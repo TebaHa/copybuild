@@ -1,0 +1,6 @@
+[submodule "lib/libft"]
+	path = lib/libft
+	url = https://github.com/TebaHa/personal_libft
+[submodule "lib/minilibx"]
+	path = lib/minilibx
+	url = https://github.com/pbondoer/MinilibX.git
