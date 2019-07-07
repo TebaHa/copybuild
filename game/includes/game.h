@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/07 19:05:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/06 22:18:55 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@
 # define RIGHT_ARROW 124
 # define DOWN_ARROW 125
 # define TOP_ARROW 126
-# define TWO_DIM_KEY 19
-# define THREE_DIM_KEY 20
 # include <engine.h>
 # include <unistd.h>
 # include <math.h>
 # include <stdlib.h>
 # include <libft.h>
 # include <mlx.h>
+
+typedef	struct		s_player
+{
+	long			px;
+	long			py;
+	double			angle;
+}					t_player;
 
 typedef	struct		s_game
 {
