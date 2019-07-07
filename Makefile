@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/07/06 22:09:15 by zytrams          ###   ########.fr        #
+#    Updated: 2019/07/07 20:04:31 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,8 @@ $(LIBFT):
 	$(MAKE) -sC $(LIBFT_DIRECTORY)
 
 clean:
-	rm -rf $(OBJS_DIRECTORY)/*.o
+	rm -rf $(GAME_OBJS_DIRECTORY)/*.o
+	rm -rf $(ENGINE_OBJS_DIRECTORY)/*.o
 	$(MAKE) -sC $(LIBFT_DIRECTORY) clean
 	$(MAKE) -sC $(MINILIB_DIRECTORY) clean
 

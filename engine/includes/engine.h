@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/06 22:13:40 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/07 20:29:20 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define ENGINE_H
 # define WIDTH 2000
 # define HEIGHT 1200
+# define TWODIM 2
+# define THREEDIM 3
 # include <unistd.h>
 # include <math.h>
 # include <stdlib.h>
@@ -27,8 +29,9 @@
 /* BSP ARRAYS */
 typedef	struct	s_point
 {
-	long		x;
-	long		y;
+	int		x;
+	int		y;
+	int		z;
 }				t_point;
 
 typedef struct	s_wall_pos
@@ -78,15 +81,22 @@ typedef struct	s_image
 	long		height;
 }				t_image;
 
+typedef	struct	s_player
+{
+	long		px;
+	long		py;
+	double		angle;
+}				t_player;
+
 typedef struct	s_engine
 {
 	t_portals	portals;
 	t_image		img;
 	t_mxl_win	window;
+	short		view_type;
 }				t_engine;
 
-/* BSP FUNS*/
-/* creating BSP from file */
+
 //void			createsectors(char *filename);
 
 
@@ -100,9 +110,15 @@ void			init_window(t_mxl_win *window);
 void			create_portal_map(t_portals *lvl);
 void			create_sector(long id, t_sector *sector, long size, long start);
 void			create_wall(long id, t_wall *array, t_point a, t_point b, long portal);
+void			draw_map_2d(t_image *image, t_portals *lvl, t_player *plr);
+void			draw_player_2d(t_image *image, int x, int y, double angle);
+
+void			draw_map_3d(t_image *image, t_portals *lvl, t_player *plr);
+
 void			draw_line(t_image *image, t_point a, t_point b, int color);
-void			draw_map(t_image *image, t_portals *lvl);
-void			draw_player(t_image *image, int x, int y, int angle);
 void			put_on_image(int x, int y, int color, t_image *image);
+
+long			dot_cross(t_point a, t_point b);
+t_point			intersect(t_point a, t_point b, t_point c, t_point d);
 
 #endif
