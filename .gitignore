@@ -3,3 +3,5 @@
 */objs/*
 *.o
 freefps
+/sdl2/*
+lib/sdl2/*
