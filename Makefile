@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/07/08 17:12:56 by zytrams          ###   ########.fr        #
+#    Updated: 2019/07/09 19:43:07 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,11 @@ LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./lib/libft/
 LIBFT_DIRECTORY_HEADERS = $(LIBFT_DIRECTORY)includes
 
-GAME_SRCS_LIST =	fps_game.c \
-					handlers.c \
+GAME_SRCS_LIST = freefps.c \
 
-MINILIB = $(MINILIB_DIRECTORY)libmlx.a
-MINILIB_DIRECTORY = ./lib/minilibx/sierra/
+SDL = $(SDL_DIRECTORY)libmlx.a
+SDL_DIRECTORY = ./lib/sdl2/
+SDL_INCLUDES = ./engine/includes/SDL2/
 
 GAME_OBJS_DIRECTORY = ./game/objs/
 GAME_SRCS_DIRECTORY = ./game/srcs/
@@ -40,9 +40,8 @@ GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 
 ENGINE_SRCS_LIST =	draw.c \
 					engine.c \
-					mlx.c \
-					portal.c \
-					cross.c \
+					error_handler.c \
+					world.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
@@ -60,25 +59,22 @@ ENGINE_OBJS_LIST = $(patsubst %.c, %.o, $(ENGINE_SRCS_LIST))
 
 all: $(NAME)
 
-$(NAME): $(MINILIB) $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS)
-	$(CC) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -lmlx -framework OpenGL -framework AppKit -L lib/minilibx/ $(LIBFT) -g
+$(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS)
+	$(CC) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_INCLUDES) -L $(SDL_DIRECTORY) $(LIBFT) -g -l SDL2-2.0.0
 
 $(ENGINE_OBJS_DIRECTORY):
 	mkdir -p $(ENGINE_OBJS_DIRECTORY)
 	echo "$(NAME): $(ENGINE_OBJS_DIRECTORY) was created"
 
 $(ENGINE_OBJS_DIRECTORY)%.o: $(ENGINE_SRCS_DIRECTORY)%.c $(ENGINE_HEADERS)
-	$(CC) $(FLAGS) -c $(ENGINE_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(MINILIB_DIRECTORY) $< -o $@ -g
+	$(CC) $(FLAGS) -c $(ENGINE_INCLUDES) -I $(SDL_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_DIRECTORY) $< -o $@ -g
 
 $(GAME_OBJS_DIRECTORY):
 	mkdir -p $(GAME_OBJS_DIRECTORY)
 	echo "$(NAME): $(GAME_OBJS_DIRECTORY) was created"
 
 $(GAME_OBJS_DIRECTORY)%.o: $(GAME_SRCS_DIRECTORY)%.c $(GAME_HEADERS)
-	$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(MINILIB_DIRECTORY) $< -o $@ -g
-
-$(MINILIB):
-	$(MAKE) -sC $(MINILIB_DIRECTORY)
+	$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_DIRECTORY) $< -o $@ -g
 
 $(LIBFT):
 	$(MAKE) -sC $(LIBFT_DIRECTORY)
@@ -87,7 +83,6 @@ clean:
 	rm -rf $(GAME_OBJS_DIRECTORY)/*.o
 	rm -rf $(ENGINE_OBJS_DIRECTORY)/*.o
 	$(MAKE) -sC $(LIBFT_DIRECTORY) clean
-	$(MAKE) -sC $(MINILIB_DIRECTORY) clean
 
 
 fclean: clean

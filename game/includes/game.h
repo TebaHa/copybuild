@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/08 22:34:12 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/09 19:51:04 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,8 @@ typedef	struct		s_game
 {
 	t_engine		*eng;
 	t_player		player;
-	long			g_width;
-	long			g_height;
 }					t_game;
 
-void				init_player(t_player *player, float x, float y, float angle);
-void				draw(t_game *fps);
-int					rotate_handler(int key, void *param);
+void		game_create_test_player(t_player *plr);
 
 #endif
