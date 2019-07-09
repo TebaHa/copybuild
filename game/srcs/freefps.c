@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/09 20:24:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/09 21:54:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int		main(void)
 	sdl_clear_window(fps.eng->ren);
 	game_create_test_player(&fps.player);
 	engine_create_test_world(&fps.eng->world);
+	//engine_render_obj(fps.eng, fps.eng->world->sectors_array->objects_array[0], -500);
+	engine_render_sector(fps.eng, &fps.eng->world->sectors_array[0], &fps.player);
 	engine_render_frame(fps.eng);
 	while (1)
 	{

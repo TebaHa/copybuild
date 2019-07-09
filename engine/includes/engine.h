@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/09 20:30:32 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/09 21:48:02 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@
 
 /* INIT AND UNINIT ENGINE */
 //void			uninitengine(void);
+
+typedef struct		s_vec4
+{
+	float			x;
+	float			y;
+	float			z;
+	float			w;
+}					t_vec4;
+
+typedef struct		s_mat4
+{
+	float			values[4][4];
+}					t_mat4;
 
 typedef	struct		s_point_2d
 {
@@ -54,6 +67,7 @@ typedef struct		s_object
 typedef	struct		s_sector
 {
 	t_object		*objects_array;
+	int				objects_size;
 }					t_sector;
 
 typedef	struct		s_world
@@ -91,7 +105,11 @@ typedef struct		s_engine
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
 void			engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color);
+
+void			engine_render_obj(t_engine *eng, t_object obj, int view);
 void			engine_render_frame(t_engine *eng);
+void			engine_render_sector(t_engine *eng, t_sector *sec, t_player *plr);
+
 void			sdl_clear_window(SDL_Renderer *ren);
 void			sdl_put_pixel(SDL_Renderer *ren, int x, int y, int color);
 void			error_handler(char *error_type, const char *str_error, t_engine *eng);
@@ -99,5 +117,9 @@ void			error_handler(char *error_type, const char *str_error, t_engine *eng);
 
 void			engine_create_test_world(t_world **world);
 t_object		engine_create_obj_wall(int portal, t_point_3d a, t_point_3d b, t_point_3d c, t_point_3d d);
+
+t_point_3d		engine_count_perspective(t_point_3d a, int c);
+t_mat4			getzeroaffinmat4(void);
+t_vec4			matrix_on_vec_multiply(t_mat4 a, t_vec4 b);
 
 #endif
