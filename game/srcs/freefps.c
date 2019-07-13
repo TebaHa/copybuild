@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/11 21:12:42 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/12 18:13:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int		main(void)
 	game_create_test_player(&fps.player);
 	engine_create_test_world(&fps.eng->world);
 	engine_render_sector(fps.eng, &fps.eng->world->sectors_array[0], &fps.player);
-	//engine_render_sector(fps.eng, fps.eng->world->sectors_array, &fps.player);
 	engine_render_frame(fps.eng);
 	while (1)
 	{
@@ -52,7 +51,20 @@ int		main(void)
 				if (fps.eng->event.key.keysym.sym == SDLK_s)
 					fps.player.position.y++;
 				if (fps.eng->event.key.keysym.sym == SDLK_a)
-					fps.player.angle += 10;
+					fps.player.angle += 5;
+				if (fps.eng->event.key.keysym.sym == SDLK_c)
+				{
+					if (fps.player.controller.ducking == 0)
+					{
+						fps.player.controller.ducking = 1;
+						fps.player.position.z -= 15;
+					}
+					else if (fps.player.controller.ducking == 1)
+					{
+						fps.player.controller.ducking = 0;
+						fps.player.position.z += 15;
+					}
+				}
 			}
 		}
 		sdl_clear_window(fps.eng->ren);

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/11 21:16:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/12 18:09:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,13 @@ void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, 
 		if(tz2 < nearz) { if(i1.y > 0) { tx2 = i1.x; tz2 = i1.y; } else { tx2 = i2.x; tz2 = i2.y; } }
 	}
 	/* Do perspective transformation */
-	float xscale1 = hfov / tz1, yscale1 = vfov / tz1;    int x1 = WIDTH / 2 - (int)(tx1 * xscale1);
-	float xscale2 = hfov / tz2, yscale2 = vfov / tz2;    int x2 = WIDTH / 2 - (int)(tx2 * xscale2);
+	float xscale1 = hfov / tz1, yscale1 = vfov / tz1;
+	int x1 = WIDTH / 2 - (int)(tx1 * xscale1);
+	float xscale2 = hfov / tz2, yscale2 = vfov / tz2;
+	int x2 = WIDTH / 2 - (int)(tx2 * xscale2);
 	//if(x1 >= x2 || x2 < now.sx1 || x1 > now.sx2) return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil  = 20 - plr->position.z;
+	float yceil  = 50 - plr->position.z;
 	float yfloor = 0 - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	//int neighbor = -1;
