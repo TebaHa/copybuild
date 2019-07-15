@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/15 07:11:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/15 10:32:07 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void		game_create_test_player(t_player *plr)
 {
-	plr->position = (t_point_3d){0, 0, 40};
-	plr->velocity = (t_point_3d){0, 0, 1};
+	plr->position = (t_point_3d){0, 0, 60};
+	plr->velocity = (t_point_3d){0, 0, 0};
 	plr->cursector = 1;
 	plr->angle = 10;
 	plr->controller.wasd[0] = 0;
@@ -52,7 +52,7 @@ int		main(void)
 			if (fps.eng->event.type == SDL_KEYUP)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
-					fps.player.controller.running = 0;
+					fps.player.controller.running 	= 0;
 			}
 			if (fps.eng->event.type == SDL_KEYDOWN)
 			{
@@ -126,15 +126,24 @@ int		main(void)
 						fps.player.position.z += 20;
 					}
 				}
-				if (fps.eng->event.key.keysym.sym == SDLK_SPACE)
-					fps.player.position.z += 20;
+				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.falling != 1)
+				{
+					fps.player.position.z += 30;
+					fps.player.controller.falling = 1;
+				}
 			}
-			int x, y;
-			SDL_GetRelativeMouseState(&x, &y);
-			fps.player.angle += x * 0.03f;
-			yaw = clamp(yaw - y * 0.05f, -5, 5);
-			fps.player.yaw = yaw - fps.player.velocity.z * 0.5f;
 		}
+		if (fps.player.controller.falling == 1)
+		{
+			fps.player.position.z -= 2;
+			if (fps.player.position.z == 60)
+				fps.player.controller.falling = 0;
+		}
+		int x, y;
+		SDL_GetRelativeMouseState(&x, &y);
+		fps.player.angle += x * 0.03f;
+		yaw = clamp(yaw - y * 0.05f, -5, 5);
+		fps.player.yaw = yaw - fps.player.velocity.z * 0.5f;
 	}
 	engine_sdl_uninit(fps.eng);
 	return (0);
