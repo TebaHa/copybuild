@@ -6,13 +6,13 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/07/09 19:43:07 by zytrams          ###   ########.fr        #
+#    Updated: 2019/07/15 05:58:52 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = freefps
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS =
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./lib/libft/
@@ -42,6 +42,7 @@ ENGINE_SRCS_LIST =	draw.c \
 					engine.c \
 					error_handler.c \
 					world.c \
+					objects.c
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/

@@ -6,27 +6,47 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/12 18:09:25 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/15 09:48:46 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void		engine_render_sector(t_engine *eng, t_sector *sect, t_player *plr)
+unsigned	get_rgb(int r, int g, int b)
 {
-	int		i;
-	int ytop[WIDTH] = {0}, ybottom[WIDTH];
-	for(unsigned x=0; x<WIDTH; ++x) ybottom[x] = HEIGHT-1;
-
-	i = 0;
-	while (i < 4)
-	{
-		engine_render_polygone(eng, sect->objects_array[i].polies_array[0], plr, ytop, ybottom);
-		i++;
-	}
+	return (0x00FFFFFF * r + 65536 * g + 256 * b + 255);
 }
 
-void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, int *ytop, int *ybottom)
+void		engine_render_sector(t_engine *eng, t_sector *sect, t_player *plr, int *rendered)
+{
+	int			i;
+	int			ytop[WIDTH] = {0};
+	int			ybottom[WIDTH];
+	unsigned	x;
+
+	x = 0;
+	SDL_LockSurface(eng->surface);
+	while (x < WIDTH)
+	{
+		ybottom[x] = HEIGHT - 1;
+		x++;
+	}
+	i = 0;
+	rendered[sect->id] = 1;
+	while (i < 4)
+	{
+		engine_render_polygone(eng, sect->objects_array[i].polies_array[0], plr, ytop, ybottom, sect->objects_array[i].sector);
+		if (sect->objects_array[i].sector >= 0)
+		{
+			if (rendered[sect->objects_array[i].sector] == 0)
+				engine_render_sector(eng, &eng->world->sectors_array[sect->objects_array[i].sector], plr, rendered);
+		}
+		i++;
+	}
+	SDL_UnlockSurface(eng->surface);
+}
+
+void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, int *ytop, int *ybottom, int portal)
 {
 	float vx1 = polygone.vertices[0].x - plr->position.x, vy1 = polygone.vertices[0].y - plr->position.y;
 	float vx2 = polygone.vertices[3].x - plr->position.x, vy2 = polygone.vertices[3].y - plr->position.y;
@@ -42,47 +62,83 @@ void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, 
 		float nearz = 1e-4f, farz = 5, nearside = 1e-5f, farside = 20.f;
 		// Find an intersection between the wall and the approximate edges of player's view
 		struct xy i1 = Intersect(tx1,tz1,tx2,tz2, -nearside,nearz, -farside, farz);
-		struct xy i2 = Intersect(tx1,tz1,tx2,tz2,  nearside,nearz,  farside, farz);
-		if(tz1 < nearz) { if(i1.y > 0) { tx1 = i1.x; tz1 = i1.y; } else { tx1 = i2.x; tz1 = i2.y; } }
-		if(tz2 < nearz) { if(i1.y > 0) { tx2 = i1.x; tz2 = i1.y; } else { tx2 = i2.x; tz2 = i2.y; } }
+		struct xy i2 = Intersect(tx1,tz1,tx2,tz2, nearside,nearz, farside, farz);
+		if(tz1 < nearz)
+		{
+			if(i1.y > 0)
+			{
+				tx1 = i1.x;
+				tz1 = i1.y;
+			}
+			else
+			{
+				tx1 = i2.x;
+				tz1 = i2.y;
+			}
+		}
+		if(tz2 < nearz)
+		{
+			if(i1.y > 0)
+			{
+				tx2 = i1.x;
+				tz2 = i1.y;
+			}
+			else
+			{
+				tx2 = i2.x;
+				tz2 = i2.y;
+			}
+		}
 	}
 	/* Do perspective transformation */
 	float xscale1 = hfov / tz1, yscale1 = vfov / tz1;
 	int x1 = WIDTH / 2 - (int)(tx1 * xscale1);
 	float xscale2 = hfov / tz2, yscale2 = vfov / tz2;
 	int x2 = WIDTH / 2 - (int)(tx2 * xscale2);
-	//if(x1 >= x2 || x2 < now.sx1 || x1 > now.sx2) return; // Only render if it's visible
+	if(x1 >= x2) return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil  = 50 - plr->position.z;
-	float yfloor = 0 - plr->position.z;
+	float yceil = polygone.vertices[0].z - plr->position.z;
+	float yfloor = polygone.vertices[1].z - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
-	//int neighbor = -1;
-	//float nyceil=0, nyfloor=0;
-	/*
-	if(neighbor >= 0) // Is another sector showing through this portal?
+	float nyceil = 0, nyfloor = 0;
+	if(portal >= 0) // Is another sector showing through this portal?
 	{
-		nyceil  = sectors[neighbor].ceil  - player.where.z;
-		nyfloor = sectors[neighbor].floor - player.where.z;
+		nyceil  = 0 - plr->position.z;
+		nyfloor = 0 - plr->position.z;
 	}
-	*/
 	int y1a  = HEIGHT / 2 - (int)(Yaw(yceil, tz1) * yscale1),  y1b = HEIGHT / 2 - (int)(Yaw(yfloor, tz1) * yscale1);
 	int y2a  = HEIGHT / 2 - (int)(Yaw(yceil, tz2) * yscale2),  y2b = HEIGHT / 2 - (int)(Yaw(yfloor, tz2) * yscale2);
 	/* The same for the neighboring sector */
-	//int ny1a = HEIGHT / 2 - (int)(Yaw(nyceil, tz1) * yscale1), ny1b = HEIGHT / 2 - (int)(Yaw(nyfloor, tz1) * yscale1);
-	//int ny2a = HEIGHT / 2 - (int)(Yaw(nyceil, tz2) * yscale2), ny2b = HEIGHT / 2 - (int)(Yaw(nyfloor, tz2) * yscale2);
+	int ny1a = HEIGHT / 2 - (int)(Yaw(nyceil, tz1) * yscale1), ny1b = HEIGHT / 2 - (int)(Yaw(nyfloor, tz1) * yscale1);
+	int ny2a = HEIGHT / 2 - (int)(Yaw(nyceil, tz2) * yscale2), ny2b = HEIGHT / 2 - (int)(Yaw(nyfloor, tz2) * yscale2);
 	int beginx = max(x1, 0), endx = min(x2, WIDTH - 1);
 	for(int x = beginx; x <= endx; ++x)
 	{
 		/* Calculate the Z coordinate for this point. (Only used for lighting.) */
-		//int z = ((x - x1) * (tz2 - tz1) / (x2-x1) + tz1) * 8;
+		//int z = ((x - x1) * (tz2 - tz1) / (x2 - x1) + tz1) * 8;
 		/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
-		int ya = (x - x1) * (y2a - y1a) / (x2-x1) + y1a, cya = clamp(ya, ytop[x],ybottom[x]); // top
-		int yb = (x - x1) * (y2b - y1b) / (x2-x1) + y1b, cyb = clamp(yb, ytop[x],ybottom[x]); // bottom
+		int ya = (x - x1) * (y2a - y1a) / (x2-x1) + y1a, cya = clamp(ya, ytop[x], ybottom[x]); // top
+		int yb = (x - x1) * (y2b - y1b) / (x2-x1) + y1b, cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
 
 		/* Render ceiling: everything above this sector's ceiling height. */
-		engine_draw_line(eng, (t_point_2d){x, ytop[x]}, (t_point_2d){x, cya-1}, 0xFF0000);
+		engine_draw_line(eng, (t_point_2d){x, ytop[x]}, (t_point_2d){x, cya-1}, get_rgb(87, 206, 235));
 		/* Render floor: everything below this sector's floor height. */
-		engine_draw_line(eng, (t_point_2d){x, cyb+1}, (t_point_2d){x, ybottom[x]}, 0xFFFFFF);
+		engine_draw_line(eng, (t_point_2d){x, cyb + 1}, (t_point_2d){x, ybottom[x]}, get_rgb(218, 165, 32));
+		/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
+		//unsigned r = 0x010101 * (255 - z);
+		if (portal < 0)
+			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cyb},  x == x1 || x == x2 ? 0 : get_rgb(255,248,220));
+		else
+		{
+			int nya = (x - x1) * (ny2a-ny1a) / (x2-x1) + ny1a, cnya = clamp(nya, ytop[x],ybottom[x]);
+			int nyb = (x - x1) * (ny2b-ny1b) / (x2-x1) + ny1b, cnyb = clamp(nyb, ytop[x],ybottom[x]);
+			/* If our ceiling is higher than their ceiling, render upper wall */
+			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cnya - 1}, x == x1 || x == x2 ? 0 : get_rgb(0, 0, 0));
+			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);// Shrink the remaining window below these ceilings
+			/* If our floor is lower than their floor, render bottom wall */
+			engine_draw_line(eng, (t_point_2d){x, cnyb + 1}, (t_point_2d){x, cyb}, x == x1 || x == x2 ? 0 : get_rgb(0, 0, 0));
+			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
+		}
 	}
 }
 
@@ -96,6 +152,7 @@ void		engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color)
 	int				i;
 
 	len = (fabs(b.x - a.x) > fabs(b.y - a.y)) ? fabs(b.x - a.x) : fabs(b.y - a.y);
+	if (len > -0.0f && len < 0.0f)
 	deltax = (b.x - a.x) / len;
 	deltay = (b.y - a.y) / len;
 	i = 0;
@@ -106,24 +163,28 @@ void		engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color)
 		x = (int)(a.x);
 		y = (int)(a.y);
 		if ((a.x) < WIDTH && (a.y) < HEIGHT)
-			sdl_put_pixel(eng->ren, (a.x), (a.y), color);
+			sdl_put_pixel(eng->surface, (a.x), (a.y), color);
 		i++;
 	}
 }
 
 void	engine_render_frame(t_engine *eng)
 {
+	SDL_Texture	*texture;
+
+	texture = SDL_CreateTextureFromSurface(eng->ren, eng->surface);
+	SDL_RenderClear(eng->ren);
+	SDL_RenderCopy(eng->ren, texture, NULL, NULL);
 	SDL_RenderPresent(eng->ren);
+	SDL_DestroyTexture(texture);
 }
 
-void	sdl_clear_window(SDL_Renderer *ren)
+void	sdl_put_pixel(SDL_Surface *surf, int x, int y, int color)
 {
-	SDL_SetRenderDrawColor(ren, 0, 0, 0, 0);
-	SDL_RenderClear(ren);
-}
+	int		bpp;
+	Uint8	*p;
 
-void	sdl_put_pixel(SDL_Renderer *ren, int x, int y, int color)
-{
-	SDL_SetRenderDrawColor(ren, (Uint8)(color >> 16), (Uint8)(color >> 8), (Uint8)(color), 255);
-	SDL_RenderDrawPoint(ren, x, y);
+	bpp = surf->format->BytesPerPixel;
+	p = (Uint8 *) surf->pixels + y* surf->pitch + x * bpp;
+	*(Uint32* ) p = color;
 }
