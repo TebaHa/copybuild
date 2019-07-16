@@ -6,15 +6,15 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/15 10:12:36 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/16 09:35:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-unsigned	get_rgb(char r, char g, char b)
+int		get_rgb(char r, char g, char b)
 {
-	return (((int)r << 24) | ((int)g << 16) | ((int)b << 8) | 0x000000FF);
+	return (((int)r << 24) | ((int)g << 16) | ((int)b << 8) | 0x000000ff);
 }
 
 void		engine_render_sector(t_engine *eng, t_sector *sect, t_player *plr, int *rendered)
@@ -121,22 +121,22 @@ void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, 
 		int yb = (x - x1) * (y2b - y1b) / (x2-x1) + y1b, cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
 
 		/* Render ceiling: everything above this sector's ceiling height. */
-		engine_draw_line(eng, (t_point_2d){x, ytop[x]}, (t_point_2d){x, cya - 1}, get_rgb(135, 206, 235));
+		engine_draw_line(eng, (t_point_2d){x, ytop[x]}, (t_point_2d){x, cya - 1}, get_rgb((char)0, (char)0, (char)255));
 		/* Render floor: everything below this sector's floor height. */
-		engine_draw_line(eng, (t_point_2d){x, cyb + 1}, (t_point_2d){x, ybottom[x]}, get_rgb(218, 165, 32));
+		engine_draw_line(eng, (t_point_2d){x, cyb + 1}, (t_point_2d){x, ybottom[x]}, get_rgb((char)218, (char)165, (char)32));
 		/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
 		//unsigned r = 0x010101 * (255 - z);
 		if (portal < 0)
-			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cyb},  x == x1 || x == x2 ? 0 : get_rgb(210,105,30));
+			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cyb},  x == x1 || x == x2 ? 0 : get_rgb((char)210, (char)105, (char)30));
 		else
 		{
 			int nya = (x - x1) * (ny2a-ny1a) / (x2-x1) + ny1a, cnya = clamp(nya, ytop[x],ybottom[x]);
 			int nyb = (x - x1) * (ny2b-ny1b) / (x2-x1) + ny1b, cnyb = clamp(nyb, ytop[x],ybottom[x]);
 			/* If our ceiling is higher than their ceiling, render upper wall */
-			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cnya - 1}, x == x1 || x == x2 ? 0 : get_rgb(0, 0, 0));
+			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cnya - 1}, x == x1 || x == x2 ? 0 : get_rgb((char)0, (char)0, (char)0));
 			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);// Shrink the remaining window below these ceilings
 			/* If our floor is lower than their floor, render bottom wall */
-			engine_draw_line(eng, (t_point_2d){x, cnyb + 1}, (t_point_2d){x, cyb}, x == x1 || x == x2 ? 0 : get_rgb(0, 0, 0));
+			engine_draw_line(eng, (t_point_2d){x, cnyb + 1}, (t_point_2d){x, cyb}, x == x1 || x == x2 ? 0 : get_rgb((char)0, (char)0, (char)0));
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 	}

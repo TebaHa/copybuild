@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/15 09:38:40 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/16 04:08:53 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define HEIGHT 720
 # define TWODIM 2
 # define THREEDIM 3
+# define PLAYERSTARTZ 60
 # define hfov (0.73f * HEIGHT) // Affects the horizontal field of vision
 # define vfov (0.2f * HEIGHT) // Affects the vertical field of vision
 # include <unistd.h>
@@ -119,6 +120,8 @@ typedef	struct		s_player
 	t_point_3d		position; // current position
 	t_point_3d		velocity; // current motion vector
 	float			angle; // view angle
+	float			cosangle;
+	float			sinangle;
 	float			yaw;
 	unsigned		cursector; // sectornumber
 }					t_player;

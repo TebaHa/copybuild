@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/15 10:32:07 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/16 09:19:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.falling = 0;
 	plr->controller.ground = 1;
 	plr->controller.moving = 0;
-	plr->controller.running = 0;
+	plr->controller.running = 1;
 	plr->yaw = 1;
 }
 
@@ -47,83 +47,58 @@ int		main(void)
 		rendered[1] = 0;
 		engine_render_sector(fps.eng, &fps.eng->world->sectors_array[1], &fps.player, rendered);
 		engine_render_frame(fps.eng);
+		if (fps.player.controller.moving)
+		{
+			float dx = fps.player.velocity.x, dy = fps.player.velocity.y;
+			int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {fps.player.position.x + dx, fps.player.position.y + dy, 0});
+			if (sect >= 0)
+			{
+				fps.player.position.x += dx;
+				fps.player.position.y += dy;
+				fps.player.cosangle = cosf(fps.player.angle);
+				fps.player.sinangle = sinf(fps.player.angle);
+			}
+		}
 		if (SDL_PollEvent(&fps.eng->event))
 		{
 			if (fps.eng->event.type == SDL_KEYUP)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
-					fps.player.controller.running 	= 0;
+					fps.player.controller.running = 1;
+				if (fps.eng->event.key.keysym.sym == SDLK_w)
+					fps.player.controller.wasd[0] = 0;
+				if (fps.eng->event.key.keysym.sym == SDLK_s)
+					fps.player.controller.wasd[3] = 0;
+				if (fps.eng->event.key.keysym.sym == SDLK_a)
+					fps.player.controller.wasd[2] = 0;
+				if (fps.eng->event.key.keysym.sym == SDLK_d)
+					fps.player.controller.wasd[1] = 0;
 			}
 			if (fps.eng->event.type == SDL_KEYDOWN)
 			{
-				fps.player.controller.moving = 0;
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
 					fps.player.controller.running = 3;
 				if (fps.eng->event.key.keysym.sym == SDLK_ESCAPE)
 					break;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
-				{
-					fps.player.controller.moving = 1;
-					float dx = cosf(fps.player.angle) * (3 + fps.player.controller.running);
-					float dy = sinf(fps.player.angle) * (3 + fps.player.controller.running);
-					int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {fps.player.position.x + dx, fps.player.position.y + dy, 0});
-					if (sect >= 0)
-					{
-						fps.player.position.x += dx;
-						fps.player.position.y += dy;
-						fps.player.cursector = sect;
-					}
-				}
+					fps.player.controller.wasd[0] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_s)
-				{
-					fps.player.controller.moving = 1;
-					float dx = cosf(fps.player.angle) * 3;
-					float dy = sinf(fps.player.angle) * 3;
-					int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {fps.player.position.x - dx, fps.player.position.y - dy, 0});
-					if (sect >= 0)
-					{
-						fps.player.position.x -= dx;
-						fps.player.position.y -= dy;
-						fps.player.cursector = sect;
-					}
-				}
+					fps.player.controller.wasd[3] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_a)
-				{
-					fps.player.controller.moving = 1;
-					float dx = sinf(fps.player.angle) * 3;
-					float dy = cosf(fps.player.angle) * 3;
-					int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {fps.player.position.x + dx, fps.player.position.y - dy, 0});
-					if (sect >= 0)
-					{
-						fps.player.position.x += dx;
-						fps.player.position.y -= dy;
-						fps.player.cursector = sect;
-					}
-				}
+					fps.player.controller.wasd[2] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_d)
-				{
-					fps.player.controller.moving = 1;
-					float dx = sinf(fps.player.angle) * 3;
-					float dy = cosf(fps.player.angle) * 3;
-					int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {fps.player.position.x - dx, fps.player.position.y + dy, 0});
-					if (sect >= 0)
-					{
-						fps.player.position.x -= dx;
-						fps.player.position.y += dy;
-						fps.player.cursector = sect;
-					}
-				}
+					fps.player.controller.wasd[1] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_c)
 				{
 					if (fps.player.controller.ducking == 0)
 					{
 						fps.player.controller.ducking = 1;
-						fps.player.position.z -= 20;
+						fps.player.position.z -= 30;
 					}
 					else if (fps.player.controller.ducking == 1)
 					{
 						fps.player.controller.ducking = 0;
-						fps.player.position.z += 20;
+						fps.player.position.z += 30;
 					}
 				}
 				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.falling != 1)
@@ -136,7 +111,7 @@ int		main(void)
 		if (fps.player.controller.falling == 1)
 		{
 			fps.player.position.z -= 2;
-			if (fps.player.position.z == 60)
+			if (fps.player.position.z == PLAYERSTARTZ)
 				fps.player.controller.falling = 0;
 		}
 		int x, y;
@@ -144,6 +119,19 @@ int		main(void)
 		fps.player.angle += x * 0.03f;
 		yaw = clamp(yaw - y * 0.05f, -5, 5);
 		fps.player.yaw = yaw - fps.player.velocity.z * 0.5f;
+		float move_vec[2] = {0.f, 0.f};
+		fps.player.cosangle = cosf(fps.player.angle);
+		fps.player.sinangle = sinf(fps.player.angle);
+		if(fps.player.controller.wasd[0]) { move_vec[0] += fps.player.cosangle * fps.player.controller.running; move_vec[1] += fps.player.sinangle * fps.player.controller.running; }
+		if(fps.player.controller.wasd[1]) { move_vec[0] -= fps.player.sinangle * fps.player.controller.running; move_vec[1] += fps.player.cosangle * fps.player.controller.running; }
+		if(fps.player.controller.wasd[2]) { move_vec[0] += fps.player.sinangle * fps.player.controller.running; move_vec[1] -= fps.player.cosangle * fps.player.controller.running; }
+		if(fps.player.controller.wasd[3]) { move_vec[0] -= fps.player.cosangle * fps.player.controller.running; move_vec[1] -= fps.player.sinangle * fps.player.controller.running; }
+		int pushing = fps.player.controller.wasd[0] || fps.player.controller.wasd[1] || fps.player.controller.wasd[2] || fps.player.controller.wasd[3];
+		float acceleration = pushing ? 0.4 : 0.2;
+		fps.player.velocity.x = fps.player.velocity.x * (1 - acceleration) + move_vec[0] * acceleration;
+		fps.player.velocity.y = fps.player.velocity.y * (1 - acceleration) + move_vec[1] * acceleration;
+		if (pushing) {fps.player.controller.moving = 1;} else {fps.player.controller.moving = 0;}
+		SDL_Delay(10);
 	}
 	engine_sdl_uninit(fps.eng);
 	return (0);
