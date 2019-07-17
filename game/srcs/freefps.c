@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/16 09:19:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/17 04:04:00 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ int		main(void)
 					fps.player.controller.wasd[1] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_c)
 				{
-					if (fps.player.controller.ducking == 0)
+					if (fps.player.controller.ducking == 0 && fps.player.controller.falling != 1)
 					{
 						fps.player.controller.ducking = 1;
 						fps.player.position.z -= 30;
 					}
-					else if (fps.player.controller.ducking == 1)
+					else if (fps.player.controller.ducking == 1 && fps.player.controller.falling != 1)
 					{
 						fps.player.controller.ducking = 0;
 						fps.player.position.z += 30;
@@ -105,14 +105,17 @@ int		main(void)
 				{
 					fps.player.position.z += 30;
 					fps.player.controller.falling = 1;
+					if (fps.player.controller.ducking == 1)
+						fps.player.controller.ducking = 0;
 				}
 			}
 		}
 		if (fps.player.controller.falling == 1)
 		{
-			fps.player.position.z -= 2;
 			if (fps.player.position.z == PLAYERSTARTZ)
 				fps.player.controller.falling = 0;
+			else
+				fps.player.position.z -= 1;
 		}
 		int x, y;
 		SDL_GetRelativeMouseState(&x, &y);
@@ -122,10 +125,26 @@ int		main(void)
 		float move_vec[2] = {0.f, 0.f};
 		fps.player.cosangle = cosf(fps.player.angle);
 		fps.player.sinangle = sinf(fps.player.angle);
-		if(fps.player.controller.wasd[0]) { move_vec[0] += fps.player.cosangle * fps.player.controller.running; move_vec[1] += fps.player.sinangle * fps.player.controller.running; }
-		if(fps.player.controller.wasd[1]) { move_vec[0] -= fps.player.sinangle * fps.player.controller.running; move_vec[1] += fps.player.cosangle * fps.player.controller.running; }
-		if(fps.player.controller.wasd[2]) { move_vec[0] += fps.player.sinangle * fps.player.controller.running; move_vec[1] -= fps.player.cosangle * fps.player.controller.running; }
-		if(fps.player.controller.wasd[3]) { move_vec[0] -= fps.player.cosangle * fps.player.controller.running; move_vec[1] -= fps.player.sinangle * fps.player.controller.running; }
+		if(fps.player.controller.wasd[0])
+		{
+			move_vec[0] += fps.player.cosangle * fps.player.controller.running;
+			move_vec[1] += fps.player.sinangle * fps.player.controller.running;
+		}
+		if(fps.player.controller.wasd[1])
+		{
+			move_vec[0] -= fps.player.sinangle * fps.player.controller.running;
+			move_vec[1] += fps.player.cosangle * fps.player.controller.running;
+		}
+		if(fps.player.controller.wasd[2])
+		{
+			move_vec[0] += fps.player.sinangle * fps.player.controller.running;
+			move_vec[1] -= fps.player.cosangle * fps.player.controller.running;
+		}
+		if(fps.player.controller.wasd[3])
+		{
+			move_vec[0] -= fps.player.cosangle * fps.player.controller.running;
+			move_vec[1] -= fps.player.sinangle * fps.player.controller.running;
+		}
 		int pushing = fps.player.controller.wasd[0] || fps.player.controller.wasd[1] || fps.player.controller.wasd[2] || fps.player.controller.wasd[3];
 		float acceleration = pushing ? 0.4 : 0.2;
 		fps.player.velocity.x = fps.player.velocity.x * (1 - acceleration) + move_vec[0] * acceleration;
