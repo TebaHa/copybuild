@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/18 17:47:39 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/18 18:53:37 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int		main(void)
 				}
 				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.falling != 1)
 				{
-					fps.player.position.z += 30;
+					fps.player.position.z += 50;
 					fps.player.controller.falling = 1;
 					if (fps.player.controller.ducking == 1)
 						fps.player.controller.ducking = 0;

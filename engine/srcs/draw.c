@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/18 18:47:47 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/18 18:53:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 		x++;
 	}
 	engine_create_renderstack(eng, sect_id, rendered);
-	printf("%d %d\n", eng->world->renderqueue[0], eng->world->renderqueue[1]);
 	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)) >= 0))
 	{
 		i = 0;
