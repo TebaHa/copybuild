@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 19:17:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/16 09:31:41 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/18 18:27:03 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 void		engine_create_test_world(t_world **world)
 {
+	int		i;
+
 	*world = (t_world *)ft_memalloc(sizeof(t_world));
+	(*world)->renderqueue = (int *)ft_memalloc(sizeof(int) * MAXSECTORS);
+	engine_clear_renderqueue((*world)->renderqueue);
 	(*world)->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector) * 2);
 	(*world)->sectors_array[0].objects_array = (t_object *)ft_memalloc(sizeof(t_object) * 4);
 	(*world)->sectors_array[0].objects_array[0] = engine_create_obj_wall(-1, (t_point_3d){-100, -100, 100}, (t_point_3d){-100, -100, 0},
@@ -28,8 +32,8 @@ void		engine_create_test_world(t_world **world)
 	(*world)->sectors_array[0].objects_size = 4;
 	(*world)->sectors_array[0].id = 0;
 	(*world)->sectors_array[1].objects_array = (t_object *)ft_memalloc(sizeof(t_object) * 4);
-	(*world)->sectors_array[1].objects_array[0] = engine_create_obj_wall(0, (t_point_3d){-100, 100, 50}, (t_point_3d){-100, 100, 0},
-	(t_point_3d){100, 100, 0}, (t_point_3d){100, 100, 50});
+	(*world)->sectors_array[1].objects_array[0] = engine_create_obj_wall(0, (t_point_3d){-100, 100, 300}, (t_point_3d){-100, 100, 0},
+	(t_point_3d){100, 100, 0}, (t_point_3d){100, 100, 300});
 	(*world)->sectors_array[1].objects_array[1] = engine_create_obj_wall(-1, (t_point_3d){100, 100, 200}, (t_point_3d){100, 100, 0},
 	(t_point_3d){200, 200, 0}, (t_point_3d){200, 200, 200});
 	(*world)->sectors_array[1].objects_array[2] = engine_create_obj_wall(-1, (t_point_3d){200, 200, 200}, (t_point_3d){200, 200, 0},

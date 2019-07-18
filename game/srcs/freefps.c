@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/17 04:04:00 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/18 17:47:39 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		game_create_test_player(t_player *plr)
 {
 	plr->position = (t_point_3d){0, 0, 60};
 	plr->velocity = (t_point_3d){0, 0, 0};
-	plr->cursector = 1;
+	plr->cursector = 0;
 	plr->angle = 10;
 	plr->controller.wasd[0] = 0;
 	plr->controller.wasd[1] = 0;
@@ -45,7 +45,7 @@ int		main(void)
 	{
 		rendered[0] = 0;
 		rendered[1] = 0;
-		engine_render_sector(fps.eng, &fps.eng->world->sectors_array[1], &fps.player, rendered);
+		engine_render_world(fps.eng, &fps.player, rendered);
 		engine_render_frame(fps.eng);
 		if (fps.player.controller.moving)
 		{
@@ -57,6 +57,7 @@ int		main(void)
 				fps.player.position.y += dy;
 				fps.player.cosangle = cosf(fps.player.angle);
 				fps.player.sinangle = sinf(fps.player.angle);
+				fps.player.cursector = sect;
 			}
 		}
 		if (SDL_PollEvent(&fps.eng->event))
@@ -115,7 +116,7 @@ int		main(void)
 			if (fps.player.position.z == PLAYERSTARTZ)
 				fps.player.controller.falling = 0;
 			else
-				fps.player.position.z -= 1;
+				fps.player.position.z -= 2;
 		}
 		int x, y;
 		SDL_GetRelativeMouseState(&x, &y);
