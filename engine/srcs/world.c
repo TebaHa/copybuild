@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 19:17:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/18 18:27:03 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/18 18:48:19 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		engine_create_test_world(t_world **world)
 
 	*world = (t_world *)ft_memalloc(sizeof(t_world));
 	(*world)->renderqueue = (int *)ft_memalloc(sizeof(int) * MAXSECTORS);
-	engine_clear_renderqueue((*world)->renderqueue);
+	engine_clear_renderstack((*world)->renderqueue);
 	(*world)->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector) * 2);
 	(*world)->sectors_array[0].objects_array = (t_object *)ft_memalloc(sizeof(t_object) * 4);
 	(*world)->sectors_array[0].objects_array[0] = engine_create_obj_wall(-1, (t_point_3d){-100, -100, 100}, (t_point_3d){-100, -100, 0},

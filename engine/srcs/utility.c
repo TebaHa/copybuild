@@ -6,13 +6,13 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:14:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/18 18:42:28 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/18 18:47:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void	engine_push_renderqueue(int *renderqueue, int sector_id)
+void	engine_push_renderstack(int *renderqueue, int sector_id)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ void	engine_push_renderqueue(int *renderqueue, int sector_id)
 	renderqueue[0] = sector_id;
 }
 
-int		engine_pop_renderqueue(int *renderqueue)
+int		engine_pop_renderstack(int *renderqueue)
 {
 	int	res;
 	int	i;
@@ -42,7 +42,7 @@ int		engine_pop_renderqueue(int *renderqueue)
 	return (res);
 }
 
-void	engine_clear_renderqueue(int *renderqueue)
+void	engine_clear_renderstack(int *renderqueue)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/18 18:44:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/18 18:47:47 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ int		get_rgb(char r, char g, char b)
 	return (((int)r << 24) | ((int)g << 16) | ((int)b << 8) | 0x000000ff);
 }
 
-void		engine_create_renderqueue(t_engine *eng, int render_id, int *rendered)
+void		engine_create_renderstack(t_engine *eng, int render_id, int *rendered)
 {
 	int		i;
 	int		sect;
 
 	i = 0;
-	engine_push_renderqueue(eng->world->renderqueue, render_id);
+	engine_push_renderstack(eng->world->renderqueue, render_id);
 	rendered[render_id] = 1;
 	while (i < 4)
 	{
 		sect = eng->world->sectors_array[render_id].objects_array[i].sector;
 		if (sect >= 0 && rendered[sect] == 0)
-			engine_create_renderqueue(eng, sect, rendered);
+			engine_create_renderstack(eng, sect, rendered);
 		i++;
 	}
 }
@@ -50,9 +50,9 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 		ybottom[x] = HEIGHT - 1;
 		x++;
 	}
-	engine_create_renderqueue(eng, sect_id, rendered);
+	engine_create_renderstack(eng, sect_id, rendered);
 	printf("%d %d\n", eng->world->renderqueue[0], eng->world->renderqueue[1]);
-	while (((sect_id = engine_pop_renderqueue(eng->world->renderqueue)) >= 0))
+	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)) >= 0))
 	{
 		i = 0;
 		while (i < 4)
@@ -62,7 +62,7 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 			i++;
 		}
 	}
-	engine_clear_renderqueue(eng->world->renderqueue);
+	engine_clear_renderstack(eng->world->renderqueue);
 	SDL_UnlockSurface(eng->surface);
 }
 

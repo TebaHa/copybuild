@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/18 18:21:47 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/18 18:47:21 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,10 @@ void			sdl_put_pixel(SDL_Surface *surf, int x, int y, int color);
 void			error_handler(char *error_type, const char *str_error, t_engine *eng);
 void			engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, int *ytop, int *ybottom, int portal);
 void			engine_create_test_world(t_world **world);
-void			engine_push_renderqueue(int *renderqueue, int sector_id);
-void			engine_clear_renderqueue(int *renderqueue);
-void			engine_create_renderqueue(t_engine *eng, int render_id, int *rendered);
-int				engine_pop_renderqueue(int *renderqueue);
+void			engine_push_renderstack(int *renderqueue, int sector_id);
+void			engine_clear_renderstack(int *renderqueue);
+void			engine_create_renderstack(t_engine *eng, int render_id, int *rendered);
+int				engine_pop_renderstack(int *renderqueue);
 int				engine_object_get_sector(t_world *world, t_point_3d pos);
 t_object		engine_create_obj_wall(int portal, t_point_3d a, t_point_3d b, t_point_3d c, t_point_3d d);
 t_point_3d		engine_count_perspective(t_point_3d a, int c);
