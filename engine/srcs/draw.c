@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/18 18:53:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/19 21:59:02 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,53 +67,49 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 
 void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, int *ytop, int *ybottom, int portal)
 {
-	float vx1 = polygone.vertices[0].x - plr->position.x, vy1 = polygone.vertices[0].y - plr->position.y;
-	float vx2 = polygone.vertices[3].x - plr->position.x, vy2 = polygone.vertices[3].y - plr->position.y;
+	t_point_2d	v1;
+	t_point_2d	v2;
+	t_point_2d	t1;
+	t_point_2d	t2;
+	v1.x = polygone.vertices[0].x - plr->position.x;
+	v1.y = polygone.vertices[0].y - plr->position.y;
+	v2.x = polygone.vertices[3].x - plr->position.x;
+	v2.y = polygone.vertices[3].y - plr->position.y;
 	/* Rotate them around the player's view */
-	float tx1 = vx1 * plr->sinangle - vy1 * plr->cosangle,  tz1 = vx1 * plr->cosangle + vy1 * plr->sinangle;
-	float tx2 = vx2 * plr->sinangle - vy2 * plr->cosangle,  tz2 = vx2 * plr->cosangle + vy2 * plr->sinangle;
+	t1.x = v1.x * plr->sinangle - v1.y * plr->cosangle;
+	t1.y = v1.x * plr->cosangle + v1.y * plr->sinangle;
+	t2.x = v2.x * plr->sinangle - v2.y * plr->cosangle;
+	t2.y = v2.x * plr->cosangle + v2.y * plr->sinangle;
 	/* Is the wall at least partially in front of the player? */
-	if(tz1 <= 0 && tz2 <= 0)
+	if(t1.y <= 0 && t2.y <= 0)
 		return;
 	/* If it's partially behind the player, clip it against player's view frustrum */
-	if(tz1 <= 0 || tz2 <= 0)
+	if(t1.y <= 0 || t2.y <= 0)
 	{
 		float nearz = 1e-4f, farz = 5, nearside = 1e-5f, farside = 20.f;
 		// Find an intersection between the wall and the approximate edges of player's view
-		t_point_2d i1 = Intersect(tx1,tz1,tx2,tz2, -nearside,nearz, -farside, farz);
-		t_point_2d i2 = Intersect(tx1,tz1,tx2,tz2, nearside,nearz, farside, farz);
-		if(tz1 < nearz)
+		t_point_2d i1 = Intersect(t1.x, t1.y, t2.x, t2.y, -nearside, nearz, -farside, farz);
+		t_point_2d i2 = Intersect(t1.x, t1.y, t2.x, t2.y, nearside, nearz, farside, farz);
+		if(t1.y < nearz)
 		{
 			if(i1.y > 0)
-			{
-				tx1 = i1.x;
-				tz1 = i1.y;
-			}
+				t1 = i1;
 			else
-			{
-				tx1 = i2.x;
-				tz1 = i2.y;
-			}
+				t1 = i2;
 		}
-		if(tz2 < nearz)
+		if(t2.y < nearz)
 		{
 			if(i1.y > 0)
-			{
-				tx2 = i1.x;
-				tz2 = i1.y;
-			}
+				t2 = i1;
 			else
-			{
-				tx2 = i2.x;
-				tz2 = i2.y;
-			}
+				t2 = i2;
 		}
 	}
 	/* Do perspective transformation */
-	float xscale1 = hfov / tz1, yscale1 = vfov / tz1;
-	int x1 = WIDTH / 2 - (int)(tx1 * xscale1);
-	float xscale2 = hfov / tz2, yscale2 = vfov / tz2;
-	int x2 = WIDTH / 2 - (int)(tx2 * xscale2);
+	float xscale1 = hfov / t1.y, yscale1 = vfov / t1.y;
+	int x1 = WIDTH / 2 - (int)(t1.x * xscale1);
+	float xscale2 = hfov / t2.y, yscale2 = vfov / t2.y;
+	int x2 = WIDTH / 2 - (int)(t2.x * xscale2);
 	if(x1 >= x2 || x2 < 0 || x1 > WIDTH - 1)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
@@ -126,11 +122,11 @@ void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, 
 		nyceil  = 60 - plr->position.z;
 		nyfloor = 0 - plr->position.z;
 	}
-	int y1a  = HEIGHT / 2 - (int)(Yaw(yceil, tz1) * yscale1),  y1b = HEIGHT / 2 - (int)(Yaw(yfloor, tz1) * yscale1);
-	int y2a  = HEIGHT / 2 - (int)(Yaw(yceil, tz2) * yscale2),  y2b = HEIGHT / 2 - (int)(Yaw(yfloor, tz2) * yscale2);
+	int y1a  = HEIGHT / 2 - (int)(Yaw(yceil, t1.y) * yscale1),  y1b = HEIGHT / 2 - (int)(Yaw(yfloor, t1.y) * yscale1);
+	int y2a  = HEIGHT / 2 - (int)(Yaw(yceil, t2.y) * yscale2),  y2b = HEIGHT / 2 - (int)(Yaw(yfloor, t2.y) * yscale2);
 	/* The same for the neighboring sector */
-	int ny1a = HEIGHT / 2 - (int)(Yaw(nyceil, tz1) * yscale1), ny1b = HEIGHT / 2 - (int)(Yaw(nyfloor, tz1) * yscale1);
-	int ny2a = HEIGHT / 2 - (int)(Yaw(nyceil, tz2) * yscale2), ny2b = HEIGHT / 2 - (int)(Yaw(nyfloor, tz2) * yscale2);
+	int ny1a = HEIGHT / 2 - (int)(Yaw(nyceil, t1.y) * yscale1), ny1b = HEIGHT / 2 - (int)(Yaw(nyfloor, t1.y) * yscale1);
+	int ny2a = HEIGHT / 2 - (int)(Yaw(nyceil, t2.y) * yscale2), ny2b = HEIGHT / 2 - (int)(Yaw(nyfloor, t2.y) * yscale2);
 	int beginx = max(x1, 0), endx = min(x2, WIDTH - 1);
 	for(int x = beginx; x <= endx; ++x)
 	{

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/18 18:53:37 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/19 22:00:24 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		game_create_test_player(t_player *plr)
 	plr->position = (t_point_3d){0, 0, 60};
 	plr->velocity = (t_point_3d){0, 0, 0};
 	plr->cursector = 0;
-	plr->angle = 10;
+	plr->angle = 0;
 	plr->controller.wasd[0] = 0;
 	plr->controller.wasd[1] = 0;
 	plr->controller.wasd[2] = 0;

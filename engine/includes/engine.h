@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/18 18:47:21 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/19 22:36:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 60
 # define MAXSECTORS 32
-# define hfov (0.73f * HEIGHT) // Affects the horizontal field of vision
-# define vfov (0.2f * HEIGHT) // Affects the vertical field of vision
+# define hfov (0.53f * HEIGHT) // Affects the horizontal field of vision
+# define vfov (0.1f * HEIGHT) // Affects the vertical field of vision
 # include <unistd.h>
 # include <math.h>
 # include <stdlib.h>
