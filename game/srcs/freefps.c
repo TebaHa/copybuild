@@ -6,12 +6,12 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/19 22:00:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/22 08:38:03 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
-
+/*
 void		game_create_test_player(t_player *plr)
 {
 	plr->position = (t_point_3d){0, 0, 60};
@@ -154,5 +154,33 @@ int		main(void)
 		SDL_Delay(10);
 	}
 	engine_sdl_uninit(fps.eng);
+	return (0);
+}
+*/
+
+int		main(void)
+{
+	t_game	fps;
+	t_point_3d	*vertex_buff;
+	t_polygone	*polies_buff;
+	t_object	*object_buff;
+	t_sector	*sector_buff;
+	int			i = 0;
+
+	engine_sdl_init(&fps.eng);
+	char *config = engine_read_level_file("game/resources/1.lvl");
+	char **splitedconfig = ft_strsplit(config, '\n');
+	fps.eng->world = engine_read_world_from_file(fps.eng, splitedconfig);
+	vertex_buff = engine_read_vertexes_from_file(fps.eng, splitedconfig);
+	polies_buff = engine_read_polygones_from_file(fps.eng, vertex_buff, splitedconfig);
+	object_buff = engine_read_objects_from_file(fps.eng, polies_buff, splitedconfig);
+	sector_buff = engine_read_sectors_from_file(fps.eng, object_buff, splitedconfig);
+	util_release_read_buffers(vertex_buff, polies_buff, object_buff);
+	while (i < 4)
+	{
+		printf("%f\n", sector_buff[0].objects_array[i++].polies_array[0].vertices_array[0].x);
+	}
+	while (1)
+		i = 0;
 	return (0);
 }

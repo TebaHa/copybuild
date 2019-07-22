@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/19 22:36:48 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/22 08:36:42 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef	struct		s_point_2d
 
 typedef	struct		s_point_3d
 {
+	int				id;
 	float			x;
 	float			y;
 	float			z;
@@ -64,27 +65,35 @@ typedef	struct		s_point_3d
 
 typedef struct		s_polygone
 {
-	t_point_3d		*vertices;
-	int				vertices_size;
+	t_point_3d		*vertices_array;
+	int				vertices_count;
+	int				id;
+	int				type;
 }					t_polygone;
 
 typedef struct		s_object
 {
-	int				sector;
 	t_polygone		*polies_array;
+	int				portal;
+	int				id;
+	int				polies_count;
 }					t_object;
 
 typedef	struct		s_sector
 {
 	t_object		*objects_array;
-	int				objects_size;
+	int				objects_count;
 	int				id;
+	int				floor;
+	int				ceil;
 }					t_sector;
 
 typedef	struct		s_world
 {
 	t_sector		*sectors_array;
+	int				sectors_count;
 	int				*renderqueue;
+	int				id;
 }					t_world;
 
 typedef	struct		s_control
@@ -109,6 +118,14 @@ typedef	struct		s_player
 	unsigned		cursector; // sectornumber
 }					t_player;
 
+typedef struct		s_stats
+{
+	int				vertexes_count;
+	int				polies_count;
+	int				objects_count;
+	int				sectors_count;
+}					t_stats;
+
 typedef struct		s_engine
 {
 	SDL_Event 		event;
@@ -117,6 +134,7 @@ typedef struct		s_engine
 	SDL_Surface 	*surface;
 	t_world			*world;
 	short			view_type;
+	t_stats			stats;
 }					t_engine;
 
 typedef struct		s_item
@@ -144,5 +162,32 @@ int				engine_pop_renderstack(int *renderqueue);
 int				engine_object_get_sector(t_world *world, t_point_3d pos);
 t_object		engine_create_obj_wall(int portal, t_point_3d a, t_point_3d b, t_point_3d c, t_point_3d d);
 t_point_3d		engine_count_perspective(t_point_3d a, int c);
+
+t_point_3d		*util_create_point_3d(float x, float y, float z);
+t_world			*util_create_world(int id, int sector_count);
+t_sector		*util_create_sector(int id, int floor, int ceil, int object_count);
+t_object		*util_create_object(int id, int portal, int polies_count);
+t_polygone		*util_create_polygone(int id, int type, int vertex_count);
+void			util_release_char_matrix(char **mtrx);
+
+t_world			*engine_read_world_from_file(t_engine *eng, char **json_splited);
+char			*engine_read_level_file(char *filename);
+t_point_3d		*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
+t_polygone		*engine_read_polygones_from_file(t_engine *eng, t_point_3d *vertex_array, char **json_splited);
+t_object		*engine_read_objects_from_file(t_engine *eng, t_polygone *polies_array, char **json_splited);
+t_sector		*engine_read_sectors_from_file(t_engine *eng, t_object *sector_array, char **json_splited);
+
+t_point_3d		util_get_vertex_from_buff_by_id(int id, int size, t_point_3d *vertexes);
+t_polygone		util_get_polygone_from_buff_by_id(int id, int size, t_polygone *sectors);
+t_object		util_get_object_from_buff_by_id(int id, int size, t_object *objects);
+
+void			util_release_read_buffers(t_point_3d *vertex_buff, t_polygone *polies_buff,
+								t_object *object_buff);
+void			util_release_sectors_buffer(t_sector *sector_buff, int size);
+void			util_release_objects_buffer(t_object *object_buff, int size);
+void			util_release_polies_buffer(t_polygone *polies_buff, int size);
+void			util_release_vertex_buffer(t_point_3d *vertex_buff);
+void			util_release_world(t_world *world);
+
 
 #endif

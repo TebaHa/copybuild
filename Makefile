@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/07/18 17:30:50 by zytrams          ###   ########.fr        #
+#    Updated: 2019/07/22 03:46:46 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,12 +38,10 @@ GAME_OBJS = $(addprefix $(GAME_OBJS_DIRECTORY), $(GAME_OBJS_LIST))
 
 GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 
-ENGINE_SRCS_LIST =	draw.c \
-					engine.c \
-					error_handler.c \
-					world.c \
-					objects.c \
+ENGINE_SRCS_LIST =	error_handler.c \
 					utility.c \
+					parser.c \
+					engine.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/

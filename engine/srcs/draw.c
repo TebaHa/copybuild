@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/19 21:59:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/22 03:30:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		engine_create_renderstack(t_engine *eng, int render_id, int *rendered)
 	rendered[render_id] = 1;
 	while (i < 4)
 	{
-		sect = eng->world->sectors_array[render_id].objects_array[i].sector;
+		sect = eng->world->sectors_array[render_id].objects_array[i].portal;
 		if (sect >= 0 && rendered[sect] == 0)
 			engine_create_renderstack(eng, sect, rendered);
 		i++;
@@ -57,7 +57,7 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 		while (i < 4)
 		{
 			engine_render_polygone(eng, eng->world->sectors_array[sect_id].objects_array[i].polies_array[0],
-				plr, ytop, ybottom, eng->world->sectors_array[sect_id].objects_array[i].sector);
+				plr, ytop, ybottom, eng->world->sectors_array[sect_id].objects_array[i].portal);
 			i++;
 		}
 	}
@@ -71,10 +71,10 @@ void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, 
 	t_point_2d	v2;
 	t_point_2d	t1;
 	t_point_2d	t2;
-	v1.x = polygone.vertices[0].x - plr->position.x;
-	v1.y = polygone.vertices[0].y - plr->position.y;
-	v2.x = polygone.vertices[3].x - plr->position.x;
-	v2.y = polygone.vertices[3].y - plr->position.y;
+	v1.x = polygone.vertices_array[0].x - plr->position.x;
+	v1.y = polygone.vertices_array[0].y - plr->position.y;
+	v2.x = polygone.vertices_array[3].x - plr->position.x;
+	v2.y = polygone.vertices_array[3].y - plr->position.y;
 	/* Rotate them around the player's view */
 	t1.x = v1.x * plr->sinangle - v1.y * plr->cosangle;
 	t1.y = v1.x * plr->cosangle + v1.y * plr->sinangle;
@@ -113,8 +113,8 @@ void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, 
 	if(x1 >= x2 || x2 < 0 || x1 > WIDTH - 1)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil = polygone.vertices[0].z - plr->position.z;
-	float yfloor = polygone.vertices[1].z - plr->position.z;
+	float yceil = polygone.vertices_array[0].z - plr->position.z;
+	float yfloor = polygone.vertices_array[1].z - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	float nyceil = 0, nyfloor = 0;
 	if(portal >= 0) // Is another sector showing through this portal?
