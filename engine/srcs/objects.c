@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 00:38:38 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/15 05:57:05 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/23 07:27:06 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int		engine_object_get_sector(t_world *world, t_point_3d pos)
 	{
 		i = 0;
 		k = 3;
-		while (i < world->sectors_array[s].objects_size)
+		while (i < world->sectors_array[s].objects_count)
 		{
-			if (intersect((t_point_2d){world->sectors_array[s].objects_array[i].polies_array[0].vertices[0].x,
-			world->sectors_array[s].objects_array[i].polies_array[0].vertices[0].y},
-			(t_point_2d){world->sectors_array[s].objects_array[k].polies_array[0].vertices[0].x,
-			world->sectors_array[s].objects_array[k].polies_array[0].vertices[0].y}, (t_point_2d){pos.x, pos.y}))
+			if (intersect((t_point_2d){world->sectors_array[s].objects_array[i].polies_array[0].vertices_array[0].x,
+			world->sectors_array[s].objects_array[i].polies_array[0].vertices_array[0].y},
+			(t_point_2d){world->sectors_array[s].objects_array[k].polies_array[0].vertices_array[0].x,
+			world->sectors_array[s].objects_array[k].polies_array[0].vertices_array[0].y}, (t_point_2d){pos.x, pos.y}))
 				res = -res;
 			k = i;
 			i++;

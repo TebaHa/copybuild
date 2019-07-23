@@ -6,15 +6,15 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/22 08:38:03 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/23 08:13:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
-/*
+
 void		game_create_test_player(t_player *plr)
 {
-	plr->position = (t_point_3d){0, 0, 60};
+	plr->position = (t_point_3d){0, 0, 0};
 	plr->velocity = (t_point_3d){0, 0, 0};
 	plr->cursector = 0;
 	plr->angle = 0;
@@ -38,7 +38,7 @@ int		main(void)
 	rendered = (int *)ft_memalloc(sizeof(int) * 2);
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
-	engine_create_test_world(&fps.eng->world);
+	engine_create_world_from_file(fps.eng, "./game/resources/1.lvl");
 	SDL_ShowCursor(SDL_DISABLE);
 	float yaw = 0;
 	while (1)
@@ -50,7 +50,7 @@ int		main(void)
 		if (fps.player.controller.moving)
 		{
 			float dx = fps.player.velocity.x, dy = fps.player.velocity.y;
-			int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {fps.player.position.x + dx, fps.player.position.y + dy, 0});
+			int sect = 0;
 			if (sect >= 0)
 			{
 				fps.player.position.x += dx;
@@ -116,7 +116,7 @@ int		main(void)
 			if (fps.player.position.z == PLAYERSTARTZ)
 				fps.player.controller.falling = 0;
 			else
-				fps.player.position.z -= 2;
+				fps.player.position.z -= 1;
 		}
 		int x, y;
 		SDL_GetRelativeMouseState(&x, &y);
@@ -156,31 +156,14 @@ int		main(void)
 	engine_sdl_uninit(fps.eng);
 	return (0);
 }
-*/
 
+/*
 int		main(void)
 {
 	t_game	fps;
-	t_point_3d	*vertex_buff;
-	t_polygone	*polies_buff;
-	t_object	*object_buff;
-	t_sector	*sector_buff;
-	int			i = 0;
 
 	engine_sdl_init(&fps.eng);
-	char *config = engine_read_level_file("game/resources/1.lvl");
-	char **splitedconfig = ft_strsplit(config, '\n');
-	fps.eng->world = engine_read_world_from_file(fps.eng, splitedconfig);
-	vertex_buff = engine_read_vertexes_from_file(fps.eng, splitedconfig);
-	polies_buff = engine_read_polygones_from_file(fps.eng, vertex_buff, splitedconfig);
-	object_buff = engine_read_objects_from_file(fps.eng, polies_buff, splitedconfig);
-	sector_buff = engine_read_sectors_from_file(fps.eng, object_buff, splitedconfig);
-	util_release_read_buffers(vertex_buff, polies_buff, object_buff);
-	while (i < 4)
-	{
-		printf("%f\n", sector_buff[0].objects_array[i++].polies_array[0].vertices_array[0].x);
-	}
-	while (1)
-		i = 0;
+	engine_create_world_from_file(fps.eng, "game/resources/1.lvl");
 	return (0);
 }
+ */

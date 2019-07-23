@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/22 08:36:42 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/23 08:13:33 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define HEIGHT 720
 # define TWODIM 2
 # define THREEDIM 3
-# define PLAYERSTARTZ 60
+# define PLAYERSTARTZ 0
 # define MAXSECTORS 32
 # define hfov (0.53f * HEIGHT) // Affects the horizontal field of vision
 # define vfov (0.1f * HEIGHT) // Affects the vertical field of vision
@@ -153,7 +153,7 @@ void			engine_render_world(t_engine *eng, t_player *plr, int *rendered);
 void			sdl_clear_window(SDL_Surface *surf);
 void			sdl_put_pixel(SDL_Surface *surf, int x, int y, int color);
 void			error_handler(char *error_type, const char *str_error, t_engine *eng);
-void			engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, int *ytop, int *ybottom, int portal);
+void			engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal);
 void			engine_create_test_world(t_world **world);
 void			engine_push_renderstack(int *renderqueue, int sector_id);
 void			engine_clear_renderstack(int *renderqueue);
@@ -188,6 +188,6 @@ void			util_release_objects_buffer(t_object *object_buff, int size);
 void			util_release_polies_buffer(t_polygone *polies_buff, int size);
 void			util_release_vertex_buffer(t_point_3d *vertex_buff);
 void			util_release_world(t_world *world);
-
+void			engine_create_world_from_file(t_engine *eng, char *filename);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/22 03:30:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/23 08:11:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,36 +45,34 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 	x = 0;
 	sect_id = plr->cursector;
 	SDL_LockSurface(eng->surface);
+	printf("%s\n", "RENDER");
 	while (x < WIDTH)
 	{
 		ybottom[x] = HEIGHT - 1;
 		x++;
 	}
-	engine_create_renderstack(eng, sect_id, rendered);
-	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)) >= 0))
+	i = 0;
+	while (i < eng->world->sectors_array[sect_id].objects_count)
 	{
-		i = 0;
-		while (i < 4)
-		{
-			engine_render_polygone(eng, eng->world->sectors_array[sect_id].objects_array[i].polies_array[0],
-				plr, ytop, ybottom, eng->world->sectors_array[sect_id].objects_array[i].portal);
-			i++;
-		}
+		engine_render_polygone(eng, eng->world->sectors_array[sect_id].objects_array[i].polies_array,
+			plr, ytop, ybottom, eng->world->sectors_array[sect_id].objects_array[i].portal);
+		i++;
 	}
-	engine_clear_renderstack(eng->world->renderqueue);
 	SDL_UnlockSurface(eng->surface);
 }
 
-void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, int *ytop, int *ybottom, int portal)
+void		engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal)
 {
 	t_point_2d	v1;
 	t_point_2d	v2;
 	t_point_2d	t1;
 	t_point_2d	t2;
-	v1.x = polygone.vertices_array[0].x - plr->position.x;
-	v1.y = polygone.vertices_array[0].y - plr->position.y;
-	v2.x = polygone.vertices_array[3].x - plr->position.x;
-	v2.y = polygone.vertices_array[3].y - plr->position.y;
+	printf("v1.x : %f v1.y : %f v2.x : %f v2.y : %f\n", polygone->vertices_array[0].x, polygone->vertices_array[0].y,
+	polygone->vertices_array[1].x, polygone->vertices_array[1].y);
+	v1.x = polygone->vertices_array[0].x - plr->position.x;
+	v1.y = polygone->vertices_array[0].y - plr->position.y;
+	v2.x = polygone->vertices_array[1].x - plr->position.x;
+	v2.y = polygone->vertices_array[1].y - plr->position.y;
 	/* Rotate them around the player's view */
 	t1.x = v1.x * plr->sinangle - v1.y * plr->cosangle;
 	t1.y = v1.x * plr->cosangle + v1.y * plr->sinangle;
@@ -113,14 +111,14 @@ void		engine_render_polygone(t_engine *eng, t_polygone polygone, t_player *plr, 
 	if(x1 >= x2 || x2 < 0 || x1 > WIDTH - 1)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil = polygone.vertices_array[0].z - plr->position.z;
-	float yfloor = polygone.vertices_array[1].z - plr->position.z;
+	float yceil = eng->world->sectors_array[plr->cursector].ceil - plr->position.z;
+	float yfloor = eng->world->sectors_array[plr->cursector].floor - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	float nyceil = 0, nyfloor = 0;
 	if(portal >= 0) // Is another sector showing through this portal?
 	{
-		nyceil  = 60 - plr->position.z;
-		nyfloor = 0 - plr->position.z;
+		nyceil  = eng->world->sectors_array[portal].ceil - plr->position.z;
+		nyfloor = eng->world->sectors_array[portal].floor - plr->position.z;
 	}
 	int y1a  = HEIGHT / 2 - (int)(Yaw(yceil, t1.y) * yscale1),  y1b = HEIGHT / 2 - (int)(Yaw(yfloor, t1.y) * yscale1);
 	int y2a  = HEIGHT / 2 - (int)(Yaw(yceil, t2.y) * yscale2),  y2b = HEIGHT / 2 - (int)(Yaw(yfloor, t2.y) * yscale2);

@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/07/22 03:46:46 by zytrams          ###   ########.fr        #
+#    Updated: 2019/07/23 07:26:26 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					utility.c \
 					parser.c \
 					engine.c \
+					draw.c \
+					objects.c
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
