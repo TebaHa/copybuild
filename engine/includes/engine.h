@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/23 08:13:33 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/23 13:04:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <math.h>
 # include <stdlib.h>
 # include <libft.h>
-# include <stdio.h>
 # include <SDL2/SDL.h>
 
 typedef	struct		s_point_2d

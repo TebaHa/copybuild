@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/23 08:13:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/23 12:59:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void		game_create_test_player(t_player *plr)
 {
-	plr->position = (t_point_3d){0, 0, 0};
-	plr->velocity = (t_point_3d){0, 0, 0};
+	plr->position = (t_point_3d){0, 0.0f, 0.0f, 100.0f};
+	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
 	plr->cursector = 0;
 	plr->angle = 0;
 	plr->controller.wasd[0] = 0;
@@ -47,10 +47,12 @@ int		main(void)
 		rendered[1] = 0;
 		engine_render_world(fps.eng, &fps.player, rendered);
 		engine_render_frame(fps.eng);
+		if (fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
+			fps.player.controller.falling = 1;
 		if (fps.player.controller.moving)
 		{
 			float dx = fps.player.velocity.x, dy = fps.player.velocity.y;
-			int sect = 0;
+			int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {0, fps.player.position.x + dx, fps.player.position.y + dy, 0});
 			if (sect >= 0)
 			{
 				fps.player.position.x += dx;
@@ -113,10 +115,10 @@ int		main(void)
 		}
 		if (fps.player.controller.falling == 1)
 		{
-			if (fps.player.position.z == PLAYERSTARTZ)
+			if (fps.player.position.z == fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
 				fps.player.controller.falling = 0;
 			else
-				fps.player.position.z -= 1;
+				fps.player.position.z -= 5;
 		}
 		int x, y;
 		SDL_GetRelativeMouseState(&x, &y);

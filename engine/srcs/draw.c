@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/23 08:11:48 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/23 12:57:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 	x = 0;
 	sect_id = plr->cursector;
 	SDL_LockSurface(eng->surface);
-	printf("%s\n", "RENDER");
 	while (x < WIDTH)
 	{
 		ybottom[x] = HEIGHT - 1;
@@ -67,8 +66,7 @@ void		engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr,
 	t_point_2d	v2;
 	t_point_2d	t1;
 	t_point_2d	t2;
-	printf("v1.x : %f v1.y : %f v2.x : %f v2.y : %f\n", polygone->vertices_array[0].x, polygone->vertices_array[0].y,
-	polygone->vertices_array[1].x, polygone->vertices_array[1].y);
+
 	v1.x = polygone->vertices_array[0].x - plr->position.x;
 	v1.y = polygone->vertices_array[0].y - plr->position.y;
 	v2.x = polygone->vertices_array[1].x - plr->position.x;
@@ -80,7 +78,7 @@ void		engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr,
 	t2.y = v2.x * plr->cosangle + v2.y * plr->sinangle;
 	/* Is the wall at least partially in front of the player? */
 	if(t1.y <= 0 && t2.y <= 0)
-		return;
+		return ;
 	/* If it's partially behind the player, clip it against player's view frustrum */
 	if(t1.y <= 0 || t2.y <= 0)
 	{
@@ -111,7 +109,7 @@ void		engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr,
 	if(x1 >= x2 || x2 < 0 || x1 > WIDTH - 1)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil = eng->world->sectors_array[plr->cursector].ceil - plr->position.z;
+	float yceil = polygone->vertices_array[0].z - plr->position.z;
 	float yfloor = eng->world->sectors_array[plr->cursector].floor - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	float nyceil = 0, nyfloor = 0;
