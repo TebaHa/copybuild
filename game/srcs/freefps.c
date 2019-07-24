@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/23 12:59:57 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/24 15:59:03 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		game_create_test_player(t_player *plr)
 {
-	plr->position = (t_point_3d){0, 0.0f, 0.0f, 100.0f};
+	plr->position = (t_point_3d){0, 750.0f, 750.0f, 100.0f};
 	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
 	plr->cursector = 0;
 	plr->angle = 0;
@@ -67,7 +67,7 @@ int		main(void)
 			if (fps.eng->event.type == SDL_KEYUP)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
-					fps.player.controller.running = 1;
+					fps.player.controller.running = 3;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
 					fps.player.controller.wasd[0] = 0;
 				if (fps.eng->event.key.keysym.sym == SDLK_s)
@@ -80,7 +80,7 @@ int		main(void)
 			if (fps.eng->event.type == SDL_KEYDOWN)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
-					fps.player.controller.running = 3;
+					fps.player.controller.running = 5;
 				if (fps.eng->event.key.keysym.sym == SDLK_ESCAPE)
 					break;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
@@ -106,7 +106,7 @@ int		main(void)
 				}
 				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.falling != 1)
 				{
-					fps.player.position.z += 50;
+					fps.player.position.z += 100;
 					fps.player.controller.falling = 1;
 					if (fps.player.controller.ducking == 1)
 						fps.player.controller.ducking = 0;
@@ -152,7 +152,11 @@ int		main(void)
 		float acceleration = pushing ? 0.4 : 0.2;
 		fps.player.velocity.x = fps.player.velocity.x * (1 - acceleration) + move_vec[0] * acceleration;
 		fps.player.velocity.y = fps.player.velocity.y * (1 - acceleration) + move_vec[1] * acceleration;
-		if (pushing) {fps.player.controller.moving = 1;} else {fps.player.controller.moving = 0;}
+		if (pushing)
+			fps.player.controller.moving = 1;
+		else
+			fps.player.controller.moving = 0;
+		engine_clear_frame(fps.eng);
 		SDL_Delay(10);
 	}
 	engine_sdl_uninit(fps.eng);

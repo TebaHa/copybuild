@@ -6,15 +6,15 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/23 12:57:57 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/24 16:16:20 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-int		get_rgb(char r, char g, char b)
+int		get_rgb(int r, int g, int b, int a)
 {
-	return (((int)r << 24) | ((int)g << 16) | ((int)b << 8) | 0x000000ff);
+	return (((((int)r) << 24) & 0xFF000000) | ((((int)g) << 16) & 0x00FF0000) | (((b) << 8) & 0x0000FF00) | (((a)) & 0x000000FF));
 }
 
 void		engine_create_renderstack(t_engine *eng, int render_id, int *rendered)
@@ -118,38 +118,38 @@ void		engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr,
 		nyceil  = eng->world->sectors_array[portal].ceil - plr->position.z;
 		nyfloor = eng->world->sectors_array[portal].floor - plr->position.z;
 	}
-	int y1a  = HEIGHT / 2 - (int)(Yaw(yceil, t1.y) * yscale1),  y1b = HEIGHT / 2 - (int)(Yaw(yfloor, t1.y) * yscale1);
-	int y2a  = HEIGHT / 2 - (int)(Yaw(yceil, t2.y) * yscale2),  y2b = HEIGHT / 2 - (int)(Yaw(yfloor, t2.y) * yscale2);
+	int y1a  = HEIGHT / 2 - (int)((yceil + t1.y * plr->yaw) * yscale1),  y1b = HEIGHT / 2 - (int)((yfloor + t1.y * plr->yaw)  * yscale1);
+	int y2a  = HEIGHT / 2 - (int)((yceil + t2.y * plr->yaw)  * yscale2),  y2b = HEIGHT / 2 - (int)((yfloor + t2.y * plr->yaw)  * yscale2);
 	/* The same for the neighboring sector */
-	int ny1a = HEIGHT / 2 - (int)(Yaw(nyceil, t1.y) * yscale1), ny1b = HEIGHT / 2 - (int)(Yaw(nyfloor, t1.y) * yscale1);
-	int ny2a = HEIGHT / 2 - (int)(Yaw(nyceil, t2.y) * yscale2), ny2b = HEIGHT / 2 - (int)(Yaw(nyfloor, t2.y) * yscale2);
+	int ny1a = HEIGHT / 2 - (int)((nyceil + t1.y * plr->yaw)  * yscale1), ny1b = HEIGHT / 2 - (int)((nyfloor + t1.y * plr->yaw) * yscale1);
+	int ny2a = HEIGHT / 2 - (int)((nyceil + t2.y * plr->yaw)  * yscale2), ny2b = HEIGHT / 2 - (int)((nyfloor + t2.y * plr->yaw) * yscale2);
 	int beginx = max(x1, 0), endx = min(x2, WIDTH - 1);
 	for(int x = beginx; x <= endx; ++x)
 	{
 		/* Calculate the Z coordinate for this point. (Only used for lighting.) */
-		//int z = ((x - x1) * (tz2 - tz1) / (x2 - x1) + tz1) * 8;
+		int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 0.1;
 		/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
 		int ya = (x - x1) * (y2a - y1a) / (x2-x1) + y1a, cya = clamp(ya, ytop[x], ybottom[x]); // top
 		int yb = (x - x1) * (y2b - y1b) / (x2-x1) + y1b, cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
 		/* Render ceiling: everything above this sector's ceiling height. */
-		engine_draw_line(eng, (t_point_2d){x, ytop[x]}, (t_point_2d){x, cya - 1}, get_rgb((char)0, (char)0, (char)255));
+		engine_draw_line(eng, (t_point_2d){x, ytop[x]}, (t_point_2d){x, cya - 1}, get_rgb(173, 216, 230, 254));
 		/* Render floor: everything below this sector's floor height. */
-		engine_draw_line(eng, (t_point_2d){x, cyb + 1}, (t_point_2d){x, ybottom[x]}, get_rgb((char)218, (char)165, (char)32));
+		engine_draw_line(eng, (t_point_2d){x, cyb + 1}, (t_point_2d){x, ybottom[x]}, get_rgb(218, 165, 32, 255));
 		/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
-		//unsigned r = 0x010101 * (255 - z);
+		unsigned r = polygone->color * (255 - z);
 		if (portal >= 0)
 		{
 			int nya = (x - x1) * (ny2a - ny1a) / (x2 - x1) + ny1a, cnya = clamp(nya, ytop[x],ybottom[x]);
 			int nyb = (x - x1) * (ny2b - ny1b) / (x2 - x1) + ny1b, cnyb = clamp(nyb, ytop[x],ybottom[x]);
 			/* If our ceiling is higher than their ceiling, render upper wall */
-			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cnya - 1}, x == x1 || x == x2 ? 0xFFFFFFFF : get_rgb((char)0, (char)0, (char)0));
+			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cnya - 1}, x == x1 || x == x2 ? 0 : get_rgb(0, 0, 0, 255));
 			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);// Shrink the remaining window below these ceilings
 			/* If our floor is lower than their floor, render bottom wall */
-			engine_draw_line(eng, (t_point_2d){x, cnyb + 1}, (t_point_2d){x, cyb}, x == x1 || x == x2 ? 0xFFFFFFFF : get_rgb((char)0, (char)0, (char)0));
+			engine_draw_line(eng, (t_point_2d){x, cnyb + 1}, (t_point_2d){x, cyb}, x == x1 || x == x2 ? 0 : get_rgb(0, 0, 0, 255));
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
-			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cyb},  x == x1 || x == x2 ? 0xFFFFFFFF : get_rgb((char)210, (char)105, (char)30));
+			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cyb},  x == x1 || x == x2 ? 0x000000FF : get_rgb(((r) >> 16), ((r) >> 8), ((r)), 255));
 	}
 }
 
@@ -166,8 +166,14 @@ void		engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color)
 	if (len > -0.0f && len < 0.0f)
 	deltax = (b.x - a.x) / len;
 	deltay = (b.y - a.y) / len;
+	a.x += deltax;
+	a.y += deltay;
+	x = (int)(a.x);
+	y = (int)(a.y);
+	if ((a.x) < WIDTH && (a.y) < HEIGHT)
+		sdl_put_pixel(eng->surface, (a.x), (a.y), 255);
 	i = 0;
-	while (i < (int)len)
+	while (i < (int)len - 1)
 	{
 		a.x += deltax;
 		a.y += deltay;
@@ -177,6 +183,19 @@ void		engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color)
 			sdl_put_pixel(eng->surface, (a.x), (a.y), color);
 		i++;
 	}
+	a.x += deltax;
+	a.y += deltay;
+	x = (int)(a.x);
+	y = (int)(a.y);
+	if ((a.x) < WIDTH && (a.y) < HEIGHT)
+		sdl_put_pixel(eng->surface, (a.x), (a.y), 255);
+}
+
+void	engine_clear_frame(t_engine *eng)
+{
+	SDL_LockSurface(eng->surface);
+	SDL_memset(eng->surface->pixels, 0, eng->surface->h * eng->surface->pitch);
+	SDL_UnlockSurface(eng->surface);
 }
 
 void	engine_render_frame(t_engine *eng)
@@ -197,5 +216,6 @@ void	sdl_put_pixel(SDL_Surface *surf, int x, int y, int color)
 
 	bpp = surf->format->BytesPerPixel;
 	p = (Uint8*) surf->pixels + y* surf->pitch + x * bpp;
-	*(Uint32*)p = color;
+	if (((color) & 0x000000FF) >= (*(int *)p  & 0x000000FF))
+			*(int *)p = color;
 }

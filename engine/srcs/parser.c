@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/23 13:04:35 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/24 16:09:00 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		engine_create_world_from_file(t_engine *eng, char *filename)
 	//engine_clear_renderstack(eng->world->renderqueue);
 	util_release_read_buffers(vertex_buff, polies_buff, object_buff);
 	util_release_char_matrix(splitedconfig);
+	free(config);
 }
 
 t_world		*engine_read_world_from_file(t_engine *eng, char **json_splited)
@@ -192,11 +193,12 @@ t_polygone	*engine_read_polygones_from_file(t_engine *eng, t_point_3d *vertex_ar
 			{
 				p_array_buffer[size].id = ft_atoi(splited_line[1]);
 				p_array_buffer[size].type = ft_atoi(splited_line[2]);
-				p_array_buffer[size].vertices_count = ft_atoi(splited_line[3]);
+				p_array_buffer[size].color = ft_atoi(splited_line[3]);
+				p_array_buffer[size].vertices_count = ft_atoi(splited_line[4]);
 				p_array_buffer[size].vertices_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d) * p_array_buffer[size].vertices_count);
-				tmp = 4;
+				tmp = 5;
 				j = 0;
-				while (tmp < 4 + p_array_buffer[size].vertices_count)
+				while (tmp < 5 + p_array_buffer[size].vertices_count)
 					p_array_buffer[size].vertices_array[j++] = util_get_vertex_from_buff_by_id(ft_atoi(splited_line[tmp++]),
 											eng->stats.vertexes_count, vertex_array);
 				size++;

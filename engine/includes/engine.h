@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/23 13:04:31 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/24 16:08:40 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (0.53f * HEIGHT) // Affects the horizontal field of vision
+# define hfov (0.73f * HEIGHT) // Affects the horizontal field of vision
 # define vfov (0.1f * HEIGHT) // Affects the vertical field of vision
 # include <unistd.h>
 # include <math.h>
@@ -37,10 +37,10 @@ typedef	struct		s_point_2d
 // implement these functions that work with multiple types.
 #define min(a,b)	(((a) < (b)) ? (a) : (b)) // min: Choose smaller of two scalars.
 #define max(a,b)	(((a) > (b)) ? (a) : (b)) // max: Choose greater of two scalars.
-#define clamp(a, mi,ma)	min(max(a,mi),ma) // clamp: Clamp value into set range.
+#define clamp(a, mi, ma)	min(max(a,mi),ma) // clamp: Clamp value into set range.
 #define vxs(x0,y0, x1,y1)	((x0)*(y1) - (x1)*(y0)) // vxs: Vector cross product
 // Overlap:  Determine whether the two number ranges overlap.
-#define Overlap(a0,a1,b0,b1)	(min(a0,a1) <= max(b0,b1) && min(b0,b1) <= max(a0,a1))
+#define Overlap(a0, a1, b0, b1)	(min(a0,a1) <= max(b0,b1) && min(b0,b1) <= max(a0,a1))
 // IntersectBox: Determine whether two 2D-boxes intersect.
 #define IntersectBox(x0,y0, x1,y1, x2,y2, x3,y3)	(Overlap(x0,x1,x2,x3) && Overlap(y0,y1,y2,y3))
 // PointSide: Determine which side of a line the point is on. Return value: <0, =0 or >0.
@@ -68,6 +68,7 @@ typedef struct		s_polygone
 	int				vertices_count;
 	int				id;
 	int				type;
+	int				color;
 }					t_polygone;
 
 typedef struct		s_object
@@ -188,5 +189,7 @@ void			util_release_polies_buffer(t_polygone *polies_buff, int size);
 void			util_release_vertex_buffer(t_point_3d *vertex_buff);
 void			util_release_world(t_world *world);
 void			engine_create_world_from_file(t_engine *eng, char *filename);
+void			engine_clear_frame(t_engine *eng);
+
 
 #endif
