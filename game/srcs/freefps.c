@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/24 15:59:03 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/24 17:59:58 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.ground = 1;
 	plr->controller.moving = 0;
 	plr->controller.running = 1;
-	plr->yaw = 1;
+	plr->yaw = 5;
 }
 
 int		main(void)
