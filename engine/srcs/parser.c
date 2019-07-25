@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/24 16:09:00 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/24 18:30:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void		engine_create_world_from_file(t_engine *eng, char *filename)
 	polies_buff = engine_read_polygones_from_file(eng, vertex_buff, splitedconfig);
 	object_buff = engine_read_objects_from_file(eng, polies_buff, splitedconfig);
 	eng->world->sectors_array = engine_read_sectors_from_file(eng, object_buff, splitedconfig);
-	eng->world->renderqueue = (int *)ft_memalloc(sizeof(int) * eng->world->sectors_count);
-	//engine_clear_renderstack(eng->world->renderqueue);
+	eng->world->renderqueue = (int *)ft_memalloc(sizeof(int) * MAXSECTORS);
+	engine_clear_renderstack(eng->world->renderqueue);
 	util_release_read_buffers(vertex_buff, polies_buff, object_buff);
 	util_release_char_matrix(splitedconfig);
 	free(config);

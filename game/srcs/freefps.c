@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/24 17:59:58 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/24 19:16:49 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void		game_create_test_player(t_player *plr)
 	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
 	plr->cursector = 0;
 	plr->angle = 0;
+	plr->sinangle = sinf(plr->angle);
+	plr->cosangle = cosf(plr->angle);
 	plr->controller.wasd[0] = 0;
 	plr->controller.wasd[1] = 0;
 	plr->controller.wasd[2] = 0;
@@ -57,8 +59,6 @@ int		main(void)
 			{
 				fps.player.position.x += dx;
 				fps.player.position.y += dy;
-				fps.player.cosangle = cosf(fps.player.angle);
-				fps.player.sinangle = sinf(fps.player.angle);
 				fps.player.cursector = sect;
 			}
 		}
@@ -125,9 +125,9 @@ int		main(void)
 		fps.player.angle += x * 0.03f;
 		yaw = clamp(yaw - y * 0.05f, -5, 5);
 		fps.player.yaw = yaw - fps.player.velocity.z * 0.5f;
-		float move_vec[2] = {0.f, 0.f};
 		fps.player.cosangle = cosf(fps.player.angle);
 		fps.player.sinangle = sinf(fps.player.angle);
+		float move_vec[2] = {0.f, 0.f};
 		if(fps.player.controller.wasd[0])
 		{
 			move_vec[0] += fps.player.cosangle * fps.player.controller.running;

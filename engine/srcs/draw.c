@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/24 16:16:20 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/24 19:01:50 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,22 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 		x++;
 	}
 	i = 0;
-	while (i < eng->world->sectors_array[sect_id].objects_count)
+	engine_push_renderstack(eng->world->renderqueue, sect_id);
+	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)) >= 0) && rendered[sect_id] == 0)
 	{
-		engine_render_polygone(eng, eng->world->sectors_array[sect_id].objects_array[i].polies_array,
-			plr, ytop, ybottom, eng->world->sectors_array[sect_id].objects_array[i].portal);
-		i++;
+		while (i < eng->world->sectors_array[sect_id].objects_count)
+		{
+			engine_render_polygone(eng, eng->world->sectors_array[sect_id].objects_array[i].polies_array,
+				plr, ytop, ybottom, eng->world->sectors_array[sect_id].objects_array[i].portal, rendered);
+			i++;
+		}
+		rendered[sect_id] = 1;
 	}
+	engine_clear_renderstack(eng->world->renderqueue);
 	SDL_UnlockSurface(eng->surface);
 }
 
-void		engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal)
+void		engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered)
 {
 	t_point_2d	v1;
 	t_point_2d	v2;
@@ -117,6 +123,7 @@ void		engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr,
 	{
 		nyceil  = eng->world->sectors_array[portal].ceil - plr->position.z;
 		nyfloor = eng->world->sectors_array[portal].floor - plr->position.z;
+		engine_push_renderstack(eng->world->renderqueue, portal);
 	}
 	int y1a  = HEIGHT / 2 - (int)((yceil + t1.y * plr->yaw) * yscale1),  y1b = HEIGHT / 2 - (int)((yfloor + t1.y * plr->yaw)  * yscale1);
 	int y2a  = HEIGHT / 2 - (int)((yceil + t2.y * plr->yaw)  * yscale2),  y2b = HEIGHT / 2 - (int)((yfloor + t2.y * plr->yaw)  * yscale2);
@@ -142,10 +149,10 @@ void		engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr,
 			int nya = (x - x1) * (ny2a - ny1a) / (x2 - x1) + ny1a, cnya = clamp(nya, ytop[x],ybottom[x]);
 			int nyb = (x - x1) * (ny2b - ny1b) / (x2 - x1) + ny1b, cnyb = clamp(nyb, ytop[x],ybottom[x]);
 			/* If our ceiling is higher than their ceiling, render upper wall */
-			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cnya - 1}, x == x1 || x == x2 ? 0 : get_rgb(0, 0, 0, 255));
+			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cnya - 1}, x == x1 || x == x2 ? 0 : get_rgb(255, 0, 0, 255));
 			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);// Shrink the remaining window below these ceilings
 			/* If our floor is lower than their floor, render bottom wall */
-			engine_draw_line(eng, (t_point_2d){x, cnyb + 1}, (t_point_2d){x, cyb}, x == x1 || x == x2 ? 0 : get_rgb(0, 0, 0, 255));
+			engine_draw_line(eng, (t_point_2d){x, cnyb + 1}, (t_point_2d){x, cyb}, x == x1 || x == x2 ? 0 : get_rgb(255, 0, 0, 255));
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
@@ -172,7 +179,7 @@ void		engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color)
 	y = (int)(a.y);
 	if ((a.x) < WIDTH && (a.y) < HEIGHT)
 		sdl_put_pixel(eng->surface, (a.x), (a.y), 255);
-	i = 0;
+	i = 1;
 	while (i < (int)len - 1)
 	{
 		a.x += deltax;

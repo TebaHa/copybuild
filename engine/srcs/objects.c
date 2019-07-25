@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 00:38:38 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/23 12:03:50 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/24 18:40:41 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int		engine_object_get_sector(t_world *world, t_point_3d pos)
 	int			j;
 	int			k;
 
-	res = -1;
 	s = 0;
 	while (s < world->sectors_count)
 	{
+		res = -1;
 		i = 0;
 		k = world->sectors_array[s].objects_count - 1;
 		while (i < world->sectors_array[s].objects_count)
@@ -45,8 +45,8 @@ int		engine_object_get_sector(t_world *world, t_point_3d pos)
 			k = i;
 			i++;
 		}
-		if (res > 0)
-			return (world->sectors_array[s].id - 1);
+		if (res >= 0)
+			return (world->sectors_array[s].id);
 		s++;
 	}
 	return (-1);

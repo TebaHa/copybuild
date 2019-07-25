@@ -10,13 +10,13 @@ vertex: 5 -1000 1000 500
 vertex: 6 -1000 1000 500
 vertex: 7 -1000 -1000 500
 vertex: 15 -500 -500 5000
-vertex: 14 500 -500 5000
-vertex: 13 500 -500 5000
-vertex: 12 500 500 5000
-vertex: 11 500 500 5000
-vertex: 10 -500 500 5000
-vertex: 9 -500 500 5000
-vertex: 8 -500 -500 5000
+vertex: 14 500 -500 100
+vertex: 13 500 -500 100
+vertex: 12 500 500 100
+vertex: 11 500 500 100
+vertex: 10 -500 500 100
+vertex: 9 -500 500 100
+vertex: 8 -500 -500 100
 # Polygones id, type, color, (0 for triangle and 1 for wall), number of vertexes, numbers of vertexes
 polygone: 0 1 16711680 2 0 1
 polygone: 1 1 16776960 2 2 3
@@ -36,12 +36,13 @@ object: 1 -1 1 1
 object: 2 -1 1 2
 object: 3 -1 1 3
 object: 4 -1 1 4
-object: 5 -1 1 5
+object: 5 1 1 5
 object: 6 -1 1 6
 object: 7 -1 1 7
-object: 8 -1 1 4
-object: 9 1 1 5
-object: 10 -1 1 6
-object: 11 -1 1 7
+object: 8 -1 1 8
+object: 9 0 1 9
+object: 10 -1 1 10
+object: 11 -1 1 11
 # Sector id floor, ceil, number of objects, numbers of objects
-sector: 1 -100 50 8 0 1 2 3 4 5 6 7
+sector: 0 0 200 8 0 1 2 3 4 5 6 7
+sector: 1 -100 200 4 8 9 10 11
