@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/24 19:16:49 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/27 13:18:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		main(void)
 			if (fps.eng->event.type == SDL_KEYUP)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
-					fps.player.controller.running = 3;
+					fps.player.controller.running = 10;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
 					fps.player.controller.wasd[0] = 0;
 				if (fps.eng->event.key.keysym.sym == SDLK_s)
@@ -80,7 +80,7 @@ int		main(void)
 			if (fps.eng->event.type == SDL_KEYDOWN)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
-					fps.player.controller.running = 5;
+					fps.player.controller.running = 15;
 				if (fps.eng->event.key.keysym.sym == SDLK_ESCAPE)
 					break;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)

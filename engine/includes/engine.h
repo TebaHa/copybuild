@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/24 18:18:39 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/26 12:49:40 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
 # define hfov (0.73f * HEIGHT) // Affects the horizontal field of vision
-# define vfov (0.1f * HEIGHT) // Affects the vertical field of vision
+# define vfov (0.4f * HEIGHT) // Affects the vertical field of vision
 # include <unistd.h>
 # include <math.h>
 # include <stdlib.h>
