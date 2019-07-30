@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/26 12:49:40 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/27 17:31:50 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
 # define hfov (0.73f * HEIGHT) // Affects the horizontal field of vision
-# define vfov (0.4f * HEIGHT) // Affects the vertical field of vision
+# define vfov (0.2f * HEIGHT) // Affects the vertical field of vision
 # include <unistd.h>
 # include <math.h>
 # include <stdlib.h>
@@ -144,6 +144,28 @@ typedef struct		s_item
 	int				sx2;
 }					t_item;
 
+typedef struct		s_tric
+{
+	int				total_height;
+	int				second_half;
+	int				i;
+	int				j;
+	int				segment_height;
+	t_point_3d		a;
+	t_point_3d		b;
+	t_point_3d		t0;
+	t_point_3d		t1;
+	t_point_3d		t2;
+	double			alpha;
+	double			beta;
+	double			intensity;
+	double			phi;
+	t_point_3d		p;
+	int				offsetx;
+	int				offsety;
+}					t_tric;
+
+
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
 void			engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color);
@@ -191,5 +213,12 @@ void			util_release_world(t_world *world);
 void			engine_create_world_from_file(t_engine *eng, char *filename);
 void			engine_clear_frame(t_engine *eng);
 
+void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
+int				engine_init_triangle(t_polygone *t, t_tric *trg);
+void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
+void			engine_do_calc(t_tric *trg);
+void			engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
+void			point_swap(t_point_3d *t0, t_point_3d *t1);
+int				get_rgb(int r, int g, int b, int a);
 
 #endif

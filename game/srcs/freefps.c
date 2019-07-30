@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/27 13:18:29 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/07/30 21:18:58 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.falling = 0;
 	plr->controller.ground = 1;
 	plr->controller.moving = 0;
-	plr->controller.running = 1;
+	plr->controller.running = 10;
 	plr->yaw = 5;
 }
 
@@ -47,8 +47,10 @@ int		main(void)
 	{
 		rendered[0] = 0;
 		rendered[1] = 0;
+		SDL_SetRenderDrawColor(fps.eng->ren, 0, 0, 0, 255);
+		SDL_RenderClear(fps.eng->ren);
 		engine_render_world(fps.eng, &fps.player, rendered);
-		engine_render_frame(fps.eng);
+		SDL_RenderPresent(fps.eng->ren);
 		if (fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
 			fps.player.controller.falling = 1;
 		if (fps.player.controller.moving)
@@ -96,12 +98,12 @@ int		main(void)
 					if (fps.player.controller.ducking == 0 && fps.player.controller.falling != 1)
 					{
 						fps.player.controller.ducking = 1;
-						fps.player.position.z -= 30;
+						fps.player.position.z -= 50;
 					}
 					else if (fps.player.controller.ducking == 1 && fps.player.controller.falling != 1)
 					{
 						fps.player.controller.ducking = 0;
-						fps.player.position.z += 30;
+						fps.player.position.z += 50;
 					}
 				}
 				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.falling != 1)
