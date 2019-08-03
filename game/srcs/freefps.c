@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/30 21:18:58 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/03 16:17:08 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		main(void)
 	rendered = (int *)ft_memalloc(sizeof(int) * 2);
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
-	engine_create_world_from_file(fps.eng, "./game/resources/1.lvl");
+	engine_create_world_from_file(fps.eng, "../game/resources/1.lvl");
 	SDL_ShowCursor(SDL_DISABLE);
 	float yaw = 0;
 	while (1)
