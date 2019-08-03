@@ -6,12 +6,13 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/27 17:07:55 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/04 00:40:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
+/*
 void			engine_do_calc(t_tric *trg)
 {
 	trg->second_half = trg->i > trg->t1.y - trg->t0.y || trg->t1.y == trg->t0.y;
@@ -71,7 +72,6 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 	f = engine_init_triangle(t, &trg);
 	if (f == 0)
 		return ;
-	printf("%d %f\n", trg.total_height, trg.b.x);
 	while (trg.i < trg.total_height)
 	{
 		engine_do_calc(&trg);
@@ -80,7 +80,60 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 			engine_do_draw(eng, plr, &trg, t->color);
 			trg.j++;
 		}
-		//printf("%s\n", "ugabga");
 		trg.i++;
+	}
+}
+ */
+
+float			edge_function(t_point_3d *a, t_point_3d *b, t_point_3d *c)
+{
+	 return ((c->x - a->x) * (b->y - a->y) - (c->y - a->y) * (b->x - a->x));
+}
+
+void			engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t)
+{
+	t_point_3d a = t->vertices_array[0];
+	t_point_3d b = t->vertices_array[1];
+	t_point_3d c = t->vertices_array[2];
+
+	float xmin = min(a.x,min(b.x, c.x));
+	float ymin = min(a.y,min(b.y, c.y));
+	float xmax = max(a.x,max(b.x, c.x));
+	float ymax = max(a.y,max(b.y, c.y));
+
+	if (xmin > WIDTH - 1 || xmax < 0 || ymin > HEIGHT - 1 || ymax < 0)
+		return ;
+
+	uint32_t x0 = max((int32_t)(0),(int32_t)(floor(xmin)));
+	uint32_t x1 = min(((int32_t)(WIDTH) - 1),(int32_t)(floor(xmax)));
+	uint32_t y0 = max((int32_t)(0), (int32_t)(floor(ymin)));
+	uint32_t y1 = min(((int32_t)(HEIGHT) - 1),(int32_t)(floor(ymax)));
+
+	float area = edge_function(&a, &b, &c);
+
+	for (uint32_t y = y0; y <= y1; ++y)
+	{
+		for (uint32_t x = x0; x <= x1; ++x)
+		{
+			t_point_3d pixelSample = (t_point_3d){x + 0.5, y + 0.5, 0};
+			float w0 = edge_function(&b, &c, &pixelSample);
+			float w1 = edge_function(&c, &a, &pixelSample);
+			float w2 = edge_function(&a, &b, &pixelSample);
+			if (w0 >= 0 && w1 >= 0 && w2 >= 0)
+			{
+				w0 /= area;
+				w1 /= area;
+				w2 /= area;
+				float oneOverZ = a.z * w0 + b.z * w1 + c.z * w2;
+				float z = 1 / oneOverZ;
+				if (z < eng->z_buff[y * WIDTH + x])
+				{
+					eng->z_buff[y * WIDTH + x] = z;
+					t_point_2d st = {a.x * w0 + b.x * w1 + c.x * w2, a.y * w0 + b.y * w1 + c.y * w2};
+					st.x *= z, st.y *= z;
+					sdl_put_pixel(eng->surface, x, y, t->color);
+				}
+			}
+		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/24 12:03:20 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/04 00:18:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void		engine_sdl_init(t_engine **eng)
 {
 	*eng = (t_engine *)ft_memalloc(sizeof(t_engine));
+	(*eng)->z_buff = (int *)ft_memalloc(sizeof(int) * WIDTH * HEIGHT);
+	zbuffer_zero((*eng)->z_buff);
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		error_handler("SDL_Init Error: ", SDL_GetError(), (*eng));
 	(*eng)->win = SDL_CreateWindow("doka 2", 100, 100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
@@ -34,4 +36,16 @@ void		engine_sdl_uninit(t_engine *eng)
 	SDL_DestroyRenderer(eng->ren);
 	SDL_DestroyWindow(eng->win);
 	SDL_Quit();
+}
+
+void	zbuffer_zero(int *zbuffer)
+{
+	int i;
+
+	i = HEIGHT * WIDTH - 1;
+	while (i)
+	{
+		zbuffer[i] = (INT32_MIN);
+		i--;
+	}
 }

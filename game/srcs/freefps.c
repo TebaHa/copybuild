@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/30 21:18:58 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/04 00:41:37 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		game_create_test_player(t_player *plr)
 {
-	plr->position = (t_point_3d){0, 750.0f, 750.0f, 100.0f};
+	plr->position = (t_point_3d){0, 75.0f, 75.0f, 100.0f};
 	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
 	plr->cursector = 0;
 	plr->angle = 0;
@@ -47,16 +47,14 @@ int		main(void)
 	{
 		rendered[0] = 0;
 		rendered[1] = 0;
-		SDL_SetRenderDrawColor(fps.eng->ren, 0, 0, 0, 255);
-		SDL_RenderClear(fps.eng->ren);
 		engine_render_world(fps.eng, &fps.player, rendered);
-		SDL_RenderPresent(fps.eng->ren);
+		engine_render_frame(fps.eng);
 		if (fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
 			fps.player.controller.falling = 1;
 		if (fps.player.controller.moving)
 		{
 			float dx = fps.player.velocity.x, dy = fps.player.velocity.y;
-			int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {0, fps.player.position.x + dx, fps.player.position.y + dy, 0});
+			int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {0, fps.player.position.x + dx + 1, fps.player.position.y + dy + 1, 0});
 			if (sect >= 0)
 			{
 				fps.player.position.x += dx;

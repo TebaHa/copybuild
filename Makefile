@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/07/27 16:38:27 by zytrams          ###   ########.fr        #
+#    Updated: 2019/08/04 00:42:03 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					draw.c \
 					objects.c \
 					rasterizer.c \
+					bresenham.c \
+					color.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/

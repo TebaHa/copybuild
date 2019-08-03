@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/27 17:31:50 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/04 00:45:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (0.73f * HEIGHT) // Affects the horizontal field of vision
-# define vfov (0.2f * HEIGHT) // Affects the vertical field of vision
+# define hfov (0.83f * HEIGHT) // Affects the horizontal field of vision
+# define vfov (0.1f * HEIGHT) // Affects the vertical field of vision
 # include <unistd.h>
 # include <math.h>
 # include <stdlib.h>
@@ -135,6 +135,7 @@ typedef struct		s_engine
 	t_world			*world;
 	short			view_type;
 	t_stats			stats;
+	int				*z_buff;
 }					t_engine;
 
 typedef struct		s_item
@@ -165,6 +166,18 @@ typedef struct		s_tric
 	int				offsety;
 }					t_tric;
 
+typedef struct				s_bcontex
+{
+	int						steep;
+	double					dx;
+	double					dy;
+	int						error2;
+	int						derror2;
+	int						x;
+	int						y;
+	t_point_3d				b;
+	t_point_3d				e;
+}							t_bcontex;
 
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
@@ -220,5 +233,23 @@ void			engine_do_calc(t_tric *trg);
 void			engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
 void			point_swap(t_point_3d *t0, t_point_3d *t1);
 int				get_rgb(int r, int g, int b, int a);
+float			edge_function(t_point_3d *a, t_point_3d *b, t_point_3d *c);
+void			zbuffer_zero(int *zbuffer);
+
+float			percent(int start, int end, int current);
+int				get_light(int start, int end, float percentage);
+int				get_color(int current, int start,
+										int end, int colors[2]);
+
+void			swapper(t_point_3d *a, t_point_3d *b, int *steep);
+t_bcontex		bresenham_init(t_point_3d *beg, t_point_3d *end);
+t_bcontex		bresenham_init(t_point_3d *beg, t_point_3d *end);
+void			bresenham_put_pixel(t_bcontex *c,
+								t_engine *eng, int color, int zmax);
+void			bresenham_line(t_point_3d *beg, t_point_3d *end,
+							t_engine *eng, int color);
+void			triangle_lines(t_polygone *t, t_engine *eng);
+void			engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t);
+void			ft_swap(float *a, float *b);
 
 #endif

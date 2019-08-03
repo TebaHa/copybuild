@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/27 17:31:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/04 00:48:49 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void		engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *yt
 	a = (t_polygone *)ft_memalloc(sizeof(t_polygone));
 	a->vertices_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d) * 3);
 	a->color = wall->color;
-	SDL_SetRenderDrawColor(eng->ren, ((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255);
 	/* Rotate them around the player's view */
 	t1.x = v1.x * plr->sinangle - v1.y * plr->cosangle;
 	t1.y = v1.x * plr->cosangle + v1.y * plr->sinangle;
@@ -126,39 +125,43 @@ void		engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *yt
 	int beginx = max(x1, 0), endx = min(x2, WIDTH - 1);
 	int ya1 = (beginx - x1) * (y2a - y1a) / (x2-x1) + y1a, cya1 = clamp(ya1, ytop[beginx], ybottom[beginx]); // top
 	int yb1 = (beginx - x1) * (y2b - y1b) / (x2-x1) + y1b, cyb1 = clamp(yb1, ytop[beginx], ybottom[beginx]); // bottom
+	int z1 = ((beginx - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;;
 	int ya2 = (endx - x1) * (y2a - y1a) / (x2-x1) + y1a, cya2 = clamp(ya2, ytop[endx], ybottom[endx]); // top
 	int yb2 = (endx - x1) * (y2b - y1b) / (x2-x1) + y1b, cyb2 = clamp(yb2, ytop[endx], ybottom[endx]); // bottom
+	int z2 = ((endx - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;;
 	a->vertices_array[0].x = beginx;
 	a->vertices_array[0].y = cya1;
-	a->vertices_array[0].z = 0;
+	a->vertices_array[0].z = z1;
 	a->vertices_array[1].x = beginx;
 	a->vertices_array[1].y = cyb1;
-	a->vertices_array[1].z = 0;
+	a->vertices_array[1].z = z1;
 	a->vertices_array[2].x = endx;
 	a->vertices_array[2].y = cya2;
-	a->vertices_array[2].z = 0;
+	a->vertices_array[2].z = z2;
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
-	SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[1].x, a->vertices_array[1].y);
+	triangle_lines(a, eng);
+	//SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[1].x, a->vertices_array[1].y);
 	//SDL_RenderDrawLine(eng->ren, a->vertices_array[2].x, a->vertices_array[2].y, a->vertices_array[1].x, a->vertices_array[1].y);
-	SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[2].x, a->vertices_array[2].y);
+	//SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[2].x, a->vertices_array[2].y);
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
 	//engine_triangle(eng, plr, a);
 	a->vertices_array[0].x = endx;
 	a->vertices_array[0].y = cya2;
-	a->vertices_array[0].z = 0;
+	a->vertices_array[0].z = z2;
 	a->vertices_array[1].x = endx;
 	a->vertices_array[1].y = cyb2;
-	a->vertices_array[1].z = 0;
+	a->vertices_array[1].z = z2;
 	a->vertices_array[2].x = beginx;
 	a->vertices_array[2].y = cyb1;
-	a->vertices_array[2].z = 0;
+	a->vertices_array[2].z = z1;
+	triangle_lines(a, eng);
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
-	SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[1].x, a->vertices_array[1].y);
-	SDL_RenderDrawLine(eng->ren, a->vertices_array[2].x, a->vertices_array[2].y, a->vertices_array[1].x, a->vertices_array[1].y);
+	//SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[1].x, a->vertices_array[1].y);
+	//SDL_RenderDrawLine(eng->ren, a->vertices_array[2].x, a->vertices_array[2].y, a->vertices_array[1].x, a->vertices_array[1].y);
 	//SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[2].x, a->vertices_array[2].y);
 	//engine_triangle(eng, plr, a);
 }
@@ -255,44 +258,6 @@ void		engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *yt
 // 			engine_draw_line(eng, (t_point_2d){x, cya}, (t_point_2d){x, cyb},  x == x1 || x == x2 ? 0x000000FF : get_rgb(((r) >> 16), ((r) >> 8), ((r)), 255));
 // 	}
 // }
-
-void		engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color)
-{
-	float			len;
-	float			deltax;
-	float			deltay;
-	unsigned long	x;
-	unsigned long	y;
-	int				i;
-
-	len = (fabs(b.x - a.x) > fabs(b.y - a.y)) ? fabs(b.x - a.x) : fabs(b.y - a.y);
-	if (len > -0.0f && len < 0.0f)
-	deltax = (b.x - a.x) / len;
-	deltay = (b.y - a.y) / len;
-	a.x += deltax;
-	a.y += deltay;
-	x = (int)(a.x);
-	y = (int)(a.y);
-	if ((a.x) < WIDTH && (a.y) < HEIGHT)
-		sdl_put_pixel(eng->surface, (a.x), (a.y), 255);
-	i = 1;
-	while (i < (int)len - 1)
-	{
-		a.x += deltax;
-		a.y += deltay;
-		x = (int)(a.x);
-		y = (int)(a.y);
-		if ((a.x) < WIDTH && (a.y) < HEIGHT)
-			sdl_put_pixel(eng->surface, (a.x), (a.y), color);
-		i++;
-	}
-	a.x += deltax;
-	a.y += deltay;
-	x = (int)(a.x);
-	y = (int)(a.y);
-	if ((a.x) < WIDTH && (a.y) < HEIGHT)
-		sdl_put_pixel(eng->surface, (a.x), (a.y), 255);
-}
 
 void	engine_clear_frame(t_engine *eng)
 {
