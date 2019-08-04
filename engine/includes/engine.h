@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 17:03:04 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/04 18:46:11 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,8 +192,8 @@ t_object		*util_create_object(int id, int portal, int polies_count);
 t_polygone		*util_create_polygone(int id, int type, int vertex_count);
 void			util_release_char_matrix(char **mtrx);
 
+char			**engine_read_level_file(char *filename);
 t_world			*engine_read_world_from_file(t_engine *eng, char **json_splited);
-char			*engine_read_level_file(char *filename);
 t_point_3d		*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
 t_polygone		*engine_read_polygones_from_file(t_engine *eng, t_point_3d *vertex_array, char **json_splited);
 t_object		*engine_read_objects_from_file(t_engine *eng, t_polygone *polies_array, char **json_splited);

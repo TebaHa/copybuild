@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/04 17:28:46 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/04 18:56:15 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,14 +132,14 @@ t_sector	*engine_read_sectors_from_file(t_engine *eng,
 	i = 0;
 	eng->stats.sectors_count = 0;
 	s_array_buffer = (t_sector *)ft_memalloc(sizeof(t_sector)
-											 * eng->stats.sectors_count);
+		* eng->stats.sectors_count);
 	while (json_splited[i] != NULL)
 	{
 		splited_line = ft_strsplit(json_splited[i], ' ');
 		if (ft_strcmp(splited_line[0], "sector:") == 0)
 			engine_fill_sectors_from_file(eng,
-										  &s_array_buffer[eng->stats.sectors_count],
-										  objects_array, splited_line);
+			&s_array_buffer[eng->stats.sectors_count],
+			objects_array, splited_line);
 		util_release_char_matrix(splited_line);
 		i++;
 	}
