@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:14:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/27 16:40:19 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/04 16:46:14 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ t_world		*util_create_world(int id, int sector_count)
 	world->id = id;
 	world->sectors_count = sector_count;
 	world->renderqueue = (int *)ft_memalloc(sizeof(int) * sector_count);
-	world->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector) * sector_count);
+	world->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector) *
+			sector_count);
 	return (world);
 }
 
@@ -126,9 +127,9 @@ void		util_release_char_matrix(char **mtrx)
 	free(mtrx);
 }
 
-t_point_3d		util_get_vertex_from_buff_by_id(int id, int size, t_point_3d *vertexes)
+t_point_3d		util_get_vertex_from_buff_by_id(int id, int size,
+		t_point_3d *vertexes)
 {
-	t_point_3d	res;
 	int			i;
 
 	i = 0;
@@ -141,9 +142,9 @@ t_point_3d		util_get_vertex_from_buff_by_id(int id, int size, t_point_3d *vertex
 	return (vertexes[i]);
 }
 
-t_polygone		util_get_polygone_from_buff_by_id(int id, int size, t_polygone *polies)
+t_polygone		util_get_polygone_from_buff_by_id(int id, int size,
+		t_polygone *polies)
 {
-	t_polygone	res;
 	int			i;
 
 	i = 0;

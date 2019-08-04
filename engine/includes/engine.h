@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/03 16:17:19 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/04 17:03:04 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,5 +220,12 @@ void			engine_do_calc(t_tric *trg);
 void			engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
 void			point_swap(t_point_3d *t0, t_point_3d *t1);
 int				get_rgb(int r, int g, int b, int a);
+
+void			engine_fill_polygones_from_file(t_engine *eng,
+				t_polygone *polygone, t_point_3d *vertex_array, char **str);
+void			engine_fill_objects_from_file(t_engine *eng, t_object *object,
+				t_polygone *polygone_array, char **str);
+void			engine_fill_sectors_from_file(t_engine *eng, t_sector *sector,
+				t_object *objects_array, char **str);
 
 #endif
