@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/04 18:56:15 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/04 19:22:37 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 t_world		*engine_read_world_from_file(t_engine *eng, char **json_splited)
 {
 	t_world	*res_world;
-	int		i;
 	char	**splited_line;
+	int		i;
 
 	i = 0;
 	while (json_splited[i])
 	{
-		splited_line = ft_strsplit(json_splited[i], ' ');
-		if (ft_strcmp(splited_line[0], "world:") == 0)
+		if (ft_strncmp(json_splited[i], "world: ", 6) == 0)
+		{
+			splited_line = ft_strsplit(json_splited[i], ' ');
 			res_world = util_create_world(ft_atoi(splited_line[1]),
-			ft_atoi(splited_line[2]));
-		util_release_char_matrix(splited_line);
+				ft_atoi(splited_line[2]));
+			util_release_char_matrix(splited_line);
+		}
 		i++;
 	}
 	return (res_world);

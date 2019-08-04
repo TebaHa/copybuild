@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 16:52:15 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/04 17:03:04 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/04 17:23:06 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,19 @@ void		engine_fill_polygones_from_file(t_engine *eng, t_polygone *polygone,
 void		engine_fill_objects_from_file(t_engine *eng, t_object *object,
 		t_polygone *polygone_array, char **str)
 {
-	int			j;
-	int			tmp;
+	int			pol_count;
+	int			str_count;
 
 	object->id = ft_atoi(str[1]);
 	object->portal = ft_atoi(str[2]);
 	object->polies_count = ft_atoi(str[3]);
 	object->polies_array = (t_polygone *)ft_memalloc(sizeof(t_polygone)
 		* object->polies_count);
-	tmp = 4;
-	j = 0;
-	while (tmp < 4 + object->polies_count)
-		object->polies_array[j++] =
-		util_get_polygone_from_buff_by_id(ft_atoi(str[tmp++]),
+	str_count = 4;
+	pol_count = 0;
+	while (str_count < 4 + object->polies_count)
+		object->polies_array[pol_count++] =
+		util_get_polygone_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.polies_count, polygone_array);
 	eng->stats.objects_count++;
 }
@@ -56,8 +56,8 @@ void		engine_fill_objects_from_file(t_engine *eng, t_object *object,
 void		engine_fill_sectors_from_file(t_engine *eng, t_sector *sector,
 		t_object *objects_array, char **str)
 {
-	int			j;
-	int			tmp;
+	int			obj_count;
+	int			str_count;
 
 	sector->id = ft_atoi(str[1]);
 	sector->floor = ft_atoi(str[2]);
@@ -65,11 +65,11 @@ void		engine_fill_sectors_from_file(t_engine *eng, t_sector *sector,
 	sector->objects_count = ft_atoi(str[4]);
 	sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object)
 		* sector->objects_count);
-	tmp = 5;
-	j = 0;
-	while (tmp < 5 + sector->objects_count)
-		sector->objects_array[j++] =
-		util_get_object_from_buff_by_id(ft_atoi(str[tmp++]),
+	str_count = 5;
+	obj_count = 0;
+	while (str_count < 5 + sector->objects_count)
+		sector->objects_array[obj_count++] =
+		util_get_object_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.objects_count, objects_array);
 	eng->stats.sectors_count++;
 }
