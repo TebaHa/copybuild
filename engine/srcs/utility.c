@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:14:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 16:46:14 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/04 21:20:00 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void		util_release_char_matrix(char **mtrx)
 }
 
 t_point_3d		util_get_vertex_from_buff_by_id(int id, int size,
-		t_point_3d *vertexes)
+		t_point_3d *vertexes, int polygone_id)
 {
 	int			i;
 
@@ -139,12 +139,14 @@ t_point_3d		util_get_vertex_from_buff_by_id(int id, int size,
 		if (vertexes[i].id == id)
 			break;
 		i++;
+		if (i == size)
+			util_parsing_error_handler("vertex", id, "polygone", polygone_id);
 	}
 	return (vertexes[i]);
 }
 
 t_polygone		util_get_polygone_from_buff_by_id(int id, int size,
-		t_polygone *polies)
+		t_polygone *polies, int object_id)
 {
 	int			i;
 
@@ -154,11 +156,14 @@ t_polygone		util_get_polygone_from_buff_by_id(int id, int size,
 		if (polies[i].id == id)
 			break;
 		i++;
+		if (i == size)
+			util_parsing_error_handler("polygone", id, "object", object_id);
 	}
 	return (polies[i]);
 }
 
-t_object		util_get_object_from_buff_by_id(int id, int size, t_object *objects)
+t_object		util_get_object_from_buff_by_id(int id, int size,
+		t_object *objects, int sector_id)
 {
 	t_object	res;
 	int			i;
@@ -169,6 +174,8 @@ t_object		util_get_object_from_buff_by_id(int id, int size, t_object *objects)
 		if (objects[i].id == id)
 			break;
 		i++;
+		if (i == size)
+			util_parsing_error_handler("object", id, "sector", sector_id);
 	}
 	return (objects[i]);
 }

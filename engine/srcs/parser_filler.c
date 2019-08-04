@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 16:52:15 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/04 17:23:06 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/04 21:20:00 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		engine_fill_polygones_from_file(t_engine *eng, t_polygone *polygone,
 	while (str_count < 5 + polygone->vertices_count)
 		polygone->vertices_array[vert_count++] =
 		util_get_vertex_from_buff_by_id(ft_atoi(str[str_count++]),
-		eng->stats.vertexes_count, vertex_array);
+		eng->stats.vertexes_count, vertex_array, polygone->id);
 	eng->stats.polies_count++;
 }
 
@@ -49,7 +49,7 @@ void		engine_fill_objects_from_file(t_engine *eng, t_object *object,
 	while (str_count < 4 + object->polies_count)
 		object->polies_array[pol_count++] =
 		util_get_polygone_from_buff_by_id(ft_atoi(str[str_count++]),
-		eng->stats.polies_count, polygone_array);
+		eng->stats.polies_count, polygone_array, object->id);
 	eng->stats.objects_count++;
 }
 
@@ -70,6 +70,6 @@ void		engine_fill_sectors_from_file(t_engine *eng, t_sector *sector,
 	while (str_count < 5 + sector->objects_count)
 		sector->objects_array[obj_count++] =
 		util_get_object_from_buff_by_id(ft_atoi(str[str_count++]),
-		eng->stats.objects_count, objects_array);
+		eng->stats.objects_count, objects_array, sector->id);
 	eng->stats.sectors_count++;
 }

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 20:18:24 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/04 21:20:00 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
+
+# define PARSING_ERROR	40
+
 # define hfov (0.73f * HEIGHT) // Affects the horizontal field of vision
 # define vfov (0.2f * HEIGHT) // Affects the vertical field of vision
 # include <unistd.h>
@@ -199,9 +202,12 @@ t_polygone		*engine_read_polygones_from_file(t_engine *eng, t_point_3d *vertex_a
 t_object		*engine_read_objects_from_file(t_engine *eng, t_polygone *polies_array, char **json_splited);
 t_sector		*engine_read_sectors_from_file(t_engine *eng, t_object *sector_array, char **json_splited);
 
-t_point_3d		util_get_vertex_from_buff_by_id(int id, int size, t_point_3d *vertexes);
-t_polygone		util_get_polygone_from_buff_by_id(int id, int size, t_polygone *sectors);
-t_object		util_get_object_from_buff_by_id(int id, int size, t_object *objects);
+t_point_3d		util_get_vertex_from_buff_by_id(int id, int size,
+				t_point_3d *vertexes, int polygone_id);
+t_polygone		util_get_polygone_from_buff_by_id(int id, int size,
+				t_polygone *sectors, int object_id);
+t_object		util_get_object_from_buff_by_id(int id, int size,
+				t_object *objects, int sector_id);
 
 void			util_release_read_buffers(t_point_3d *vertex_buff, t_polygone *polies_buff,
 								t_object *object_buff);
@@ -227,5 +233,7 @@ void			engine_fill_objects_from_file(t_engine *eng, t_object *object,
 				t_polygone *polygone_array, char **str);
 void			engine_fill_sectors_from_file(t_engine *eng, t_sector *sector,
 				t_object *objects_array, char **str);
+void			util_parsing_error_handler(char *problem, int id_problem,
+				char *problem_from, int id_problem_from);
 
 #endif

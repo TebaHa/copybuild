@@ -6,11 +6,27 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 20:18:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/04 21:15:43 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
+
+void		util_parsing_error_handler(char *problem, int id_problem,
+		char *problem_from, int id_problem_from)
+{
+	ft_putendl("Parsing error:");
+	ft_putstr("Can't find ");
+	ft_putstr(problem);
+	ft_putstr(" ");
+	ft_putnbr(id_problem);
+	ft_putstr(" from ");
+	ft_putstr(problem_from);
+	ft_putstr(" ");
+	ft_putnbr(id_problem_from);
+	ft_putstr("!\n");
+	exit(PARSING_ERROR);
+}
 
 char		**engine_read_level_file(char *filename)
 {
