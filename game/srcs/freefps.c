@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 00:41:37 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/04 07:51:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ int		main(void)
 		else
 			fps.player.controller.moving = 0;
 		engine_clear_frame(fps.eng);
+		zbuffer_zero(fps.eng->z_buff);
 		SDL_Delay(10);
 	}
 	engine_sdl_uninit(fps.eng);

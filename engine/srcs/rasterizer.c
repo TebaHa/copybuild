@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 00:40:29 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/04 08:23:51 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,13 @@ void			engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 	float ymin = min(a.y,min(b.y, c.y));
 	float xmax = max(a.x,max(b.x, c.x));
 	float ymax = max(a.y,max(b.y, c.y));
-
 	if (xmin > WIDTH - 1 || xmax < 0 || ymin > HEIGHT - 1 || ymax < 0)
 		return ;
-
-	uint32_t x0 = max((int32_t)(0),(int32_t)(floor(xmin)));
-	uint32_t x1 = min(((int32_t)(WIDTH) - 1),(int32_t)(floor(xmax)));
-	uint32_t y0 = max((int32_t)(0), (int32_t)(floor(ymin)));
-	uint32_t y1 = min(((int32_t)(HEIGHT) - 1),(int32_t)(floor(ymax)));
-
+	uint32_t x0 = max((int32_t)(0),(int32_t)(floorf(xmin)));
+	uint32_t x1 = min(((int32_t)((WIDTH) - 1)),(int32_t)(floorf(xmax)));
+	uint32_t y0 = max((int32_t)(0), (int32_t)(floorf(ymin)));
+	uint32_t y1 = min(((int32_t)((HEIGHT) - 1)),(int32_t)(floorf(ymax)));
 	float area = edge_function(&a, &b, &c);
-
 	for (uint32_t y = y0; y <= y1; ++y)
 	{
 		for (uint32_t x = x0; x <= x1; ++x)
@@ -126,12 +122,10 @@ void			engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 				w2 /= area;
 				float oneOverZ = a.z * w0 + b.z * w1 + c.z * w2;
 				float z = 1 / oneOverZ;
-				if (z < eng->z_buff[y * WIDTH + x])
+				if (z > eng->z_buff[y * WIDTH + x])
 				{
 					eng->z_buff[y * WIDTH + x] = z;
-					t_point_2d st = {a.x * w0 + b.x * w1 + c.x * w2, a.y * w0 + b.y * w1 + c.y * w2};
-					st.x *= z, st.y *= z;
-					sdl_put_pixel(eng->surface, x, y, t->color);
+					sdl_put_pixel(eng->surface, x, y, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
 				}
 			}
 		}

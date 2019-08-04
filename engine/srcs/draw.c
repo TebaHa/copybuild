@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 00:48:49 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/04 07:52:41 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void		engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *yt
 	a->vertices_array[2].x = endx;
 	a->vertices_array[2].y = cya2;
 	a->vertices_array[2].z = z2;
+	engine_rasterize_triangle(eng, plr, a);
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
@@ -146,7 +147,6 @@ void		engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *yt
 	//SDL_RenderDrawLine(eng->ren, a->vertices_array[2].x, a->vertices_array[2].y, a->vertices_array[1].x, a->vertices_array[1].y);
 	//SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[2].x, a->vertices_array[2].y);
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
-	//engine_triangle(eng, plr, a);
 	a->vertices_array[0].x = endx;
 	a->vertices_array[0].y = cya2;
 	a->vertices_array[0].z = z2;
@@ -156,6 +156,7 @@ void		engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *yt
 	a->vertices_array[2].x = beginx;
 	a->vertices_array[2].y = cyb1;
 	a->vertices_array[2].z = z1;
+	engine_rasterize_triangle(eng, plr, a);
 	triangle_lines(a, eng);
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
