@@ -95,6 +95,7 @@ t_object	*util_create_object(int id, int portal, int polies_count)
 {
 	t_object	*object;
 
+	object = (t_object *)ft_memalloc(sizeof(t_object));
 	object->id = id;
 	object->portal = portal;
 	object->polies_count = polies_count;

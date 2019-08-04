@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/04 19:22:37 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/04 20:20:31 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 	while (json_splited[i] != NULL)
 		if (ft_strncmp(json_splited[i++], "vertex: ", 8) == 0)
 			eng->stats.vertexes_count++;
-	i = 0;
 	buff_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d)
 		* eng->stats.vertexes_count);
+	i = 0;
 	eng->stats.vertexes_count = 0;
 	while (json_splited[i])
 	{
@@ -131,10 +131,10 @@ t_sector	*engine_read_sectors_from_file(t_engine *eng,
 	while (json_splited[i])
 		if (ft_strncmp(json_splited[i++], "sector: ", 8) == 0)
 			eng->stats.sectors_count++;
-	i = 0;
-	eng->stats.sectors_count = 0;
 	s_array_buffer = (t_sector *)ft_memalloc(sizeof(t_sector)
 		* eng->stats.sectors_count);
+	i = 0;
+	eng->stats.sectors_count = 0;
 	while (json_splited[i] != NULL)
 	{
 		splited_line = ft_strsplit(json_splited[i], ' ');
