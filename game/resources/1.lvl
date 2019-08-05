@@ -1,5 +1,5 @@
 # World id, number of sectors
-world: 1 1
+world: 1 1 0
 # Vertexes id X, Y, Z
 vertex: 0 -1000 -1000 500
 vertex: 1 1000 -1000 500

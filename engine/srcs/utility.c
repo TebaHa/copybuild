@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:14:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 21:20:00 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/05 20:01:32 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,67 +54,6 @@ void	engine_clear_renderstack(int *renderqueue)
 	}
 }
 
-t_point_3d	*util_create_point_3d(float x, float y, float z)
-{
-	t_point_3d	*point;
-
-	point = (t_point_3d *)ft_memalloc(sizeof(t_point_3d));
-	point->x = x;
-	point->y = y;
-	point->z = z;
-	return (point);
-}
-
-t_world		*util_create_world(int id, int sector_count)
-{
-	t_world	*world;
-
-	world = (t_world *)ft_memalloc(sizeof(t_world));
-	world->id = id;
-	world->sectors_count = sector_count;
-	world->renderqueue = (int *)ft_memalloc(sizeof(int) * sector_count);
-	world->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector) *
-			sector_count);
-	return (world);
-}
-
-t_sector	*util_create_sector(int id, int floor, int ceil, int object_count)
-{
-	t_sector	*sector;
-
-	sector = (t_sector *)ft_memalloc(sizeof(t_sector));
-	sector->ceil = ceil;
-	sector->floor = floor;
-	sector->id = id;
-	sector->objects_count = object_count;
-	sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object) * object_count);
-	return (sector);
-}
-
-t_object	*util_create_object(int id, int portal, int polies_count)
-{
-	t_object	*object;
-
-	object = (t_object *)ft_memalloc(sizeof(t_object));
-	object->id = id;
-	object->portal = portal;
-	object->polies_count = polies_count;
-	object->polies_array = (t_polygone *)ft_memalloc(sizeof(t_polygone) * polies_count);
-	return (object);
-}
-
-t_polygone	*util_create_polygone(int id, int type, int vertex_count)
-{
-	t_polygone	*polygone;
-
-	polygone = (t_polygone *)ft_memalloc(sizeof(t_polygone));
-	polygone->id = id;
-	polygone->type = type;
-	polygone->vertices_count = vertex_count;
-	polygone->vertices_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d) * vertex_count);
-	return (polygone);
-}
-
 void		util_release_char_matrix(char **mtrx)
 {
 	int		i;
@@ -140,7 +79,7 @@ t_point_3d		util_get_vertex_from_buff_by_id(int id, int size,
 			break;
 		i++;
 		if (i == size)
-			util_parsing_error_handler("vertex", id, "polygone", polygone_id);
+			util_parsing_error_lost_handler("vertex", id, "polygone", polygone_id);
 	}
 	return (vertexes[i]);
 }
@@ -157,7 +96,7 @@ t_polygone		util_get_polygone_from_buff_by_id(int id, int size,
 			break;
 		i++;
 		if (i == size)
-			util_parsing_error_handler("polygone", id, "object", object_id);
+			util_parsing_error_lost_handler("polygone", id, "object", object_id);
 	}
 	return (polies[i]);
 }
@@ -175,7 +114,7 @@ t_object		util_get_object_from_buff_by_id(int id, int size,
 			break;
 		i++;
 		if (i == size)
-			util_parsing_error_handler("object", id, "sector", sector_id);
+			util_parsing_error_lost_handler("object", id, "sector", sector_id);
 	}
 	return (objects[i]);
 }

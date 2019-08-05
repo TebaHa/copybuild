@@ -167,6 +167,6 @@ add_executable(DoomNukem
 		lib/libft/srcs/get_next_line.c
 		author
 		Makefile
-		README.md engine/srcs/parser_filler.c engine/srcs/parser_reader.c)
+		README.md engine/srcs/parser_filler.c engine/srcs/parser_reader.c engine/srcs/parser_utility.c engine/srcs/parser_errors.c)
 
 target_link_libraries(DoomNukem ${SDL2_LIBRARY})

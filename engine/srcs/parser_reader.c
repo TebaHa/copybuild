@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/04 20:20:31 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/05 22:08:22 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ t_world		*engine_read_world_from_file(t_engine *eng, char **json_splited)
 		if (ft_strncmp(json_splited[i], "world: ", 6) == 0)
 		{
 			splited_line = ft_strsplit(json_splited[i], ' ');
-			res_world = util_create_world(ft_atoi(splited_line[1]),
-				ft_atoi(splited_line[2]));
+			util_create_world(&res_world, splited_line);
 			util_release_char_matrix(splited_line);
 		}
 		i++;
@@ -35,7 +34,7 @@ t_world		*engine_read_world_from_file(t_engine *eng, char **json_splited)
 
 t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 {
-	t_point_3d	*buff_array;
+	t_point_3d	*v_arr_buffer;
 	char		**splited_line;
 	int			i;
 
@@ -44,21 +43,20 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 	while (json_splited[i] != NULL)
 		if (ft_strncmp(json_splited[i++], "vertex: ", 8) == 0)
 			eng->stats.vertexes_count++;
-	buff_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d)
-		* eng->stats.vertexes_count);
+	v_arr_buffer = (t_point_3d *)ft_memalloc(sizeof(t_point_3d) *
+		eng->stats.vertexes_count);
 	i = 0;
 	eng->stats.vertexes_count = 0;
-	while (json_splited[i])
+	while (json_splited[i] != NULL)
 	{
 		splited_line = ft_strsplit(json_splited[i], ' ');
 		if (ft_strcmp(splited_line[0], "vertex:") == 0)
-			buff_array[eng->stats.vertexes_count++] =
-			(t_point_3d){ft_atoi(splited_line[1]), ft_atoi(splited_line[2]),
-			ft_atoi(splited_line[3]), ft_atoi(splited_line[4])};
+			util_create_point_3d(eng, &v_arr_buffer[eng->stats.vertexes_count],
+			splited_line);
 		util_release_char_matrix(splited_line);
 		i++;
 	}
-	return (buff_array);
+	return (v_arr_buffer);
 }
 
 t_object	*engine_read_objects_from_file(t_engine *eng,
@@ -81,8 +79,7 @@ t_object	*engine_read_objects_from_file(t_engine *eng,
 	{
 		splited_line = ft_strsplit(json_splited[i], ' ');
 		if (ft_strcmp(splited_line[0], "object:") == 0)
-			engine_fill_objects_from_file(eng,
-			&o_array_buffer[eng->stats.objects_count],
+			util_create_object(eng,	&o_array_buffer[eng->stats.objects_count],
 			polies_array, splited_line);
 		util_release_char_matrix(splited_line);
 		i++;
@@ -110,8 +107,7 @@ t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 	{
 		splited_line = ft_strsplit(json_splited[i], ' ');
 		if (ft_strcmp(splited_line[0], "polygone:") == 0)
-			engine_fill_polygones_from_file(eng,
-			&p_array_buffer[eng->stats.polies_count],
+			util_create_polygone(eng, &p_array_buffer[eng->stats.polies_count],
 			vertex_array, splited_line);
 		util_release_char_matrix(splited_line);
 		i++;
@@ -139,8 +135,7 @@ t_sector	*engine_read_sectors_from_file(t_engine *eng,
 	{
 		splited_line = ft_strsplit(json_splited[i], ' ');
 		if (ft_strcmp(splited_line[0], "sector:") == 0)
-			engine_fill_sectors_from_file(eng,
-			&s_array_buffer[eng->stats.sectors_count],
+			util_create_sector(eng, &s_array_buffer[eng->stats.sectors_count],
 			objects_array, splited_line);
 		util_release_char_matrix(splited_line);
 		i++;

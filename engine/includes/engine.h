@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 21:20:00 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/05 21:40:12 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,13 +188,6 @@ int				engine_object_get_sector(t_world *world, t_point_3d pos);
 t_object		engine_create_obj_wall(int portal, t_point_3d a, t_point_3d b, t_point_3d c, t_point_3d d);
 t_point_3d		engine_count_perspective(t_point_3d a, int c);
 
-t_point_3d		*util_create_point_3d(float x, float y, float z);
-t_world			*util_create_world(int id, int sector_count);
-t_sector		*util_create_sector(int id, int floor, int ceil, int object_count);
-t_object		*util_create_object(int id, int portal, int polies_count);
-t_polygone		*util_create_polygone(int id, int type, int vertex_count);
-void			util_release_char_matrix(char **mtrx);
-
 char			**engine_read_level_file(char *filename);
 t_world			*engine_read_world_from_file(t_engine *eng, char **json_splited);
 t_point_3d		*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
@@ -227,13 +220,23 @@ void			engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *y
 void			point_swap(t_point_3d *t0, t_point_3d *t1);
 int				get_rgb(int r, int g, int b, int a);
 
-void			engine_fill_polygones_from_file(t_engine *eng,
-				t_polygone *polygone, t_point_3d *vertex_array, char **str);
-void			engine_fill_objects_from_file(t_engine *eng, t_object *object,
+void			util_release_char_matrix(char **mtrx);
+
+void			util_create_point_3d(t_engine *eng, t_point_3d *point, char **str);
+void			util_create_polygone(t_engine *eng, t_polygone *polygone,
+				t_point_3d *vertex_array, char **str);
+void			util_create_object(t_engine *eng, t_object *object,
 				t_polygone *polygone_array, char **str);
-void			engine_fill_sectors_from_file(t_engine *eng, t_sector *sector,
+void			util_create_sector(t_engine *eng, t_sector *sector,
 				t_object *objects_array, char **str);
-void			util_parsing_error_handler(char *problem, int id_problem,
+void			util_create_world(t_world **world, char **str);
+void			util_parsing_error_lost_handler(char *problem, int id_problem,
 				char *problem_from, int id_problem_from);
+void			util_parsing_error_count_handler(char *problem,
+				char *problem_from, char **str, int problems_number);
+void			util_parsing_error_extra_data(char *problem, char *problem_from,
+				char **str);
+void			util_parsing_error_litle_data(char *problem, char *problem_from,
+				char **str);
 
 #endif
