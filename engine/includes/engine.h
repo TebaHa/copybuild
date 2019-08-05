@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 00:45:10 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/05 13:21:53 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ typedef	struct		s_point_2d
 
 /* INIT AND UNINIT ENGINE */
 //void			uninitengine(void);
+
+typedef	struct		s_fix_point_3d
+{
+	int				x;
+	int				y;
+	int				z;
+}					t_fix_point_3d;
 
 typedef	struct		s_point_3d
 {
@@ -152,16 +159,16 @@ typedef struct		s_tric
 	int				i;
 	int				j;
 	int				segment_height;
-	t_point_3d		a;
-	t_point_3d		b;
-	t_point_3d		t0;
-	t_point_3d		t1;
-	t_point_3d		t2;
+	t_fix_point_3d	a;
+	t_fix_point_3d	b;
+	t_fix_point_3d	t0;
+	t_fix_point_3d	t1;
+	t_fix_point_3d	t2;
 	double			alpha;
 	double			beta;
 	double			intensity;
 	double			phi;
-	t_point_3d		p;
+	t_fix_point_3d	p;
 	int				offsetx;
 	int				offsety;
 }					t_tric;
@@ -231,7 +238,7 @@ int				engine_init_triangle(t_polygone *t, t_tric *trg);
 void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
 void			engine_do_calc(t_tric *trg);
 void			engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
-void			point_swap(t_point_3d *t0, t_point_3d *t1);
+void			point_swap(t_fix_point_3d *t0, t_fix_point_3d *t1);
 int				get_rgb(int r, int g, int b, int a);
 float			edge_function(t_point_3d *a, t_point_3d *b, t_point_3d *c);
 void			zbuffer_zero(int *zbuffer);
