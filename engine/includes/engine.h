@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/05 21:40:12 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/07 22:00:35 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,5 +238,10 @@ void			util_parsing_error_extra_data(char *problem, char *problem_from,
 				char **str);
 void			util_parsing_error_litle_data(char *problem, char *problem_from,
 				char **str);
+
+char			**ft_strsplitwhitespaces(char const *s);
+int				ft_countwords_whitespaces(char const *s);
+int				ft_strwcmp(const char *s1, const char *s2);
+
 
 #endif

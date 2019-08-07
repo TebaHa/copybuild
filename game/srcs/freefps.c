@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 19:04:18 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/07 21:17:48 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ int		main(void)
 {
 	t_game	fps;
 	int		*rendered;
+
+//	ft_putnbr(ft_countwords_whitespaces("polygone:	3	1	65280		2	6	7"));
+//	ft_putstr(ft_strsplitwhitespaces("polygone:	3	1	65280		2	6	7")[0]);
+//	ft_putnbr(ft_strwcmp("\thello", " hello"));
 
 	rendered = (int *)ft_memalloc(sizeof(int) * 2);
 	engine_sdl_init(&fps.eng);

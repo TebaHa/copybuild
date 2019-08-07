@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/05 22:08:22 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/07 20:44:22 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ t_world		*engine_read_world_from_file(t_engine *eng, char **json_splited)
 	i = 0;
 	while (json_splited[i])
 	{
-		if (ft_strncmp(json_splited[i], "world: ", 6) == 0)
+		if (ft_strwcmp(json_splited[i], "world:") == 0)
 		{
-			splited_line = ft_strsplit(json_splited[i], ' ');
+			splited_line = ft_strsplitwhitespaces(json_splited[i]);
 			util_create_world(&res_world, splited_line);
 			util_release_char_matrix(splited_line);
 		}
@@ -41,7 +41,7 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 	i = 0;
 	eng->stats.vertexes_count = 0;
 	while (json_splited[i] != NULL)
-		if (ft_strncmp(json_splited[i++], "vertex: ", 8) == 0)
+		if (ft_strwcmp(json_splited[i++], "vertex:") == 0)
 			eng->stats.vertexes_count++;
 	v_arr_buffer = (t_point_3d *)ft_memalloc(sizeof(t_point_3d) *
 		eng->stats.vertexes_count);
@@ -49,7 +49,7 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 	eng->stats.vertexes_count = 0;
 	while (json_splited[i] != NULL)
 	{
-		splited_line = ft_strsplit(json_splited[i], ' ');
+		splited_line = ft_strsplitwhitespaces(json_splited[i]);
 		if (ft_strcmp(splited_line[0], "vertex:") == 0)
 			util_create_point_3d(eng, &v_arr_buffer[eng->stats.vertexes_count],
 			splited_line);
@@ -69,7 +69,7 @@ t_object	*engine_read_objects_from_file(t_engine *eng,
 	i = 0;
 	eng->stats.objects_count = 0;
 	while (json_splited[i])
-		if (ft_strncmp(json_splited[i++], "object: ", 8) == 0)
+		if (ft_strwcmp(json_splited[i++], "object:") == 0)
 			eng->stats.objects_count++;
 	o_array_buffer = (t_object *)ft_memalloc(sizeof(t_object) *
 		eng->stats.objects_count);
@@ -77,9 +77,9 @@ t_object	*engine_read_objects_from_file(t_engine *eng,
 	eng->stats.objects_count = 0;
 	while (json_splited[i] != NULL)
 	{
-		splited_line = ft_strsplit(json_splited[i], ' ');
+		splited_line = ft_strsplitwhitespaces(json_splited[i]);
 		if (ft_strcmp(splited_line[0], "object:") == 0)
-			util_create_object(eng,	&o_array_buffer[eng->stats.objects_count],
+			util_create_object(eng, &o_array_buffer[eng->stats.objects_count],
 			polies_array, splited_line);
 		util_release_char_matrix(splited_line);
 		i++;
@@ -97,7 +97,7 @@ t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 	i = 0;
 	eng->stats.polies_count = 0;
 	while (json_splited[i])
-		if (ft_strncmp(json_splited[i++], "polygone: ", 10) == 0)
+		if (ft_strwcmp(json_splited[i++], "polygone:") == 0)
 			eng->stats.polies_count++;
 	p_array_buffer = (t_polygone *)ft_memalloc(sizeof(t_polygone)
 		* eng->stats.polies_count);
@@ -105,7 +105,7 @@ t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 	eng->stats.polies_count = 0;
 	while (json_splited[i] != NULL)
 	{
-		splited_line = ft_strsplit(json_splited[i], ' ');
+		splited_line = ft_strsplitwhitespaces(json_splited[i]);
 		if (ft_strcmp(splited_line[0], "polygone:") == 0)
 			util_create_polygone(eng, &p_array_buffer[eng->stats.polies_count],
 			vertex_array, splited_line);
@@ -125,7 +125,7 @@ t_sector	*engine_read_sectors_from_file(t_engine *eng,
 	i = 0;
 	eng->stats.sectors_count = 0;
 	while (json_splited[i])
-		if (ft_strncmp(json_splited[i++], "sector: ", 8) == 0)
+		if (ft_strwcmp(json_splited[i++], "sector:") == 0)
 			eng->stats.sectors_count++;
 	s_array_buffer = (t_sector *)ft_memalloc(sizeof(t_sector)
 		* eng->stats.sectors_count);
@@ -133,7 +133,7 @@ t_sector	*engine_read_sectors_from_file(t_engine *eng,
 	eng->stats.sectors_count = 0;
 	while (json_splited[i] != NULL)
 	{
-		splited_line = ft_strsplit(json_splited[i], ' ');
+		splited_line = ft_strsplitwhitespaces(json_splited[i]);
 		if (ft_strcmp(splited_line[0], "sector:") == 0)
 			util_create_sector(eng, &s_array_buffer[eng->stats.sectors_count],
 			objects_array, splited_line);
