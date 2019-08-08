@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/05 13:21:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/08 14:58:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ typedef	struct		s_fix_point_3d
 	int				y;
 	int				z;
 }					t_fix_point_3d;
+
+typedef	struct		s_fix_point_2d
+{
+	int				x;
+	int				y;
+}					t_fix_point_2d;
 
 typedef	struct		s_point_3d
 {
@@ -238,7 +244,8 @@ int				engine_init_triangle(t_polygone *t, t_tric *trg);
 void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
 void			engine_do_calc(t_tric *trg);
 void			engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
-void			point_swap(t_fix_point_3d *t0, t_fix_point_3d *t1);
+void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
+void			point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
 int				get_rgb(int r, int g, int b, int a);
 float			edge_function(t_point_3d *a, t_point_3d *b, t_point_3d *c);
 void			zbuffer_zero(int *zbuffer);
@@ -258,5 +265,7 @@ void			bresenham_line(t_point_3d *beg, t_point_3d *end,
 void			triangle_lines(t_polygone *t, t_engine *eng);
 void			engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 void			ft_swap(float *a, float *b);
+t_point_3d		barycentric(t_fix_point_2d pts[3], t_fix_point_2d *p);
+t_point_3d		cross(t_point_3d a, t_point_3d b);
 
 #endif

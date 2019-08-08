@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:14:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/05 13:13:41 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/08 12:46:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ void			util_release_read_buffers(t_point_3d *vertex_buff, t_polygone *polies_buf
 	free(object_buff);
 }
 
-void	point_swap(t_fix_point_3d *t0, t_fix_point_3d *t1)
+void	point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1)
 {
 	t_fix_point_3d		tmp;
 
@@ -243,4 +243,16 @@ void	point_swap(t_fix_point_3d *t0, t_fix_point_3d *t1)
 	t1->x = tmp.x;
 	t1->y = tmp.y;
 	t1->z = tmp.z;
+}
+
+void	point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1)
+{
+	t_fix_point_2d		tmp;
+
+	tmp.x = t0->x;
+	tmp.y = t0->y;
+	t0->x = t1->x;
+	t0->y = t1->y;
+	t1->x = tmp.x;
+	t1->y = tmp.y;
 }

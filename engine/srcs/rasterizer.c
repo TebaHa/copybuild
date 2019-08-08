@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/05 13:24:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/08 15:05:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,15 +137,71 @@ void			engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 		}
 	}
 }
- */
+*/
+t_point_3d	cross(t_point_3d a, t_point_3d b)
+{
+	t_point_3d res;
+
+	res.x = (a.y * b.z) - (a.z * b.y);
+	res.y = (a.z * b.x) - (a.x * b.z);
+	res.z = (a.x * b.y) - (a.y * b.x);
+	return (res);
+}
+
+t_point_3d	barycentric(t_fix_point_2d pts[3], t_fix_point_2d *p)
+{
+	t_point_3d u = cross((t_point_3d){0, pts[2].x - pts[0].x, pts[1].x - pts[0].x,
+	pts[0].x - p->x}, (t_point_3d){0, pts[2].y - pts[0].y, pts[1].y - pts[0].y, pts[0].y - p->y});
+	if (fabsf(u.z) > 1e-2)
+		return ((t_point_3d){(int)0, (float)(1.f - (u.x + u.y) / u.z), (float)(u.y / u.z), (float)(u.x / u.z)});
+	return ((t_point_3d){(int)0, (float)-1, (float)1, (float)1}); // triangle is degenerate, in this case return smth with negative coordinates
+}
+
+void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
+{
+	t_fix_point_2d	bboxmin;
+	t_fix_point_2d	bboxmax;
+	t_fix_point_2d	clampt;
+	t_fix_point_2d	p;
+	t_fix_point_2d	pts2[3];
+	int 			color;
+
+	pts2[0] = (t_fix_point_2d){t->vertices_array[0].x, t->vertices_array[0].y};
+	pts2[1] = (t_fix_point_2d){t->vertices_array[1].x, t->vertices_array[1].y};
+	pts2[2] = (t_fix_point_2d){t->vertices_array[2].x, t->vertices_array[2].y};
+	bboxmin = (t_fix_point_2d){INT32_MAX, INT32_MAX};
+	bboxmax = (t_fix_point_2d){INT32_MIN, INT32_MIN};
+	clampt = (t_fix_point_2d){WIDTH - 1, HEIGHT - 1};
+	color = get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255);
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			((int *)&bboxmin)[j] = max(0.f, min(((int *)&bboxmin)[j], ((int *)&pts2[i])[j]));
+			((int *)&bboxmax)[j] = min(((int *)&clampt)[j], max(((int *)&bboxmax)[j], ((int *)&pts2[i])[j]));
+		}
+	}
+	//printf("MIN X %d MIN Y %d MAX X %d MAX Y %d\n", bboxmin.x, bboxmin.y, bboxmax.x, bboxmax.y);
+	for (p.x = bboxmin.x; p.x <= bboxmax.x; p.x++)
+	{
+		for (p.y = bboxmin.y; p.y <= bboxmax.y; p.y++)
+		{
+			t_point_3d bc_screen = barycentric(pts2, &p);
+			if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
+				sdl_put_pixel(eng->surface, p.x, p.y, color);
+		}
+	}
+}
+
+/*
 void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 {
 	t_tric		trg;
 	int 		color;
-	
-	trg.t0 = (t_fix_point_3d){t->vertices_array[0].x, t->vertices_array[0].y, t->vertices_array[0].z};
+
+	trg.t0 = (t_fix_point_3d){t->vertices_array[2].x, t->vertices_array[2].y, t->vertices_array[2].z};
 	trg.t1 = (t_fix_point_3d){t->vertices_array[1].x, t->vertices_array[1].y, t->vertices_array[1].z};
-	trg.t2 = (t_fix_point_3d){t->vertices_array[2].x, t->vertices_array[2].y, t->vertices_array[2].z};
+	trg.t2 = (t_fix_point_3d){t->vertices_array[0].x, t->vertices_array[0].y, t->vertices_array[0].z};
 	if (trg.t0.y == trg.t1.y && trg.t0.y == trg.t2.y)
 		return ;
 	if (trg.t0.y > trg.t1.y)
@@ -179,7 +235,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 			trg.p.y = trg.a.y + (trg.b.y - trg.a.y) * trg.phi;
 			trg.p.z = trg.a.z + (trg.b.z - trg.a.z) * trg.phi;
 			if (((trg.p.x >= 0 && trg.p.x < WIDTH) && (trg.p.y >= 0 && trg.p.y < HEIGHT))
-			&& (eng->z_buff[trg.p.x + trg.p.y * WIDTH] <= trg.p.z))
+			&& (eng->z_buff[trg.p.x + trg.p.y * WIDTH] < trg.p.z))
 			{
 				eng->z_buff[trg.p.x + trg.p.y * WIDTH] = trg.p.z;
 				sdl_put_pixel(eng->surface, trg.p.x, trg.p.y, color);
@@ -189,3 +245,4 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 		trg.i++;
 	}
 }
+*/
