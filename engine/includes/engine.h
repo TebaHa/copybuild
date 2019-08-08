@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/08 14:58:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/08 15:43:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct		s_polygone
 	t_point_3d		*vertices_array;
 	int				vertices_count;
 	int				id;
+	t_point_3d		norm;
 	int				type;
 	int				color;
 }					t_polygone;
@@ -267,5 +268,12 @@ void			engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 void			ft_swap(float *a, float *b);
 t_point_3d		barycentric(t_fix_point_2d pts[3], t_fix_point_2d *p);
 t_point_3d		cross(t_point_3d a, t_point_3d b);
+
+t_point_3d		cross_vec3(t_point_3d v1, t_point_3d v2);
+t_point_3d		create_vector(t_point_3d *a, t_point_3d *b);
+double			magnitude(t_point_3d *normal);
+void			normalize_vec3(t_point_3d *normal);
+t_point_3d		calc_normal(t_polygone *poly);
+
 
 #endif

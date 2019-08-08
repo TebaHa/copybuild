@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/08 15:05:30 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/08 15:51:07 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 	t_fix_point_2d	p;
 	t_fix_point_2d	pts2[3];
 	int 			color;
+	double			itensity;
 
 	pts2[0] = (t_fix_point_2d){t->vertices_array[0].x, t->vertices_array[0].y};
 	pts2[1] = (t_fix_point_2d){t->vertices_array[1].x, t->vertices_array[1].y};
@@ -172,7 +173,11 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 	bboxmin = (t_fix_point_2d){INT32_MAX, INT32_MAX};
 	bboxmax = (t_fix_point_2d){INT32_MIN, INT32_MIN};
 	clampt = (t_fix_point_2d){WIDTH - 1, HEIGHT - 1};
-	color = get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255);
+	itensity = t->norm.x * 0.2 + t->norm.y * 0.0 + t->norm.z * 0.9;
+	itensity = itensity > 1 ? 1 : itensity;
+	if (itensity <= 0)
+		return ;
+	color = get_rgb(((int)(t->color * itensity) >> 16), ((int)(t->color * itensity) >> 8), ((int)(t->color * itensity)), 255);
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 2; j++)
