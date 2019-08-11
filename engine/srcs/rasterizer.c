@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/08 15:51:07 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/11 17:54:00 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,9 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 	t_fix_point_2d	p;
 	t_fix_point_2d	pts2[3];
 	int 			color;
-	double			itensity;
+	double			intensity;
+	int				dx;
+	int				dy;
 
 	pts2[0] = (t_fix_point_2d){t->vertices_array[0].x, t->vertices_array[0].y};
 	pts2[1] = (t_fix_point_2d){t->vertices_array[1].x, t->vertices_array[1].y};
@@ -173,11 +175,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 	bboxmin = (t_fix_point_2d){INT32_MAX, INT32_MAX};
 	bboxmax = (t_fix_point_2d){INT32_MIN, INT32_MIN};
 	clampt = (t_fix_point_2d){WIDTH - 1, HEIGHT - 1};
-	itensity = t->norm.x * 0.2 + t->norm.y * 0.0 + t->norm.z * 0.9;
-	itensity = itensity > 1 ? 1 : itensity;
-	if (itensity <= 0)
-		return ;
-	color = get_rgb(((int)(t->color * itensity) >> 16), ((int)(t->color * itensity) >> 8), ((int)(t->color * itensity)), 255);
+	color = get_rgb(((int)(t->color) >> 16), ((int)(t->color) >> 8), ((int)(t->color)), 255);
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 2; j++)
@@ -186,18 +184,124 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 			((int *)&bboxmax)[j] = min(((int *)&clampt)[j], max(((int *)&bboxmax)[j], ((int *)&pts2[i])[j]));
 		}
 	}
-	//printf("MIN X %d MIN Y %d MAX X %d MAX Y %d\n", bboxmin.x, bboxmin.y, bboxmax.x, bboxmax.y);
-	for (p.x = bboxmin.x; p.x <= bboxmax.x; p.x++)
+	p.x = bboxmin.x;
+	dx = 8;
+	dy = 8;
+	while (p.x <= bboxmax.x)
 	{
-		for (p.y = bboxmin.y; p.y <= bboxmax.y; p.y++)
+		p.y = bboxmin.y;
+		while (p.y <= bboxmax.y)
 		{
-			t_point_3d bc_screen = barycentric(pts2, &p);
-			if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
-				sdl_put_pixel(eng->surface, p.x, p.y, color);
+			check_box(eng, p, dx, dy, pts2, color);
+			p.y += dy;
 		}
+		p.x += dx;
+	}
+	p.x -= dx;
+	p.y = bboxmin.y;
+	full_check_fill_box(eng, p, p.x + dx, p.x + dy, pts2, color);
+}
+
+void		check_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color)
+{
+	t_point_3d		bc_screen;
+	t_fix_point_2d	a;
+	t_fix_point_2d	b;
+	t_fix_point_2d	c;
+	int				f1;
+	int				f2;
+	int				f3;
+	int				f4;
+
+	f1 = 0;
+	f2 = 0;
+	f3 = 0;
+	f4 = 0;
+	bc_screen = barycentric(pts2, &p);
+	if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
+		f1 = 1;
+	p.x += offsetx;
+	bc_screen = barycentric(pts2, &p);
+	if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
+		f2 = 1;
+	p.x -= offsetx;
+	p.y += offsety;
+	bc_screen = barycentric(pts2, &p);
+	if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
+		f3 = 1;
+	p.x += offsetx;
+	bc_screen = barycentric(pts2, &p);
+	if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
+		f4 = 1;
+	p.x -= offsetx;
+	p.y -= offsety;
+	if (f1 == 1 && f2 == 1 && f3 == 1 && f4 == 1)
+		fill_box(eng, p, p.x + offsetx, p.y + offsety, color);
+	else if (f1 == 0 && f2 == 0 && f3 == 0 && f4 == 0)
+		return ;
+	else
+		full_check_fill_box(eng, p, p.x + offsetx, p.y + offsety, pts2, color);
+}
+
+void		fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int color)
+{
+	int		x;
+	int		y;
+
+	x = p.x;
+	while (x < offsetx)
+	{
+		y = p.y;
+		while (y < offsety)
+		{
+			sdl_put_pixel(eng->surface, x, y, color);
+			y++;
+		}
+		x++;
 	}
 }
 
+void		full_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color)
+{
+	int			ty;
+	t_point_3d	bc_screen;
+
+	ty = p.y;
+	while (p.x <= offsetx)
+	{
+		p.y = ty;
+		while (p.y <= offsety)
+		{
+			bc_screen = barycentric(pts2, &p);
+			if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
+				sdl_put_pixel(eng->surface, p.x, p.y, color);
+			p.y++;
+		}
+		p.x++;
+	}
+}
+
+void		fill_triangle(t_engine *eng, t_fix_point_2d a, t_fix_point_2d b, t_fix_point_2d c, int color)
+{
+	int			dx;
+	int			dy;
+	t_point_3d	begin;
+	t_point_3d	end;
+
+	dx = 1;
+	if (a.y > c.y)
+		dy = 1;
+	else
+		dy = -1;
+	while (a.x < b.x)
+	{
+		begin = (t_point_3d){0, a.x, a.y, 0};
+		end = (t_point_3d){0, a.x, b.y, 0};
+		bresenham_line(&begin, &end, eng, color);
+		a.x = a.x + dx;
+		a.y = a.y + dy;
+	}
+}
 /*
 void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 {

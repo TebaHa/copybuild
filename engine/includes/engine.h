@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/08 15:43:25 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/11 17:21:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,6 +274,9 @@ t_point_3d		create_vector(t_point_3d *a, t_point_3d *b);
 double			magnitude(t_point_3d *normal);
 void			normalize_vec3(t_point_3d *normal);
 t_point_3d		calc_normal(t_polygone *poly);
-
+void			fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int color);
+void			fill_triangle(t_engine *eng, t_fix_point_2d a, t_fix_point_2d b, t_fix_point_2d c, int color);
+void			full_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
+void			check_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
 
 #endif

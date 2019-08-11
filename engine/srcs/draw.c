@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/08 15:48:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/11 18:26:56 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,25 +87,25 @@ void		engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *yt
 	t2.x = v2.x * plr->sinangle - v2.y * plr->cosangle;
 	t2.y = v2.x * plr->cosangle + v2.y * plr->sinangle;
 	/* Is the wall at least partially in front of the player? */
-	if(t1.y <= 0 && t2.y <= 0)
+	if(t1.y < 0 && t2.y < 0)
 		return ;
 	/* If it's partially behind the player, clip it against player's view frustrum */
 	if(t1.y <= 0 || t2.y <= 0)
 	{
-		float nearz = 1e-4f, farz = 5, nearside = 1e-5f, farside = 20.f;
+		float nearz = 1e-5f, farz = 4, nearside = 1e-6f, farside = 20.f;
 		// Find an intersection between the wall and the approximate edges of player's view
 		t_point_2d i1 = Intersect(t1.x, t1.y, t2.x, t2.y, -nearside, nearz, -farside, farz);
 		t_point_2d i2 = Intersect(t1.x, t1.y, t2.x, t2.y, nearside, nearz, farside, farz);
-		if(t1.y < nearz)
+		if (t1.y < nearz)
 		{
-			if(i1.y > 0)
+			if (i1.y > 0)
 				t1 = i1;
 			else
 				t1 = i2;
 		}
-		if(t2.y < nearz)
+		if (t2.y < nearz)
 		{
-			if(i1.y > 0)
+			if (i1.y >= 0)
 				t2 = i1;
 			else
 				t2 = i2;
@@ -116,7 +116,7 @@ void		engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *yt
 	int x1 = WIDTH / 2 - (int)(t1.x * xscale1);
 	float xscale2 = hfov / t2.y, yscale2 = vfov / t2.y;
 	int x2 = WIDTH / 2 - (int)(t2.x * xscale2);
-	if(x1 >= x2 || x2 < 0 || x1 > WIDTH - 1)
+	if(x1 >= x2 || x2 < 0 || x1 > WIDTH)
 		return; // Only render if it's visible
 	float yceil = wall->vertices_array[0].z - plr->position.z;
 	float yfloor = eng->world->sectors_array[plr->cursector].floor - plr->position.z;
@@ -138,7 +138,6 @@ void		engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *yt
 	a->vertices_array[2].x = endx;
 	a->vertices_array[2].y = cya2;
 	a->vertices_array[2].z = z2;
-	a->norm = calc_normal(a);
 	engine_triangle(eng, plr, a);
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
@@ -157,7 +156,6 @@ void		engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *yt
 	a->vertices_array[2].x = beginx;
 	a->vertices_array[2].y = cyb1;
 	a->vertices_array[2].z = z1;
-	a->norm = calc_normal(a);
 	engine_triangle(eng, plr, a);
 	//triangle_lines(a, eng);
 	//engine_draw_line(eng, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
@@ -287,6 +285,5 @@ void	sdl_put_pixel(SDL_Surface *surf, int x, int y, int color)
 
 	bpp = surf->format->BytesPerPixel;
 	p = (Uint8*) surf->pixels + y* surf->pitch + x * bpp;
-	if (((color) & 0x000000FF) >= (*(int *)p  & 0x000000FF))
-			*(int *)p = color;
+	*(int *)p = color;
 }
