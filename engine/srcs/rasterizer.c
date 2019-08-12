@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/11 17:54:00 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/12 19:10:36 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,21 +193,15 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 		while (p.y <= bboxmax.y)
 		{
 			check_box(eng, p, dx, dy, pts2, color);
-			p.y += dy;
+			p.y = p.y + dy;
 		}
-		p.x += dx;
+		p.x = p.x + dx;
 	}
-	p.x -= dx;
-	p.y = bboxmin.y;
-	full_check_fill_box(eng, p, p.x + dx, p.x + dy, pts2, color);
 }
 
 void		check_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color)
 {
 	t_point_3d		bc_screen;
-	t_fix_point_2d	a;
-	t_fix_point_2d	b;
-	t_fix_point_2d	c;
 	int				f1;
 	int				f2;
 	int				f3;
@@ -224,23 +218,19 @@ void		check_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix
 	bc_screen = barycentric(pts2, &p);
 	if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		f2 = 1;
-	p.x -= offsetx;
 	p.y += offsety;
 	bc_screen = barycentric(pts2, &p);
 	if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		f3 = 1;
-	p.x += offsetx;
+	p.x -= offsetx;
 	bc_screen = barycentric(pts2, &p);
 	if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		f4 = 1;
-	p.x -= offsetx;
 	p.y -= offsety;
 	if (f1 == 1 && f2 == 1 && f3 == 1 && f4 == 1)
 		fill_box(eng, p, p.x + offsetx, p.y + offsety, color);
-	else if (f1 == 0 && f2 == 0 && f3 == 0 && f4 == 0)
-		return ;
 	else
-		full_check_fill_box(eng, p, p.x + offsetx, p.y + offsety, pts2, color);
+		square_check_fill_box(eng, p, offsetx, offsety, pts2, color);
 }
 
 void		fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int color)
@@ -249,16 +239,82 @@ void		fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int co
 	int		y;
 
 	x = p.x;
-	while (x < offsetx)
+	while (x <= offsetx)
 	{
 		y = p.y;
-		while (y < offsety)
+		while (y <= offsety)
 		{
 			sdl_put_pixel(eng->surface, x, y, color);
 			y++;
 		}
 		x++;
 	}
+}
+
+void		square_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color)
+{
+	while (check_ractangle(eng, p, offsetx, offsety, pts2, color) && (offsetx > 0 || offsety > 0))
+	{
+		p.x++;
+		p.y++;
+		offsetx -= 1;
+		offsety -= 1;
+	}
+}
+
+int			check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey, t_fix_point_2d pts2[3], int color)
+{
+	int			x;
+	int			y;
+	int			f;
+	t_point_3d	bc_screen;
+
+	x = start.x;
+	f = 0;
+	y = start.y;
+	while (start.y <= y + sizey)
+	{
+		bc_screen = barycentric(pts2, &start);
+		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
+		{
+			f = 1;
+			sdl_put_pixel(eng->surface, start.x, start.y, color);
+		}
+		start.y++;
+	}
+	while (start.x <= x + sizex)
+	{
+		bc_screen = barycentric(pts2, &start);
+		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
+		{
+			f = 1;
+			sdl_put_pixel(eng->surface, start.x, start.y, color);
+		}
+		start.x++;
+	}
+	start.x = x;
+	start.y = y;
+	while (start.x <= x + sizex)
+	{
+		bc_screen = barycentric(pts2, &start);
+		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
+		{
+			f = 1;
+			sdl_put_pixel(eng->surface, start.x, start.y, color);
+		}
+		start.x++;
+	}
+	while (start.y <= y + sizey)
+	{
+		bc_screen = barycentric(pts2, &start);
+		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
+		{
+			f = 1;
+			sdl_put_pixel(eng->surface, start.x, start.y, color);
+		}
+		start.y++;
+	}
+	return (f);
 }
 
 void		full_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color)

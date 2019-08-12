@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/11 17:21:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/12 19:19:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (0.83f * HEIGHT) // Affects the horizontal field of vision
+# define hfov (0.73f * HEIGHT) // Affects the horizontal field of vision
 # define vfov (0.1f * HEIGHT) // Affects the vertical field of vision
 # include <unistd.h>
 # include <math.h>
@@ -278,5 +278,7 @@ void			fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int c
 void			fill_triangle(t_engine *eng, t_fix_point_2d a, t_fix_point_2d b, t_fix_point_2d c, int color);
 void			full_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
 void			check_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
+int				check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey, t_fix_point_2d pts2[3], int color);
+void			square_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
 
 #endif

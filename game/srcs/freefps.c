@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/04 07:51:29 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/12 18:24:06 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		main(void)
 {
 	t_game	fps;
 	int		*rendered;
+	int		dz;
 
 	rendered = (int *)ft_memalloc(sizeof(int) * 2);
 	engine_sdl_init(&fps.eng);
@@ -54,7 +55,7 @@ int		main(void)
 		if (fps.player.controller.moving)
 		{
 			float dx = fps.player.velocity.x, dy = fps.player.velocity.y;
-			int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {0, fps.player.position.x + dx + 1, fps.player.position.y + dy + 1, 0});
+			int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {0, fps.player.position.x + dx, fps.player.position.y + dy, 0});
 			if (sect >= 0)
 			{
 				fps.player.position.x += dx;
@@ -115,10 +116,17 @@ int		main(void)
 		}
 		if (fps.player.controller.falling == 1)
 		{
-			if (fps.player.position.z == fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
+			if (fps.player.position.z - dz <= fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
+			{
 				fps.player.controller.falling = 0;
+				fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100;
+				dz = 0;
+			}
 			else
-				fps.player.position.z -= 5;
+			{
+				fps.player.position.z -= dz;
+				dz += 1;
+			}
 		}
 		int x, y;
 		SDL_GetRelativeMouseState(&x, &y);
