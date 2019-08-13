@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/12 22:31:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/13 21:04:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 	bboxmin = (t_fix_point_2d){INT32_MAX, INT32_MAX};
 	bboxmax = (t_fix_point_2d){INT32_MIN, INT32_MIN};
 	clampt = (t_fix_point_2d){WIDTH - 1, HEIGHT - 1};
-	color = t->color;
-	//color = get_rgb(((int)(t->color) >> 16), ((int)(t->color) >> 8), ((int)(t->color)), 255);
+	color = get_rgb(((int)(t->color) >> 16), ((int)(t->color) >> 8), ((int)(t->color)), 255);
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 2; j++)
@@ -238,7 +237,6 @@ void		fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int co
 {
 	int		x;
 	int		y;
-	int		tcolor;
 
 	x = p.x;
 	while (x <= offsetx)
@@ -246,8 +244,7 @@ void		fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int co
 		y = p.y;
 		while (y <= offsety)
 		{
-			tcolor = get_rgb(((int)(color) >> 16), ((int)(color) >> 8), ((int)(color)), 255 * engine_gain(GAIN, y * KOEFF));
-			sdl_put_pixel(eng->surface, x, y, tcolor);
+			sdl_put_pixel(eng->surface, x, y, color);
 			y++;
 		}
 		x++;
@@ -270,7 +267,6 @@ int			check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey,
 	int			x;
 	int			y;
 	int			f;
-	int			tcolor;
 	t_point_3d	bc_screen;
 
 	x = start.x;
@@ -282,8 +278,7 @@ int			check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey,
 		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		{
 			f = 1;
-			tcolor = get_rgb(((int)(color) >> 16), ((int)(color) >> 8), ((int)(color)), 255 * engine_gain(GAIN, start.y * KOEFF));
-			sdl_put_pixel(eng->surface, start.x, start.y, tcolor);
+			sdl_put_pixel(eng->surface, start.x, start.y, color);
 		}
 		start.y++;
 	}
@@ -293,8 +288,7 @@ int			check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey,
 		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		{
 			f = 1;
-			tcolor = get_rgb(((int)(color) >> 16), ((int)(color) >> 8), ((int)(color)), 255 * engine_gain(GAIN, start.y * KOEFF));
-			sdl_put_pixel(eng->surface, start.x, start.y, tcolor);
+			sdl_put_pixel(eng->surface, start.x, start.y, color);
 		}
 		start.x++;
 	}
@@ -306,8 +300,7 @@ int			check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey,
 		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		{
 			f = 1;
-			tcolor = get_rgb(((int)(color) >> 16), ((int)(color) >> 8), ((int)(color)), 255 * engine_gain(GAIN, start.y * KOEFF));
-			sdl_put_pixel(eng->surface, start.x, start.y, tcolor);
+			sdl_put_pixel(eng->surface, start.x, start.y, color);
 		}
 		start.x++;
 	}
@@ -317,8 +310,7 @@ int			check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey,
 		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		{
 			f = 1;
-			tcolor = get_rgb(((int)(color) >> 16), ((int)(color) >> 8), ((int)(color)), 255 * engine_gain(GAIN, start.y * KOEFF));
-			sdl_put_pixel(eng->surface, start.x, start.y, tcolor);
+			sdl_put_pixel(eng->surface, start.x, start.y, color);
 		}
 		start.y++;
 	}
@@ -371,9 +363,9 @@ void		fill_triangle(t_engine *eng, t_fix_point_2d a, t_fix_point_2d b, t_fix_poi
 	}
 }
 
-void		engine_bw_procedural_texture(t_engine *eng, t_fix_point_2d a)
+void		engine_bw_procedural_texture(t_engine *eng, t_fix_point_3d a)
 {
-	if ((((int)(a.x * 5.9) % 2) == 0) && (((int)(a.y * 5.9) % 2) == 0))
+	if ((((int)(a.x * 3.9) % 4) == 0) && (((int)(a.y * 3.9) % 4) == 0))
 		sdl_put_pixel(eng->surface, a.x, a.y, 0x000000FF);
 	else
 		sdl_put_pixel(eng->surface, a.x, a.y, 0xFFFFFFFF);

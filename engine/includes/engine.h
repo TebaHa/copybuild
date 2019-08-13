@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/12 22:32:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/13 21:05:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,6 @@ void			engine_render_world(t_engine *eng, t_player *plr, int *rendered);
 void			sdl_clear_window(SDL_Surface *surf);
 void			sdl_put_pixel(SDL_Surface *surf, int x, int y, int color);
 void			error_handler(char *error_type, const char *str_error, t_engine *eng);
-void			engine_render_polygone(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered);
 void			engine_create_test_world(t_world **world);
 void			engine_push_renderstack(int *renderqueue, int sector_id);
 void			engine_clear_renderstack(int *renderqueue);
@@ -246,7 +245,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 int				engine_init_triangle(t_polygone *t, t_tric *trg);
 void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
 void			engine_do_calc(t_tric *trg);
-void			engine_render_wall(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
+void			engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered);
 void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
 void			point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
 int				get_rgb(int r, int g, int b, int a);
@@ -282,8 +281,10 @@ void			full_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int off
 void			check_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
 int				check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey, t_fix_point_2d pts2[3], int color);
 void			square_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
-void			engine_bw_procedural_texture(t_engine *eng, t_fix_point_2d a);
+void			engine_bw_procedural_texture(t_engine *eng, t_fix_point_3d a);
 double			engine_gain(double gain, int t);
 double			engine_bias(double b, int t);
+void			engine_render_polygone(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
+void			engine_vline(t_engine *eng, t_fix_point_3d a, t_fix_point_3d b, int color);
 
 #endif
