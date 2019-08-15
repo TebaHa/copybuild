@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/13 22:19:57 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/15 20:19:15 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	/* If it's partially behind the player, clip it against player's view frustrum */
 	if(t1.y <= 0 || t2.y <= 0)
 	{
-		float nearz = 1e-4f, farz = 5, nearside = 1e-5f, farside = 20.f;
+		float nearz = 1e-4f, farz = 5, nearside = 1e-5f, farside = 60.f;
 		// Find an intersection between the wall and the approximate edges of player's view
 		t_point_2d i1 = Intersect(t1.x, t1.y, t2.x, t2.y, -nearside, nearz, -farside, farz);
 		t_point_2d i2 = Intersect(t1.x, t1.y, t2.x, t2.y, nearside, nearz, farside, farz);
@@ -106,9 +106,9 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	}
 	/* Do perspective transformation */
 	float xscale1 = hfov / t1.y, yscale1 = vfov / t1.y;
-	int x1 = WIDTH / 2 - (int)(t1.x * xscale1);
+	int x1 = WIDTH / 2 - (t1.x * xscale1);
 	float xscale2 = hfov / t2.y, yscale2 = vfov / t2.y;
-	int x2 = WIDTH / 2 - (int)(t2.x * xscale2);
+	int x2 = WIDTH / 2 - (t2.x * xscale2);
 	if(x1 >= x2 || x2 < 0 || x1 > WIDTH - 1)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
@@ -136,9 +136,9 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 		int ya = (x - x1) * (y2a - y1a) / (x2 - x1) + y1a, cya = clamp(ya, ytop[x], ybottom[x]); // top
 		int yb = (x - x1) * (y2b - y1b) / (x2 - x1) + y1b, cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
 		/* Render ceiling: everything above this sector's ceiling height. */
-		bresenham_line(&(t_point_3d){0, x, ytop[x], 0}, &(t_point_3d){0, x, cya - 1, 0}, eng, get_rgb(173, 216, 230, 254));
+		engine_vline(eng, (t_fix_point_3d){x, ytop[x], z}, (t_fix_point_3d){x, cya - 1, z}, get_rgb(173, 216, 230, 254));
 		/* Render floor: everything below this sector's floor height. */
-		bresenham_line(&(t_point_3d){0, x, cyb + 1, 0}, &(t_point_3d){0, x, ybottom[x], 0}, eng, get_rgb(218, 165, 32, 255));
+		engine_vline(eng, (t_fix_point_3d){x, cyb + 1, z}, (t_fix_point_3d){x, ybottom[x], z}, get_rgb(218, 165, 32, 255));
 		/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
 		unsigned r = get_rgb(((polygone->color) >> 16), ((polygone->color) >> 8), ((polygone->color)), 255);
 		//get_rgb(((r) >> 16), ((r) >> 8), ((r)), 255)

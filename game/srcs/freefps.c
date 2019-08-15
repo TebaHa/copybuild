@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/12 18:24:06 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/15 20:31:47 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ int		main(void)
 	t_game	fps;
 	int		*rendered;
 	int		dz;
+	int		movement_dz;
+	int		counter;
 
 	rendered = (int *)ft_memalloc(sizeof(int) * 2);
+	movement_dz = 30;
+	counter = 0;
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
 	engine_create_world_from_file(fps.eng, "./game/resources/1.lvl");
@@ -50,8 +54,6 @@ int		main(void)
 		rendered[1] = 0;
 		engine_render_world(fps.eng, &fps.player, rendered);
 		engine_render_frame(fps.eng);
-		if (fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
-			fps.player.controller.falling = 1;
 		if (fps.player.controller.moving)
 		{
 			float dx = fps.player.velocity.x, dy = fps.player.velocity.y;
@@ -60,15 +62,21 @@ int		main(void)
 			{
 				fps.player.position.x += dx;
 				fps.player.position.y += dy;
+				movement_dz = fabs(sin(M_PI_4 * counter++)) * 13;
+				fps.player.position.z += movement_dz;
 				fps.player.cursector = sect;
+				if ((fps.player.position.z) > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
+					fps.player.controller.falling = 1;
 			}
 		}
+		else
+			counter = 0;
 		if (SDL_PollEvent(&fps.eng->event))
 		{
 			if (fps.eng->event.type == SDL_KEYUP)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
-					fps.player.controller.running = 10;
+					fps.player.controller.running = 5;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
 					fps.player.controller.wasd[0] = 0;
 				if (fps.eng->event.key.keysym.sym == SDLK_s)
@@ -81,7 +89,7 @@ int		main(void)
 			if (fps.eng->event.type == SDL_KEYDOWN)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
-					fps.player.controller.running = 15;
+					fps.player.controller.running = 10;
 				if (fps.eng->event.key.keysym.sym == SDLK_ESCAPE)
 					break;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
@@ -94,20 +102,22 @@ int		main(void)
 					fps.player.controller.wasd[1] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_c)
 				{
-					if (fps.player.controller.ducking == 0 && fps.player.controller.falling != 1)
+					if (fps.player.controller.ducking == 0)
 					{
+						fps.player.controller.running -= 3;
 						fps.player.controller.ducking = 1;
-						fps.player.position.z -= 50;
+						fps.player.position.z -= 100;
 					}
-					else if (fps.player.controller.ducking == 1 && fps.player.controller.falling != 1)
+					else if (fps.player.controller.ducking == 1)
 					{
+						fps.player.controller.running += 3;
 						fps.player.controller.ducking = 0;
-						fps.player.position.z += 50;
+						fps.player.position.z += 100;
 					}
 				}
 				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.falling != 1)
 				{
-					fps.player.position.z += 100;
+					fps.player.position.z += 150;
 					fps.player.controller.falling = 1;
 					if (fps.player.controller.ducking == 1)
 						fps.player.controller.ducking = 0;
@@ -125,7 +135,7 @@ int		main(void)
 			else
 			{
 				fps.player.position.z -= dz;
-				dz += 1;
+				dz += 2;
 			}
 		}
 		int x, y;

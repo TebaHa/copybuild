@@ -6,19 +6,19 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/13 21:05:29 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/15 18:04:39 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENGINE_H
 # define ENGINE_H
-# define WIDTH 1024
-# define HEIGHT 720
+# define WIDTH 1400
+# define HEIGHT 900
 # define TWODIM 2
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (0.73f * HEIGHT) // Affects the horizontal field of vision
+# define hfov (0.83f * HEIGHT) // Affects the horizontal field of vision
 # define vfov (0.1f * HEIGHT) // Affects the vertical field of vision
 # include <unistd.h>
 # include <math.h>
