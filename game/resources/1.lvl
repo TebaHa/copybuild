@@ -1,18 +1,18 @@
 # World id, number of sectors
 world: 1 1
 # Vertexes id X, Y, Z
-vertex: 11 -200 100 400
-vertex: 10 200 100 400
-vertex: 9 200 100 400
-vertex: 8 500 0 400
-vertex: 7 500 0 400
-vertex: 6 200 -100 400
-vertex: 5 200 -100 400
-vertex: 4 -200 -100 400
-vertex: 3 -200 -100 400
-vertex: 2 -500 0 400
-vertex: 1 -500 0 400
-vertex: 0 -200 100 400
+vertex: 11 -200 100 500
+vertex: 10 200 100 500
+vertex: 9 200 100 500
+vertex: 8 500 0 500
+vertex: 7 500 0 500
+vertex: 6 200 -100 500
+vertex: 5 200 -100 500
+vertex: 4 -200 -100 500
+vertex: 3 -200 -100 500
+vertex: 2 -500 0 500
+vertex: 1 -500 0 500
+vertex: 0 -200 100 500
 # Polygones id, type, color, (0 for triangle and 1 for wall), number of vertexes, id of vertexes
 polygone: 0 1 16711680 2 0 1
 polygone: 1 1 16764159 2 2 3

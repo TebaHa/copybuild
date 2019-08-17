@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/15 18:04:39 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/16 21:46:18 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,9 @@ typedef	struct		s_control
 	int				falling;
 	int				moving;
 	int				ducking;
+	int				duckcheck;
 	int				running;
+	int				fakefall;
 }					t_control;
 
 typedef	struct		s_player

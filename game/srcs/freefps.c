@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/15 20:31:47 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/17 08:50:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.wasd[1] = 0;
 	plr->controller.wasd[2] = 0;
 	plr->controller.wasd[3] = 0;
-	plr->controller.ducking = 0;
+	plr->controller.ducking = 1;
+	plr->controller.duckcheck = -1;
 	plr->controller.falling = 0;
 	plr->controller.ground = 1;
 	plr->controller.moving = 0;
 	plr->controller.running = 10;
+	plr->controller.fakefall = 0;
 	plr->yaw = 5;
 }
 
@@ -37,12 +39,14 @@ int		main(void)
 	t_game	fps;
 	int		*rendered;
 	int		dz;
+	int		tz;
 	int		movement_dz;
 	int		counter;
 
 	rendered = (int *)ft_memalloc(sizeof(int) * 2);
 	movement_dz = 30;
 	counter = 0;
+	tz = 0;
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
 	engine_create_world_from_file(fps.eng, "./game/resources/1.lvl");
@@ -62,15 +66,18 @@ int		main(void)
 			{
 				fps.player.position.x += dx;
 				fps.player.position.y += dy;
-				movement_dz = fabs(sin(M_PI_4 * counter++)) * 13;
-				fps.player.position.z += movement_dz;
+				if (fps.player.controller.ducking == 1)
+				{
+					movement_dz = fabs(sin(M_PI_4 * counter++)) * 13;
+					fps.player.position.z += movement_dz;
+				}
 				fps.player.cursector = sect;
-				if ((fps.player.position.z) > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
-					fps.player.controller.falling = 1;
 			}
 		}
 		else
 			counter = 0;
+		if ((fps.player.position.z) > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
+			fps.player.controller.falling = 1;
 		if (SDL_PollEvent(&fps.eng->event))
 		{
 			if (fps.eng->event.type == SDL_KEYUP)
@@ -101,26 +108,21 @@ int		main(void)
 				if (fps.eng->event.key.keysym.sym == SDLK_d)
 					fps.player.controller.wasd[1] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_c)
+					fps.player.controller.duckcheck = 1;
+				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.fakefall != 1)
 				{
-					if (fps.player.controller.ducking == 0)
+					if (fps.player.controller.ducking == -1)
 					{
-						fps.player.controller.running -= 3;
 						fps.player.controller.ducking = 1;
-						fps.player.position.z -= 100;
+						fps.player.controller.running += 4 * fps.player.controller.ducking;
+						fps.player.position.z += 100 * fps.player.controller.ducking;
 					}
-					else if (fps.player.controller.ducking == 1)
+					else
 					{
-						fps.player.controller.running += 3;
-						fps.player.controller.ducking = 0;
-						fps.player.position.z += 100;
+						fps.player.controller.ducking = 1;
+						fps.player.position.z += 150;
+						fps.player.controller.fakefall = 1;
 					}
-				}
-				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.falling != 1)
-				{
-					fps.player.position.z += 150;
-					fps.player.controller.falling = 1;
-					if (fps.player.controller.ducking == 1)
-						fps.player.controller.ducking = 0;
 				}
 			}
 		}
@@ -135,7 +137,13 @@ int		main(void)
 			else
 			{
 				fps.player.position.z -= dz;
+				tz += dz;
 				dz += 2;
+				if (tz > fps.player.position.z + 220)
+				{
+					fps.player.controller.fakefall = 0;
+					tz = 0;
+				}
 			}
 		}
 		int x, y;
@@ -165,6 +173,13 @@ int		main(void)
 		{
 			move_vec[0] -= fps.player.cosangle * fps.player.controller.running;
 			move_vec[1] -= fps.player.sinangle * fps.player.controller.running;
+		}
+		if (fps.player.controller.duckcheck == 1)
+		{
+			fps.player.controller.ducking *= -1;
+			fps.player.controller.duckcheck = -1;
+			fps.player.controller.running += 4 * fps.player.controller.ducking;
+			fps.player.position.z += 50 * fps.player.controller.ducking;
 		}
 		int pushing = fps.player.controller.wasd[0] || fps.player.controller.wasd[1] || fps.player.controller.wasd[2] || fps.player.controller.wasd[3];
 		float acceleration = pushing ? 0.4 : 0.2;

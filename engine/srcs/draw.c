@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/15 20:19:15 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/18 01:09:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
-			engine_vline(eng, (t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb - 1, z}, r);
+			engine_vline(eng, (t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, r);
 	}
 }
 
