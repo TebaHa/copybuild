@@ -6,39 +6,11 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 19:30:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/07 22:04:05 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/18 15:14:17 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
-
-//int		ft_countwords_whitespaces(char const *s)
-//{
-//	int			cnt;
-//	const char	*l_comma;
-//	const char	*tmp;
-//	int			f;
-//
-//	tmp = s;
-//	l_comma = 0;
-//	cnt = 0;
-//	f = 0;
-//	while (*tmp)
-//	{
-//		if ((*tmp == ' ' || *tmp == '\t') && f == 0)
-//		{
-//			cnt++;
-//			f = 1;
-//			l_comma = tmp;
-//		}
-//		else if (*tmp != ' ' && *tmp != '\t' && f == 1)
-//			f = 0;
-//		tmp++;
-//	}
-//	cnt += l_comma < (s + ft_strlen(s) - 1);
-//	cnt++;
-//	return (cnt);
-//}
 
 int			ft_countwords_whitespaces(char const *s)
 {
@@ -65,67 +37,57 @@ int			ft_countwords_whitespaces(char const *s)
 	return (0);
 }
 
-
-static char		*ft_cutword_whitespaces(char const *s, size_t i)
+static char		**ft_strsplitwhitespaces_check(char const *s)
 {
-	char	*word;
-	size_t	end;
-	size_t	l;
+	char		**output;
 
-	l = 0;
-	end = i + 1;
-	while (s[end] && s[end] != ' ' && s[end] != '\t')
-		end++;
-	word = (char *)ft_strnew(end - i);
-	if (word == NULL)
+	if (!s)
 		return (NULL);
-	while (s[i] && i < end)
-	{
-		word[l++] = s[i];
-		i++;
-	}
-	return (word);
+	if (!(output = (char **)malloc(sizeof(char *)
+		* (ft_countwords_whitespaces(s) + 1))))
+		return (NULL);
+	return (output);
 }
 
-static void		ft_putnull(char **res, int cnt)
+static void		*ft_freetab(char ***output, size_t err_word)
 {
-	if (cnt > 1)
+	size_t word;
+
+	word = 0;
+	while (word < err_word)
 	{
-		free(res[cnt - 1]);
-		res[cnt - 1] = NULL;
+		free((*output)[word]);
+		word++;
 	}
-	else
-	{
-		free(res[cnt]);
-		res[cnt] = NULL;
-	}
+	free(*output);
+	return (NULL);
 }
 
 char			**ft_strsplitwhitespaces(char const *s)
 {
-	char	**res;
-	int		cnt;
-	int		words;
-	size_t	i;
+	size_t		i;
+	size_t		pos;
+	int			words;
+	char		**output;
 
-	if (s)
+	if (!(output = ft_strsplitwhitespaces_check(s)))
+		return (NULL);
+	i = 0;
+	pos = 0;
+	words = 0;
+	while (s[i])
 	{
-		i = 0;
-		cnt = 0;
-		words = ft_countwords_whitespaces(s);
-		res = (char **)ft_memalloc(sizeof(char **) * words);
-		if (res == NULL)
-			return (NULL);
-		while (words-- > 0)
-		{
-			while (s[i] && (s[i] == ' ' || s[i] == '\t'))
+		if (s[i] == ' ' || s[i] == '\t')
+			pos = ++i;
+		else
+			while (s[i] != ' ' && s[i] != '\t' && s[i] != '\0')
+			{
+				if (s[i + 1] == ' ' || s[i + 1] == '\t' || s[i + 1] == '\0')
+					if (!(output[words++] = ft_strsub(s, pos, (i + 1 - pos))))
+						return (ft_freetab(&output, words));
 				i++;
-			res[cnt++] = ft_cutword_whitespaces(s, i);
-			while (s[i] && s[i] != ' ' && s[i] != '\t')
-				i++;
-		}
-		ft_putnull(res, cnt);
-		return (res);
+			}
 	}
-	return (NULL);
+	output[words] = NULL;
+	return (output);
 }

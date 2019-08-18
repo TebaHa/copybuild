@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:41:27 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/07 21:41:25 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/18 15:18:35 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,6 @@ void	util_parsing_error_count_handler(char *problem, char *problem_from,
 {
 	if (!str[ft_atoi(str[problems_number]) + problems_number])
 		util_parsing_error_litle_data(problem, problem_from, str);
-	int i = 0;
-	while (str[i])
-	{
-		ft_putnbr(i);
-		ft_putstr(": ");
-		ft_putendl(str[i]);
-		i++;
-	}
 	if (str[ft_atoi(str[problems_number]) + problems_number + 1])
-	{
-//		ft_putnbr(ft_atoi(str[problems_number]) + problems_number + 1);
-//		ft_putchar('\n');
-//		char *s = str[ft_atoi(str[problems_number]) + problems_number + 1];
-//		ft_putstr(str[ft_atoi(str[problems_number]) + problems_number + 1]);
-
 		util_parsing_error_extra_data(problem, problem_from, str);
-	}
 }
