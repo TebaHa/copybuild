@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/17 08:50:52 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/18 07:07:12 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,25 +126,19 @@ int		main(void)
 				}
 			}
 		}
-		if (fps.player.controller.falling == 1)
+		if (fps.player.controller.falling == 1 || fps.player.controller.fakefall == 1)
 		{
-			if (fps.player.position.z - dz <= fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
-			{
-				fps.player.controller.falling = 0;
-				fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100;
-				dz = 0;
-			}
-			else
-			{
 				fps.player.position.z -= dz;
 				tz += dz;
 				dz += 2;
-				if (tz > fps.player.position.z + 220)
+				if (fps.eng->world->sectors_array[fps.player.cursector].floor + 100 > fps.player.position.z - dz)
 				{
+					fps.player.controller.falling = 0;
 					fps.player.controller.fakefall = 0;
+					fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100;
 					tz = 0;
+					dz = 0;
 				}
-			}
 		}
 		int x, y;
 		SDL_GetRelativeMouseState(&x, &y);
