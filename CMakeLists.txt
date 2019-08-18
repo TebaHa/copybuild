@@ -171,6 +171,6 @@ add_executable(DoomNukem
 		engine/srcs/parser_filler.c
 		engine/srcs/parser_reader.c
 		engine/srcs/parser_utility.c
-		engine/srcs/parser_errors.c engine/srcs/ft_strsplitwhitespaces.c engine/srcs/ft_strwcmp.c)
+		engine/srcs/parser_errors.c engine/srcs/ft_strsplitwhitespaces.c engine/srcs/ft_strwcmp.c engine/srcs/ft_atoi_hex.c)
 
 target_link_libraries(DoomNukem ${SDL2_LIBRARY})

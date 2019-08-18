@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 19:30:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/18 15:14:17 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/18 15:22:51 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int			ft_countwords_whitespaces(char const *s)
 	return (0);
 }
 
-static char		**ft_strsplitwhitespaces_check(char const *s)
+static char	**ft_strsplitwhitespaces_check(char const *s)
 {
-	char		**output;
+	char	**output;
 
 	if (!s)
 		return (NULL);
@@ -49,7 +49,7 @@ static char		**ft_strsplitwhitespaces_check(char const *s)
 	return (output);
 }
 
-static void		*ft_freetab(char ***output, size_t err_word)
+static void	*ft_freetab(char ***output, size_t err_word)
 {
 	size_t word;
 
@@ -63,12 +63,12 @@ static void		*ft_freetab(char ***output, size_t err_word)
 	return (NULL);
 }
 
-char			**ft_strsplitwhitespaces(char const *s)
+char		**ft_strsplitwhitespaces(char const *s)
 {
-	size_t		i;
-	size_t		pos;
-	int			words;
-	char		**output;
+	size_t	i;
+	size_t	pos;
+	int		words;
+	char	**output;
 
 	if (!(output = ft_strsplitwhitespaces_check(s)))
 		return (NULL);

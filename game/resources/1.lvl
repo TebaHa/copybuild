@@ -23,14 +23,14 @@ vertex:	8	-500	-500	1000
 
 #Polygones
 			id,	type, color,	(0 for triangle and 1 for wall), number of vertexes, id of vertexes
-polygone:	0	1	16711680	2	0	1
-polygone:	1	1	16776960	2	2	3
-polygone:	2	1	65535		2	4	5
-polygone:	3	1	65280		2	6	7
-polygone:	4	1	16711680	2	8	9
-polygone:	5	1	65280		2	10	11
-polygone:	6	1	65535		2	12	13
-polygone:	7	1	65280		2	14	15
+polygone:	0	1	0xFF0000	2	0	1
+polygone:	1	1	0xFFFF00	2	2	3
+polygone:	2	1	0x00FFFF	2	4	5
+polygone:	3	1	0x00FF00	2	6	7
+polygone:	4	1	0xFF0000	2	8	9
+polygone:	5	1	0x00FF00	2	10	11
+polygone:	6	1	0x00FFFF	2	12	13
+polygone:	7	1	0x00FF00	2	14	15
 
 #Objects
 		id,	portal, number of polygones, numbers of polygones

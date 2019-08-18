@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/07 21:50:46 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/18 17:21:56 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void		util_create_world(t_world **world, char **str)
 {
 	*world = (t_world *)ft_memalloc(sizeof(t_world));
-	(*world)->id = ft_atoi(str[1]);
-	(*world)->sectors_count = ft_atoi(str[2]);
+	util_int10_data_filler(&(*world)->id, str[1]);
+	util_int10_data_filler(&(*world)->sectors_count, str[2]);
 	util_parsing_error_count_handler("sector", "world", str, 2);
 	(*world)->renderqueue = (int *)ft_memalloc(sizeof(int)
 		* (*world)->sectors_count);
@@ -30,10 +30,10 @@ void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str)
 		util_parsing_error_litle_data("coordinate", "vertex", str);
 	if (str[5])
 		util_parsing_error_extra_data("coordinate", "vertex", str);
-	point->id = ft_atoi(str[1]);
-	point->x = ft_atoi(str[2]);
-	point->y = ft_atoi(str[3]);
-	point->z = ft_atoi(str[4]);
+	util_int10_data_filler(&point->id, str[1]);
+	util_float10_data_filler(&point->x, str[2]);
+	util_float10_data_filler(&point->y, str[3]);
+	util_float10_data_filler(&point->z, str[4]);
 	eng->stats.vertexes_count++;
 }
 
@@ -43,15 +43,15 @@ void		util_create_polygone(t_engine *eng, t_polygone *polygone,
 	int			vert_count;
 	int			str_count;
 
-	str_count = 5;
-	vert_count = 0;
-	polygone->id = ft_atoi(str[1]);
-	polygone->type = ft_atoi(str[2]);
-	polygone->color = ft_atoi(str[3]);
-	polygone->vertices_count = ft_atoi(str[4]);
+	util_int10_data_filler(&polygone->id, str[1]);
+	util_int10_data_filler(&polygone->type, str[2]);
+	util_int16_data_filler(&polygone->color, str[3]);
+	util_int10_data_filler(&polygone->vertices_count, str[4]);
 	util_parsing_error_count_handler("vertex", "polygone", str, 4);
 	polygone->vertices_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d)
 		* polygone->vertices_count);
+	str_count = 5;
+	vert_count = 0;
 	while (str_count < 5 + polygone->vertices_count)
 		polygone->vertices_array[vert_count++] =
 		util_get_vertex_from_buff_by_id(ft_atoi(str[str_count++]),
@@ -65,9 +65,9 @@ void		util_create_object(t_engine *eng, t_object *object,
 	int			pol_count;
 	int			str_count;
 
-	object->id = ft_atoi(str[1]);
-	object->portal = ft_atoi(str[2]);
-	object->polies_count = ft_atoi(str[3]);
+	util_int10_data_filler(&object->id, str[1]);
+	util_int10_data_filler(&object->portal, str[2]);
+	util_int10_data_filler(&object->polies_count, str[3]);
 	util_parsing_error_count_handler("polygone", "object", str, 3);
 	object->polies_array = (t_polygone *)ft_memalloc(sizeof(t_polygone)
 		* object->polies_count);
@@ -86,13 +86,13 @@ void		util_create_sector(t_engine *eng, t_sector *sector,
 	int			obj_count;
 	int			str_count;
 
-	sector->id = ft_atoi(str[1]);
-	sector->floor = ft_atoi(str[2]);
-	sector->ceil = ft_atoi(str[3]);
-	sector->objects_count = ft_atoi(str[4]);
+	util_int10_data_filler(&sector->id, str[1]);
+	util_int10_data_filler(&sector->floor, str[2]);
+	util_int10_data_filler(&sector->ceil, str[3]);
+	util_int10_data_filler(&sector->objects_count, str[4]);
 	util_parsing_error_count_handler("object", "sector", str, 4);
 	sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object)
-													* sector->objects_count);
+		* sector->objects_count);
 	str_count = 5;
 	obj_count = 0;
 	while (str_count < 5 + sector->objects_count)

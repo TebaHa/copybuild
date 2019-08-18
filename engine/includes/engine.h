@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/07 22:00:35 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/18 16:36:02 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,9 +238,15 @@ void			util_parsing_error_extra_data(char *problem, char *problem_from,
 				char **str);
 void			util_parsing_error_litle_data(char *problem, char *problem_from,
 				char **str);
+void			util_parsing_error_not_digit(char *problem);
+void			util_parsing_error_not_hex(char *problem);
+void			util_int10_data_filler(int *data, char *str);
+void			util_int16_data_filler(int *data, char *str);
+void			util_float10_data_filler(float *data, char *str);
 
 char			**ft_strsplitwhitespaces(char const *s);
 int				ft_countwords_whitespaces(char const *s);
+int				ft_atoi_hex(char *str);
 int				ft_strwcmp(const char *s1, const char *s2);
 
 
