@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/18 07:07:12 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/18 14:30:36 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		game_create_test_player(t_player *plr)
 {
-	plr->position = (t_point_3d){0, 75.0f, 75.0f, 100.0f};
+	plr->position = (t_point_3d){0, 300.0f, 0.f, 200.0f};
 	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
 	plr->cursector = 0;
 	plr->angle = 0;
@@ -39,14 +39,14 @@ int		main(void)
 	t_game	fps;
 	int		*rendered;
 	int		dz;
-	int		tz;
+	int		duck_shift;
 	int		movement_dz;
 	int		counter;
 
 	rendered = (int *)ft_memalloc(sizeof(int) * 2);
 	movement_dz = 30;
 	counter = 0;
-	tz = 0;
+	duck_shift = 0;
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
 	engine_create_world_from_file(fps.eng, "./game/resources/1.lvl");
@@ -70,13 +70,14 @@ int		main(void)
 				{
 					movement_dz = fabs(sin(M_PI_4 * counter++)) * 13;
 					fps.player.position.z += movement_dz;
+					fps.player.controller.fakefall = 1;
 				}
 				fps.player.cursector = sect;
 			}
 		}
 		else
 			counter = 0;
-		if ((fps.player.position.z) > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
+		if ((fps.player.position.z) - movement_dz - 100 > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
 			fps.player.controller.falling = 1;
 		if (SDL_PollEvent(&fps.eng->event))
 		{
@@ -108,20 +109,33 @@ int		main(void)
 				if (fps.eng->event.key.keysym.sym == SDLK_d)
 					fps.player.controller.wasd[1] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_c)
-					fps.player.controller.duckcheck = 1;
-				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.fakefall != 1)
+				{
+					if (fps.player.controller.ducking == 1)
+					{
+						duck_shift = 50;
+						fps.player.controller.running -= 3;
+						fps.player.controller.ducking = -1;
+					}
+					else if (fps.player.controller.ducking == -1)
+					{
+						duck_shift = 0;
+						fps.player.controller.running += 3;
+						fps.player.controller.ducking = 1;
+					}
+					fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100 - duck_shift;
+				}
+				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.falling != 1)
 				{
 					if (fps.player.controller.ducking == -1)
 					{
+						fps.player.controller.running += 3;
+						duck_shift = 0;
+						fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100 - duck_shift;
 						fps.player.controller.ducking = 1;
-						fps.player.controller.running += 4 * fps.player.controller.ducking;
-						fps.player.position.z += 100 * fps.player.controller.ducking;
 					}
 					else
 					{
-						fps.player.controller.ducking = 1;
-						fps.player.position.z += 150;
-						fps.player.controller.fakefall = 1;
+						fps.player.position.z += 500;
 					}
 				}
 			}
@@ -129,14 +143,12 @@ int		main(void)
 		if (fps.player.controller.falling == 1 || fps.player.controller.fakefall == 1)
 		{
 				fps.player.position.z -= dz;
-				tz += dz;
 				dz += 2;
-				if (fps.eng->world->sectors_array[fps.player.cursector].floor + 100 > fps.player.position.z - dz)
+				if (fps.eng->world->sectors_array[fps.player.cursector].floor + 100 - duck_shift > fps.player.position.z)
 				{
 					fps.player.controller.falling = 0;
 					fps.player.controller.fakefall = 0;
-					fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100;
-					tz = 0;
+					fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100 - duck_shift;
 					dz = 0;
 				}
 		}
@@ -167,13 +179,6 @@ int		main(void)
 		{
 			move_vec[0] -= fps.player.cosangle * fps.player.controller.running;
 			move_vec[1] -= fps.player.sinangle * fps.player.controller.running;
-		}
-		if (fps.player.controller.duckcheck == 1)
-		{
-			fps.player.controller.ducking *= -1;
-			fps.player.controller.duckcheck = -1;
-			fps.player.controller.running += 4 * fps.player.controller.ducking;
-			fps.player.position.z += 50 * fps.player.controller.ducking;
 		}
 		int pushing = fps.player.controller.wasd[0] || fps.player.controller.wasd[1] || fps.player.controller.wasd[2] || fps.player.controller.wasd[3];
 		float acceleration = pushing ? 0.4 : 0.2;
