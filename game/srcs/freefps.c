@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/18 14:30:36 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/19 15:43:18 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void		game_create_test_player(t_player *plr)
 {
-	plr->position = (t_point_3d){0, 300.0f, 0.f, 200.0f};
+	plr->position = (t_point_3d){0, -300.0f, 0.f, 200.0f};
 	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
-	plr->cursector = 0;
+	plr->cursector = 1;
 	plr->angle = 0;
 	plr->sinangle = sinf(plr->angle);
 	plr->cosangle = cosf(plr->angle);
@@ -29,7 +29,7 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.falling = 0;
 	plr->controller.ground = 1;
 	plr->controller.moving = 0;
-	plr->controller.running = 10;
+	plr->controller.running = 7;
 	plr->controller.fakefall = 0;
 	plr->yaw = 5;
 }
@@ -77,7 +77,7 @@ int		main(void)
 		}
 		else
 			counter = 0;
-		if ((fps.player.position.z) - movement_dz - 100 > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
+		if ((fps.player.position.z) - movement_dz - 100 > fps.eng->world->sectors_array[fps.player.cursector].floor + 100 + duck_shift)
 			fps.player.controller.falling = 1;
 		if (SDL_PollEvent(&fps.eng->event))
 		{
@@ -115,14 +115,15 @@ int		main(void)
 						duck_shift = 50;
 						fps.player.controller.running -= 3;
 						fps.player.controller.ducking = -1;
+						fps.player.controller.falling  = 1;
 					}
 					else if (fps.player.controller.ducking == -1)
 					{
 						duck_shift = 0;
 						fps.player.controller.running += 3;
 						fps.player.controller.ducking = 1;
+						fps.player.position.z += 50;
 					}
-					fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100 - duck_shift;
 				}
 				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.falling != 1)
 				{
@@ -135,7 +136,7 @@ int		main(void)
 					}
 					else
 					{
-						fps.player.position.z += 500;
+						fps.player.position.z += 150;
 					}
 				}
 			}

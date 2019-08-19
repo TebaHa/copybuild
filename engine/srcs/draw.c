@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/18 12:26:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/19 17:41:35 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 	SDL_LockSurface(eng->surface);
 	while (x < WIDTH)
 		ybottom[x++] = HEIGHT;
-	i = 0;
 	engine_push_renderstack(eng->world->renderqueue, sect_id);
 	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)) >= 0) && rendered[sect_id] == 0)
 	{
+		i = 0;
 		while (i < eng->world->sectors_array[sect_id].objects_count)
 		{
 			engine_render_wall(eng, eng->world->sectors_array[sect_id].objects_array[i].polies_array, plr,
-				ytop, ybottom, eng->world->sectors_array[sect_id].objects_array[i].portal, rendered);
+				ytop, ybottom, eng->world->sectors_array[sect_id].objects_array[i].portal, rendered, sect_id);
 			i++;
 		}
 		rendered[sect_id] = 1;
@@ -63,7 +63,7 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 	SDL_UnlockSurface(eng->surface);
 }
 
-void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered)
+void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, int sect)
 {
 	t_point_2d	v1;
 	t_point_2d	v2;
@@ -79,6 +79,8 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	t1.y = v1.x * plr->cosangle + v1.y * plr->sinangle;
 	t2.x = v2.x * plr->sinangle - v2.y * plr->cosangle;
 	t2.y = v2.x * plr->cosangle + v2.y * plr->sinangle;
+	if (rendered[portal] == 1)
+			return ;
 	/* Is the wall at least partially in front of the player? */
 	if(t1.y <= 0 && t2.y <= 0)
 		return ;
@@ -112,8 +114,8 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	if(x1 >= x2 || x2 < 0 || x1 > WIDTH - 1)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil = polygone->vertices_array[0].z - plr->position.z;
-	float yfloor = eng->world->sectors_array[plr->cursector].floor - plr->position.z;
+	float yceil =  eng->world->sectors_array[sect].ceil - plr->position.z;
+	float yfloor = eng->world->sectors_array[sect].floor - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	float nyceil = 0, nyfloor = 0;
 	if(portal >= 0) // Is another sector showing through this portal?
@@ -122,8 +124,8 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 		nyfloor = eng->world->sectors_array[portal].floor - plr->position.z;
 		engine_push_renderstack(eng->world->renderqueue, portal);
 	}
-	int y1a  = HEIGHT / 2 - (int)((yceil + t1.y * plr->yaw) * yscale1),  y1b = HEIGHT / 2 - (int)((yfloor + t1.y * plr->yaw)  * yscale1);
-	int y2a  = HEIGHT / 2 - (int)((yceil + t2.y * plr->yaw)  * yscale2),  y2b = HEIGHT / 2 - (int)((yfloor + t2.y * plr->yaw)  * yscale2);
+	int y1a  = HEIGHT / 2 - (int)((yceil + t1.y * plr->yaw) * yscale1), y1b = HEIGHT / 2 - (int)((yfloor + t1.y * plr->yaw)  * yscale1);
+	int y2a  = HEIGHT / 2 - (int)((yceil + t2.y * plr->yaw)  * yscale2), y2b = HEIGHT / 2 - (int)((yfloor + t2.y * plr->yaw)  * yscale2);
 	/* The same for the neighboring sector */
 	int ny1a = HEIGHT / 2 - (int)((nyceil + t1.y * plr->yaw)  * yscale1), ny1b = HEIGHT / 2 - (int)((nyfloor + t1.y * plr->yaw) * yscale1);
 	int ny2a = HEIGHT / 2 - (int)((nyceil + t2.y * plr->yaw)  * yscale2), ny2b = HEIGHT / 2 - (int)((nyfloor + t2.y * plr->yaw) * yscale2);
@@ -136,21 +138,20 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 		int ya = (x - x1) * (y2a - y1a) / (x2 - x1) + y1a, cya = clamp(ya, ytop[x], ybottom[x]); // top
 		int yb = (x - x1) * (y2b - y1b) / (x2 - x1) + y1b, cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
 		/* Render ceiling: everything above this sector's ceiling height. */
-		engine_vline(eng, (t_fix_point_3d){x, ytop[x], z}, (t_fix_point_3d){x, cya - 1, z}, get_rgb(173, 216, 230, 254));
+		engine_vline(eng, (t_fix_point_3d){x, ytop[x], z}, (t_fix_point_3d){x, cya - 1, z}, get_rgb(173, 216, 230, 255));
 		/* Render floor: everything below this sector's floor height. */
 		engine_vline(eng, (t_fix_point_3d){x, cyb + 1, z}, (t_fix_point_3d){x, ybottom[x], z}, get_rgb(218, 165, 32, 255));
 		/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
 		unsigned r = get_rgb(((polygone->color) >> 16), ((polygone->color) >> 8), ((polygone->color)), 255);
-		//get_rgb(((r) >> 16), ((r) >> 8), ((r)), 255)
 		if (portal >= 0)
 		{
 			int nya = (x - x1) * (ny2a - ny1a) / (x2 - x1) + ny1a, cnya = clamp(nya, ytop[x], ybottom[x]);
 			int nyb = (x - x1) * (ny2b - ny1b) / (x2 - x1) + ny1b, cnyb = clamp(nyb, ytop[x], ybottom[x]);
 			/* If our ceiling is higher than their ceiling, render upper wall */
-			bresenham_line(&(t_point_3d){0, x, cya, 0}, &(t_point_3d){0, x, cnya - 1, 0}, eng, x == x1 || x == x2 ? 0 : get_rgb(255, 0, 0, 255));
+			bresenham_line(&(t_point_3d){0, x, cya, 0}, &(t_point_3d){0, x, cnya - 1, 0}, eng, x == x1 || x == x2 ? 0 : get_rgb(173, 216, 230, 255));
 			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);// Shrink the remaining window below these ceilings
 			/* If our floor is lower than their floor, render bottom wall */
-			bresenham_line(&(t_point_3d){0, x, cnyb + 1, 0}, &(t_point_3d){0, x, cyb, 0}, eng, x == x1 || x == x2 ? 0 : get_rgb(255, 0, 0, 255));
+			bresenham_line(&(t_point_3d){0, x, cnyb + 1, 0}, &(t_point_3d){0, x, cyb, 0}, eng, x == x1 || x == x2 ? 0 : get_rgb(218, 165, 32, 255));
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
