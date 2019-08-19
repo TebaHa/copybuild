@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/19 18:58:33 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/19 19:24:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int		main(void)
 			counter = 0;
 		if ((fps.player.position.z) - movement_dz - 100 > fps.eng->world->sectors_array[fps.player.cursector].floor + 100 + duck_shift
 			|| (fps.player.controller.ducking == -1 &&
-			(fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + 50)))
+			((fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + 50) ||
+			(fps.player.position.z < fps.eng->world->sectors_array[fps.player.cursector].floor + 50))))
 			fps.player.controller.falling = 1;
 		if (SDL_PollEvent(&fps.eng->event))
 		{
