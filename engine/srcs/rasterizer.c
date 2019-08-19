@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/13 21:04:52 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/19 18:59:33 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void			engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t)
 	}
 }
 */
-t_point_3d	engine_cross(t_point_3d a, t_point_3d b)
+t_point_3d		engine_cross(t_point_3d a, t_point_3d b)
 {
 	t_point_3d res;
 
@@ -148,7 +148,7 @@ t_point_3d	engine_cross(t_point_3d a, t_point_3d b)
 	return (res);
 }
 
-t_point_3d	engine_barycentric(t_fix_point_2d pts[3], t_fix_point_2d *p)
+t_point_3d		engine_barycentric(t_fix_point_2d pts[3], t_fix_point_2d *p)
 {
 	t_point_3d u = engine_cross((t_point_3d){0, pts[2].x - pts[0].x, pts[1].x - pts[0].x,
 	pts[0].x - p->x}, (t_point_3d){0, pts[2].y - pts[0].y, pts[1].y - pts[0].y, pts[0].y - p->y});

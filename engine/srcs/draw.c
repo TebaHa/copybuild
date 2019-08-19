@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/19 17:41:35 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/19 19:08:39 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,10 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 			int nya = (x - x1) * (ny2a - ny1a) / (x2 - x1) + ny1a, cnya = clamp(nya, ytop[x], ybottom[x]);
 			int nyb = (x - x1) * (ny2b - ny1b) / (x2 - x1) + ny1b, cnyb = clamp(nyb, ytop[x], ybottom[x]);
 			/* If our ceiling is higher than their ceiling, render upper wall */
-			bresenham_line(&(t_point_3d){0, x, cya, 0}, &(t_point_3d){0, x, cnya - 1, 0}, eng, x == x1 || x == x2 ? 0 : get_rgb(173, 216, 230, 255));
+			engine_vline(eng, (t_fix_point_3d){x, cya, 0}, (t_fix_point_3d){x, cnya - 1, 0}, x == x1 || x == x2 ? 0 : get_rgb(173, 216, 230, 255));
 			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);// Shrink the remaining window below these ceilings
 			/* If our floor is lower than their floor, render bottom wall */
-			bresenham_line(&(t_point_3d){0, x, cnyb + 1, 0}, &(t_point_3d){0, x, cyb, 0}, eng, x == x1 || x == x2 ? 0 : get_rgb(218, 165, 32, 255));
+			engine_vline(eng, (t_fix_point_3d){x, cnyb + 1, 0}, (t_fix_point_3d){x, cyb, 0}, x == x1 || x == x2 ? 0 : get_rgb(218, 165, 32, 255));
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
@@ -298,7 +298,9 @@ void		engine_vline(t_engine *eng, t_fix_point_3d a, t_fix_point_3d b, int color)
 		sdl_put_pixel(eng->surface, b.x, y1, color);
 	else if(y2 > y1)
 	{
+		sdl_put_pixel(eng->surface, a.x, y1, 0xFF);
 		for(int y = y1 + 1; y < y2; ++y)
 			sdl_put_pixel(eng->surface, a.x, y, color);
+		sdl_put_pixel(eng->surface, a.x, y2, 0xFF);
 	}
 }
