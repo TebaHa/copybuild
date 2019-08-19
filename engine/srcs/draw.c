@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/19 19:22:22 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/19 19:36:15 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	int ny1a = HEIGHT / 2 - (int)((nyceil + t1.y * plr->yaw)  * yscale1), ny1b = HEIGHT / 2 - (int)((nyfloor + t1.y * plr->yaw) * yscale1);
 	int ny2a = HEIGHT / 2 - (int)((nyceil + t2.y * plr->yaw)  * yscale2), ny2b = HEIGHT / 2 - (int)((nyfloor + t2.y * plr->yaw) * yscale2);
 	int beginx = max(x1, 0), endx = min(x2, WIDTH - 1);
+	unsigned r = get_rgb(((polygone->color) >> 16), ((polygone->color) >> 8), ((polygone->color)), 255);
 	for(int x = beginx; x <= endx; ++x)
 	{
 		/* Calculate the Z coordinate for this point. (Only used for lighting.) */
@@ -142,7 +143,6 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 		/* Render floor: everything below this sector's floor height. */
 		engine_vline(eng, (t_fix_point_3d){x, cyb + 1, z}, (t_fix_point_3d){x, ybottom[x], z}, get_rgb(218, 165, 32, 255));
 		/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
-		unsigned r = get_rgb(((polygone->color) >> 16), ((polygone->color) >> 8), ((polygone->color)), 255);
 		if (portal >= 0)
 		{
 			int nya = (x - x1) * (ny2a - ny1a) / (x2 - x1) + ny1a, cnya = clamp(nya, ytop[x], ybottom[x]);
