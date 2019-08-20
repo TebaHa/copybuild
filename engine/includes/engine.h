@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/19 20:19:41 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/20 16:57:23 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (0.83f * HEIGHT) // Affects the horizontal field of vision
+# define hfov (0.53f * HEIGHT) // Affects the horizontal field of vision
 # define vfov (0.1f * HEIGHT) // Affects the vertical field of vision
 # include <unistd.h>
 # include <math.h>
@@ -53,8 +53,12 @@ typedef	struct		s_point_2d
 # define GAIN 0.5
 # define KOEFF -1
 
-/* INIT AND UNINIT ENGINE */
-//void			uninitengine(void);
+typedef struct		s_item
+{
+	int				sectorno;
+	int				sx1;
+	int				sx2;
+}					t_item;
 
 typedef	struct		s_fix_point_3d
 {
@@ -108,7 +112,7 @@ typedef	struct		s_world
 {
 	t_sector		*sectors_array;
 	int				sectors_count;
-	int				*renderqueue;
+	t_item			*renderqueue;
 	int				id;
 }					t_world;
 
@@ -156,13 +160,6 @@ typedef struct		s_engine
 	int				*z_buff;
 }					t_engine;
 
-typedef struct		s_item
-{
-	int				sectorno;
-	int				sx1;
-	int				sx2;
-}					t_item;
-
 typedef struct		s_tric
 {
 	int				total_height;
@@ -184,18 +181,18 @@ typedef struct		s_tric
 	int				offsety;
 }					t_tric;
 
-typedef struct				s_bcontex
+typedef struct		s_bcontex
 {
-	int						steep;
-	double					dx;
-	double					dy;
-	int						error2;
-	int						derror2;
-	int						x;
-	int						y;
-	t_point_3d				b;
-	t_point_3d				e;
-}							t_bcontex;
+	int				steep;
+	double			dx;
+	double			dy;
+	int				error2;
+	int				derror2;
+	int				x;
+	int				y;
+	t_point_3d		b;
+	t_point_3d		e;
+}					t_bcontex;
 
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
@@ -207,10 +204,10 @@ void			sdl_clear_window(SDL_Surface *surf);
 void			sdl_put_pixel(SDL_Surface *surf, int x, int y, int color);
 void			error_handler(char *error_type, const char *str_error, t_engine *eng);
 void			engine_create_test_world(t_world **world);
-void			engine_push_renderstack(int *renderqueue, int sector_id);
-void			engine_clear_renderstack(int *renderqueue);
+void			engine_push_renderstack(t_item *renderqueue, t_item item);
+void			engine_clear_renderstack(t_item *renderqueue);
 void			engine_create_renderstack(t_engine *eng, int render_id, int *rendered);
-int				engine_pop_renderstack(int *renderqueue);
+t_item			engine_pop_renderstack(t_item *renderqueue);
 int				engine_object_get_sector(t_world *world, t_point_3d pos);
 t_object		engine_create_obj_wall(int portal, t_point_3d a, t_point_3d b, t_point_3d c, t_point_3d d);
 t_point_3d		engine_count_perspective(t_point_3d a, int c);
@@ -247,7 +244,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 int				engine_init_triangle(t_polygone *t, t_tric *trg);
 void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
 void			engine_do_calc(t_tric *trg);
-void			engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, int sect);
+void			engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect);
 void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
 void			point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
 int				get_rgb(int r, int g, int b, int a);

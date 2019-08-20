@@ -6,35 +6,35 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:14:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/19 15:26:04 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/20 14:45:42 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void	engine_push_renderstack(int *renderqueue, int sector_id)
+void	engine_push_renderstack(t_item *renderqueue, t_item item)
 {
 	int	i;
 
 	i = 0;
-	while (renderqueue[i] >= 0)
+	while (renderqueue[i].sectorno >= 0)
 		i++;
 	while ((i + 1) < MAXSECTORS && i >= 0)
 	{
 		renderqueue[i + 1] = renderqueue[i];
 		i--;
 	}
-	renderqueue[0] = sector_id;
+	renderqueue[0] = item;
 }
 
-int		engine_pop_renderstack(int *renderqueue)
+t_item		engine_pop_renderstack(t_item *renderqueue)
 {
-	int	res;
+	t_item	res;
 	int	i;
 
 	i = 0;
 	res = renderqueue[0];
-	while ((i + 1) < MAXSECTORS && renderqueue[i] >= 0)
+	while ((i + 1) < MAXSECTORS && renderqueue[i].sectorno >= 0)
 	{
 		renderqueue[i] = renderqueue[i + 1];
 		i++;
@@ -42,14 +42,14 @@ int		engine_pop_renderstack(int *renderqueue)
 	return (res);
 }
 
-void	engine_clear_renderstack(int *renderqueue)
+void	engine_clear_renderstack(t_item *renderqueue)
 {
 	int	i;
 
 	i = 0;
 	while (i < MAXSECTORS)
 	{
-		renderqueue[i] = -1;
+		renderqueue[i].sectorno = -1;
 		i++;
 	}
 }
@@ -72,7 +72,6 @@ t_world		*util_create_world(int id, int sector_count)
 	world = (t_world *)ft_memalloc(sizeof(t_world));
 	world->id = id;
 	world->sectors_count = sector_count;
-	world->renderqueue = (int *)ft_memalloc(sizeof(int) * sector_count);
 	world->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector) * sector_count);
 	return (world);
 }

@@ -1,6 +1,24 @@
 # World id, number of sectors
-world: 1 1
+world: 1 4
 # Vertexes id X, Y, Z
+vertex: 28 -200 -100 600
+vertex: 29 -400 -200 600
+vertex: 30 -400 -200 600
+vertex: 31 -600 -100 600
+vertex: 32 -600 -100 600
+vertex: 33 -500 0 600
+vertex: 34 -500 0 600
+vertex: 35 -200 -100 600
+
+vertex: 20 -200 100 600
+vertex: 21 -400 200 600
+vertex: 22 -400 200 600
+vertex: 23 -600 100 600
+vertex: 24 -600 100 600
+vertex: 25 -500 0 600
+vertex: 26 -500 0 600
+vertex: 27 -200 100 600
+
 vertex: 19 200 100 800
 vertex: 18 500 0 800
 vertex: 17 500 0 800
@@ -36,6 +54,16 @@ polygone: 7 1 13434879 2 4 5
 polygone: 8 1 16711680 2 6 7
 polygone: 9 1 16711680 2 8 9
 
+polygone: 10 1 14277081 2 20 21
+polygone: 11 1 15786525 2 22 23
+polygone: 12 1 13434879 2 24 25
+polygone: 13 1 16711680 2 26 27
+
+polygone: 14 1 14277081 2 29 28
+polygone: 15 1 15786525 2 31 30
+polygone: 16 1 13434879 2 33 32
+polygone: 17 1 16711680 2 35 34
+
 # Object id, portal, number of polygones, numbers of polygones
 object: 0 -1 1 0
 object: 1 1 1 1
@@ -43,12 +71,24 @@ object: 2 -1 1 2
 object: 3 -1 1 3
 object: 4 -1 1 4
 
-object: 5 -1 1 5
-object: 6 -1 1 6
+object: 5 2 1 5
+object: 6 3 1 6
 object: 7 -1 1 7
 object: 8 0 1 8
 object: 9 -1 1 9
 
+object: 10 -1 1 10
+object: 11 -1 1 11
+object: 12 -1 1 12
+object: 13 1 1 13
+
+object: 14 -1 1 14
+object: 15 -1 1 15
+object: 16 -1 1 16
+object: 17 1 1 17
+
 # Sector id floor, ceil, number of objects, numbers of objects
-sector: 0 0 400 5 0 1 2 3 4
-sector: 1 -500 600 5 5 6 7 8 9
+sector: 0 0 500 5 0 1 2 3 4
+sector: 1 25 1100 5 5 6 7 8 9
+sector: 2 500 1000 4 10 11 12 13
+sector: 3 500 1000 4 14 15 16 17

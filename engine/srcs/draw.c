@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/19 19:36:15 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/20 17:13:54 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,59 +17,44 @@ int			get_rgb(int r, int g, int b, int a)
 	return (((((int)r) << 24) & 0xFF000000) | ((((int)g) << 16) & 0x00FF0000) | (((b) << 8) & 0x0000FF00) | (((a)) & 0x000000FF));
 }
 
-void		engine_create_renderstack(t_engine *eng, int render_id, int *rendered)
-{
-	int		i;
-	int		sect;
-
-	i = 0;
-	engine_push_renderstack(eng->world->renderqueue, render_id);
-	rendered[render_id] = 1;
-	while (i < 4)
-	{
-		sect = eng->world->sectors_array[render_id].objects_array[i].portal;
-		if (sect >= 0 && rendered[sect] == 0)
-			engine_create_renderstack(eng, sect, rendered);
-		i++;
-	}
-}
-
 void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 {
 	int			ytop[WIDTH] = {0};
 	int			ybottom[WIDTH];
 	unsigned	x;
-	int			sect_id;
+	t_item		sect_id;
 	int			i;
 
 	x = 0;
-	sect_id = plr->cursector;
+	sect_id = (t_item){plr->cursector, 0, WIDTH - 1};
 	SDL_LockSurface(eng->surface);
 	while (x < WIDTH)
 		ybottom[x++] = HEIGHT;
 	engine_push_renderstack(eng->world->renderqueue, sect_id);
-	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)) >= 0) && rendered[sect_id] == 0)
+	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)).sectorno >= 0) && rendered[sect_id.sectorno] == 0)
 	{
 		i = 0;
-		while (i < eng->world->sectors_array[sect_id].objects_count)
+		while (i < eng->world->sectors_array[sect_id.sectorno].objects_count)
 		{
-			engine_render_wall(eng, eng->world->sectors_array[sect_id].objects_array[i].polies_array, plr,
-				ytop, ybottom, eng->world->sectors_array[sect_id].objects_array[i].portal, rendered, sect_id);
+			engine_render_wall(eng, eng->world->sectors_array[sect_id.sectorno].objects_array[i].polies_array, plr,
+				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, rendered, sect_id);
 			i++;
 		}
-		rendered[sect_id] = 1;
+		rendered[sect_id.sectorno] = 1;
 	}
 	engine_clear_renderstack(eng->world->renderqueue);
 	SDL_UnlockSurface(eng->surface);
 }
 
-void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, int sect)
+void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect)
 {
 	t_point_2d	v1;
 	t_point_2d	v2;
 	t_point_2d	t1;
 	t_point_2d	t2;
+	int			push;
 
+	push = 0;
 	v1.x = polygone->vertices_array[0].x - plr->position.x;
 	v1.y = polygone->vertices_array[0].y - plr->position.y;
 	v2.x = polygone->vertices_array[1].x - plr->position.x;
@@ -111,28 +96,34 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	int x1 = WIDTH / 2 - (t1.x * xscale1);
 	float xscale2 = hfov / t2.y, yscale2 = vfov / t2.y;
 	int x2 = WIDTH / 2 - (t2.x * xscale2);
-	if(x1 >= x2 || x2 < 0 || x1 > WIDTH - 1)
+	if(x1 >= x2 || x2 < sect.sx1 || x1 > sect.sx2)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil =  eng->world->sectors_array[sect].ceil - plr->position.z;
-	float yfloor = eng->world->sectors_array[sect].floor - plr->position.z;
+	float yceil =  eng->world->sectors_array[sect.sectorno].ceil - plr->position.z;
+	float yfloor = eng->world->sectors_array[sect.sectorno].floor - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	float nyceil = 0, nyfloor = 0;
 	if(portal >= 0) // Is another sector showing through this portal?
 	{
 		nyceil  = eng->world->sectors_array[portal].ceil - plr->position.z;
 		nyfloor = eng->world->sectors_array[portal].floor - plr->position.z;
-		engine_push_renderstack(eng->world->renderqueue, portal);
+		push = 1;
 	}
 	int y1a  = HEIGHT / 2 - (int)((yceil + t1.y * plr->yaw) * yscale1), y1b = HEIGHT / 2 - (int)((yfloor + t1.y * plr->yaw)  * yscale1);
 	int y2a  = HEIGHT / 2 - (int)((yceil + t2.y * plr->yaw)  * yscale2), y2b = HEIGHT / 2 - (int)((yfloor + t2.y * plr->yaw)  * yscale2);
 	/* The same for the neighboring sector */
 	int ny1a = HEIGHT / 2 - (int)((nyceil + t1.y * plr->yaw)  * yscale1), ny1b = HEIGHT / 2 - (int)((nyfloor + t1.y * plr->yaw) * yscale1);
 	int ny2a = HEIGHT / 2 - (int)((nyceil + t2.y * plr->yaw)  * yscale2), ny2b = HEIGHT / 2 - (int)((nyfloor + t2.y * plr->yaw) * yscale2);
-	int beginx = max(x1, 0), endx = min(x2, WIDTH - 1);
-	unsigned r = get_rgb(((polygone->color) >> 16), ((polygone->color) >> 8), ((polygone->color)), 255);
+	int beginx = max(x1, sect.sx1), endx = min(x2, sect.sx2);
+	if (push)
+		engine_push_renderstack(eng->world->renderqueue, (t_item){portal, beginx, endx});
+	unsigned r;
 	for(int x = beginx; x <= endx; ++x)
 	{
+		if (x == beginx || x == endx)
+			r = 0;
+		else
+			r = get_rgb(((polygone->color) >> 16), ((polygone->color) >> 8), ((polygone->color)), 255);
 		/* Calculate the Z coordinate for this point. (Only used for lighting.) */
 		int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;
 		/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
