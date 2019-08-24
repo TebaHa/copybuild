@@ -2,5 +2,5 @@
 	path = lib/libft
 	url = https://github.com/TebaHa/personal_libft
 [submodule "lib/stblib"]
-	path = lib/stlib
+	path = lib/stblib
 	url = https://github.com/nothings/stb.git
