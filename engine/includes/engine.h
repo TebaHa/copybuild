@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/18 16:36:02 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/18 17:18:46 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ t_object		engine_create_obj_wall(int portal, t_point_3d a, t_point_3d b, t_point
 t_point_3d		engine_count_perspective(t_point_3d a, int c);
 
 char			**engine_read_level_file(char *filename);
+void			engine_count_all_from_file(t_engine *eng, char **json_splited);
 t_world			*engine_read_world_from_file(t_engine *eng, char **json_splited);
 t_point_3d		*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
 t_polygone		*engine_read_polygones_from_file(t_engine *eng, t_point_3d *vertex_array, char **json_splited);
@@ -236,7 +237,7 @@ void			util_parsing_error_count_handler(char *problem,
 				char *problem_from, char **str, int problems_number);
 void			util_parsing_error_extra_data(char *problem, char *problem_from,
 				char **str);
-void			util_parsing_error_litle_data(char *problem, char *problem_from,
+void			util_parsing_error_little_data(char *problem, char *problem_from,
 				char **str);
 void			util_parsing_error_not_digit(char *problem);
 void			util_parsing_error_not_hex(char *problem);

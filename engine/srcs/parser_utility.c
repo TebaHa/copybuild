@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/08/18 17:21:56 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/24 15:41:36 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		util_create_world(t_world **world, char **str)
 void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str)
 {
 	if (!str[4])
-		util_parsing_error_litle_data("coordinate", "vertex", str);
+		util_parsing_error_little_data("coordinate", "vertex", str);
 	if (str[5])
 		util_parsing_error_extra_data("coordinate", "vertex", str);
 	util_int10_data_filler(&point->id, str[1]);
@@ -57,6 +57,7 @@ void		util_create_polygone(t_engine *eng, t_polygone *polygone,
 		util_get_vertex_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.vertexes_count, vertex_array, polygone->id);
 	eng->stats.polies_count++;
+//	free(polygone->vertices_array); // "типа" место утечки
 }
 
 void		util_create_object(t_engine *eng, t_object *object,

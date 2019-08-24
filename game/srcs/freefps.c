@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/18 15:05:37 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/19 20:43:04 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.running = 10;
 	plr->yaw = 5;
 }
-
+///*
 int		main(void)
 {
 	t_game	fps;
@@ -164,32 +164,17 @@ int		main(void)
 	engine_sdl_uninit(fps.eng);
 	return (0);
 }
-
+//*/
 /*
 int		main(void)
 {
-//	t_game	fps;
+	t_game	fps;
 
 //	engine_sdl_init(&fps.eng);
-//	engine_create_world_from_file(fps.eng, "../game/resources/1.lvl");
-
-//	ft_putnbr(ft_countwords_whitespaces("polygone:	3	1	65280		2	6	7"));
-//	ft_putnbr(ft_strwcmp("\thello", " hello"));
-
-	char *str = "1 2 3 4";
-	int i = 0;
-	ft_putnbr(ft_countwords_whitespaces(str));
-	ft_putchar('\n');
-	while (ft_strsplitwhitespaces(str)[i])
-	{
-		ft_putnbr(i);
-		ft_putstr(": ");
-		ft_putstr(ft_strsplitwhitespaces(str)[i]);
-		ft_putchar('\n');
-		i++;
-	}
-
-
+	fps.eng = (t_engine *)ft_memalloc(sizeof(t_engine));
+	engine_create_world_from_file(fps.eng, "../game/resources/1.lvl");
+	while (1)
+		;
 	return (0);
 }
 */
