@@ -6,14 +6,14 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/20 16:57:23 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/22 20:06:41 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENGINE_H
 # define ENGINE_H
-# define WIDTH 1400
-# define HEIGHT 900
+# define WIDTH 1024
+# define HEIGHT 768
 # define TWODIM 2
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
@@ -25,6 +25,7 @@
 # include <stdlib.h>
 # include <libft.h>
 # include <SDL2/SDL.h>
+# include <png.h>
 
 typedef	struct		s_point_2d
 {
@@ -193,6 +194,11 @@ typedef struct		s_bcontex
 	t_point_3d		b;
 	t_point_3d		e;
 }					t_bcontex;
+
+typedef struct		s_texture
+{
+	int				texture[1024][2014];
+}					t_texture;
 
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
