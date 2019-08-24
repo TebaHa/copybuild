@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/19 20:08:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/24 21:09:15 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,7 +332,7 @@ void		full_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offs
 			bc_screen = engine_barycentric(pts2, &p);
 			if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 			{
-				tcolor = get_rgb(((int)(color) >> 16), ((int)(color) >> 8), ((int)(color)), 255 * engine_gain(GAIN, p.y * KOEFF));
+				tcolor = get_rgb(((int)(color) >> 16), ((int)(color) >> 8), ((int)(color)), 255);
 				sdl_put_pixel(eng->surface, p.x, p.y, tcolor);
 			}
 			p.y++;

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/24 16:58:37 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/24 22:42:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,11 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (0.53f * HEIGHT) // Affects the horizontal field of vision
-# define vfov (0.1f * HEIGHT) // Affects the vertical field of vision
-# include <unistd.h>
-# include <math.h>
-# include <stdlib.h>
-# include <libft.h>
-# include <SDL2/SDL.h>
+# define hfov (0.53f * HEIGHT)
+# define vfov (0.1f * HEIGHT)
+# define TEXTURE_PACK_PATH "./game/resources/images/tiles.png"
+# define GAME_PATH "./game/resources/1.lvl"
 
-typedef	struct		s_point_2d
-{
-	float			x;
-	float			y;
-}					t_point_2d;
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
@@ -50,8 +42,47 @@ typedef	struct		s_point_2d
 	vxs(vxs(x1,y1, x2,y2), (x1)-(x2), vxs(x3,y3, x4,y4), (x3)-(x4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)), \
 	vxs(vxs(x1,y1, x2,y2), (y1)-(y2), vxs(x3,y3, x4,y4), (y3)-(y4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)) })
 # define Yaw(y, z) (y + z)
-# define GAIN 0.5
-# define KOEFF -1
+
+# include <unistd.h>
+# include <math.h>
+# include <stdlib.h>
+# include <libft.h>
+# include <SDL2/SDL.h>
+# include "../../lib/stblib/stb_image.h"
+
+typedef struct		s_texture
+{
+	int				texture[1024 * 1024];
+}					t_texture;
+
+typedef enum		e_bool
+{
+	false,
+	true
+}					t_bool;
+
+typedef	struct		s_point_2d
+{
+	float			x;
+	float			y;
+}					t_point_2d;
+
+typedef enum		e_alloc_type
+{
+	NO_ALLOCATION,
+	SELF_ALLOCATED,
+	STB_ALLOCATED
+}					t_alloc_type;
+
+typedef struct		s_image
+{
+	int				width;
+	int				height;
+	int				channels;
+	size_t			size;
+	uint8_t			*data;
+	t_alloc_type	allocation_;
+ }					t_image;
 
 typedef struct		s_item
 {
@@ -158,6 +189,7 @@ typedef struct		s_engine
 	short			view_type;
 	t_stats			stats;
 	int				*z_buff;
+	t_image			image;
 }					t_engine;
 
 typedef struct		s_tric
@@ -193,11 +225,6 @@ typedef struct		s_bcontex
 	t_point_3d		b;
 	t_point_3d		e;
 }					t_bcontex;
-
-typedef struct		s_texture
-{
-	int				texture[1024][2014];
-}					t_texture;
 
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
@@ -291,4 +318,12 @@ double			engine_bias(double b, int t);
 void			engine_render_polygone(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
 void			engine_vline(t_engine *eng, t_fix_point_3d a, t_fix_point_3d b, int color);
 
-#endif
+/*
+**Image-processing functions
+*/
+static void		image_load(t_image *img, const char *fname);
+static void		image_create(t_image *img, int width, int height, int channels);
+static void		image_free(t_image *img);
+t_image			load_textures(const char *fname);§
+
+# endif

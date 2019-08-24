@@ -6,13 +6,9 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/19 21:50:19 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/24 22:06:00 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void	setupspritevline()
-{
-
-}
