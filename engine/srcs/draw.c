@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 19:43:11 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/26 20:38:22 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	/* Is the wall at least partially in front of the player? */
 	if(t1.y <= 0 && t2.y <= 0)
 		return ;
-	int u0 = 0, u1 = polygone->texture->width - 1;
+	int u0 = 0, u1 = polygone->texture->height - 1;
 	/* If it's partially behind the player, clip it against player's view frustrum */
 	if(t1.y <= 0 || t2.y <= 0)
 	{
@@ -93,9 +93,9 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 				t2 = i2;
 		}
 		if(fabsf(t2.x - t1.x) > fabsf(t2.y - t1.y))
-			u0 = (t1.x - org1.x) * 63 / (org2.x-org1.x), u1 = (t2.x - org1.x) * 63 / (org2.x - org1.x);
+			u0 = (t1.x - org1.x) * (polygone->texture->width - 1) / (org2.x-org1.x), u1 = (t2.x - org1.x) * (polygone->texture->width - 1) / (org2.x - org1.x);
 		else
-			u0 = (t1.y - org1.y) * 63 / (org2.y-org1.y), u1 = (t2.y - org1.y) * 63 / (org2.y - org1.y);
+			u0 = (t1.y - org1.y) * (polygone->texture->height - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (polygone->texture->height - 1) / (org2.y - org1.y);
 	}
 	/* Do perspective transformation */
 	float xscale1 = hfov / t1.y, yscale1 = vfov / t1.y;
@@ -171,7 +171,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
-			engine_vline_textured(eng, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->width - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, polygone->texture);
+			engine_vline_textured(eng, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, polygone->texture);
 	}
 }
 
