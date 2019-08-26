@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/19 20:43:04 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/26 16:49:51 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void		game_create_test_player(t_player *plr)
 {
-	plr->position = (t_point_3d){0, 750.0f, 750.0f, 100.0f};
+	plr->position = (t_point_3d){0, -300.0f, 0.f, 200.0f};
 	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
-	plr->cursector = 0;
+	plr->cursector = 1;
 	plr->angle = 0;
 	plr->sinangle = sinf(plr->angle);
 	plr->cosangle = cosf(plr->angle);
@@ -24,35 +24,40 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.wasd[1] = 0;
 	plr->controller.wasd[2] = 0;
 	plr->controller.wasd[3] = 0;
-	plr->controller.ducking = 0;
+	plr->controller.ducking = 1;
+	plr->controller.duckcheck = -1;
 	plr->controller.falling = 0;
 	plr->controller.ground = 1;
 	plr->controller.moving = 0;
-	plr->controller.running = 10;
+	plr->controller.running = 7;
+	plr->controller.fakefall = 0;
 	plr->yaw = 5;
 }
-///*
+
 int		main(void)
 {
 	t_game	fps;
 	int		*rendered;
+	int		dz;
+	int		duck_shift;
+	int		movement_dz;
+	int		counter;
 
-	rendered = (int *)ft_memalloc(sizeof(int) * 2);
+	movement_dz = 30;
+	counter = 0;
+	duck_shift = 0;
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
-	engine_create_world_from_file(fps.eng, "../game/resources/1.lvl");
+	engine_create_world_from_file(fps.eng, GAME_PATH);
+	rendered = (int *)ft_memalloc(sizeof(int) * fps.eng->stats.sectors_count);
 	SDL_ShowCursor(SDL_DISABLE);
 	float yaw = 0;
 	while (1)
 	{
-		rendered[0] = 0;
-		rendered[1] = 0;
-		SDL_SetRenderDrawColor(fps.eng->ren, 0, 0, 0, 255);
-		SDL_RenderClear(fps.eng->ren);
+		for (int i = 0; i < fps.eng->stats.sectors_count; i++)
+			rendered[i] = 0;
 		engine_render_world(fps.eng, &fps.player, rendered);
-		SDL_RenderPresent(fps.eng->ren);
-		if (fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
-			fps.player.controller.falling = 1;
+		engine_render_frame(fps.eng);
 		if (fps.player.controller.moving)
 		{
 			float dx = fps.player.velocity.x, dy = fps.player.velocity.y;
@@ -61,15 +66,28 @@ int		main(void)
 			{
 				fps.player.position.x += dx;
 				fps.player.position.y += dy;
+				if (fps.player.controller.ducking == 1)
+				{
+					movement_dz = fabs(sin(M_PI_4 * counter++)) * 13;
+					fps.player.position.z += movement_dz;
+					fps.player.controller.fakefall = 1;
+				}
 				fps.player.cursector = sect;
 			}
 		}
+		else
+			counter = 0;
+		if ((fps.player.position.z) - movement_dz - 100 > fps.eng->world->sectors_array[fps.player.cursector].floor + 100 + duck_shift
+			|| (fps.player.controller.ducking == -1 &&
+			((fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + 50) ||
+			(fps.player.position.z < fps.eng->world->sectors_array[fps.player.cursector].floor + 50))))
+			fps.player.controller.falling = 1;
 		if (SDL_PollEvent(&fps.eng->event))
 		{
 			if (fps.eng->event.type == SDL_KEYUP)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
-					fps.player.controller.running = 10;
+					fps.player.controller.running = 5;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
 					fps.player.controller.wasd[0] = 0;
 				if (fps.eng->event.key.keysym.sym == SDLK_s)
@@ -82,7 +100,7 @@ int		main(void)
 			if (fps.eng->event.type == SDL_KEYDOWN)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
-					fps.player.controller.running = 15;
+					fps.player.controller.running = 10;
 				if (fps.eng->event.key.keysym.sym == SDLK_ESCAPE)
 					break;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
@@ -95,32 +113,48 @@ int		main(void)
 					fps.player.controller.wasd[1] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_c)
 				{
-					if (fps.player.controller.ducking == 0 && fps.player.controller.falling != 1)
+					if (fps.player.controller.ducking == 1)
 					{
-						fps.player.controller.ducking = 1;
-						fps.player.position.z -= 50;
+						duck_shift = 50;
+						fps.player.controller.running -= 3;
+						fps.player.controller.ducking = -1;
+						fps.player.controller.falling  = 1;
 					}
-					else if (fps.player.controller.ducking == 1 && fps.player.controller.falling != 1)
+					else if (fps.player.controller.ducking == -1)
 					{
-						fps.player.controller.ducking = 0;
+						duck_shift = 0;
+						fps.player.controller.running += 3;
+						fps.player.controller.ducking = 1;
 						fps.player.position.z += 50;
 					}
 				}
 				if (fps.eng->event.key.keysym.sym == SDLK_SPACE && fps.player.controller.falling != 1)
 				{
-					fps.player.position.z += 100;
-					fps.player.controller.falling = 1;
-					if (fps.player.controller.ducking == 1)
-						fps.player.controller.ducking = 0;
+					if (fps.player.controller.ducking == -1)
+					{
+						fps.player.controller.running += 3;
+						duck_shift = 0;
+						fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100 - duck_shift;
+						fps.player.controller.ducking = 1;
+					}
+					else
+					{
+						fps.player.position.z += 150;
+					}
 				}
 			}
 		}
-		if (fps.player.controller.falling == 1)
+		if (fps.player.controller.falling == 1 || fps.player.controller.fakefall == 1)
 		{
-			if (fps.player.position.z == fps.eng->world->sectors_array[fps.player.cursector].floor + 100)
-				fps.player.controller.falling = 0;
-			else
-				fps.player.position.z -= 5;
+				fps.player.position.z -= dz;
+				dz += 2;
+				if (fps.eng->world->sectors_array[fps.player.cursector].floor + 100 - duck_shift > fps.player.position.z)
+				{
+					fps.player.controller.falling = 0;
+					fps.player.controller.fakefall = 0;
+					fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100 - duck_shift;
+					dz = 0;
+				}
 		}
 		int x, y;
 		SDL_GetRelativeMouseState(&x, &y);
@@ -159,22 +193,20 @@ int		main(void)
 		else
 			fps.player.controller.moving = 0;
 		engine_clear_frame(fps.eng);
+		zbuffer_zero(fps.eng->z_buff);
 		SDL_Delay(10);
 	}
 	engine_sdl_uninit(fps.eng);
 	return (0);
 }
-//*/
+
 /*
 int		main(void)
 {
 	t_game	fps;
 
-//	engine_sdl_init(&fps.eng);
-	fps.eng = (t_engine *)ft_memalloc(sizeof(t_engine));
-	engine_create_world_from_file(fps.eng, "../game/resources/1.lvl");
-	while (1)
-		;
+	engine_sdl_init(&fps.eng);
+	engine_create_world_from_file(fps.eng, "game/resources/1.lvl");
 	return (0);
 }
-*/
+ */

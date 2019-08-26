@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/07/09 19:51:04 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/26 16:50:02 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@
 # define EyeHeight  6 // Camera height from floor when standing
 # define DuckHeight 2.5 // And when crouching
 # include <engine.h>
-# include <unistd.h>
-# include <math.h>
-# include <stdlib.h>
-# include <libft.h>
 
 typedef	struct		s_game
 {
@@ -32,6 +28,6 @@ typedef	struct		s_game
 	t_player		player;
 }					t_game;
 
-void		game_create_test_player(t_player *plr);
+void			game_create_test_player(t_player *plr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/24 16:04:44 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/08/25 18:55:11 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,14 @@ void		engine_create_world_from_file(t_engine *eng, char *filename)
 	eng->world = engine_read_world_from_file(eng, config);
 	vertex_buff = engine_read_vertexes_from_file(eng, config);
 	polies_buff = engine_read_polygones_from_file(eng, vertex_buff, config);
-	/* в polies_buff в каждом полигоне малочится память под точки и не фришится */
-
 	object_buff = engine_read_objects_from_file(eng, polies_buff, config);
 	eng->world->sectors_array =
 		engine_read_sectors_from_file(eng, object_buff, config);
-	eng->world->renderqueue = (int *)ft_memalloc(sizeof(int) * MAXSECTORS);
+	eng->world->renderqueue =
+		(t_item *)ft_memalloc(sizeof(t_item) * MAXSECTORS);
 	engine_clear_renderstack(eng->world->renderqueue);
-//	util_release_read_buffers(vertex_buff, polies_buff, object_buff);
-	{
-//		free(eng->world->sectors_array);
-//		free(eng->world->renderqueue);
-		free(vertex_buff);
-		free(polies_buff);
-		free(object_buff);
-	}
+	util_release_read_buffers(vertex_buff, polies_buff, object_buff);
 	util_release_char_matrix(config);
-//	engine_sdl_uninit(eng);
 }
 
 void		engine_count_all_from_file(t_engine *eng, char **json_splited)
