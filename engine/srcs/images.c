@@ -6,11 +6,13 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 21:48:37 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/24 22:19:30 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/26 18:49:45 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
+#define STB_IMAGE_IMPLEMENTATION
+# include "../../lib/stblib/stb_image.h"
 
 t_image			load_textures(const char *fname)
 {
@@ -20,16 +22,16 @@ t_image			load_textures(const char *fname)
 	return (image);
 }
 
-static void		image_load(t_image *img, const char *fname)
+void		image_load(t_image *img, const char *fname)
 {
-	if (img->data = stbi_load(fname, &img->width, &img->height, &img->channels, 0) != NULL);
+	if ((img->data = stbi_load(fname, &img->width, &img->height, &img->channels, 0)) != NULL)
 	{
 		img->size = img->height * img->width * img->channels;
 		img->allocation_ = STB_ALLOCATED;
 	}
 }
 
-static void		image_create(t_image *img, int width, int height, int channels)
+void		image_create(t_image *img, int width, int height, int channels)
 {
 	size_t size;
 
@@ -45,7 +47,7 @@ static void		image_create(t_image *img, int width, int height, int channels)
 	}
 }
 
-static void		image_free(t_image *img)
+void		image_free(t_image *img)
 {
 	if (img->allocation_ != NO_ALLOCATION && img->data != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/24 22:42:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/26 18:20:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,24 @@
 	vxs(vxs(x1,y1, x2,y2), (x1)-(x2), vxs(x3,y3, x4,y4), (x3)-(x4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)), \
 	vxs(vxs(x1,y1, x2,y2), (y1)-(y2), vxs(x3,y3, x4,y4), (y3)-(y4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)) })
 # define Yaw(y, z) (y + z)
+#define Scaler_Init(a,b,c,d,f) \
+	{ d + (b-1 - a) * (f-d) / (c-a), ((f<d) ^ (c<a)) ? -1 : 1, \
+		abs(f-d), abs(c-a), (int)((b-1-a) * abs(f-d)) % abs(c-a) }
 
 # include <unistd.h>
 # include <math.h>
-# include <stdlib.h>
 # include <libft.h>
 # include <SDL2/SDL.h>
-# include "../../lib/stblib/stb_image.h"
+# include <dirent.h>
+
+typedef struct		s_scaler
+{
+	int result;
+	int bop;
+	int fd;
+	int ca;
+	int cache;
+}					t_scaler;
 
 typedef struct		s_texture
 {
@@ -115,11 +126,12 @@ typedef	struct		s_point_3d
 typedef struct		s_polygone
 {
 	t_point_3d		*vertices_array;
+	t_point_3d		norm;
 	int				vertices_count;
 	int				id;
-	t_point_3d		norm;
 	int				type;
 	int				color;
+	t_image			*texture;
 }					t_polygone;
 
 typedef struct		s_object
@@ -137,6 +149,8 @@ typedef	struct		s_sector
 	int				id;
 	int				floor;
 	int				ceil;
+	t_image			*ceil_texture;
+	t_image			*floor_texture;
 }					t_sector;
 
 typedef	struct		s_world
@@ -189,7 +203,7 @@ typedef struct		s_engine
 	short			view_type;
 	t_stats			stats;
 	int				*z_buff;
-	t_image			image;
+	t_image			**image_buffer;
 }					t_engine;
 
 typedef struct		s_tric
@@ -321,9 +335,12 @@ void			engine_vline(t_engine *eng, t_fix_point_3d a, t_fix_point_3d b, int color
 /*
 **Image-processing functions
 */
-static void		image_load(t_image *img, const char *fname);
-static void		image_create(t_image *img, int width, int height, int channels);
-static void		image_free(t_image *img);
-t_image			load_textures(const char *fname);§
+void		image_load(t_image *img, const char *fname);
+void		image_create(t_image *img, int width, int height, int channels);
+void		image_free(t_image *img);
+t_image		load_textures(const char *fname);
+void		engine_read_textures(t_engine **eng);
+int			scaler_next(t_scaler *i);
+void		engine_vline_textured(t_engine *eng, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture);
 
 # endif

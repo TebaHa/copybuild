@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/24 22:36:22 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/26 19:43:11 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	/* Is the wall at least partially in front of the player? */
 	if(t1.y <= 0 && t2.y <= 0)
 		return ;
+	int u0 = 0, u1 = polygone->texture->width - 1;
 	/* If it's partially behind the player, clip it against player's view frustrum */
 	if(t1.y <= 0 || t2.y <= 0)
 	{
@@ -76,6 +77,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 		// Find an intersection between the wall and the approximate edges of player's view
 		t_point_2d i1 = Intersect(t1.x, t1.y, t2.x, t2.y, -nearside, nearz, -farside, farz);
 		t_point_2d i2 = Intersect(t1.x, t1.y, t2.x, t2.y, nearside, nearz, farside, farz);
+		t_point_2d org1 = {t1.x, t1.y}, org2 = {t2.x, t2.y};
 		if(t1.y < nearz)
 		{
 			if(i1.y > 0)
@@ -90,6 +92,10 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 			else
 				t2 = i2;
 		}
+		if(fabsf(t2.x - t1.x) > fabsf(t2.y - t1.y))
+			u0 = (t1.x - org1.x) * 63 / (org2.x-org1.x), u1 = (t2.x - org1.x) * 63 / (org2.x - org1.x);
+		else
+			u0 = (t1.y - org1.y) * 63 / (org2.y-org1.y), u1 = (t2.y - org1.y) * 63 / (org2.y - org1.y);
 	}
 	/* Do perspective transformation */
 	float xscale1 = hfov / t1.y, yscale1 = vfov / t1.y;
@@ -118,17 +124,36 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	if (push)
 		engine_push_renderstack(eng->world->renderqueue, (t_item){portal, beginx, endx});
 	unsigned r;
+	t_scaler ya_int = Scaler_Init(x1, beginx, x2, y1a, y2a);
+	t_scaler yb_int = Scaler_Init(x1, beginx, x2, y1b, y2b);
+	t_scaler nya_int = Scaler_Init(x1, beginx, x2, ny1a, ny2a);
+	t_scaler nyb_int = Scaler_Init(x1, beginx, x2, ny1b, ny2b);
 	for(int x = beginx; x <= endx; ++x)
 	{
-		if (x == beginx || x == endx)
-			r = 0;
-		else
-			r = get_rgb(((polygone->color) >> 16), ((polygone->color) >> 8), ((polygone->color)), 255);
 		/* Calculate the Z coordinate for this point. (Only used for lighting.) */
 		int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;
 		/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
-		int ya = (x - x1) * (y2a - y1a) / (x2 - x1) + y1a, cya = clamp(ya, ytop[x], ybottom[x]); // top
-		int yb = (x - x1) * (y2b - y1b) / (x2 - x1) + y1b, cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
+		int ya = scaler_next(&ya_int);
+		int yb = scaler_next(&yb_int);
+		int cya = clamp(ya, ytop[x], ybottom[x]); // top
+		int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
+		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x-x1) * t1.y)) / ((x2-x) * t2.y + (x - x1) * t1.y);
+		/*
+		for(int y=ytop[x]; y<=ybottom[x]; ++y)
+		{
+			if(y >= cya && y <= cyb)
+			{
+				y = cyb;
+				continue;
+			}
+			float hei = y < cya ? yceil : yfloor;
+			float mapx, mapz;
+			CeilingFloorScreenCoordinatesToMapCoordinates(hei, x,y, mapx,mapz);
+			unsigned txtx = (mapx * 256), txtz = (mapz * 256);
+			int pel = polygone->texture->data[txtz % polygone->texture->width * txtx %  polygone->texture->height];
+			((int*)surface->pixels)[y * WIDTH +x] = pel;
+		}
+		*/
 		/* Render ceiling: everything above this sector's ceiling height. */
 		engine_vline(eng, (t_fix_point_3d){x, ytop[x], z}, (t_fix_point_3d){x, cya - 1, z}, get_rgb(173, 216, 230, 255));
 		/* Render floor: everything below this sector's floor height. */
@@ -146,7 +171,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
-			engine_vline(eng, (t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, r);
+			engine_vline_textured(eng, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->width - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, polygone->texture);
 	}
 }
 
@@ -274,7 +299,7 @@ void		sdl_put_pixel(SDL_Surface *surf, int x, int y, int color)
 	Uint8	*p;
 
 	bpp = surf->format->BytesPerPixel;
-	p = (Uint8*) surf->pixels + y* surf->pitch + x * bpp;
+	p = (Uint8*) surf->pixels + y * surf->pitch + x * bpp;
 	*(int *)p = color;
 }
 
@@ -282,16 +307,17 @@ void		engine_vline(t_engine *eng, t_fix_point_3d a, t_fix_point_3d b, int color)
 {
 	int		y1;
 	int		y2;
+	int		*pix = (int*) eng->surface->pixels;
 
 	y1 = clamp(a.y, 0, HEIGHT - 1);
 	y2 = clamp(b.y, 0, HEIGHT - 1);
 	if(y2 == y1)
-		sdl_put_pixel(eng->surface, b.x, y1, color);
+		pix[y1 * WIDTH + a.x] = color;
 	else if(y2 > y1)
 	{
-		sdl_put_pixel(eng->surface, a.x, y1, 0xFF);
+		pix[y1 * WIDTH + a.x] = 0xFF;
 		for(int y = y1 + 1; y < y2; ++y)
-			sdl_put_pixel(eng->surface, a.x, y, color);
-		sdl_put_pixel(eng->surface, a.x, y2, 0xFF);
+			pix[y * WIDTH + a.x] = color;
+		pix[y2 * WIDTH + a.x] = 0xFF;
 	}
 }
