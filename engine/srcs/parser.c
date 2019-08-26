@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 20:40:04 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/26 20:50:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ t_polygone	*engine_read_polygones_from_file(t_engine *eng, t_point_3d *vertex_ar
 			splited_line = ft_strsplit(json_splited[i], ' ');
 			if (ft_strcmp(splited_line[0], "polygone:") == 0)
 			{
-				p_array_buffer[size].texture = eng->image_buffer[0];
+				p_array_buffer[size].texture = &eng->texture_buffer[0]->texture;
 				p_array_buffer[size].id = ft_atoi(splited_line[1]);
 				p_array_buffer[size].type = ft_atoi(splited_line[2]);
 				p_array_buffer[size].color = ft_atoi(splited_line[3]);

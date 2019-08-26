@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 18:20:30 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/26 20:52:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,6 @@ typedef struct		s_scaler
 	int ca;
 	int cache;
 }					t_scaler;
-
-typedef struct		s_texture
-{
-	int				texture[1024 * 1024];
-}					t_texture;
 
 typedef enum		e_bool
 {
@@ -140,6 +135,8 @@ typedef struct		s_object
 	int				portal;
 	int				id;
 	int				polies_count;
+	t_image			*floor_wall_texture;
+	t_image			*ceil_wall_texture;
 }					t_object;
 
 typedef	struct		s_sector
@@ -193,6 +190,12 @@ typedef struct		s_stats
 	int				sectors_count;
 }					t_stats;
 
+typedef struct		s_txtr_pkg
+{
+	t_image			texture;
+	char			*filename;
+}					t_txtr_pkg;
+
 typedef struct		s_engine
 {
 	SDL_Event 		event;
@@ -203,7 +206,7 @@ typedef struct		s_engine
 	short			view_type;
 	t_stats			stats;
 	int				*z_buff;
-	t_image			**image_buffer;
+	t_txtr_pkg		**texture_buffer;
 }					t_engine;
 
 typedef struct		s_tric

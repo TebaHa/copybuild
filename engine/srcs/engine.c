@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 18:24:34 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/26 20:49:46 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,8 @@
 
 void		engine_sdl_init(t_engine **eng)
 {
-	DIR *d;
-	struct dirent *dir;
-	d = opendir("./game/resources/images/");
-
 	*eng = (t_engine *)ft_memalloc(sizeof(t_engine));
 	(*eng)->z_buff = (int *)ft_memalloc(sizeof(int) * WIDTH * HEIGHT);
-	(*eng)->image_buffer = (t_image **)ft_memalloc(sizeof(t_image *) * 1);
 	zbuffer_zero((*eng)->z_buff);
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		error_handler("SDL_Init Error: ", SDL_GetError(), (*eng));
@@ -78,8 +73,8 @@ void		engine_read_textures(t_engine **eng)
 	d = opendir("./game/resources/images/");
 	if (d)
 	{
-		(*eng)->image_buffer = (t_image **)ft_memalloc(sizeof(t_image *) * (count - 2));
-		if ((*eng)->image_buffer == NULL)
+		(*eng)->texture_buffer = (t_txtr_pkg **)ft_memalloc(sizeof(t_txtr_pkg *) * (count - 2));
+		if ((*eng)->texture_buffer == NULL)
 			error_handler("malloc error: ", "allocation", (*eng));
 		while (i < 2)
 		{
@@ -91,10 +86,11 @@ void		engine_read_textures(t_engine **eng)
 			if ((dir = readdir(d)) != NULL)
 			{
 				buffer_name = ft_strjoin("./game/resources/images/", dir->d_name);
-				(*eng)->image_buffer[real_i] = (t_image *)ft_memalloc(sizeof(t_image));
-				if ((*eng)->image_buffer[real_i] == NULL)
+				(*eng)->texture_buffer[real_i] = (t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
+				(*eng)->texture_buffer[real_i]->filename = ft_strdup(dir->d_name);
+				if ((*eng)->texture_buffer[real_i] == NULL)
 					error_handler("malloc error: ", "allocation", (*eng));
-				image_load((*eng)->image_buffer[real_i], buffer_name);
+				image_load(&(*eng)->texture_buffer[real_i]->texture, buffer_name);
 				free(buffer_name);
 				real_i++;
 				i++;
