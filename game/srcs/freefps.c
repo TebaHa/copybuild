@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/30 18:07:56 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/30 21:17:09 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		main(void)
 			int sect;
 			int	sectprev;
 			sectprev = fps.player.cursector;
-			if((sect = engine_object_get_sector(fps.eng->world, (t_point_3d){0.f, px + dx, py + dy, 0.f})) >= 0)
+			if((sect = engine_object_get_sector(fps.eng->world, (t_point_3d){0.f, px + dx, py + dy, 0.f}, fps.player.cursector)) >= 0)
 			{
 				move_player(fps.eng, &fps.player, dx, dy, sect);
 			}
@@ -100,6 +100,14 @@ int		main(void)
 			}
 			if (fps.eng->event.type == SDL_KEYDOWN)
 			{
+				if (fps.eng->event.key.keysym.sym == SDLK_o)
+					change_floor(fps.eng, fps.player.cursector, 10);
+				if (fps.eng->event.key.keysym.sym == SDLK_l)
+					change_floor(fps.eng, fps.player.cursector, -10);
+				if (fps.eng->event.key.keysym.sym == SDLK_u)
+					change_ceil(fps.eng, fps.player.cursector, 10);
+				if (fps.eng->event.key.keysym.sym == SDLK_j)
+					change_ceil(fps.eng, fps.player.cursector, -10);
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
 					fps.player.controller.running = 10;
 				if (fps.eng->event.key.keysym.sym == SDLK_ESCAPE)
@@ -215,6 +223,15 @@ void	move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect
 	plr->cosangle = cosf(plr->angle);
 }
 
+void	change_floor(t_engine *eng, int sect, int change)
+{
+	eng->world->sectors_array[sect].floor += change;
+}
+
+void	change_ceil(t_engine *eng, int sect, int change)
+{
+	eng->world->sectors_array[sect].ceil += change;
+}
 /*
 int		main(void)
 {

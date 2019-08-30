@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/30 18:20:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/30 21:17:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ void		engine_render_polygone(t_engine *eng, t_player *plr, t_polygone *wall, int
 	v2.y = wall->vertices_array[1].y - plr->position.y;
 	a.vertices_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d) * 3);
 	a.color = wall->color;
-	/* Rotate them around the player's view */
 	t1.x = v1.x * plr->sinangle - v1.y * plr->cosangle;
 	t1.y = v1.x * plr->cosangle + v1.y * plr->sinangle;
 	t2.x = v2.x * plr->sinangle - v2.y * plr->cosangle;

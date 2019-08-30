@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/30 18:18:32 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/30 20:27:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <SDL2/SDL.h>
 # include <dirent.h>
 # define ENGINE_H
-# define WIDTH 1024
-# define HEIGHT 768
+# define WIDTH 1400
+# define HEIGHT 900
 # define TWODIM 2
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
@@ -262,7 +262,7 @@ void			engine_push_renderstack(t_item *renderqueue, t_item item);
 void			engine_clear_renderstack(t_item *renderqueue);
 void			engine_create_renderstack(t_engine *eng, int render_id, int *rendered);
 t_item			engine_pop_renderstack(t_item *renderqueue);
-int				engine_object_get_sector(t_world *world, t_point_3d pos);
+int				engine_object_get_sector(t_world *world, t_point_3d pos, int start_sect);
 t_object		engine_create_obj_wall(int portal, t_point_3d a, t_point_3d b, t_point_3d c, t_point_3d d);
 t_point_3d		engine_count_perspective(t_point_3d a, int c);
 
@@ -353,5 +353,10 @@ void			engine_vline_textured(t_engine *eng, t_scaler ty, t_fix_point_3d a, t_fix
 void			move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect);
 t_costil		relative_map_coordinate_to_absolute(t_player *plr, float map_y, float screen_x, float screen_y);
 t_costil		ceiling_floor_screen_coordinates_to_map_coordinates(t_player *plr, float tz, float tx);
+void			change_floor(t_engine *eng, int sect, int change);
+void			change_ceil(t_engine *eng, int sect, int change);
+void			engine_push_checkstack(int *stack, int sect);
+int				engine_pop_checkstack(int *stack);
+void			engine_clear_checkstack(int *stack);
 
 # endif

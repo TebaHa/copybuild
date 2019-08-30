@@ -88,7 +88,7 @@ object: 16 -1 1 16
 object: 17 1 1 17
 
 # Sector id floor, ceil, number of objects, numbers of objects
-sector: 0 -75 200 5 0 1 2 3 4
-sector: 1 25 300 5 5 6 7 8 9
-sector: 2 150 300 4 10 11 12 13
-sector: 3 100 300 4 14 15 16 17
+sector: 0 -75 400 5 0 1 2 3 4
+sector: 1 25 500 5 5 6 7 8 9
+sector: 2 150 500 4 10 11 12 13
+sector: 3 100 500 4 14 15 16 17
