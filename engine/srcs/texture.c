@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 20:36:35 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/30 18:21:36 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ void	engine_vline_textured(t_engine *eng, t_scaler ty, t_fix_point_3d a, t_fix_p
 	for(int y = y1; y <= y2; ++y)
 	{
 		unsigned txty = scaler_next(&ty);
-		red = (texture->data)[(((txty % texture->height) * texture->width) + (txtx % texture->width)) * texture->channels];
-		green = (texture->data)[(((txty % texture->height) * texture->width) + (txtx % texture->width)) * texture->channels + 1];
-		blue = (texture->data)[(((txty % texture->height) * texture->width) + (txtx % texture->width)) * texture->channels + 2];
+		unsigned offset = (((txty % texture->height) * texture->width) + (txtx % texture->width)) * texture->channels;
+		red = (texture->data)[offset];
+		green = (texture->data)[offset + 1];
+		blue = (texture->data)[offset + 2];
 		color = get_rgb((int)red, (int)green, (int)blue, 255);
 		*pix = color;
 		pix += WIDTH;

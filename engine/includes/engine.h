@@ -6,11 +6,16 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 20:52:48 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/30 18:18:32 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENGINE_H
+# include <unistd.h>
+# include <math.h>
+# include <libft.h>
+# include <SDL2/SDL.h>
+# include <dirent.h>
 # define ENGINE_H
 # define WIDTH 1024
 # define HEIGHT 768
@@ -18,8 +23,8 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (0.53f * HEIGHT)
-# define vfov (0.1f * HEIGHT)
+# define hfov (1.0 * 0.63f * HEIGHT / WIDTH)
+# define vfov (1.0 * .2f)
 # define TEXTURE_PACK_PATH "./game/resources/images/tiles.png"
 # define GAME_PATH "./game/resources/1.lvl"
 
@@ -39,18 +44,18 @@
 # define PointSide(px,py, x0,y0, x1,y1) vxs((x1)-(x0), (y1)-(y0), (px)-(x0), (py)-(y0))
 // Intersect: Calculate the point of intersection between two lines.
 # define Intersect(x1,y1, x2,y2, x3,y3, x4,y4) ((t_point_2d) { \
-	vxs(vxs(x1,y1, x2,y2), (x1)-(x2), vxs(x3,y3, x4,y4), (x3)-(x4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)), \
+	vxs(vxs(x1,y1, x2,y2), (x1) - (x2), vxs(x3,y3, x4,y4), (x3)-(x4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)), \
 	vxs(vxs(x1,y1, x2,y2), (y1)-(y2), vxs(x3,y3, x4,y4), (y3)-(y4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)) })
 # define Yaw(y, z) (y + z)
-#define Scaler_Init(a,b,c,d,f) \
+# define Scaler_Init(a,b,c,d,f) \
 	{ d + (b-1 - a) * (f-d) / (c-a), ((f<d) ^ (c<a)) ? -1 : 1, \
-		abs(f-d), abs(c-a), (int)((b-1-a) * abs(f-d)) % abs(c-a) }
+		abs(f-d), abs(c-a), (int)((b - 1 - a) * abs(f-d)) % abs(c-a) }
 
-# include <unistd.h>
-# include <math.h>
-# include <libft.h>
-# include <SDL2/SDL.h>
-# include <dirent.h>
+typedef struct		s_costil
+{
+	float			x;
+	float			z;
+}					t_costil;
 
 typedef struct		s_scaler
 {
@@ -293,7 +298,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 int				engine_init_triangle(t_polygone *t, t_tric *trg);
 void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
 void			engine_do_calc(t_tric *trg);
-void			engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect);
+void			engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id);
 void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
 void			point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
 int				get_rgb(int r, int g, int b, int a);
@@ -338,12 +343,15 @@ void			engine_vline(t_engine *eng, t_fix_point_3d a, t_fix_point_3d b, int color
 /*
 **Image-processing functions
 */
-void		image_load(t_image *img, const char *fname);
-void		image_create(t_image *img, int width, int height, int channels);
-void		image_free(t_image *img);
-t_image		load_textures(const char *fname);
-void		engine_read_textures(t_engine **eng);
-int			scaler_next(t_scaler *i);
-void		engine_vline_textured(t_engine *eng, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture);
+void			image_load(t_image *img, const char *fname);
+void			image_create(t_image *img, int width, int height, int channels);
+void			image_free(t_image *img);
+t_image			load_textures(const char *fname);
+void			engine_read_textures(t_engine **eng);
+int				scaler_next(t_scaler *i);
+void			engine_vline_textured(t_engine *eng, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture);
+void			move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect);
+t_costil		relative_map_coordinate_to_absolute(t_player *plr, float map_y, float screen_x, float screen_y);
+t_costil		ceiling_floor_screen_coordinates_to_map_coordinates(t_player *plr, float tz, float tx);
 
 # endif

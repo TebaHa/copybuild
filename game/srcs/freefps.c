@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 16:49:51 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/30 18:07:56 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.moving = 0;
 	plr->controller.running = 7;
 	plr->controller.fakefall = 0;
-	plr->yaw = 5;
+	plr->yaw = 0;
 }
 
 int		main(void)
@@ -55,29 +55,30 @@ int		main(void)
 	while (1)
 	{
 		for (int i = 0; i < fps.eng->stats.sectors_count; i++)
-			rendered[i] = 0;
+			rendered[i] = 0;;
 		engine_render_world(fps.eng, &fps.player, rendered);
 		engine_render_frame(fps.eng);
 		if (fps.player.controller.moving)
 		{
+			float px = fps.player.position.x, py = fps.player.position.y;
 			float dx = fps.player.velocity.x, dy = fps.player.velocity.y;
-			int sect = engine_object_get_sector(fps.eng->world, (t_point_3d) {0, fps.player.position.x + dx, fps.player.position.y + dy, 0});
-			if (sect >= 0)
+			int sect;
+			int	sectprev;
+			sectprev = fps.player.cursector;
+			if((sect = engine_object_get_sector(fps.eng->world, (t_point_3d){0.f, px + dx, py + dy, 0.f})) >= 0)
 			{
-				fps.player.position.x += dx;
-				fps.player.position.y += dy;
-				if (fps.player.controller.ducking == 1)
-				{
-					movement_dz = fabs(sin(M_PI_4 * counter++)) * 13;
-					fps.player.position.z += movement_dz;
-					fps.player.controller.fakefall = 1;
-				}
-				fps.player.cursector = sect;
+				move_player(fps.eng, &fps.player, dx, dy, sect);
+			}
+			if (fps.player.controller.ducking == 1)
+			{
+				movement_dz = fabs(sin(M_PI_4 * counter++)) * 13;
+				fps.player.position.z += movement_dz;
+				fps.player.controller.fakefall = 1;
 			}
 		}
 		else
 			counter = 0;
-		if ((fps.player.position.z) - movement_dz - 100 > fps.eng->world->sectors_array[fps.player.cursector].floor + 100 + duck_shift
+		if ((fps.player.position.z) - movement_dz - 100 > fps.eng->world->sectors_array[fps.player.cursector].floor + 50 + duck_shift
 			|| (fps.player.controller.ducking == -1 &&
 			((fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + 50) ||
 			(fps.player.position.z < fps.eng->world->sectors_array[fps.player.cursector].floor + 50))))
@@ -139,7 +140,13 @@ int		main(void)
 					}
 					else
 					{
-						fps.player.position.z += 150;
+						fps.player.controller.falling = 1;
+						if ((fps.player.position.z + 150) >= fps.eng->world->sectors_array[fps.player.cursector].ceil)
+						{
+							fps.player.position.z += fps.eng->world->sectors_array[fps.player.cursector].ceil - fps.player.position.z - HeadMargin;
+						}
+						else
+							fps.player.position.z += 100;
 					}
 				}
 			}
@@ -160,9 +167,8 @@ int		main(void)
 		SDL_GetRelativeMouseState(&x, &y);
 		fps.player.angle += x * 0.03f;
 		yaw = clamp(yaw - y * 0.05f, -5, 5);
-		fps.player.yaw = yaw - fps.player.velocity.z * 0.5f;
-		fps.player.cosangle = cosf(fps.player.angle);
-		fps.player.sinangle = sinf(fps.player.angle);
+		fps.player.yaw = yaw - (fps.player.velocity.z) * 0.5f;
+		move_player(fps.eng, &fps.player, 0, 0, fps.player.cursector);
 		float move_vec[2] = {0.f, 0.f};
 		if(fps.player.controller.wasd[0])
 		{
@@ -198,6 +204,15 @@ int		main(void)
 	}
 	engine_sdl_uninit(fps.eng);
 	return (0);
+}
+
+void	move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect)
+{
+	plr->position.x += dx;
+	plr->position.y += dy;
+	plr->cursector = sect;
+	plr->sinangle = sinf(plr->angle);
+	plr->cosangle = cosf(plr->angle);
 }
 
 /*

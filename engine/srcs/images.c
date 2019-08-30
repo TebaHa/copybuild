@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 21:48:37 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 20:32:11 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/30 14:27:55 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_image			load_textures(const char *fname)
 
 void		image_load(t_image *img, const char *fname)
 {
-	if ((img->data = stbi_load(fname, &img->width, &img->height, &img->channels, 0)) != NULL)
+	if ((img->data = stbi_load(fname, &img->width, &img->height, &img->channels, 4)) != NULL)
 	{
 		img->size = img->height * img->width * img->channels;
 		img->allocation_ = STB_ALLOCATED;

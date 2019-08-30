@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 20:50:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/30 18:14:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,16 @@ t_object	*engine_read_objects_from_file(t_engine *eng, t_polygone *polies_array,
 				o_array_buffer[size].portal = ft_atoi(splited_line[2]);
 				o_array_buffer[size].polies_count = ft_atoi(splited_line[3]);
 				o_array_buffer[size].polies_array = (t_polygone *)ft_memalloc(sizeof(t_polygone) * o_array_buffer[size].polies_count);
+				if (o_array_buffer[size].portal >= 0)
+				{
+					o_array_buffer[size].ceil_wall_texture = &eng->texture_buffer[2]->texture;
+					o_array_buffer[size].floor_wall_texture = &eng->texture_buffer[4]->texture;
+				}
+				else
+				{
+					o_array_buffer[size].ceil_wall_texture = NULL;
+					o_array_buffer[size].floor_wall_texture = NULL;
+				}
 				tmp = 4;
 				j = 0;
 				while (tmp < 4 + o_array_buffer[size].polies_count)
@@ -245,8 +255,8 @@ t_sector	*engine_read_sectors_from_file(t_engine *eng, t_object *sector_array, c
 			splited_line = ft_strsplit(json_splited[i], ' ');
 			if (ft_strcmp(splited_line[0], "sector:") == 0)
 			{
-				s_array_buffer[size].ceil_texture = NULL;
-				s_array_buffer[size].floor_texture = NULL;
+				s_array_buffer[size].ceil_texture = &eng->texture_buffer[1]->texture;
+				s_array_buffer[size].floor_texture = &eng->texture_buffer[3]->texture;
 				s_array_buffer[size].id = ft_atoi(splited_line[1]);
 				s_array_buffer[size].floor = ft_atoi(splited_line[2]);
 				s_array_buffer[size].ceil = ft_atoi(splited_line[3]);

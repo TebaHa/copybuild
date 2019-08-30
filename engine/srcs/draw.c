@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 20:38:22 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/08/30 18:20:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 		while (i < eng->world->sectors_array[sect_id.sectorno].objects_count)
 		{
 			engine_render_wall(eng, eng->world->sectors_array[sect_id.sectorno].objects_array[i].polies_array, plr,
-				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, rendered, sect_id);
+				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, rendered, sect_id, i);
 			i++;
 		}
 		rendered[sect_id.sectorno] = 1;
@@ -46,7 +46,7 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 	SDL_UnlockSurface(eng->surface);
 }
 
-void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect)
+void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id)
 {
 	t_point_2d	v1;
 	t_point_2d	v2;
@@ -69,7 +69,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	/* Is the wall at least partially in front of the player? */
 	if(t1.y <= 0 && t2.y <= 0)
 		return ;
-	int u0 = 0, u1 = polygone->texture->height - 1;
+	int u0 = 0, u1 = polygone->texture->width - 1;
 	/* If it's partially behind the player, clip it against player's view frustrum */
 	if(t1.y <= 0 || t2.y <= 0)
 	{
@@ -98,10 +98,10 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 			u0 = (t1.y - org1.y) * (polygone->texture->height - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (polygone->texture->height - 1) / (org2.y - org1.y);
 	}
 	/* Do perspective transformation */
-	float xscale1 = hfov / t1.y, yscale1 = vfov / t1.y;
-	int x1 = WIDTH / 2 - (t1.x * xscale1);
-	float xscale2 = hfov / t2.y, yscale2 = vfov / t2.y;
-	int x2 = WIDTH / 2 - (t2.x * xscale2);
+	float xscale1 = (WIDTH * hfov) / t1.y, yscale1 = (HEIGHT * vfov) / t1.y;
+	int x1 = WIDTH / 2 + (-t1.x * xscale1);
+	float xscale2 = (WIDTH * hfov) / t2.y, yscale2 = (HEIGHT * vfov) / t2.y;
+	int x2 = WIDTH / 2 + (-t2.x * xscale2);
 	if(x1 >= x2 || x2 < sect.sx1 || x1 > sect.sx2)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
@@ -115,11 +115,11 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 		nyfloor = eng->world->sectors_array[portal].floor - plr->position.z;
 		push = 1;
 	}
-	int y1a  = HEIGHT / 2 - (int)((yceil + t1.y * plr->yaw) * yscale1), y1b = HEIGHT / 2 - (int)((yfloor + t1.y * plr->yaw)  * yscale1);
-	int y2a  = HEIGHT / 2 - (int)((yceil + t2.y * plr->yaw)  * yscale2), y2b = HEIGHT / 2 - (int)((yfloor + t2.y * plr->yaw)  * yscale2);
+	int y1a  = HEIGHT / 2 + (int)(-(yceil + t1.y * plr->yaw) * yscale1), y1b = HEIGHT / 2 + (int)(-(yfloor + t1.y * plr->yaw)  * yscale1);
+	int y2a  = HEIGHT / 2 + (int)(-(yceil + t2.y * plr->yaw)  * yscale2), y2b = HEIGHT / 2 + (int)(-(yfloor + t2.y * plr->yaw)  * yscale2);
 	/* The same for the neighboring sector */
-	int ny1a = HEIGHT / 2 - (int)((nyceil + t1.y * plr->yaw)  * yscale1), ny1b = HEIGHT / 2 - (int)((nyfloor + t1.y * plr->yaw) * yscale1);
-	int ny2a = HEIGHT / 2 - (int)((nyceil + t2.y * plr->yaw)  * yscale2), ny2b = HEIGHT / 2 - (int)((nyfloor + t2.y * plr->yaw) * yscale2);
+	int ny1a = HEIGHT / 2 + (int)(-(nyceil + t1.y * plr->yaw)  * yscale1), ny1b = HEIGHT / 2 + (int)(-(nyfloor + t1.y * plr->yaw) * yscale1);
+	int ny2a = HEIGHT / 2 + (int)(-(nyceil + t2.y * plr->yaw)  * yscale2), ny2b = HEIGHT / 2 + (int)(-(nyfloor + t2.y * plr->yaw) * yscale2);
 	int beginx = max(x1, sect.sx1), endx = min(x2, sect.sx2);
 	if (push)
 		engine_push_renderstack(eng->world->renderqueue, (t_item){portal, beginx, endx});
@@ -137,9 +137,9 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 		int yb = scaler_next(&yb_int);
 		int cya = clamp(ya, ytop[x], ybottom[x]); // top
 		int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
-		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x-x1) * t1.y)) / ((x2-x) * t2.y + (x - x1) * t1.y);
-		/*
-		for(int y=ytop[x]; y<=ybottom[x]; ++y)
+		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2-x) * t2.y + (x - x1) * t1.y);
+		t_image *tex = NULL;
+		for(int y = ytop[x]; y <= ybottom[x] - 1; ++y)
 		{
 			if(y >= cya && y <= cyb)
 			{
@@ -147,27 +147,28 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 				continue;
 			}
 			float hei = y < cya ? yceil : yfloor;
-			float mapx, mapz;
-			CeilingFloorScreenCoordinatesToMapCoordinates(hei, x,y, mapx,mapz);
-			unsigned txtx = (mapx * 256), txtz = (mapz * 256);
-			int pel = polygone->texture->data[txtz % polygone->texture->width * txtx %  polygone->texture->height];
-			((int*)surface->pixels)[y * WIDTH +x] = pel;
+			t_costil pnts = relative_map_coordinate_to_absolute(plr, hei, x, y);
+			tex = y < cya ? eng->world->sectors_array[sect.sectorno].ceil_texture : eng->world->sectors_array[sect.sectorno].floor_texture;
+			unsigned txtx = (pnts.x * 2), txtz = (pnts.z * 2);
+			int offset = (((txtz % tex->height) * tex->width) + (txtx % tex->width)) * tex->channels;
+			int8_t red = (tex->data)[offset];
+			int8_t green = (tex->data)[offset + 1];
+			int8_t blue = (tex->data)[offset + 2];
+			int color = get_rgb((int)red, (int)green, (int)blue, 255);
+			((int*)eng->surface->pixels)[y * WIDTH + x] = color;
 		}
-		*/
-		/* Render ceiling: everything above this sector's ceiling height. */
-		engine_vline(eng, (t_fix_point_3d){x, ytop[x], z}, (t_fix_point_3d){x, cya - 1, z}, get_rgb(173, 216, 230, 255));
-		/* Render floor: everything below this sector's floor height. */
-		engine_vline(eng, (t_fix_point_3d){x, cyb + 1, z}, (t_fix_point_3d){x, ybottom[x], z}, get_rgb(218, 165, 32, 255));
 		/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
 		if (portal >= 0)
 		{
-			int nya = (x - x1) * (ny2a - ny1a) / (x2 - x1) + ny1a, cnya = clamp(nya, ytop[x], ybottom[x]);
-			int nyb = (x - x1) * (ny2b - ny1b) / (x2 - x1) + ny1b, cnyb = clamp(nyb, ytop[x], ybottom[x]);
+			int nya = scaler_next(&nya_int);
+			int nyb = scaler_next(&nyb_int);
+			int cnya = clamp(nya, ytop[x],ybottom[x]);
+			int cnyb = clamp(nyb, ytop[x],ybottom[x]);
 			/* If our ceiling is higher than their ceiling, render upper wall */
-			engine_vline(eng, (t_fix_point_3d){x, cya, 0}, (t_fix_point_3d){x, cnya - 1, 0}, x == x1 || x == x2 ? 0 : get_rgb(173, 216, 230, 255));
+			engine_vline_textured(eng, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya, z}, (t_fix_point_3d){x, cnya-1, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
 			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);// Shrink the remaining window below these ceilings
 			/* If our floor is lower than their floor, render bottom wall */
-			engine_vline(eng, (t_fix_point_3d){x, cnyb + 1, 0}, (t_fix_point_3d){x, cyb, 0}, x == x1 || x == x2 ? 0 : get_rgb(218, 165, 32, 255));
+			engine_vline_textured(eng, (t_scaler)Scaler_Init(ya, cnyb + 1, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cnyb + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
@@ -320,4 +321,22 @@ void		engine_vline(t_engine *eng, t_fix_point_3d a, t_fix_point_3d b, int color)
 			pix[y * WIDTH + a.x] = color;
 		pix[y2 * WIDTH + a.x] = 0xFF;
 	}
+}
+
+t_costil	relative_map_coordinate_to_absolute(t_player *plr, float map_y, float screen_x, float screen_y)
+{
+	float z = (map_y * HEIGHT * vfov) / ((HEIGHT / 2 - screen_y) - (plr->yaw * HEIGHT * vfov));
+	float x = z * (WIDTH / 2 - screen_x) / (WIDTH * hfov);
+	return (ceiling_floor_screen_coordinates_to_map_coordinates(plr, z, x));
+}
+
+t_costil	ceiling_floor_screen_coordinates_to_map_coordinates(t_player *plr, float tz, float tx)
+{
+	t_costil	res;
+
+	float rtx = (tz) * plr->cosangle + (tx) * plr->sinangle;
+	float rtz = (tz) * plr->sinangle - (tx) * plr->cosangle;
+	res.x = rtx + plr->position.x;
+	res.z = rtz + plr->position.y;
+	return (res);
 }
