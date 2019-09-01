@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/01 19:09:33 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/01 19:23:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define vfov (1.0 * .2f)
 # define TEXTURE_PACK_PATH "./game/resources/images/tiles.png"
 # define GAME_PATH "./game/resources/1.lvl"
-
+# define PARSING_ERROR 40
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
@@ -137,6 +137,7 @@ typedef struct		s_object
 {
 	t_polygone		*polies_array;
 	int				portal;
+	int				passble;
 	int				id;
 	int				polies_count;
 	t_image			*floor_wall_texture;
@@ -192,6 +193,7 @@ typedef struct		s_stats
 	int				polies_count;
 	int				objects_count;
 	int				sectors_count;
+	int 			textures_count;
 }					t_stats;
 
 typedef struct		s_txtr_pkg
@@ -264,24 +266,6 @@ t_item			engine_pop_renderstack(t_item *renderqueue);
 int				engine_object_get_sector(t_world *world, t_point_3d pos, int start_sect);
 t_object		engine_create_obj_wall(int portal, t_point_3d a, t_point_3d b, t_point_3d c, t_point_3d d);
 t_point_3d		engine_count_perspective(t_point_3d a, int c);
-
-t_point_3d		*util_create_point_3d(float x, float y, float z);
-t_world			*util_create_world(int id, int sector_count);
-t_sector		*util_create_sector(int id, int floor, int ceil, int object_count);
-t_object		*util_create_object(int id, int portal, int polies_count);
-t_polygone		*util_create_polygone(int id, int type, int vertex_count);
-void			util_release_char_matrix(char **mtrx);
-
-t_world			*engine_read_world_from_file(t_engine *eng, char **json_splited);
-char			*engine_read_level_file(char *filename);
-t_point_3d		*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
-t_polygone		*engine_read_polygones_from_file(t_engine *eng, t_point_3d *vertex_array, char **json_splited);
-t_object		*engine_read_objects_from_file(t_engine *eng, t_polygone *polies_array, char **json_splited);
-t_sector		*engine_read_sectors_from_file(t_engine *eng, t_object *sector_array, char **json_splited);
-
-t_point_3d		util_get_vertex_from_buff_by_id(int id, int size, t_point_3d *vertexes);
-t_polygone		util_get_polygone_from_buff_by_id(int id, int size, t_polygone *sectors);
-t_object		util_get_object_from_buff_by_id(int id, int size, t_object *objects);
 
 void			util_release_read_buffers(t_point_3d *vertex_buff, t_polygone *polies_buff,
 								t_object *object_buff);
@@ -357,5 +341,58 @@ void			change_ceil(t_engine *eng, int sect, int change);
 void			engine_push_checkstack(int *stack, int sect);
 int				engine_pop_checkstack(int *stack);
 void			engine_clear_checkstack(int *stack);
+
+/*
+**	Parsing functions
+*/
+
+char		**engine_read_level_file(char *filename);
+void		util_release_char_matrix(char **mtrx);
+void		engine_create_world_from_file(t_engine *eng, char *filename);
+void		engine_count_all_from_file(t_engine *eng, char **json_splited);
+t_world		*engine_read_world_from_file(t_engine *eng, char **json_splited);
+t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
+t_object	*engine_read_objects_from_file(t_engine *eng,
+			t_polygone *polies_array, char **json_splited);
+t_polygone	*engine_read_polygones_from_file(t_engine *eng,
+			t_point_3d *vertex_array, char **json_splited);
+t_sector	*engine_read_sectors_from_file(t_engine *eng,
+			t_object *objects_array, char **json_splited);
+void		util_float10_data_filler(float *data, char *str);
+void		util_int10_data_filler(int *data, char *str);
+void		util_int16_data_filler(int *data, char *str);
+void		util_parsing_error_count_handler(char *problem, char *problem_from,
+			char **str, int problems_number);
+void		util_parsing_error_lost_handler(char *problem, int id_problem,
+			char *problem_from, int id_problem_from);
+void		util_parsing_error_extra_data(char *problem, char *problem_from,
+			char **str);
+void		util_parsing_error_little_data(char *problem, char *problem_from,
+			char **str);
+void		util_parsing_error_not_digit(char *problem);
+void		util_parsing_error_not_hex(char *problem);
+void		util_parsing_error_no_texture(t_image **dst, t_engine *eng,
+			char *name);
+void		util_create_world(t_world **world, char **str);
+void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str);
+void		util_create_polygone(t_engine *eng, t_polygone *polygone,
+			t_point_3d *vertex_array, char **str);
+void		util_create_object(t_engine *eng, t_object *object,
+			t_polygone *polygone_array, char **str);
+void		util_create_sector(t_engine *eng, t_sector *sector,
+			t_object *objects_array, char **str);
+t_point_3d	util_get_vertex_from_buff_by_id(int id, int size,
+			t_point_3d *vertexes, int polygone_id);
+t_polygone	util_get_polygone_from_buff_by_id(int id, int size,
+			t_polygone *polies, int object_id);
+t_object	util_get_object_from_buff_by_id(int id, int size,
+			t_object *objects, int sector_id);
+void		util_find_texture_by_name(t_image **dst, t_engine *eng,
+			char *name);
+
+/*
+**	Parsing functions end
+*/
+
 
 # endif

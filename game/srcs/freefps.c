@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/30 21:17:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/01 19:32:59 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.moving = 0;
 	plr->controller.running = 7;
 	plr->controller.fakefall = 0;
-	plr->yaw = 0;
+	plr->yaw = 5;
 }
 
 int		main(void)
@@ -55,7 +55,7 @@ int		main(void)
 	while (1)
 	{
 		for (int i = 0; i < fps.eng->stats.sectors_count; i++)
-			rendered[i] = 0;;
+			rendered[i] = 0;
 		engine_render_world(fps.eng, &fps.player, rendered);
 		engine_render_frame(fps.eng);
 		if (fps.player.controller.moving)

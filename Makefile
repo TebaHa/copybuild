@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/08/30 20:11:45 by zytrams          ###   ########.fr        #
+#    Updated: 2019/09/01 19:33:13 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,10 @@ GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 ENGINE_SRCS_LIST =	error_handler.c \
 					utility.c \
 					parser.c \
+					parser_errors.c \
+					parser_filler.c \
+					parser_reader.c \
+					parser_utility.c \
 					engine.c \
 					draw.c \
 					objects.c \

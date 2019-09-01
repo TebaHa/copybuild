@@ -5,3 +5,6 @@
 freefps
 /sdl2/*
 lib/sdl2/*
+.idea/
+cmake-build-debug/
+CMake/
