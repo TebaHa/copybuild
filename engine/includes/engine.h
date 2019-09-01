@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/30 20:27:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/01 19:09:33 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <SDL2/SDL.h>
 # include <dirent.h>
 # define ENGINE_H
-# define WIDTH 1400
-# define HEIGHT 900
+# define WIDTH 1024
+# define HEIGHT 728
 # define TWODIM 2
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
@@ -37,7 +37,7 @@
 # define clamp(a, mi, ma)	min(max(a,mi),ma) // clamp: Clamp value into set range.
 # define vxs(x0,y0, x1,y1)	((x0)*(y1) - (x1)*(y0)) // vxs: Vector cross product
 // Overlap:  Determine whether the two number ranges overlap.
-# define Overlap(a0, a1, b0, b1)	(min(a0,a1) <= max(b0,b1) && min(b0,b1) <= max(a0,a1))
+# define Overlap(a0, a1, b0, b1)	(min(a0, a1) <= max(b0, b1) && min(b0, b1) <= max(a0, a1))
 // IntersectBox: Determine whether two 2D-boxes intersect.
 # define IntersectBox(x0,y0, x1,y1, x2,y2, x3,y3)	(Overlap(x0,x1,x2,x3) && Overlap(y0,y1,y2,y3))
 // PointSide: Determine which side of a line the point is on. Return value: <0, =0 or >0.
@@ -46,7 +46,6 @@
 # define Intersect(x1,y1, x2,y2, x3,y3, x4,y4) ((t_point_2d) { \
 	vxs(vxs(x1,y1, x2,y2), (x1) - (x2), vxs(x3,y3, x4,y4), (x3)-(x4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)), \
 	vxs(vxs(x1,y1, x2,y2), (y1)-(y2), vxs(x3,y3, x4,y4), (y3)-(y4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)) })
-# define Yaw(y, z) (y + z)
 # define Scaler_Init(a,b,c,d,f) \
 	{ d + (b-1 - a) * (f-d) / (c-a), ((f<d) ^ (c<a)) ? -1 : 1, \
 		abs(f-d), abs(c-a), (int)((b - 1 - a) * abs(f-d)) % abs(c-a) }
