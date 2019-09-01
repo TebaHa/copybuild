@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 20:49:46 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/01 13:09:40 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void		engine_read_textures(t_engine **eng)
 	real_i = 0;
 	d = opendir("./game/resources/images/");
 	i = 0;
+	(*eng)->stats.textures_count = 0;
 	if (d)
 	{
 		while ((dir = readdir(d)) != NULL)
@@ -88,6 +89,7 @@ void		engine_read_textures(t_engine **eng)
 				buffer_name = ft_strjoin("./game/resources/images/", dir->d_name);
 				(*eng)->texture_buffer[real_i] = (t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
 				(*eng)->texture_buffer[real_i]->filename = ft_strdup(dir->d_name);
+				(*eng)->stats.textures_count++;
 				if ((*eng)->texture_buffer[real_i] == NULL)
 					error_handler("malloc error: ", "allocation", (*eng));
 				image_load(&(*eng)->texture_buffer[real_i]->texture, buffer_name);

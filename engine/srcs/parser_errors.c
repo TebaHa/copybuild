@@ -73,3 +73,15 @@ void	util_parsing_error_not_hex(char *problem)
 	ft_putstr("!\n");
 	exit(PARSING_ERROR);
 }
+
+void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
+		char *name)
+{
+	ft_putendl("Parsing error:");
+	ft_putstr("Cant find texture: ");
+	ft_putstr(name);
+	ft_putstr("!\n");
+	util_find_texture_by_name(dst, eng, "!purple.png");
+//	*dst = &eng->texture_buffer[0]->texture;
+//	exit(PARSING_ERROR);
+}

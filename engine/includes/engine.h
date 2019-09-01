@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 20:52:48 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/01 14:31:40 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ typedef struct		s_stats
 	int				polies_count;
 	int				objects_count;
 	int				sectors_count;
+	int 			textures_count;
 }					t_stats;
 
 typedef struct		s_txtr_pkg
@@ -359,6 +360,8 @@ void		util_parsing_error_little_data(char *problem, char *problem_from,
 			char **str);
 void		util_parsing_error_not_digit(char *problem);
 void		util_parsing_error_not_hex(char *problem);
+void		util_parsing_error_no_texture(t_image **dst, t_engine *eng,
+			char *name);
 void		util_create_world(t_world **world, char **str);
 void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str);
 void		util_create_polygone(t_engine *eng, t_polygone *polygone,
@@ -373,6 +376,8 @@ t_polygone	util_get_polygone_from_buff_by_id(int id, int size,
 			t_polygone *polies, int object_id);
 t_object	util_get_object_from_buff_by_id(int id, int size,
 			t_object *objects, int sector_id);
+void		util_find_texture_by_name(t_image **dst, t_engine *eng,
+			char *name);
 
 /*
 **	Parsing functions end

@@ -1,19 +1,23 @@
 cmake_minimum_required(VERSION 3.13)
-project(DoomNukem)
+project(DoomNukemParsing)
 
 set(CMAKE_CXX_STANDARD 14)
-
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 
 include_directories(engine/includes)
 include_directories(engine/includes/SDL2)
 include_directories(game/includes)
 include_directories(lib/libft/includes)
+include_directories(lib/stblib)
+include_directories(lib/stblib/deprecated)
+include_directories(lib/stblib/tests/caveview)
+include_directories(lib/stblib/tests/oversample)
+include_directories(lib/stblib/tests/prerelease)
 include_directories(${SDL2_INCLUDE_DIR})
 
 find_package(SDL2 REQUIRED)
 
-add_executable(DoomNukem
+add_executable(DoomNukemParsing
 		engine/includes/SDL2/begin_code.h
 		engine/includes/SDL2/close_code.h
 		engine/includes/SDL2/SDL.h
@@ -88,19 +92,27 @@ add_executable(DoomNukem
 		engine/includes/SDL2/SDL_video.h
 		engine/includes/SDL2/SDL_vulkan.h
 		engine/includes/engine.h
-		engine/includes/fixed_point_math.h
+		engine/srcs/bresenham.c
+		engine/srcs/color.c
 		engine/srcs/draw.c
 		engine/srcs/engine.c
 		engine/srcs/error_handler.c
+		engine/srcs/images.c
+		engine/srcs/normal.c
 		engine/srcs/objects.c
 		engine/srcs/parser.c
+		engine/srcs/parser_errors.c
+		engine/srcs/parser_filler.c
+		engine/srcs/parser_reader.c
+		engine/srcs/parser_utility.c
+		engine/srcs/rasterizer.c
 		engine/srcs/texture.c
 		engine/srcs/utility.c
 		game/includes/game.h
-		game/resources/1.lvl
 		game/srcs/freefps.c
 		lib/libft/includes/libft.h
 		lib/libft/srcs/ft_atoi.c
+		lib/libft/srcs/ft_atoi_hex.c
 		lib/libft/srcs/ft_bzero.c
 		lib/libft/srcs/ft_isalnum.c
 		lib/libft/srcs/ft_isalpha.c
@@ -159,18 +171,91 @@ add_executable(DoomNukem
 		lib/libft/srcs/ft_strnstr.c
 		lib/libft/srcs/ft_strrchr.c
 		lib/libft/srcs/ft_strsplit.c
+		lib/libft/srcs/ft_strsplitwhitespaces.c
 		lib/libft/srcs/ft_strstr.c
 		lib/libft/srcs/ft_strsub.c
 		lib/libft/srcs/ft_strtrim.c
+		lib/libft/srcs/ft_strwcmp.c
 		lib/libft/srcs/ft_tolower.c
 		lib/libft/srcs/ft_toupper.c
 		lib/libft/srcs/get_next_line.c
-		author
-		Makefile
-		README.md
-		engine/srcs/parser_filler.c
-		engine/srcs/parser_reader.c
-		engine/srcs/parser_utility.c
-		engine/srcs/parser_errors.c engine/srcs/ft_strsplitwhitespaces.c engine/srcs/ft_strwcmp.c engine/srcs/ft_atoi_hex.c)
+		lib/stblib/deprecated/rrsprintf.h
+		lib/stblib/deprecated/stb_image.c
+		lib/stblib/tests/caveview/win32/SDL_windows_main.c
+		lib/stblib/tests/caveview/cave_main.c
+		lib/stblib/tests/caveview/cave_mesher.c
+		lib/stblib/tests/caveview/cave_parse.c
+		lib/stblib/tests/caveview/cave_parse.h
+		lib/stblib/tests/caveview/cave_render.c
+		lib/stblib/tests/caveview/caveview.h
+		lib/stblib/tests/caveview/glext.h
+		lib/stblib/tests/caveview/glext_list.h
+		lib/stblib/tests/caveview/main.c
+		lib/stblib/tests/caveview/stb_gl.h
+		lib/stblib/tests/caveview/stb_glprog.h
+		lib/stblib/tests/oversample/main.c
+		lib/stblib/tests/oversample/stb_wingraph.h
+		lib/stblib/tests/pg_test/pg_test.c
+		lib/stblib/tests/prerelease/stb_lib.h
+		lib/stblib/tests/sdf/sdf_test.c
+		lib/stblib/tests/vorbseek/vorbseek.c
+		lib/stblib/tests/c_lexer_test.c
+		lib/stblib/tests/grid_reachability.c
+		lib/stblib/tests/herringbone_generator.c
+		lib/stblib/tests/herringbone_map.c
+		lib/stblib/tests/image_test.c
+		lib/stblib/tests/image_write_test.c
+		lib/stblib/tests/resample_test.cpp
+		lib/stblib/tests/resample_test_c.c
+		lib/stblib/tests/stb.c
+		lib/stblib/tests/stb_cpp.cpp
+		lib/stblib/tests/stb_static.c
+		lib/stblib/tests/stblib_test.c
+		lib/stblib/tests/stblib_test_companion.c
+		lib/stblib/tests/stretch_test.c
+		lib/stblib/tests/stretchy_buffer_test.c
+		lib/stblib/tests/test_c_compilation.c
+		lib/stblib/tests/test_c_lexer.c
+		lib/stblib/tests/test_cpp_compilation.cpp
+		lib/stblib/tests/test_ds.c
+		lib/stblib/tests/test_ds_cpp.cpp
+		lib/stblib/tests/test_dxt.c
+		lib/stblib/tests/test_easyfont.c
+		lib/stblib/tests/test_image.c
+		lib/stblib/tests/test_image_write.c
+		lib/stblib/tests/test_perlin.c
+		lib/stblib/tests/test_siphash.c
+		lib/stblib/tests/test_sprintf.c
+		lib/stblib/tests/test_truetype.c
+		lib/stblib/tests/test_vorbis.c
+		lib/stblib/tests/test_voxel.c
+		lib/stblib/tests/textedit_sample.c
+		lib/stblib/tests/tilemap_editor_integration_example.c
+		lib/stblib/tools/build_matrix.c
+		lib/stblib/tools/easy_font_maker.c
+		lib/stblib/tools/make_readme.c
+		lib/stblib/tools/unicode.c
+		lib/stblib/stb.h
+		lib/stblib/stb_c_lexer.h
+		lib/stblib/stb_connected_components.h
+		lib/stblib/stb_divide.h
+		lib/stblib/stb_ds.h
+		lib/stblib/stb_dxt.h
+		lib/stblib/stb_easy_font.h
+		lib/stblib/stb_herringbone_wang_tile.h
+		lib/stblib/stb_image.h
+		lib/stblib/stb_image_resize.h
+		lib/stblib/stb_image_write.h
+		lib/stblib/stb_include.h
+		lib/stblib/stb_leakcheck.h
+		lib/stblib/stb_perlin.h
+		lib/stblib/stb_rect_pack.h
+		lib/stblib/stb_sprintf.h
+		lib/stblib/stb_textedit.h
+		lib/stblib/stb_tilemap_editor.h
+		lib/stblib/stb_truetype.h
+		lib/stblib/stb_vorbis.c
+		lib/stblib/stb_voxel_render.h
+		lib/stblib/stretchy_buffer.h)
 
-target_link_libraries(DoomNukem ${SDL2_LIBRARY})
+target_link_libraries(DoomNukemParsing ${SDL2_LIBRARY})
