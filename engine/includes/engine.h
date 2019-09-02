@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/02 10:16:01 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 19:14:11 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define TEXTURE_PACK_PATH "./game/resources/images/tiles.png"
 # define GAME_PATH "./game/resources/1.lvl"
 # define PARSING_ERROR 40
+# define PARSING_ERROR_TEXTURE	"!purple"
 # define THREAD_POOL_SIZE 1
 
 // Utility functions. Because C doesn't have templates,

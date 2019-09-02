@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/01 21:01:57 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 19:27:37 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,16 @@ void		util_create_object(t_engine *eng, t_object *object,
 	util_int10_data_filler(&object->id, str[1]);
 	util_int10_data_filler(&object->portal, str[2]);
 	util_int10_data_filler(&object->passble, str[3]);
-	util_find_texture_by_name(&object->floor_wall_texture, eng, str[4]);
-	util_find_texture_by_name(&object->ceil_wall_texture, eng, str[5]);
-	util_int10_data_filler(&object->polies_count, str[6]);
-	util_parsing_error_count_handler("polygone", "object", str, 6);
+	util_int10_data_filler(&object->visible, str[4]);
+	util_find_texture_by_name(&object->floor_wall_texture, eng, str[5]);
+	util_find_texture_by_name(&object->ceil_wall_texture, eng, str[6]);
+	util_int10_data_filler(&object->polies_count, str[7]);
+	util_parsing_error_count_handler("polygone", "object", str, 7);
 	object->polies_array = (t_polygone *)ft_memalloc(sizeof(t_polygone)
 		* object->polies_count);
-	str_count = 7;
+	str_count = 8;
 	pol_count = 0;
-	while (str_count < 7 + object->polies_count)
+	while (str_count < 8 + object->polies_count)
 		object->polies_array[pol_count++] =
 		util_get_polygone_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.polies_count, polygone_array, object->id);
@@ -111,14 +112,16 @@ void		util_create_sector(t_engine *eng, t_sector *sector,
 void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 			char *name)
 {
-	int		i;
-	int		find;
-
+	int     i;
+	int     find;
+	char    *name_png;
 	i = 0;
 	find = 0;
+	name_png = ft_strnew(ft_strlen(name) + ft_strlen(".png"));
+	name_png = ft_strcat(ft_strcpy(name_png, name), ".png");
 	while (i < eng->stats.textures_count)
 	{
-		if (!ft_strcmp(name, eng->texture_buffer[i]->filename))
+		if (!ft_strcmp(name_png, eng->texture_buffer[i]->filename))
 		{
 			*dst = &eng->texture_buffer[i]->texture;
 			find = 1;
@@ -127,4 +130,5 @@ void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 	}
 	if (i >= eng->stats.textures_count && !find)
 		util_parsing_error_no_texture(dst, eng, name);
+	free(name_png);
 }
