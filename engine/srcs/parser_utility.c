@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/02 19:27:37 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/02 20:31:05 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void		util_create_world(t_world **world, char **str)
 		* (*world)->sectors_count);
 	(*world)->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector)
 		* (*world)->sectors_count);
+	(*world)->world_box = (t_sector *)ft_memalloc(sizeof(t_sector));
+	(*world)->renderqueue = (t_item *)ft_memalloc(sizeof(t_item) * MAXSECTORS);
+	engine_clear_renderstack((*world)->renderqueue);
 }
 
 void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str)

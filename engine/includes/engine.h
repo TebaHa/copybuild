@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/02 19:14:11 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/02 20:34:18 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,13 +364,15 @@ char		**engine_read_level_file(char *filename);
 void		util_release_char_matrix(char **mtrx);
 void		engine_create_world_from_file(t_engine *eng, char *filename);
 void		engine_count_all_from_file(t_engine *eng, char **json_splited);
-t_world		*engine_read_world_from_file(t_engine *eng, char **json_splited);
+void		engine_read_world_from_file(t_engine *eng, char **json_splited);
 t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
 t_object	*engine_read_objects_from_file(t_engine *eng,
 			t_polygone *polies_array, char **json_splited);
 t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 			t_point_3d *vertex_array, char **json_splited);
-t_sector	*engine_read_sectors_from_file(t_engine *eng,
+void		engine_read_sectors_from_file(t_engine *eng,
+			t_object *objects_array, char **json_splited);
+void		engine_read_worldbox_from_file(t_engine *eng,
 			t_object *objects_array, char **json_splited);
 void		util_float10_data_filler(float *data, char *str);
 void		util_int10_data_filler(int *data, char *str);
