@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/01 21:48:31 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 07:49:00 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void		engine_sdl_init(t_engine **eng)
 {
 	*eng = (t_engine *)ft_memalloc(sizeof(t_engine));
-	(*eng)->z_buff = (int *)ft_memalloc(sizeof(int) * WIDTH * HEIGHT);
-	zbuffer_zero((*eng)->z_buff);
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		error_handler("SDL_Init Error: ", SDL_GetError(), (*eng));
 	(*eng)->win = SDL_CreateWindow("doka 2", 100, 100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
@@ -25,10 +23,6 @@ void		engine_sdl_init(t_engine **eng)
 	(*eng)->ren = SDL_CreateRenderer((*eng)->win, -1, SDL_RENDERER_SOFTWARE);
 	if ((*eng)->ren == NULL)
 		error_handler("SDL_CreateRenderer Error: ", SDL_GetError(), (*eng));
-	(*eng)->surface = SDL_CreateRGBSurface(0, WIDTH, HEIGHT, 32, (Uint32)0xff000000,
-							(Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff);
-	if ((*eng)->surface == NULL)
-		error_handler("SDL_CreateSurface Error: ", SDL_GetError(), (*eng));
 	engine_read_textures(eng);
 }
 
@@ -37,18 +31,6 @@ void		engine_sdl_uninit(t_engine *eng)
 	SDL_DestroyRenderer(eng->ren);
 	SDL_DestroyWindow(eng->win);
 	SDL_Quit();
-}
-
-void	zbuffer_zero(int *zbuffer)
-{
-	int i;
-
-	i = HEIGHT * WIDTH - 1;
-	while (i)
-	{
-		zbuffer[i] = (INT32_MIN);
-		i--;
-	}
 }
 
 void		engine_read_textures(t_engine **eng)

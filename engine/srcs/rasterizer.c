@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/01 19:28:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 08:05:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ void		fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int co
 		y = p.y;
 		while (y <= offsety)
 		{
-			sdl_put_pixel(eng->surface, x, y, color);
+			//sdl_put_pixel(eng->surface, x, y, color);
 			y++;
 		}
 		x++;
@@ -278,7 +278,7 @@ int			check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey,
 		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		{
 			f = 1;
-			sdl_put_pixel(eng->surface, start.x, start.y, color);
+			//sdl_put_pixel(eng->surface, start.x, start.y, color);
 		}
 		start.y++;
 	}
@@ -288,7 +288,7 @@ int			check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey,
 		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		{
 			f = 1;
-			sdl_put_pixel(eng->surface, start.x, start.y, color);
+			//sdl_put_pixel(eng->surface, start.x, start.y, color);
 		}
 		start.x++;
 	}
@@ -300,7 +300,7 @@ int			check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey,
 		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		{
 			f = 1;
-			sdl_put_pixel(eng->surface, start.x, start.y, color);
+			//sdl_put_pixel(eng->surface, start.x, start.y, color);
 		}
 		start.x++;
 	}
@@ -310,7 +310,7 @@ int			check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey,
 		if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 		{
 			f = 1;
-			sdl_put_pixel(eng->surface, start.x, start.y, color);
+			//sdl_put_pixel(eng->surface, start.x, start.y, color);
 		}
 		start.y++;
 	}
@@ -333,7 +333,7 @@ void		full_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offs
 			if (bc_screen.x >= 0 && bc_screen.y >= 0 && bc_screen.z >= 0)
 			{
 				tcolor = get_rgb(((int)(color) >> 16), ((int)(color) >> 8), ((int)(color)), 255);
-				sdl_put_pixel(eng->surface, p.x, p.y, tcolor);
+				//sdl_put_pixel(eng->surface, p.x, p.y, tcolor);
 			}
 			p.y++;
 		}
@@ -365,10 +365,10 @@ void		fill_triangle(t_engine *eng, t_fix_point_2d a, t_fix_point_2d b, t_fix_poi
 
 void		engine_bw_procedural_texture(t_engine *eng, t_fix_point_3d a)
 {
-	if ((((int)(a.x * 3.9) % 4) == 0) && (((int)(a.y * 3.9) % 4) == 0))
-		sdl_put_pixel(eng->surface, a.x, a.y, 0x000000FF);
-	else
-		sdl_put_pixel(eng->surface, a.x, a.y, 0xFFFFFFFF);
+	//if ((((int)(a.x * 3.9) % 4) == 0) && (((int)(a.y * 3.9) % 4) == 0))
+		//sdl_put_pixel(eng->surface, a.x, a.y, 0x000000FF);
+	//else
+		//sdl_put_pixel(eng->surface, a.x, a.y, 0xFFFFFFFF);
 }
 
 double		engine_gain(double gain, int t)

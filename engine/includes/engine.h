@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/02 01:00:18 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 09:46:24 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,18 @@
 # include <SDL2/SDL.h>
 # include <dirent.h>
 # define ENGINE_H
-# define WIDTH 1024
-# define HEIGHT 728
+# define WIDTH 2300
+# define HEIGHT 1400
 # define TWODIM 2
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (1.0 * 0.63f * HEIGHT / WIDTH)
-# define vfov (1.0 * .2f)
+# define hfov (0.83f * HEIGHT / WIDTH)
+# define vfov (0.2f)
 # define TEXTURE_PACK_PATH "./game/resources/images/tiles.png"
 # define GAME_PATH "./game/resources/1.lvl"
 # define PARSING_ERROR 40
+# define THREAD_POOL_SIZE 4
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
@@ -209,7 +210,6 @@ typedef struct		s_engine
 	SDL_Event 		event;
 	SDL_Window		*win;
 	SDL_Renderer	*ren;
-	SDL_Surface 	*surface;
 	t_world			*world;
 	short			view_type;
 	t_stats			stats;
@@ -251,12 +251,20 @@ typedef struct		s_bcontex
 	t_point_3d		e;
 }					t_bcontex;
 
+typedef struct		s_thread_pool
+{
+	SDL_Thread		*thread;
+	SDL_Surface 	*surface;
+	int				value;
+}					t_thread_pool;
+
+
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
 void			engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color);
 void			engine_render_object(t_engine *eng, t_object obj, t_player *plr);
-void			engine_render_frame(t_engine *eng);
-void			engine_render_world(t_engine *eng, t_player *plr, int *rendered);
+void			engine_render_frame(t_engine *eng, SDL_Surface 	*surf);
+void			engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf);
 void			sdl_clear_window(SDL_Surface *surf);
 void			sdl_put_pixel(SDL_Surface *surf, int x, int y, int color);
 void			error_handler(char *error_type, const char *str_error, t_engine *eng);
@@ -283,7 +291,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 int				engine_init_triangle(t_polygone *t, t_tric *trg);
 void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
 void			engine_do_calc(t_tric *trg);
-void			engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id, int prev);
+void			engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id, int prev);
 void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
 void			point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
 int				get_rgb(int r, int g, int b, int a);
@@ -323,7 +331,7 @@ void			engine_bw_procedural_texture(t_engine *eng, t_fix_point_3d a);
 double			engine_gain(double gain, int t);
 double			engine_bias(double b, int t);
 void			engine_render_polygone(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
-void			engine_vline(t_engine *eng, t_fix_point_3d a, t_fix_point_3d b, int color);
+void			engine_vline(t_engine *eng, SDL_Surface *surf, t_fix_point_3d a, t_fix_point_3d b, int color);
 void			engine_render_world_walls(t_engine *eng, t_polygone *polygone, t_player *plr, t_item sect);
 void			engine_render_world_box(t_engine *eng, t_player *plr);
 
@@ -336,7 +344,7 @@ void			image_free(t_image *img);
 t_image			load_textures(const char *fname);
 void			engine_read_textures(t_engine **eng);
 int				scaler_next(t_scaler *i);
-void			engine_vline_textured(t_engine *eng, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture);
+void			engine_vline_textured(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture);
 void			move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect);
 t_costil		relative_map_coordinate_to_absolute(t_player *plr, float map_y, float screen_x, float screen_y);
 t_costil		ceiling_floor_screen_coordinates_to_map_coordinates(t_player *plr, float tz, float tx);
@@ -346,7 +354,7 @@ void			engine_push_checkstack(int *stack, int sect);
 int				engine_pop_checkstack(int *stack);
 void			engine_clear_checkstack(int *stack);
 t_image			*engine_cut_texture(t_image *world_texture, int xstart, int xsize, int ystart, int ysize);
-
+void			game_stop_threads(t_thread_pool	*render_thread, int thread_count);
 /*
 **	Parsing functions
 */

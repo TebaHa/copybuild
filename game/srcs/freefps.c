@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/02 00:46:12 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 09:56:00 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,56 @@ void		game_create_test_player(t_player *plr)
 	plr->yaw = 5;
 }
 
+static	int		game_thread_wrapper(void *ptr)
+{
+	t_game *fps;
+
+	fps = (t_game *)ptr;
+	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface);
+	SDL_Delay(20);
+	return (fps->thread_num);
+}
+
+void			game_init_threads(t_thread_pool *render_thread_pool)
+{
+	int			i;
+
+	i = 0;
+
+	while (i < THREAD_POOL_SIZE)
+	{
+		render_thread_pool[i++].surface = SDL_CreateRGBSurface(0, WIDTH, HEIGHT, 32, (Uint32)0xff000000,
+							(Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff);
+	}
+}
+
 int		main(void)
 {
-	t_game	fps;
-	int		*rendered;
-	int		dz;
-	int		duck_shift;
-	int		movement_dz;
-	int		counter;
+	t_game			fps;
+	int				dz;
+	int				duck_shift;
+	int				movement_dz;
+	int				counter;
+	int				thread_start_index;
+	int				thread_end_index;
+	int				init;
 
 	movement_dz = 30;
 	counter = 0;
 	duck_shift = 0;
+	thread_end_index = 0;
+	thread_start_index = 0;
+	init = 0;
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
 	engine_create_world_from_file(fps.eng, GAME_PATH);
-	rendered = (int *)ft_memalloc(sizeof(int) * fps.eng->stats.sectors_count);
+	game_init_threads(fps.render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
 	float yaw = 0;
 	while (1)
 	{
-		for (int i = 0; i < fps.eng->stats.sectors_count; i++)
-			rendered[i] = 0;
-		engine_render_world(fps.eng, &fps.player, rendered);
-		engine_render_frame(fps.eng);
+		fps.thread_num = thread_start_index;
+		fps.render_thread_pool[thread_start_index].thread = SDL_CreateThread(game_thread_wrapper, NULL, (void *)&fps);
 		if (fps.player.controller.moving)
 		{
 			float px = fps.player.position.x, py = fps.player.position.y;
@@ -111,7 +137,10 @@ int		main(void)
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
 					fps.player.controller.running = 10;
 				if (fps.eng->event.key.keysym.sym == SDLK_ESCAPE)
+				{
+					game_stop_threads(fps.render_thread_pool, THREAD_POOL_SIZE);
 					break;
+				}
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
 					fps.player.controller.wasd[0] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_s)
@@ -206,12 +235,32 @@ int		main(void)
 			fps.player.controller.moving = 1;
 		else
 			fps.player.controller.moving = 0;
-		engine_clear_frame(fps.eng);
-		zbuffer_zero(fps.eng->z_buff);
-		SDL_Delay(10);
+		if (thread_start_index == (THREAD_POOL_SIZE - 1) || init == 1)
+		{
+			SDL_WaitThread(fps.render_thread_pool[thread_end_index].thread, &fps.render_thread_pool[thread_end_index].value);
+			engine_render_frame(fps.eng, fps.render_thread_pool[thread_end_index].surface);
+			thread_start_index = thread_end_index;
+			thread_end_index = thread_end_index < (THREAD_POOL_SIZE - 1) ? thread_end_index + 1 : 0;
+			if (init == 0)
+				init = 1;
+		}
+		else
+			thread_start_index++;
 	}
 	engine_sdl_uninit(fps.eng);
 	return (0);
+}
+
+void	game_stop_threads(t_thread_pool	*render_thread, int thread_count)
+{
+	int	i;
+
+	i = 0;
+	while (i < thread_count)
+	{
+		SDL_WaitThread(render_thread[i].thread, &render_thread[i].value);
+		i++;
+	}
 }
 
 void	move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect)

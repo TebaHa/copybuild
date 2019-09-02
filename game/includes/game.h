@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/01 19:34:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 08:02:32 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ typedef	struct		s_game
 {
 	t_engine		*eng;
 	t_player		player;
+	int				thread_num;
+	t_thread_pool	render_thread_pool[THREAD_POOL_SIZE];
 }					t_game;
 
 void			game_create_test_player(t_player *plr);
+static	int		game_thread_wrapper(void *ptr);
 
 #endif

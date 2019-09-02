@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 00:12:42 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/26 20:37:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 08:05:51 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void		bresenham_put_pixel(t_bcontex *c,
 	&& (c->x >= 0 && c->x < WIDTH))
 	&& (eng->z_buff[c->x + c->y * WIDTH] < zmax + 1))))
 	{
-		sdl_put_pixel(eng->surface, c->steep ? c->y : c->x,
-		c->steep ? c->x : c->y, color);
+		//sdl_put_pixel(eng->surface, c->steep ? c->y : c->x,
+		//c->steep ? c->x : c->y, color);
 	}
 }
 

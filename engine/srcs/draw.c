@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/02 01:10:31 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 08:22:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			get_rgb(int r, int g, int b, int a)
 	return (((((int)r) << 24) & 0xFF000000) | ((((int)g) << 16) & 0x00FF0000) | (((b) << 8) & 0x0000FF00) | (((a)) & 0x000000FF));
 }
 
-void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
+void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf)
 {
 	int			ytop[WIDTH] = {0};
 	int			ybottom[WIDTH];
@@ -28,10 +28,10 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 
 	x = 0;
 	prev = -1;
-	SDL_LockSurface(eng->surface);
+	SDL_LockSurface(surf);
 	while (x < WIDTH)
 		ybottom[x++] = HEIGHT;
-	sect_id = (t_item){plr->cursector, 0, WIDTH - 1};
+	sect_id = (t_item){plr.cursector, 0, WIDTH - 1};
 	//engine_render_world_box(eng, plr);
 	engine_push_renderstack(eng->world->renderqueue, sect_id);
 	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)).sectorno >= 0))
@@ -39,17 +39,17 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 		i = 0;
 		while (i < eng->world->sectors_array[sect_id.sectorno].objects_count)
 		{
-			engine_render_wall(eng, eng->world->sectors_array[sect_id.sectorno].objects_array[i].polies_array, plr,
-				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, rendered, sect_id, i, prev);
+			engine_render_wall(eng, surf, eng->world->sectors_array[sect_id.sectorno].objects_array[i].polies_array, &plr,
+				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, NULL, sect_id, i, prev);
 			i++;
 		}
 		prev = sect_id.sectorno;
 	}
 	engine_clear_renderstack(eng->world->renderqueue);
-	SDL_UnlockSurface(eng->surface);
+	SDL_UnlockSurface(surf);
 }
 
-void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id, int prev)
+void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id, int prev)
 {
 	t_point_2d	v1;
 	t_point_2d	v2;
@@ -156,7 +156,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 			int8_t green = (tex->data)[offset + 1];
 			int8_t blue = (tex->data)[offset + 2];
 			int color = get_rgb((int)red, (int)green, (int)blue, 255);
-			((int*)eng->surface->pixels)[y * WIDTH + x] = color;
+			((int*)surf->pixels)[y * WIDTH + x] = color;
 		}
 		/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
 		if (portal >= 0)
@@ -166,14 +166,14 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 			int cnya = clamp(nya, ytop[x], ybottom[x]);
 			int cnyb = clamp(nyb, ytop[x], ybottom[x]);
 			/* If our ceiling is higher than their ceiling, render upper wall */
-			engine_vline_textured(eng, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya, z}, (t_fix_point_3d){x, cnya-1, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
+			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya, z}, (t_fix_point_3d){x, cnya-1, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
 			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);// Shrink the remaining window below these ceilings
 			/* If our floor is lower than their floor, render bottom wall */
-			engine_vline_textured(eng, (t_scaler)Scaler_Init(ya, cnyb + 1, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cnyb + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
+			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cnyb + 1, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cnyb + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
-			engine_vline_textured(eng, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, polygone->texture);
+			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, polygone->texture);
 	}
 }
 
@@ -276,18 +276,11 @@ void		engine_render_polygone(t_engine *eng, t_player *plr, t_polygone *wall, int
 	//engine_triangle(eng, plr, a);
 }
 
-void		engine_clear_frame(t_engine *eng)
-{
-	SDL_LockSurface(eng->surface);
-	SDL_memset(eng->surface->pixels, 0, eng->surface->h * eng->surface->pitch);
-	SDL_UnlockSurface(eng->surface);
-}
-
-void		engine_render_frame(t_engine *eng)
+void		engine_render_frame(t_engine *eng, SDL_Surface *surf)
 {
 	SDL_Texture	*texture;
 
-	texture = SDL_CreateTextureFromSurface(eng->ren, eng->surface);
+	texture = SDL_CreateTextureFromSurface(eng->ren, surf);
 	SDL_RenderClear(eng->ren);
 	SDL_RenderCopy(eng->ren, texture, NULL, NULL);
 	SDL_RenderPresent(eng->ren);
@@ -304,11 +297,11 @@ void		sdl_put_pixel(SDL_Surface *surf, int x, int y, int color)
 	*(int *)p = color;
 }
 
-void		engine_vline(t_engine *eng, t_fix_point_3d a, t_fix_point_3d b, int color)
+void		engine_vline(t_engine *eng, SDL_Surface *surf, t_fix_point_3d a, t_fix_point_3d b, int color)
 {
 	int		y1;
 	int		y2;
-	int		*pix = (int*) eng->surface->pixels;
+	int		*pix = (int*) surf->pixels;
 
 	y1 = clamp(a.y, 0, HEIGHT - 1);
 	y2 = clamp(b.y, 0, HEIGHT - 1);
