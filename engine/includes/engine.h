@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/02 09:46:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 10:16:01 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <SDL2/SDL.h>
 # include <dirent.h>
 # define ENGINE_H
-# define WIDTH 2300
-# define HEIGHT 1400
+# define WIDTH 1024
+# define HEIGHT 728
 # define TWODIM 2
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
@@ -28,7 +28,7 @@
 # define TEXTURE_PACK_PATH "./game/resources/images/tiles.png"
 # define GAME_PATH "./game/resources/1.lvl"
 # define PARSING_ERROR 40
-# define THREAD_POOL_SIZE 4
+# define THREAD_POOL_SIZE 1
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
