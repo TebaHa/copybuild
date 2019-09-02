@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/01 19:26:51 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 01:10:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,33 @@ void		engine_render_world(t_engine *eng, t_player *plr, int *rendered)
 	int			ybottom[WIDTH];
 	unsigned	x;
 	t_item		sect_id;
+	int			prev;
 	int			i;
 
 	x = 0;
-	sect_id = (t_item){plr->cursector, 0, WIDTH - 1};
+	prev = -1;
 	SDL_LockSurface(eng->surface);
 	while (x < WIDTH)
 		ybottom[x++] = HEIGHT;
+	sect_id = (t_item){plr->cursector, 0, WIDTH - 1};
+	//engine_render_world_box(eng, plr);
 	engine_push_renderstack(eng->world->renderqueue, sect_id);
-	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)).sectorno >= 0) && rendered[sect_id.sectorno] == 0)
+	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)).sectorno >= 0))
 	{
 		i = 0;
 		while (i < eng->world->sectors_array[sect_id.sectorno].objects_count)
 		{
 			engine_render_wall(eng, eng->world->sectors_array[sect_id.sectorno].objects_array[i].polies_array, plr,
-				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, rendered, sect_id, i);
+				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, rendered, sect_id, i, prev);
 			i++;
 		}
-		rendered[sect_id.sectorno] = 1;
+		prev = sect_id.sectorno;
 	}
 	engine_clear_renderstack(eng->world->renderqueue);
 	SDL_UnlockSurface(eng->surface);
 }
 
-void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id)
+void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id, int prev)
 {
 	t_point_2d	v1;
 	t_point_2d	v2;
@@ -64,12 +67,10 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	t1.y = v1.x * plr->cosangle + v1.y * plr->sinangle;
 	t2.x = v2.x * plr->sinangle - v2.y * plr->cosangle;
 	t2.y = v2.x * plr->cosangle + v2.y * plr->sinangle;
-	if (rendered[portal] == 1)
-			return ;
 	/* Is the wall at least partially in front of the player? */
 	if(t1.y <= 0 && t2.y <= 0)
 		return ;
-	int u0 = 0, u1 = polygone->texture->width - 1;
+	int u0 = 0, u1 = polygone->texture->height - 1;
 	/* If it's partially behind the player, clip it against player's view frustrum */
 	if(t1.y <= 0 || t2.y <= 0)
 	{
@@ -93,9 +94,9 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 				t2 = i2;
 		}
 		if(fabsf(t2.x - t1.x) > fabsf(t2.y - t1.y))
-			u0 = (t1.x - org1.x) * (polygone->texture->width - 1) / (org2.x-org1.x), u1 = (t2.x - org1.x) * (polygone->texture->width - 1) / (org2.x - org1.x);
+			u0 = (t1.x - org1.x) * (polygone->texture->height - 1) / (org2.x-org1.x), u1 = (t2.x - org1.x) * (polygone->texture->height - 1) / (org2.x - org1.x);
 		else
-			u0 = (t1.y - org1.y) * (polygone->texture->height - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (polygone->texture->height - 1) / (org2.y - org1.y);
+			u0 = (t1.y - org1.y) * (polygone->texture->width - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (polygone->texture->width - 1) / (org2.y - org1.y);
 	}
 	/* Do perspective transformation */
 	float xscale1 = (WIDTH * hfov) / t1.y, yscale1 = (HEIGHT * vfov) / t1.y;
@@ -109,7 +110,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 	float yfloor = eng->world->sectors_array[sect.sectorno].floor - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	float nyceil = 0, nyfloor = 0;
-	if(portal >= 0) // Is another sector showing through this portal?
+	if(portal >= 0 && prev != portal) // Is another sector showing through this portal?
 	{
 		nyceil  = eng->world->sectors_array[portal].ceil - plr->position.z;
 		nyfloor = eng->world->sectors_array[portal].floor - plr->position.z;
@@ -149,7 +150,7 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 			float hei = y < cya ? yceil : yfloor;
 			t_costil pnts = relative_map_coordinate_to_absolute(plr, hei, x, y);
 			tex = y < cya ? eng->world->sectors_array[sect.sectorno].ceil_texture : eng->world->sectors_array[sect.sectorno].floor_texture;
-			unsigned txtx = (pnts.x * 2), txtz = (pnts.z * 2);
+			unsigned txtx = (pnts.x), txtz = (pnts.z);
 			int offset = (((txtz % tex->height) * tex->width) + (txtx % tex->width)) * tex->channels;
 			int8_t red = (tex->data)[offset];
 			int8_t green = (tex->data)[offset + 1];
@@ -162,8 +163,8 @@ void		engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int
 		{
 			int nya = scaler_next(&nya_int);
 			int nyb = scaler_next(&nyb_int);
-			int cnya = clamp(nya, ytop[x],ybottom[x]);
-			int cnyb = clamp(nyb, ytop[x],ybottom[x]);
+			int cnya = clamp(nya, ytop[x], ybottom[x]);
+			int cnyb = clamp(nyb, ytop[x], ybottom[x]);
 			/* If our ceiling is higher than their ceiling, render upper wall */
 			engine_vline_textured(eng, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya, z}, (t_fix_point_3d){x, cnya-1, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
 			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);// Shrink the remaining window below these ceilings

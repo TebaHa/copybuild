@@ -1,9 +1,18 @@
 #Worlds
 #		id, num of sects,	sectors
-world:	1	4				0 1 2 3
+world:	1	5				0 1 2 3 4
 
 #Vertexes
 #		id	X,		Y,		Z
+vertex: 37	-1524	-1524	600
+vertex: 36	-1524	1524	600
+vertex: 39	-1524	1524	600
+vertex: 38	1524	1524	600
+vertex: 40	1524	1524	600
+vertex: 41	1524	-1524	600
+vertex: 43	1524	-1524	600
+vertex: 42	-1524	-1524	600
+
 vertex: 28 -200		-100	600
 vertex: 29 -400		-200	600
 vertex: 30 -400		-200	600
@@ -69,34 +78,45 @@ polygone:	15	1	0xF0E21D	bricks.png		2		31 30
 polygone:	16	1	0xCCFFFF	bricks.png		2		33 32
 polygone:	17	1	0xFF0000	bricks.png		2		35 34
 
+polygone:	18	1	0xD9D9D9	skybox_front.png	2		36 37
+polygone:	19	1	0xF0E21D	skybox_left.png	2		38 39
+polygone:	20	1	0xCCFFFF	skybox_back.png	2		41 40
+polygone:	21	1	0xFF0000	skybox_right.png	2		42 43
+
 #Objects
 #			(if >= 0 where goes)
-#		id,	portal, pasble,	floor_wall,		ceil_wall,	#polys,	id of poly
-object:	0	-1		0		floor_wall		ceil_wall	1		0
-object:	1	1		0		floor_wall		ceil_wall	1		1
-object:	2	-1		0		floor_wall		ceil_wall	1		2
-object:	3	-1		0		floor_wall		ceil_wall	1		3
-object:	4	-1		0		floor_wall		ceil_wall	1		4
+#		id,	portal, pasble, visible,	floor_wall,		ceil_wall,	#polys,	id of poly
+object:	0	-1		0		flooring.png		ceil_wall	1		0
+object:	1	1		0		flooring.png		ceiling.png	1		1
+object:	2	-1		0		flooring.png		ceil_wall	1		2
+object:	3	-1		0		flooring.png		ceil_wall	1		3
+object:	4	-1		0		flooring.png		ceil_wall	1		4
 
-object:	5	2		0		floor_wall		ceil_wall	1		5
-object:	6	3		0		floor_wall		ceil_wall	1		6
+object:	5	2		0		flooring.png		ceiling.png	1		5
+object:	6	3		0		flooring.png		ceiling.png	1		6
 object:	7	-1		0		floor_wall		ceil_wall	1		7
-object:	8	0		0		floor_wall		ceil_wall	1		8
+object:	8	0		0		flooring.png		ceiling.png	1		8
 object:	9	-1		0		floor_wall		ceil_wall	1		9
 
 object:	10	-1		0		floor_wall		ceil_wall	1		10
 object:	11	-1		0		floor_wall		ceil_wall	1		11
 object:	12	-1		0		floor_wall		ceil_wall	1		12
-object:	13	1		0		floor_wall		ceil_wall	1		13
+object:	13	1		0		flooring.png	ceiling.png	1		13
 
 object:	14	-1		0		floor_wall		ceil_wall	1		14
 object:	15	-1		0		floor_wall		ceil_wall	1		15
 object:	16	-1		0		floor_wall		ceil_wall	1		16
-object:	17	1		0		floor_wall		ceil_wall	1		17
+object:	17	1		0		flooring.png	ceiling.png	1		17
+
+object:	18	-1		0		floor_wall		ceil_wall	1		18
+object:	19	-1		0		floor_wall		ceil_wall	1		19
+object:	20	-1		0		floor_wall		ceil_wall	1		20
+object:	21	-1		0		floor_wall		ceil_wall	1		21
 
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture,	#objs,	id of obj
-sector:	0	0		500		floor_wall.png	ceil_wall.png	5		0 1 2 3 4
-sector:	1	25		1100	stone_floor		star_sky		5		5 6 7 8 9
-sector:	2	50		1000	stone_floor		star_sky		4		10 11 12 13
-sector:	3	50		1000	stone_floor		star_sky		4		14 15 16 17
+sector:	0	0		500		floor_wall.png		ceil_wall.png	5		0 1 2 3 4
+sector:	1	0		1100	floor_wall.png		ceil_wall.png	5		5 6 7 8 9
+sector:	2	-25		1125	floor_wall.png		ceil_wall.png	4		10 11 12 13
+sector:	3	25		1000	floor_wall.png		ceil_wall.png	4		14 15 16 17
+sector:	4	-2000	2548	skybox_top.png		skybox_top.png		4		18 19 20 21

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 00:38:38 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/01 19:28:01 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 00:45:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		engine_object_get_sector(t_world *world, t_point_3d pos, int start_sect)
 			(t_point_2d){world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[1].x,
 			world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[1].y}, (t_point_2d){pos.x, pos.y}))
 				res = -res;
-			if (world->sectors_array[cursect].objects_array[i].portal >= 0 && checked_array[world->sectors_array[cursect].objects_array[i].portal] == 0)
+			if (world->sectors_array[cursect].objects_array[i].portal >= 0 && world->sectors_array[cursect].objects_array[i].portal != 4 && checked_array[world->sectors_array[cursect].objects_array[i].portal] == 0)
 				engine_push_checkstack(check_stack, world->sectors_array[cursect].objects_array[i].portal);
 			i++;
 		}

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/01 19:27:26 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/01 21:48:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,15 @@ void		engine_read_textures(t_engine **eng)
 		(*eng)->texture_buffer = (t_txtr_pkg **)ft_memalloc(sizeof(t_txtr_pkg *) * (count - 2));
 		if ((*eng)->texture_buffer == NULL)
 			error_handler("malloc error: ", "allocation", (*eng));
-		while (i < 2)
-		{
-			i++;
-		}
 		while (i < count)
 		{
 			if ((dir = readdir(d)) != NULL)
 			{
+				if (ft_strcmp(dir->d_name, ".") == 0 || ft_strcmp(dir->d_name, "..") == 0 || ft_strcmp(dir->d_name, ".DS_Store") == 0)
+				{
+					i++;
+					continue;
+				}
 				buffer_name = ft_strjoin("./game/resources/images/", dir->d_name);
 				(*eng)->texture_buffer[real_i] = (t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
 				(*eng)->texture_buffer[real_i]->filename = ft_strdup(dir->d_name);
@@ -92,6 +93,7 @@ void		engine_read_textures(t_engine **eng)
 				if ((*eng)->texture_buffer[real_i] == NULL)
 					error_handler("malloc error: ", "allocation", (*eng));
 				image_load(&(*eng)->texture_buffer[real_i]->texture, buffer_name);
+				printf("%s\n",(*eng)->texture_buffer[real_i]->filename);
 				free(buffer_name);
 				real_i++;
 				i++;

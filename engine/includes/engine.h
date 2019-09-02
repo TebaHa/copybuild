@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/01 19:23:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 01:00:18 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ typedef struct		s_object
 	int				passble;
 	int				id;
 	int				polies_count;
+	int				visible;
 	t_image			*floor_wall_texture;
 	t_image			*ceil_wall_texture;
 }					t_object;
@@ -158,6 +159,7 @@ typedef	struct		s_sector
 typedef	struct		s_world
 {
 	t_sector		*sectors_array;
+	t_sector		*world_box;
 	int				sectors_count;
 	t_item			*renderqueue;
 	int				id;
@@ -281,7 +283,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 int				engine_init_triangle(t_polygone *t, t_tric *trg);
 void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
 void			engine_do_calc(t_tric *trg);
-void			engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id);
+void			engine_render_wall(t_engine *eng, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id, int prev);
 void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
 void			point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
 int				get_rgb(int r, int g, int b, int a);
@@ -322,6 +324,8 @@ double			engine_gain(double gain, int t);
 double			engine_bias(double b, int t);
 void			engine_render_polygone(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
 void			engine_vline(t_engine *eng, t_fix_point_3d a, t_fix_point_3d b, int color);
+void			engine_render_world_walls(t_engine *eng, t_polygone *polygone, t_player *plr, t_item sect);
+void			engine_render_world_box(t_engine *eng, t_player *plr);
 
 /*
 **Image-processing functions
@@ -341,6 +345,7 @@ void			change_ceil(t_engine *eng, int sect, int change);
 void			engine_push_checkstack(int *stack, int sect);
 int				engine_pop_checkstack(int *stack);
 void			engine_clear_checkstack(int *stack);
+t_image			*engine_cut_texture(t_image *world_texture, int xstart, int xsize, int ystart, int ysize);
 
 /*
 **	Parsing functions
