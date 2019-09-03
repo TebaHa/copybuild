@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/02 10:16:01 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/03 14:54:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,19 @@
 # include <SDL2/SDL.h>
 # include <dirent.h>
 # define ENGINE_H
-# define WIDTH 1024
-# define HEIGHT 728
+# define WIDTH 2100
+# define HEIGHT 1300
 # define TWODIM 2
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
 # define hfov (0.83f * HEIGHT / WIDTH)
 # define vfov (0.2f)
-# define TEXTURE_PACK_PATH "./game/resources/images/tiles.png"
+# define TEXTURE_PACK_PATH "./game/resources/images/"
+# define TEXTURE_SPRITE_PATH "./game/resources/sprites/"
 # define GAME_PATH "./game/resources/1.lvl"
 # define PARSING_ERROR 40
-# define THREAD_POOL_SIZE 1
+# define THREAD_POOL_SIZE 8
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
@@ -197,6 +198,7 @@ typedef struct		s_stats
 	int				objects_count;
 	int				sectors_count;
 	int 			textures_count;
+	int 			sprites_count;
 }					t_stats;
 
 typedef struct		s_txtr_pkg
@@ -215,6 +217,7 @@ typedef struct		s_engine
 	t_stats			stats;
 	int				*z_buff;
 	t_txtr_pkg		**texture_buffer;
+	t_txtr_pkg		**sprites_buffer;
 }					t_engine;
 
 typedef struct		s_tric
@@ -355,6 +358,8 @@ int				engine_pop_checkstack(int *stack);
 void			engine_clear_checkstack(int *stack);
 t_image			*engine_cut_texture(t_image *world_texture, int xstart, int xsize, int ystart, int ysize);
 void			game_stop_threads(t_thread_pool	*render_thread, int thread_count);
+void			engine_draw_hud(t_engine *eng, SDL_Surface *surf);
+void			engine_read_sprites(t_engine **eng);
 /*
 **	Parsing functions
 */

@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/09/02 09:51:47 by zytrams          ###   ########.fr        #
+#    Updated: 2019/09/02 12:16:52 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					normal.c \
 					images.c \
 					texture.c \
+					hud_draw.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
@@ -72,21 +73,21 @@ ENGINE_OBJS_LIST = $(patsubst %.c, %.o, $(ENGINE_SRCS_LIST))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS)
-	$(CC) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_INCLUDES) -L $(SDL_DIRECTORY) $(LIBFT) -l SDL2-2.0.0 -lm
+	$(CC) -Ofast -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_INCLUDES) -L $(SDL_DIRECTORY) $(LIBFT) -l SDL2-2.0.0 -lm
 
 $(ENGINE_OBJS_DIRECTORY):
 	mkdir -p $(ENGINE_OBJS_DIRECTORY)
 	echo "$(NAME): $(ENGINE_OBJS_DIRECTORY) was created"
 
 $(ENGINE_OBJS_DIRECTORY)%.o: $(ENGINE_SRCS_DIRECTORY)%.c $(ENGINE_HEADERS)
-	$(CC) $(FLAGS) -c $(ENGINE_INCLUDES) -I $(SDL_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_DIRECTORY) $< -o $@
+	$(CC) -Ofast $(FLAGS) -c $(ENGINE_INCLUDES) -I $(SDL_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_DIRECTORY) $< -o $@
 
 $(GAME_OBJS_DIRECTORY):
 	mkdir -p $(GAME_OBJS_DIRECTORY)
 	echo "$(NAME): $(GAME_OBJS_DIRECTORY) was created"
 
 $(GAME_OBJS_DIRECTORY)%.o: $(GAME_SRCS_DIRECTORY)%.c $(GAME_HEADERS)
-	$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_DIRECTORY) $< -o $@
+	$(CC) -Ofast $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_DIRECTORY) $< -o $@
 $(LIBFT):
 	$(MAKE) -sC $(LIBFT_DIRECTORY)
 
