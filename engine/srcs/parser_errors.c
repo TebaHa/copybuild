@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:41:27 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/01 19:36:27 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/02 19:31:20 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 	ft_putstr("Cant find texture: ");
 	ft_putstr(name);
 	ft_putstr("!\n");
-	util_find_texture_by_name(dst, eng, "!purple.png");
-//	*dst = &eng->texture_buffer[0]->texture;
-//	exit(PARSING_ERROR);
+	util_find_texture_by_name(dst, eng, PARSING_ERROR_TEXTURE);
+	exit(PARSING_ERROR);
 }

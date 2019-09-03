@@ -6,15 +6,14 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/01 13:09:40 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/02 20:34:18 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-t_world		*engine_read_world_from_file(t_engine *eng, char **json_splited)
+void		engine_read_world_from_file(t_engine *eng, char **json_splited)
 {
-	t_world	*res_world;
 	char	**splitted_line;
 	int		i;
 
@@ -24,12 +23,11 @@ t_world		*engine_read_world_from_file(t_engine *eng, char **json_splited)
 		if (ft_strwcmp(json_splited[i], "world:") == 0)
 		{
 			splitted_line = ft_strsplitwhitespaces(json_splited[i]);
-			util_create_world(&res_world, splitted_line);
+			util_create_world(&eng->world, splitted_line);
 			util_release_char_matrix(splitted_line);
 		}
 		i++;
 	}
-	return (res_world);
 }
 
 t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
@@ -100,25 +98,39 @@ t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 	return (p_array_buffer);
 }
 
-t_sector	*engine_read_sectors_from_file(t_engine *eng,
+void		engine_read_sectors_from_file(t_engine *eng,
 			t_object *objects_array, char **json_splited)
 {
-	t_sector	*s_array_buffer;
 	char		**splitted_line;
 	int			i;
 
-	s_array_buffer = (t_sector *)ft_memalloc(sizeof(t_sector)
-		* eng->stats.sectors_count);
 	i = 0;
 	eng->stats.sectors_count = 0;
 	while (json_splited[i] != NULL)
 	{
 		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
 		if (ft_strcmp(splitted_line[0], "sector:") == 0)
-			util_create_sector(eng, &s_array_buffer[eng->stats.sectors_count],
+			util_create_sector(eng, &eng->world->sectors_array
+			[eng->stats.sectors_count], objects_array, splitted_line);
+		util_release_char_matrix(splitted_line);
+		i++;
+	}
+}
+
+void		engine_read_worldbox_from_file(t_engine *eng,
+			t_object *objects_array, char **json_splited)
+{
+	char		**splitted_line;
+	int			i;
+
+	i = 0;
+	while (json_splited[i] != NULL)
+	{
+		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
+		if (ft_strcmp(splitted_line[0], "wrldbx:") == 0)
+			util_create_sector(eng, eng->world->world_box,
 			objects_array, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
-	return (s_array_buffer);
 }

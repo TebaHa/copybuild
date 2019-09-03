@@ -6,7 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/09/03 14:54:10 by zytrams          ###   ########.fr       */
+=======
+/*   Updated: 2019/09/02 20:34:18 by fsmith           ###   ########.fr       */
+>>>>>>> 2e1386b79670992242afdd939648c3a126e65ccf
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +33,12 @@
 # define TEXTURE_SPRITE_PATH "./game/resources/sprites/"
 # define GAME_PATH "./game/resources/1.lvl"
 # define PARSING_ERROR 40
+<<<<<<< HEAD
 # define THREAD_POOL_SIZE 8
+=======
+# define PARSING_ERROR_TEXTURE	"!purple"
+# define THREAD_POOL_SIZE 1
+>>>>>>> 2e1386b79670992242afdd939648c3a126e65ccf
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
@@ -368,13 +377,15 @@ char		**engine_read_level_file(char *filename);
 void		util_release_char_matrix(char **mtrx);
 void		engine_create_world_from_file(t_engine *eng, char *filename);
 void		engine_count_all_from_file(t_engine *eng, char **json_splited);
-t_world		*engine_read_world_from_file(t_engine *eng, char **json_splited);
+void		engine_read_world_from_file(t_engine *eng, char **json_splited);
 t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
 t_object	*engine_read_objects_from_file(t_engine *eng,
 			t_polygone *polies_array, char **json_splited);
 t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 			t_point_3d *vertex_array, char **json_splited);
-t_sector	*engine_read_sectors_from_file(t_engine *eng,
+void		engine_read_sectors_from_file(t_engine *eng,
+			t_object *objects_array, char **json_splited);
+void		engine_read_worldbox_from_file(t_engine *eng,
 			t_object *objects_array, char **json_splited);
 void		util_float10_data_filler(float *data, char *str);
 void		util_int10_data_filler(int *data, char *str);
