@@ -6,11 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2019/09/02 12:16:52 by zytrams          ###   ########.fr        #
-=======
-#    Updated: 2019/09/02 19:13:47 by fsmith           ###   ########.fr        #
->>>>>>> 2e1386b79670992242afdd939648c3a126e65ccf
+#    Updated: 2019/09/07 19:31:04 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +23,8 @@ GAME_SRCS_LIST = freefps.c \
 SDL = $(SDL_DIRECTORY)libmlx.a
 SDL_DIRECTORY = ./lib/sdl2/
 SDL_INCLUDES = ./engine/includes/SDL2/
+
+SDL_TTF_DIRECTORY = -L ./lib/sdl_ttf/
 
 GAME_OBJS_DIRECTORY = ./game/objs/
 GAME_SRCS_DIRECTORY = ./game/srcs/
@@ -77,21 +75,21 @@ ENGINE_OBJS_LIST = $(patsubst %.c, %.o, $(ENGINE_SRCS_LIST))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS)
-	$(CC) -Ofast -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_INCLUDES) -L $(SDL_DIRECTORY) $(LIBFT) -l SDL2-2.0.0 -lm
+	$(CC) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_INCLUDES) -L $(SDL_DIRECTORY) $(SDL_TTF_DIRECTORY) $(LIBFT) -l SDL2-2.0.0 -lm
 
 $(ENGINE_OBJS_DIRECTORY):
 	mkdir -p $(ENGINE_OBJS_DIRECTORY)
 	echo "$(NAME): $(ENGINE_OBJS_DIRECTORY) was created"
 
 $(ENGINE_OBJS_DIRECTORY)%.o: $(ENGINE_SRCS_DIRECTORY)%.c $(ENGINE_HEADERS)
-	$(CC) -Ofast $(FLAGS) -c $(ENGINE_INCLUDES) -I $(SDL_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_DIRECTORY) $< -o $@
+	$(CC) $(FLAGS) -c $(ENGINE_INCLUDES) -I $(SDL_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_DIRECTORY) $< -o $@
 
 $(GAME_OBJS_DIRECTORY):
 	mkdir -p $(GAME_OBJS_DIRECTORY)
 	echo "$(NAME): $(GAME_OBJS_DIRECTORY) was created"
 
 $(GAME_OBJS_DIRECTORY)%.o: $(GAME_SRCS_DIRECTORY)%.c $(GAME_HEADERS)
-	$(CC) -Ofast $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_DIRECTORY) $< -o $@
+	$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_DIRECTORY) $< -o $@
 $(LIBFT):
 	$(MAKE) -sC $(LIBFT_DIRECTORY)
 

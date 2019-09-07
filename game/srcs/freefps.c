@@ -6,11 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/09/02 14:13:59 by zytrams          ###   ########.fr       */
-=======
-/*   Updated: 2019/09/02 19:13:47 by fsmith           ###   ########.fr       */
->>>>>>> 2e1386b79670992242afdd939648c3a126e65ccf
+/*   Updated: 2019/09/07 19:43:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +18,7 @@ void		game_create_test_player(t_player *plr)
 	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
 	plr->cursector = 1;
 	plr->angle = 0;
+	plr->real_position = (t_point_3d){0, -300.0f, 0.f, 200.0f};
 	plr->sinangle = sinf(plr->angle);
 	plr->cosangle = cosf(plr->angle);
 	plr->controller.wasd[0] = 0;
@@ -44,6 +41,7 @@ static	int		game_thread_wrapper(void *ptr)
 
 	fps = (t_game *)ptr;
 	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface);
+	//SDL_Delay(15);
 	return (fps->thread_num);
 }
 
@@ -100,8 +98,7 @@ int		main(void)
 			}
 			if (fps.player.controller.ducking == 1)
 			{
-				movement_dz = fabs(sin(M_PI_4 * counter++)) * 13;
-				fps.player.position.z += movement_dz;
+				fps.player.position.z += fabs(sin(M_PI_4 * counter++)) * 13;
 				fps.player.controller.fakefall = 1;
 			}
 		}
@@ -243,7 +240,7 @@ int		main(void)
 			SDL_WaitThread(fps.render_thread_pool[thread_end_index].thread, &fps.render_thread_pool[thread_end_index].value);
 			engine_draw_hud(fps.eng, fps.render_thread_pool[thread_end_index].surface);
 			engine_render_frame(fps.eng, fps.render_thread_pool[thread_end_index].surface);
-			SDL_Delay(5);
+			//SDL_Delay(10);
 			thread_start_index = thread_end_index;
 			thread_end_index = thread_end_index < (THREAD_POOL_SIZE - 1) ? thread_end_index + 1 : 0;
 			if (init == 0)

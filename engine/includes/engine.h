@@ -6,11 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/09/03 14:54:10 by zytrams          ###   ########.fr       */
-=======
-/*   Updated: 2019/09/02 20:34:18 by fsmith           ###   ########.fr       */
->>>>>>> 2e1386b79670992242afdd939648c3a126e65ccf
+/*   Updated: 2019/09/07 19:33:28 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +16,10 @@
 # include <libft.h>
 # include <SDL2/SDL.h>
 # include <dirent.h>
+# include <SDL2/SDL_ttf.h>
 # define ENGINE_H
-# define WIDTH 2100
-# define HEIGHT 1300
+# define WIDTH 1024
+# define HEIGHT 768
 # define TWODIM 2
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
@@ -31,14 +28,11 @@
 # define vfov (0.2f)
 # define TEXTURE_PACK_PATH "./game/resources/images/"
 # define TEXTURE_SPRITE_PATH "./game/resources/sprites/"
-# define GAME_PATH "./game/resources/1.lvl"
+# define GAME_PATH "./game/resources/levels/1.lvl"
 # define PARSING_ERROR 40
-<<<<<<< HEAD
-# define THREAD_POOL_SIZE 8
-=======
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define THREAD_POOL_SIZE 1
->>>>>>> 2e1386b79670992242afdd939648c3a126e65ccf
+# define DELAY 15
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
@@ -152,6 +146,7 @@ typedef struct		s_object
 	int				id;
 	int				polies_count;
 	int				visible;
+	t_point_3d		particles[10];
 	t_image			*floor_wall_texture;
 	t_image			*ceil_wall_texture;
 }					t_object;
@@ -193,6 +188,7 @@ typedef	struct		s_player
 	t_control		controller;
 	t_point_3d		position; // current position
 	t_point_3d		velocity; // current motion vector
+	t_point_3d		real_position;
 	float			angle; // view angle
 	float			cosangle;
 	float			sinangle;
