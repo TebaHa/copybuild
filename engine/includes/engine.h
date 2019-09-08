@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/07 19:33:28 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/08 20:38:05 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define GAME_PATH "./game/resources/levels/1.lvl"
 # define PARSING_ERROR 40
 # define PARSING_ERROR_TEXTURE	"!purple"
+# define PARSING_ERROR_SPRITE	"!sprite"
 # define THREAD_POOL_SIZE 1
 # define DELAY 15
 
@@ -54,6 +55,17 @@
 # define Scaler_Init(a,b,c,d,f) \
 	{ d + (b-1 - a) * (f-d) / (c-a), ((f<d) ^ (c<a)) ? -1 : 1, \
 		abs(f-d), abs(c-a), (int)((b - 1 - a) * abs(f-d)) % abs(c-a) }
+
+typedef enum        e_sprite_type
+{
+	NOT_ANIMATBLE,
+	ANIMATBLE
+}                   t_sprite_type;
+typedef enum        e_sprt_obj_type
+{
+	STATIC_OBJECT,
+	ROTATABLE_OBJECT
+}                   t_sprt_obj_type;
 
 typedef struct		s_costil
 {
@@ -138,6 +150,27 @@ typedef struct		s_polygone
 	t_image			*texture;
 }					t_polygone;
 
+typedef struct		s_sprite
+{
+	int				id;
+	SDL_Surface		*idle;
+	SDL_Surface		*death;
+	SDL_Surface		*attack;
+	SDL_Surface		*hurt;
+	int 			frames_num;
+	int 			frames_delay;
+	int 			frames_type;
+}					t_sprite;
+
+typedef struct		s_sprobject
+{
+	int				id;
+	t_point_3d		position;
+	t_sprite		sprite;
+	int 			angle;
+	int				class;
+}					t_sprobject;
+
 typedef struct		s_object
 {
 	t_polygone		*polies_array;
@@ -165,6 +198,7 @@ typedef	struct		s_sector
 typedef	struct		s_world
 {
 	t_sector		*sectors_array;
+	t_sprobject		*sprobjects_array;
 	t_sector		*world_box;
 	int				sectors_count;
 	t_item			*renderqueue;
@@ -204,6 +238,7 @@ typedef struct		s_stats
 	int				sectors_count;
 	int 			textures_count;
 	int 			sprites_count;
+	int 			sprobjects_count;
 }					t_stats;
 
 typedef struct		s_txtr_pkg
@@ -265,7 +300,6 @@ typedef struct		s_thread_pool
 	SDL_Surface 	*surface;
 	int				value;
 }					t_thread_pool;
-
 
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
@@ -407,14 +441,22 @@ void		util_create_object(t_engine *eng, t_object *object,
 void		util_create_sector(t_engine *eng, t_sector *sector,
 			t_object *objects_array, char **str);
 t_point_3d	util_get_vertex_from_buff_by_id(int id, int size,
-			t_point_3d *vertexes, int polygone_id);
+			t_point_3d *vertexes);
 t_polygone	util_get_polygone_from_buff_by_id(int id, int size,
 			t_polygone *polies, int object_id);
 t_object	util_get_object_from_buff_by_id(int id, int size,
 			t_object *objects, int sector_id);
 void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 			char *name);
-
+t_sprite	*engine_read_sprites_from_file(t_engine *eng,
+			t_point_3d *vertex_array, char **json_splited);
+void		util_create_sprite(t_engine *eng, t_sprite *sprite,
+			t_point_3d *vertex_array, char **str);
+void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
+			char *name);
+SDL_Surface	*util_transform_texture_to_sprite(t_image texture);
+void		util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
+			char *name);
 /*
 **	Parsing functions end
 */

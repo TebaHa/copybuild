@@ -56,12 +56,3 @@ void	util_int16_data_filler(int *data, char *str)
 	}
 	*data = ft_atoi_hex(str);
 }
-
-void	util_parsing_error_count_handler(char *problem, char *problem_from,
-			char **str, int problems_number)
-{
-	if (!str[ft_atoi(str[problems_number]) + problems_number])
-		util_parsing_error_little_data(problem, problem_from, str);
-	if (str[ft_atoi(str[problems_number]) + problems_number + 1])
-		util_parsing_error_extra_data(problem, problem_from, str);
-}

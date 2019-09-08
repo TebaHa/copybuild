@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:14:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/02 19:13:47 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/08 14:29:53 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		util_release_char_matrix(char **mtrx)
 	free(mtrx);
 }
 
-t_point_3d		util_get_vertex_from_buff_by_id(int id, int size, t_point_3d *vertexes, int polygone_id)
+t_point_3d		util_get_vertex_from_buff_by_id(int id, int size, t_point_3d *vertexes)
 {
 	t_point_3d	res;
 	int			i;

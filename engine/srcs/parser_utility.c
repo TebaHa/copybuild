@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/02 20:31:05 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/08 20:58:30 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		util_create_polygone(t_engine *eng, t_polygone *polygone,
 	while (str_count < 6 + polygone->vertices_count)
 		polygone->vertices_array[vert_count++] =
 		util_get_vertex_from_buff_by_id(ft_atoi(str[str_count++]),
-		eng->stats.vertexes_count, vertex_array, polygone->id);
+		eng->stats.vertexes_count, vertex_array);
 	eng->stats.polies_count++;
 }
 
@@ -112,12 +112,28 @@ void		util_create_sector(t_engine *eng, t_sector *sector,
 	eng->stats.sectors_count++;
 }
 
+void		util_create_sprite(t_engine *eng, t_sprite *sprite,
+			t_point_3d *vertex_array, char **str)
+{
+	util_int10_data_filler(&sprite->id, str[1]);
+	util_int10_data_filler(&sprite->frames_num, str[2]);
+	util_int10_data_filler(&sprite->frames_delay, str[3]);
+	util_int10_data_filler(&sprite->frames_type, str[4]);
+	util_find_sprite_by_name(sprite->idle, eng, str[5]);
+	util_find_sprite_by_name(sprite->idle, eng, str[6]);
+	util_find_sprite_by_name(sprite->idle, eng, str[7]);
+	util_find_sprite_by_name(sprite->idle, eng, str[8]);
+	/* Добавить обработку лишней и недостаточной инфы */
+	eng->stats.sprites_count++;
+}
+
 void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 			char *name)
 {
 	int     i;
 	int     find;
 	char    *name_png;
+
 	i = 0;
 	find = 0;
 	name_png = ft_strnew(ft_strlen(name) + ft_strlen(".png"));
@@ -134,4 +150,45 @@ void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 	if (i >= eng->stats.textures_count && !find)
 		util_parsing_error_no_texture(dst, eng, name);
 	free(name_png);
+}
+
+void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
+			char *name)
+{
+	int     i;
+	int     find;
+	char    *name_png;
+
+	/* Не реализовано несколько спрайтов на одно событие */
+	i = 0;
+	find = 0;
+	if (!ft_strcmp(name, "0"))
+	{
+		/* Обработка ситуации, когда нет текстуры */
+		dst = NULL;
+		return ;
+	}
+	name_png = ft_strnew(ft_strlen(name) + ft_strlen(".png"));
+	name_png = ft_strcat(ft_strcpy(name_png, name), ".png");
+	while (i < eng->stats.sprites_count)
+	{
+		if (!ft_strcmp(name_png, eng->sprites_buffer[i]->filename))
+		{
+			dst = util_transform_texture_to_sprite(eng->sprites_buffer[i]->texture);
+			find = 1;
+		}
+		i++;
+	}
+	if (i >= eng->stats.textures_count && !find)
+		util_parsing_error_no_sprite(dst, eng, name);
+	free(name_png);
+}
+
+SDL_Surface	*util_transform_texture_to_sprite(t_image texture)
+{
+	/* Функция перевода текстуры в спрайт не готова сосвсем */
+	SDL_Surface	*sprite;
+
+	sprite = NULL;
+	return(sprite);
 }

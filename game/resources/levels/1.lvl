@@ -113,6 +113,14 @@ object:	19	-1		0		1		floor_wall		ceil_wall	1		19
 object:	20	-1		0		1		floor_wall		ceil_wall	1		20
 object:	21	-1		0		1		floor_wall		ceil_wall	1		21
 
+#Sprites
+#		id,	frames,	delay,	anmtd,	s_idle,			s_death,	s_attack,		s_hurt
+sprite:	0	10		50		0		big_gun_idle	no_ammo		big_gun_fire	0
+
+#Sprites objects			(1-enemy|0-thing)
+#		id,	sprite, angle,	class,	vert
+sobjct:	0	0		0		0		21
+
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture,	#objs,	id of obj
 sector:	0	0		500		floor_wall		ceil_wall		5		0 1 2 3 4
