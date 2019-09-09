@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:14:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/08 14:29:53 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/09 21:34:06 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ t_polygone		util_get_polygone_from_buff_by_id(int id, int size, t_polygone *poli
 
 t_object		util_get_object_from_buff_by_id(int id, int size, t_object *objects, int sector_id)
 {
-	t_object	res;
 	int			i;
 
 	i = 0;
@@ -110,6 +109,41 @@ t_object		util_get_object_from_buff_by_id(int id, int size, t_object *objects, i
 		i++;
 	}
 	return (objects[i]);
+}
+
+t_sprobject		util_get_sprobject_from_buff_by_id(int id, int size, t_sprobject *sprobjects, int sector_id)
+{
+	int			i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (sprobjects[i].id == id)
+			break;
+		i++;
+	}
+	return (sprobjects[i]);
+}
+
+t_sprite		util_get_sprite_from_buff_by_id(int id, int size, t_sprite *sprites)
+{
+	t_sprite	res;
+	int			i;
+
+	if (id < 0)
+	{
+		/* Дописать кусок обработки, когда просто нет отображения никакого */
+		ft_putendl("Вернуть пустой спрайт");
+		exit(PARSING_ERROR);
+	}
+	i = 0;
+	while (i < size)
+	{
+		if (sprites[i].id == id)
+			break;
+		i++;
+	}
+	return (sprites[i]);
 }
 
 void			util_release_vertex_buffer(t_point_3d *vertex_buff)

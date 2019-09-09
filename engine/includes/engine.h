@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/08 20:38:05 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/09 21:42:37 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,7 @@ typedef struct		s_polygone
 typedef struct		s_sprite
 {
 	int				id;
-	SDL_Surface		*idle;
-	SDL_Surface		*death;
-	SDL_Surface		*attack;
-	SDL_Surface		*hurt;
+	SDL_Surface		*surface;
 	int 			frames_num;
 	int 			frames_delay;
 	int 			frames_type;
@@ -166,7 +163,10 @@ typedef struct		s_sprobject
 {
 	int				id;
 	t_point_3d		position;
-	t_sprite		sprite;
+	t_sprite		idle;
+	t_sprite		death;
+	t_sprite		attack;
+	t_sprite		hurt;
 	int 			angle;
 	int				class;
 }					t_sprobject;
@@ -187,7 +187,9 @@ typedef struct		s_object
 typedef	struct		s_sector
 {
 	t_object		*objects_array;
+	t_sprobject		*sprobjects_array;
 	int				objects_count;
+	int				sprobjects_count;
 	int				id;
 	int				floor;
 	int				ceil;
@@ -414,9 +416,9 @@ t_object	*engine_read_objects_from_file(t_engine *eng,
 t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 			t_point_3d *vertex_array, char **json_splited);
 void		engine_read_sectors_from_file(t_engine *eng,
-			t_object *objects_array, char **json_splited);
+			t_object *objects_array, t_sprobject *sprobject_array, char **json_splited);
 void		engine_read_worldbox_from_file(t_engine *eng,
-			t_object *objects_array, char **json_splited);
+			t_object *objects_array, t_sprobject *sprobjects_array,char **json_splited);
 void		util_float10_data_filler(float *data, char *str);
 void		util_int10_data_filler(int *data, char *str);
 void		util_int16_data_filler(int *data, char *str);
@@ -439,7 +441,7 @@ void		util_create_polygone(t_engine *eng, t_polygone *polygone,
 void		util_create_object(t_engine *eng, t_object *object,
 			t_polygone *polygone_array, char **str);
 void		util_create_sector(t_engine *eng, t_sector *sector,
-			t_object *objects_array, char **str);
+			t_object *objects_array, t_sprobject *sprobject_array, char **str);
 t_point_3d	util_get_vertex_from_buff_by_id(int id, int size,
 			t_point_3d *vertexes);
 t_polygone	util_get_polygone_from_buff_by_id(int id, int size,
@@ -457,6 +459,14 @@ void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 SDL_Surface	*util_transform_texture_to_sprite(t_image texture);
 void		util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
 			char *name);
+t_sprobject	*engine_read_sprobjects_from_file(t_engine *eng,
+			t_sprite *sprites_array, t_point_3d *vertex_array, char **json_splited);
+t_sprite	util_get_sprite_from_buff_by_id(int id, int size, t_sprite *sprites);
+void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
+			t_sprite *sprite_array, t_point_3d *vertex_array, char **str);
+t_sprobject	util_get_sprobject_from_buff_by_id(int id, int size,
+			t_sprobject *sprobjects, int sector_id);
+
 /*
 **	Parsing functions end
 */
