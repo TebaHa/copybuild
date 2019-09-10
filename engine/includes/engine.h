@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/09 21:42:37 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/10 20:52:54 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,10 +237,11 @@ typedef struct		s_stats
 	int				vertexes_count;
 	int				polies_count;
 	int				objects_count;
+	int 			sprobjects_count;
 	int				sectors_count;
 	int 			textures_count;
+	int 			skins_count;
 	int 			sprites_count;
-	int 			sprobjects_count;
 }					t_stats;
 
 typedef struct		s_txtr_pkg
@@ -452,8 +453,7 @@ void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 			char *name);
 t_sprite	*engine_read_sprites_from_file(t_engine *eng,
 			t_point_3d *vertex_array, char **json_splited);
-void		util_create_sprite(t_engine *eng, t_sprite *sprite,
-			t_point_3d *vertex_array, char **str);
+void		util_create_sprite(t_engine *eng, t_sprite *sprite,	char **str);
 void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 			char *name);
 SDL_Surface	*util_transform_texture_to_sprite(t_image texture);

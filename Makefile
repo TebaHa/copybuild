@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/09/08 14:29:53 by fsmith           ###   ########.fr        #
+#    Updated: 2019/09/10 19:57:05 by fsmith           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					parser_filler.c \
 					parser_reader.c \
 					parser_utility.c \
+					parser_utility_find.c \
 					engine.c \
 					draw.c \
 					objects.c \

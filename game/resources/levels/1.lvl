@@ -125,8 +125,8 @@ sprite:	5	4		50		barrel_under_fire
 
 #Sprites objects			(1-enemy|0-thing)
 #		id,	angle,	class,	vert,	s_idle,	s_deth,	s_atck,	s_hurt
-sobjct:	0	0		0		21		0		1		2		-1
-sobjct:	1	0		1		25		3		4		-1		5
+sobjct:	0	0		0		21		0		1		2		3
+sobjct:	1	0		1		25		3		4		2		5
 
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture, #objs, #sprobjs,	id of obj,	id of sprobj

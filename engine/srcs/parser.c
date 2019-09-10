@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/09 21:38:58 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/10 21:20:19 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		engine_count_all_from_file(t_engine *eng, char **json_splited)
 		else if (ft_strwcmp(json_splited[i], "sector:") == 0)
 			eng->stats.sectors_count++;
 		else if (ft_strwcmp(json_splited[i], "sprite:") == 0)
-			eng->stats.sprites_count++;
+			eng->stats.skins_count++;
 		else if (ft_strwcmp(json_splited[i], "sobjct:") == 0)
 			eng->stats.sprobjects_count++;
 		i++;
