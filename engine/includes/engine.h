@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/10 20:52:54 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/12 21:25:28 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define PARSING_ERROR 40
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!sprite"
-# define THREAD_POOL_SIZE 1
+# define THREAD_POOL_SIZE 2
 # define DELAY 15
 
 // Utility functions. Because C doesn't have templates,
@@ -472,7 +472,7 @@ t_sprite	*engine_read_sprites_from_file(t_engine *eng,
 void		util_create_sprite(t_engine *eng, t_sprite *sprite,	char **str);
 void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 			char *name);
-SDL_Surface	*util_transform_texture_to_sprite(t_image texture);
+SDL_Surface	*util_transform_texture_to_sprite(t_image *texture);
 void		util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
 			char *name);
 t_sprobject	*engine_read_sprobjects_from_file(t_engine *eng,

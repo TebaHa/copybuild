@@ -115,7 +115,7 @@ object:	21	-1		0		1		floor_wall		ceil_wall	1		21
 
 #Sprites
 #		id,	frames,	delay,	sprite_name
-sprite:	0	4		50		big_gun_idle
+sprite:	0	4		50		hud
 sprite:	1	4		50		big_gun_no_ammo
 sprite:	2	10		10		big_gun_fire
 

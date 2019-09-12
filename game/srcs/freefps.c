@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/10 19:57:05 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/12 21:25:25 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,7 @@ int		main(void)
 			SDL_WaitThread(fps.render_thread_pool[thread_end_index].thread, &fps.render_thread_pool[thread_end_index].value);
 			engine_draw_hud(fps.eng, fps.render_thread_pool[thread_end_index].surface);
 			engine_render_frame(fps.eng, fps.render_thread_pool[thread_end_index].surface);
-			//SDL_Delay(10);
+			SDL_Delay(15);
 			thread_start_index = thread_end_index;
 			thread_end_index = thread_end_index < (THREAD_POOL_SIZE - 1) ? thread_end_index + 1 : 0;
 			if (init == 0)

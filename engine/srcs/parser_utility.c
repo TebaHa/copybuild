@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/12 21:04:57 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/12 21:25:28 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,36 @@ void		util_create_sector(t_engine *eng, t_sector *sector,
 	eng->stats.sectors_count++;
 }
 
-SDL_Surface	*util_transform_texture_to_sprite(t_image texture)
+SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 {
 	/* Функция перевода текстуры в спрайт не готова сосвсем */
 	SDL_Surface	*sprite;
+	int 		x;
+	int 		y;
+	int 		offset;
+	int 		*pix;
 
-	sprite = NULL;
+	if (texture == NULL)
+		return (NULL);
+	sprite = SDL_CreateRGBSurface(0, texture->width, texture->height, 32, (Uint32)0xff000000,
+								  (Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff);
+	pix = sprite->pixels;
+	x = 0;
+	while (x < sprite->w)
+	{
+		y = 0;
+		while (y < sprite->h)
+		{
+			offset = y * sprite->w + x;
+			pix[offset] = get_rgb(texture->data[offset * texture->channels],
+								  texture->data[offset * texture->channels + 1],
+								  texture->data[offset * texture->channels + 2],
+								  texture->data[offset * texture->channels +
+												3]);
+			y++;
+		}
+		x++;
+	}
 	return(sprite);
 }
 
