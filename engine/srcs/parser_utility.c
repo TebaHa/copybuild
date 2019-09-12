@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/10 21:45:58 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/12 21:04:57 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,10 @@ void		util_create_sector(t_engine *eng, t_sector *sector,
 	util_find_texture_by_name(&sector->ceil_texture, eng, str[5]);
 	util_int10_data_filler(&sector->objects_count, str[6]);
 	util_int10_data_filler(&sector->sprobjects_count, str[7]);
-//	util_parsing_error_count_handler("object", "sector", str, 6);
+	if (!str[7 + sector->objects_count + sector->sprobjects_count])
+		util_parsing_error_little_data("objects", "sector", str);
+	if (str[8 + sector->objects_count + sector->sprobjects_count])
+		util_parsing_error_extra_data("objects", "sector", str);
 	sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object)
 		* sector->objects_count);
 	sector->sprobjects_array = (t_sprobject *)ft_memalloc(sizeof(t_sprobject)
@@ -133,6 +136,7 @@ void		util_create_sector(t_engine *eng, t_sector *sector,
 		sector->sprobjects_array[sprobj_count++] =
 		util_get_sprobject_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.sprobjects_count, sprobjects_array, sector->id);
+//	util_parsing_error_count_handler("object", "sector", str, 8 + sector->objects_count + sector->sprobjects_count);
 	eng->stats.sectors_count++;
 }
 
@@ -151,6 +155,10 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 	int			pol_count;
 	int			str_count;
 
+	if (!str[8])
+		util_parsing_error_little_data("sprites", "sprite object", str);
+	if (str[9])
+		util_parsing_error_extra_data("sprites", "sprite object", str);
 	util_int10_data_filler(&sprobject->id, str[1]);
 	util_int10_data_filler(&sprobject->angle, str[2]);
 	util_int10_data_filler(&sprobject->class, str[3]);
@@ -165,6 +173,6 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 		eng->stats.sprites_count, sprite_array);
 	sprobject->hurt = util_get_sprite_from_buff_by_id(ft_atoi(str[8]),
 		eng->stats.sprites_count, sprite_array);
-	util_parsing_error_count_handler("sprites", "sprite object", str, 8);
+//	util_parsing_error_count_handler("sprites", "sprite object", str, 8);
 	eng->stats.objects_count++;
 }
