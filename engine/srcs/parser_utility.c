@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/02 20:31:05 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/12 21:25:28 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,21 @@ void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str)
 	eng->stats.vertexes_count++;
 }
 
+void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
+{
+	util_int10_data_filler(&sprite->id, str[1]);
+	util_int10_data_filler(&sprite->frames_num, str[2]);
+	util_int10_data_filler(&sprite->frames_delay, str[3]);
+	sprite->a_state = STATIC;
+	if (sprite->frames_num > 1)
+		sprite->frames_type = 1;
+	else
+		sprite->frames_type = 0;
+	util_find_sprite_by_name(sprite->surface, eng, str[4]);
+	/* Добавить обработку лишней и недостаточной инфы */
+	eng->stats.skins_count++;
+}
+
 void		util_create_polygone(t_engine *eng, t_polygone *polygone,
 			t_point_3d *vertex_array, char **str)
 {
@@ -59,7 +74,7 @@ void		util_create_polygone(t_engine *eng, t_polygone *polygone,
 	while (str_count < 6 + polygone->vertices_count)
 		polygone->vertices_array[vert_count++] =
 		util_get_vertex_from_buff_by_id(ft_atoi(str[str_count++]),
-		eng->stats.vertexes_count, vertex_array, polygone->id);
+		eng->stats.vertexes_count, vertex_array);
 	eng->stats.polies_count++;
 }
 
@@ -89,9 +104,10 @@ void		util_create_object(t_engine *eng, t_object *object,
 }
 
 void		util_create_sector(t_engine *eng, t_sector *sector,
-			t_object *objects_array, char **str)
+			t_object *objects_array, t_sprobject *sprobjects_array, char **str)
 {
 	int			obj_count;
+	int			sprobj_count;
 	int			str_count;
 
 	util_int10_data_filler(&sector->id, str[1]);
@@ -100,38 +116,87 @@ void		util_create_sector(t_engine *eng, t_sector *sector,
 	util_find_texture_by_name(&sector->floor_texture, eng, str[4]);
 	util_find_texture_by_name(&sector->ceil_texture, eng, str[5]);
 	util_int10_data_filler(&sector->objects_count, str[6]);
-	util_parsing_error_count_handler("object", "sector", str, 6);
+	util_int10_data_filler(&sector->sprobjects_count, str[7]);
+	if (!str[7 + sector->objects_count + sector->sprobjects_count])
+		util_parsing_error_little_data("objects", "sector", str);
+	if (str[8 + sector->objects_count + sector->sprobjects_count])
+		util_parsing_error_extra_data("objects", "sector", str);
 	sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object)
 		* sector->objects_count);
-	str_count = 7;
+	sector->sprobjects_array = (t_sprobject *)ft_memalloc(sizeof(t_sprobject)
+		* sector->sprobjects_count);
+	str_count = 8;
 	obj_count = 0;
-	while (str_count < 7 + sector->objects_count)
+	while (str_count < 8 + sector->objects_count)
 		sector->objects_array[obj_count++] =
 		util_get_object_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.objects_count, objects_array, sector->id);
+	sprobj_count = 0;
+	while (str_count < 8 + sector->objects_count + sector->sprobjects_count)
+		sector->sprobjects_array[sprobj_count++] =
+		util_get_sprobject_from_buff_by_id(ft_atoi(str[str_count++]),
+		eng->stats.sprobjects_count, sprobjects_array, sector->id);
+//	util_parsing_error_count_handler("object", "sector", str, 8 + sector->objects_count + sector->sprobjects_count);
 	eng->stats.sectors_count++;
 }
 
-void		util_find_texture_by_name(t_image **dst, t_engine *eng,
-			char *name)
+SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 {
-	int     i;
-	int     find;
-	char    *name_png;
-	i = 0;
-	find = 0;
-	name_png = ft_strnew(ft_strlen(name) + ft_strlen(".png"));
-	name_png = ft_strcat(ft_strcpy(name_png, name), ".png");
-	while (i < eng->stats.textures_count)
+	/* Функция перевода текстуры в спрайт не готова сосвсем */
+	SDL_Surface	*sprite;
+	int 		x;
+	int 		y;
+	int 		offset;
+	int 		*pix;
+
+	if (texture == NULL)
+		return (NULL);
+	sprite = SDL_CreateRGBSurface(0, texture->width, texture->height, 32, (Uint32)0xff000000,
+								  (Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff);
+	pix = sprite->pixels;
+	x = 0;
+	while (x < sprite->w)
 	{
-		if (!ft_strcmp(name_png, eng->texture_buffer[i]->filename))
+		y = 0;
+		while (y < sprite->h)
 		{
-			*dst = &eng->texture_buffer[i]->texture;
-			find = 1;
+			offset = y * sprite->w + x;
+			pix[offset] = get_rgb(texture->data[offset * texture->channels],
+								  texture->data[offset * texture->channels + 1],
+								  texture->data[offset * texture->channels + 2],
+								  texture->data[offset * texture->channels +
+												3]);
+			y++;
 		}
-		i++;
+		x++;
 	}
-	if (i >= eng->stats.textures_count && !find)
-		util_parsing_error_no_texture(dst, eng, name);
-	free(name_png);
+	return(sprite);
+}
+
+void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
+			t_sprite *sprite_array, t_point_3d *vertex_array, char **str)
+{
+	int			pol_count;
+	int			str_count;
+
+	if (!str[8])
+		util_parsing_error_little_data("sprites", "sprite object", str);
+	if (str[9])
+		util_parsing_error_extra_data("sprites", "sprite object", str);
+	util_int10_data_filler(&sprobject->id, str[1]);
+	util_int10_data_filler(&sprobject->angle, str[2]);
+	util_int10_data_filler(&sprobject->class, str[3]);
+	sprobject->state = IDLE;
+	sprobject->position = util_get_vertex_from_buff_by_id(ft_atoi(str[4]),
+		eng->stats.vertexes_count, vertex_array);
+	sprobject->idle = util_get_sprite_from_buff_by_id(ft_atoi(str[5]),
+		eng->stats.sprites_count, sprite_array);
+	sprobject->death = util_get_sprite_from_buff_by_id(ft_atoi(str[6]),
+		eng->stats.sprites_count, sprite_array);
+	sprobject->attack = util_get_sprite_from_buff_by_id(ft_atoi(str[7]),
+		eng->stats.sprites_count, sprite_array);
+	sprobject->hurt = util_get_sprite_from_buff_by_id(ft_atoi(str[8]),
+		eng->stats.sprites_count, sprite_array);
+//	util_parsing_error_count_handler("sprites", "sprite object", str, 8);
+	eng->stats.objects_count++;
 }

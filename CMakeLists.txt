@@ -256,6 +256,6 @@ add_executable(DoomNukemParsing
 		lib/stblib/stb_truetype.h
 		lib/stblib/stb_vorbis.c
 		lib/stblib/stb_voxel_render.h
-		lib/stblib/stretchy_buffer.h)
+		lib/stblib/stretchy_buffer.h engine/srcs/parser_utility_find.c)
 
 target_link_libraries(DoomNukemParsing ${SDL2_LIBRARY})

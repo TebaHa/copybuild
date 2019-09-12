@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/02 20:34:18 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/12 20:48:44 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,29 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 		i++;
 	}
 	return (v_arr_buffer);
+}
+
+t_sprite	*engine_read_sprites_from_file(t_engine *eng,
+			t_point_3d *vertex_array, char **json_splited)
+{
+	t_sprite	*sprites_buff;
+	char		**splitted_line;
+	int			i;
+
+	sprites_buff = (t_sprite *)ft_memalloc(sizeof(t_sprite) *
+		eng->stats.skins_count);
+	i = 0;
+	eng->stats.skins_count = 0;
+	while (json_splited[i] != NULL)
+	{
+		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
+		if (ft_strcmp(splitted_line[0], "sprite:") == 0)
+			util_create_sprite(eng, &sprites_buff[eng->stats.skins_count],
+				splitted_line);
+		util_release_char_matrix(splitted_line);
+		i++;
+	}
+	return (sprites_buff);
 }
 
 t_object	*engine_read_objects_from_file(t_engine *eng,
@@ -99,7 +122,7 @@ t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 }
 
 void		engine_read_sectors_from_file(t_engine *eng,
-			t_object *objects_array, char **json_splited)
+			t_object *objects_array, t_sprobject *sprobject_array, char **json_splited)
 {
 	char		**splitted_line;
 	int			i;
@@ -111,14 +134,14 @@ void		engine_read_sectors_from_file(t_engine *eng,
 		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
 		if (ft_strcmp(splitted_line[0], "sector:") == 0)
 			util_create_sector(eng, &eng->world->sectors_array
-			[eng->stats.sectors_count], objects_array, splitted_line);
+			[eng->stats.sectors_count], objects_array, sprobject_array, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
 }
 
 void		engine_read_worldbox_from_file(t_engine *eng,
-			t_object *objects_array, char **json_splited)
+			t_object *objects_array, t_sprobject *sprobjects_array,char **json_splited)
 {
 	char		**splitted_line;
 	int			i;
@@ -129,8 +152,31 @@ void		engine_read_worldbox_from_file(t_engine *eng,
 		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
 		if (ft_strcmp(splitted_line[0], "wrldbx:") == 0)
 			util_create_sector(eng, eng->world->world_box,
-			objects_array, splitted_line);
+			objects_array, sprobjects_array, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
+}
+
+t_sprobject	*engine_read_sprobjects_from_file(t_engine *eng,
+			t_sprite *sprites_array, t_point_3d *vertex_array, char **json_splited)
+{
+	t_sprobject	*sprobject_buff;
+	char		**splitted_line;
+	int			i;
+
+	sprobject_buff = (t_sprobject *)ft_memalloc(sizeof(t_sprobject) *
+			eng->stats.sprobjects_count);
+	i = 0;
+	eng->stats.sprobjects_count = 0;
+	while (json_splited[i] != NULL)
+	{
+		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
+		if (ft_strcmp(splitted_line[0], "sobjct:") == 0)
+			util_create_sprobject(eng, &sprobject_buff[eng->stats.objects_count],
+			sprites_array, vertex_array, splitted_line);
+		util_release_char_matrix(splitted_line);
+		i++;
+	}
+		return (sprobject_buff);
 }
