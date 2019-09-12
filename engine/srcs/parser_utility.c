@@ -45,6 +45,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	util_int10_data_filler(&sprite->id, str[1]);
 	util_int10_data_filler(&sprite->frames_num, str[2]);
 	util_int10_data_filler(&sprite->frames_delay, str[3]);
+	sprite->a_state = STATIC;
 	if (sprite->frames_num > 1)
 		sprite->frames_type = 1;
 	else
@@ -153,6 +154,7 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 	util_int10_data_filler(&sprobject->id, str[1]);
 	util_int10_data_filler(&sprobject->angle, str[2]);
 	util_int10_data_filler(&sprobject->class, str[3]);
+	sprobject->state = IDLE;
 	sprobject->position = util_get_vertex_from_buff_by_id(ft_atoi(str[4]),
 		eng->stats.vertexes_count, vertex_array);
 	sprobject->idle = util_get_sprite_from_buff_by_id(ft_atoi(str[5]),

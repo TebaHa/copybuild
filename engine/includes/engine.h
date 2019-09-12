@@ -101,6 +101,20 @@ typedef enum		e_alloc_type
 	STB_ALLOCATED
 }					t_alloc_type;
 
+typedef enum		e_sobj_state
+{
+	IDLE,
+	DEATH,
+	ATTACK,
+	HURT
+}					t_sobj_state;
+
+typedef enum		e_animtn_state
+{
+	STATIC,
+	ANIMATE
+}					t_animtn_state;
+
 typedef struct		s_image
 {
 	int				width;
@@ -154,6 +168,7 @@ typedef struct		s_sprite
 {
 	int				id;
 	SDL_Surface		*surface;
+	t_animtn_state	a_state;
 	int 			frames_num;
 	int 			frames_delay;
 	int 			frames_type;
@@ -167,6 +182,7 @@ typedef struct		s_sprobject
 	t_sprite		death;
 	t_sprite		attack;
 	t_sprite		hurt;
+	t_sobj_state 	state;
 	int 			angle;
 	int				class;
 }					t_sprobject;
