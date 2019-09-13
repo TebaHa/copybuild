@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/12 21:25:28 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/12 22:00:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 	SDL_Surface	*sprite;
 	int 		x;
 	int 		y;
-	int 		offset;
+	int 		offsets;
+	int 		offseti;
 	int 		*pix;
 
 	if (texture == NULL)
@@ -160,12 +161,12 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 		y = 0;
 		while (y < sprite->h)
 		{
-			offset = y * sprite->w + x;
-			pix[offset] = get_rgb(texture->data[offset * texture->channels],
-								  texture->data[offset * texture->channels + 1],
-								  texture->data[offset * texture->channels + 2],
-								  texture->data[offset * texture->channels +
-												3]);
+			offsets = y * sprite->w + x;
+			offseti = y * texture->channels * sprite->w + x * texture->channels;
+			pix[offsets] = get_rgb(texture->data[offseti],
+									texture->data[offseti + 1],
+									texture->data[offseti + 2],
+									texture->data[offseti + 3]);
 			y++;
 		}
 		x++;

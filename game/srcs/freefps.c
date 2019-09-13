@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/12 21:51:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/13 09:06:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static	int		game_thread_wrapper(void *ptr)
 
 	fps = (t_game *)ptr;
 	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface);
-	//SDL_Delay(10);
+	SDL_Delay(15);
 	return (fps->thread_num);
 }
 
@@ -94,20 +94,14 @@ int		main(void)
 			sectprev = fps.player.cursector;
 			if((sect = engine_object_get_sector(fps.eng->world, (t_point_3d){0.f, px + dx, py + dy, 0.f}, fps.player.cursector)) >= 0)
 			{
-				move_player(fps.eng, &fps.player, dx, dy, sect);
-			}
-			if (fps.player.controller.ducking == 1)
-			{
-				fps.player.position.z += fabs(sin(M_PI_4 * counter++)) * 13;
-				fps.player.controller.fakefall = 1;
+				if (fps.eng->world->sectors_array[sect].floor <= fps.player.position.z + KneeHeight - 50 - duck_shift)
+					move_player(fps.eng, &fps.player, dx, dy, sect);
 			}
 		}
 		else
 			counter = 0;
-		if ((fps.player.position.z) - movement_dz - 100 > fps.eng->world->sectors_array[fps.player.cursector].floor + 50 + duck_shift
-			|| (fps.player.controller.ducking == -1 &&
-			((fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + 50) ||
-			(fps.player.position.z < fps.eng->world->sectors_array[fps.player.cursector].floor + 50))))
+		if (fps.player.position.z > fps.eng->world->sectors_array[fps.player.cursector].floor + duck_shift + 100
+		|| fps.player.position.z < fps.eng->world->sectors_array[fps.player.cursector].floor + duck_shift + 100)
 			fps.player.controller.falling = 1;
 		if (SDL_PollEvent(&fps.eng->event))
 		{
@@ -188,14 +182,13 @@ int		main(void)
 				}
 			}
 		}
-		if (fps.player.controller.falling == 1 || fps.player.controller.fakefall == 1)
+		if (fps.player.controller.falling == 1)
 		{
 				fps.player.position.z -= dz;
 				dz += 2;
 				if (fps.eng->world->sectors_array[fps.player.cursector].floor + 100 - duck_shift > fps.player.position.z)
 				{
 					fps.player.controller.falling = 0;
-					fps.player.controller.fakefall = 0;
 					fps.player.position.z = fps.eng->world->sectors_array[fps.player.cursector].floor + 100 - duck_shift;
 					dz = 0;
 				}
@@ -240,7 +233,6 @@ int		main(void)
 			SDL_WaitThread(fps.render_thread_pool[thread_end_index].thread, &fps.render_thread_pool[thread_end_index].value);
 			engine_draw_hud(fps.eng, fps.render_thread_pool[thread_end_index].surface);
 			engine_render_frame(fps.eng, fps.render_thread_pool[thread_end_index].surface);
-			SDL_Delay(15);
 			thread_start_index = thread_end_index;
 			thread_end_index = thread_end_index < (THREAD_POOL_SIZE - 1) ? thread_end_index + 1 : 0;
 			if (init == 0)

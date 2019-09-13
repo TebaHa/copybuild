@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/10 19:57:05 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/13 09:05:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define HeadMargin 10
 # define EyeHeight  6 // Camera height from floor when standing
 # define DuckHeight 2.5 // And when crouching
-# define KneeHeight 2
+# define KneeHeight 10
 # include <engine.h>
 
 typedef	struct		s_game

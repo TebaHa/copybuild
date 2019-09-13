@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utility_find.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 20:56:36 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/10 21:09:29 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/12 21:54:43 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 			char *name)
 {
-	int     i;
-	int     find;
-	char    *name_png;
+	int		i;
+	int		find;
+	char	*name_png;
 
 	i = 0;
 	find = 0;
@@ -40,9 +40,9 @@ void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 			char *name)
 {
-	int     i;
-	int     find;
-	char    *name_png;
+	int		i;
+	int		find;
+	char	*name_png;
 
 	/* Не реализовано несколько спрайтов на одно событие */
 	i = 0;
@@ -61,7 +61,6 @@ void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 		{
 
 			dst = util_transform_texture_to_sprite(&eng->sprites_buffer[i]->texture);
-			ft_putstr("?");
 			find = 1;
 		}
 		i++;

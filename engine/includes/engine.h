@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/12 21:51:06 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/13 08:53:23 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,17 @@
 	{ d + (b-1 - a) * (f-d) / (c-a), ((f<d) ^ (c<a)) ? -1 : 1, \
 		abs(f-d), abs(c-a), (int)((b - 1 - a) * abs(f-d)) % abs(c-a) }
 
-typedef enum        e_sprite_type
+typedef enum		e_sprite_type
 {
 	NOT_ANIMATBLE,
 	ANIMATBLE
-}                   t_sprite_type;
-typedef enum        e_sprt_obj_type
+}					t_sprite_type;
+
+typedef enum		e_sprt_obj_type
 {
 	STATIC_OBJECT,
 	ROTATABLE_OBJECT
-}                   t_sprt_obj_type;
+}					t_sprt_obj_type;
 
 typedef struct		s_costil
 {
@@ -319,6 +320,19 @@ typedef struct		s_thread_pool
 	SDL_Surface 	*surface;
 	int				value;
 }					t_thread_pool;
+
+typedef struct		s_line
+{
+	t_point_3d		a;
+	t_point_3d		b;
+}					t_line;
+
+typedef struct		s_plane
+{
+	t_point_3d		p;
+	t_point_3d		n;
+}					t_plane;
+
 
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
