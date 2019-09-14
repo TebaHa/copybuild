@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/14 15:59:37 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 18:06:04 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	util_int10_data_filler(&sprite->frames_delay, str[3]);
 	sprite->a_state = STATIC;
 	if (sprite->frames_num > 1)
-		sprite->frames_type = 1;
+		sprite->frames_type = ANIMATE;
 	else
-		sprite->frames_type = 0;
+		sprite->frames_type = STATIC;
 	util_find_sprite_by_name(sprite->surface, eng, str[4]);
 	eng->stats.skins_count++;
 }
@@ -71,7 +71,7 @@ void		util_create_polygone(t_engine *eng, t_polygone *polygone,
 	while (str_count < 6 + polygone->vertices_count)
 		polygone->vertices_array[vert_count++] =
 		util_get_vertex_from_buff_by_id(ft_atoi(str[str_count++]),
-		eng->stats.vertexes_count, vertex_array);
+		eng->stats.vertexes_count, vertex_array, polygone->id);
 	eng->stats.polies_count++;
 }
 
@@ -192,14 +192,14 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 	util_int10_data_filler(&sprobject->class, str[3]);
 	sprobject->state = IDLE;
 	sprobject->position = util_get_vertex_from_buff_by_id(ft_atoi(str[4]),
-		eng->stats.vertexes_count, vertex_array);
+		eng->stats.vertexes_count, vertex_array, sprobject->id);
 	sprobject->idle = util_get_sprite_from_buff_by_id(ft_atoi(str[5]),
-		eng->stats.sprites_count, sprite_array);
+		eng->stats.sprites_count, sprite_array, sprobject->id);
 	sprobject->death = util_get_sprite_from_buff_by_id(ft_atoi(str[6]),
-		eng->stats.sprites_count, sprite_array);
+		eng->stats.sprites_count, sprite_array, sprobject->id);
 	sprobject->attack = util_get_sprite_from_buff_by_id(ft_atoi(str[7]),
-		eng->stats.sprites_count, sprite_array);
+		eng->stats.sprites_count, sprite_array, sprobject->id);
 	sprobject->hurt = util_get_sprite_from_buff_by_id(ft_atoi(str[8]),
-		eng->stats.sprites_count, sprite_array);
+		eng->stats.sprites_count, sprite_array, sprobject->id);
 	eng->stats.objects_count++;
 }

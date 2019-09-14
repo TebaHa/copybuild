@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:41:27 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/14 13:38:41 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 13:47:38 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,17 @@ void	util_parsing_error_not_hex(char *problem)
 	ft_putendl("Parsing error:");
 	ft_putstr("Not hex data: ");
 	ft_putstr(problem);
+	ft_putstr("!\n");
+	exit(PARSING_ERROR);
+}
+
+void	util_parsing_error_cant_find(char *problem, int id_problem)
+{
+	ft_putendl("Parsing error:");
+	ft_putstr("Can't find ");
+	ft_putstr(problem);
+	ft_putstr(" ");
+	ft_putnbr(id_problem);
 	ft_putstr("!\n");
 	exit(PARSING_ERROR);
 }

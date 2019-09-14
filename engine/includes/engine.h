@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 16:33:43 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 19:14:19 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define GAME_PATH "./game/resources/levels/1.lvl"
 # define PARSING_ERROR 40
 # define PARSING_ERROR_TEXTURE	"!purple"
-# define PARSING_ERROR_SPRITE	"!sprite"
+# define PARSING_ERROR_SPRITE	"!teal"
 # define THREAD_POOL_SIZE 2
 # define DELAY 15
 
@@ -460,6 +460,7 @@ void		util_int10_data_filler(int *data, char *str);
 void		util_int16_data_filler(int *data, char *str);
 void		util_parsing_error_count_handler(char *problem_from,
 			char **str, int problems_number);
+void		util_parsing_error_cant_find(char *problem, int id_problem);
 void		util_parsing_error_lost_handler(char *problem, int id_problem,
 			char *problem_from, int id_problem_from);
 void		util_parsing_error_extra_data(char *problem, char *problem_from,
@@ -482,7 +483,7 @@ void		util_create_world(t_world **world, char **str);
 t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
 void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str);
 t_point_3d	util_get_vertex_from_buff_by_id(int id, int size,
-			t_point_3d *vertexes);
+			t_point_3d *vertexes, int polygone_id);
 
 t_polygone	*engine_read_polygones_from_file(t_engine *eng, t_buff buff);
 void		util_create_polygone(t_engine *eng, t_polygone *polygone,
@@ -516,7 +517,8 @@ void		util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 
 t_sprite	*engine_read_sprites_from_file(t_engine *eng, t_buff);
 void		util_create_sprite(t_engine *eng, t_sprite *sprite,	char **str);
-t_sprite	util_get_sprite_from_buff_by_id(int id, int size, t_sprite *sprites);
+t_sprite	util_get_sprite_from_buff_by_id(int id, int size, t_sprite *sprites,
+			int sprobj_id);
 void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 			char *name);
 void		util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
