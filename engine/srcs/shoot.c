@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 08:39:35 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 13:30:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 	res = 0;
 	shoot.a = plr->position;
 	double angle_xy = atan2f(plr->sinangle, plr->cosangle);
-	double angle_z = atanf(plr->yaw);
+	double angle_z = -atanf(plr->yaw);
 	double dx = weapon_range * cosf(angle_xy) + shoot.a.x;
 	double dy = weapon_range * sinf(angle_xy) + shoot.a.y;
 	double dz = weapon_range * angle_z + shoot.a.z;
@@ -50,7 +50,6 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 	{
 		i = 0;
 		sect = &eng->world->sectors_array[sect_id];
-		printf("sect %d prev %d\n", sect_id, prev);
 		while (i < sect->objects_count)
 		{
 			plane.n = calc_normal_dots((t_point_3d){0, sect->objects_array[i].polies_array[0].vertices_array[0].x,
@@ -64,9 +63,15 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 			res = intersect_3d_seg_plane(shoot, plane, &int_p);
 			if (res > 0)
 			{
-				if (sect->objects_array[i].portal != -1 && prev != sect->objects_array[i].portal)
-					engine_push_checkstack(eng->world->checkqueue, sect->objects_array[i].portal);
-				else
+				if (sect->objects_array[i].portal >= 0)
+				{
+					if (check_point_inside_box(int_p, &sect->objects_array[i], sect->ceil, sect->floor) && ((int_p.z < eng->world->sectors_array[sect->objects_array[i].portal].floor && int_p.z > sect->floor)
+					|| (int_p.z > eng->world->sectors_array[sect->objects_array[i].portal].ceil && int_p.z < sect->ceil)))
+						engine_push_particlestack(sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
+					else if (prev != sect_id)
+						engine_push_checkstack(eng->world->checkqueue, sect->objects_array[i].portal);
+				}
+				else if (check_point_inside_box(int_p, &sect->objects_array[i], sect->ceil, sect->floor) && prev != sect_id)
 					engine_push_particlestack(sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
 				break;
 			}
@@ -75,6 +80,38 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 		prev = sect_id;
 	}
 	printf("X: %f Y: %f Z: %f\n", int_p.x, int_p.y, int_p.z);
+}
+
+int		check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor)
+{
+	t_point_3d	t0;
+	t_point_3d	t1;
+
+	if (obj->polies_array[0].vertices_array[0].x > obj->polies_array[0].vertices_array[1].x)
+	{
+		t0.x = obj->polies_array[0].vertices_array[0].x;
+		t1.x = obj->polies_array[0].vertices_array[1].x;
+	}
+	else
+	{
+		t1.x = obj->polies_array[0].vertices_array[0].x;
+		t0.x = obj->polies_array[0].vertices_array[1].x;
+	}
+	if (obj->polies_array[0].vertices_array[0].y > obj->polies_array[0].vertices_array[1].y)
+	{
+		t0.y = obj->polies_array[0].vertices_array[0].y;
+		t1.y = obj->polies_array[0].vertices_array[1].y;
+	}
+	else
+	{
+		t1.y = obj->polies_array[0].vertices_array[0].y;
+		t0.y = obj->polies_array[0].vertices_array[1].y;
+	}
+	t0.z = ceil;
+	t1.z = floor;
+	if (a.x < t0.x && a.x > t1.x && a.y < t0.y && a.y > t1.y && a.z < t0.z && a.z > t1.z)
+		return (1);
+	return (0);
 }
 
 int		intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res)

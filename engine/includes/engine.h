@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 08:22:04 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 12:54:28 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,6 +416,7 @@ void			engine_push_particlestack(t_point_3d *particlestack, int *status, t_point
 void			engine_push_checkstack(int *checkqueue, int item);
 int				engine_pop_checkstack(int *checkqueue);
 void			engine_clear_checkstack(int *checkqueue);
+int				check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
 
 /*
 **Image-processing functions

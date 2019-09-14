@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/02 12:05:14 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 13:09:33 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void		engine_draw_hud(t_engine *eng, SDL_Surface *surf)
 		ty = HEIGHT - img->height;
 		while (y < img->height)
 		{
-			if (img->data[(y * img->width + x) * img->channels + 3] == 255)
+			if (img->data[(y * img->channels * img->width + x * img->channels) + 3] == 255)
 			{
-				red = img->data[(y * img->width + x) * img->channels];
-				green = img->data[(y * img->width + x) * img->channels + 1];
-				blue = img->data[(y * img->width + x) * img->channels + 2];
+				red = img->data[(y * img->channels * img->width + x * img->channels)];
+				green = img->data[(y * img->channels * img->width + x * img->channels) + 1];
+				blue = img->data[(y * img->channels * img->width + x * img->channels) + 2];
 				pix[ty * WIDTH + tx] = get_rgb(red, green, blue, 255);
 			}
 			y++;

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 08:39:58 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 13:26:59 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,8 @@ int		main(void)
 		if (SDL_PollEvent(&fps.eng->event))
 		{
 			if (fps.eng->event.button.type == SDL_MOUSEBUTTONDOWN)
-			{
 				if (fps.eng->event.button.button == SDL_BUTTON_LEFT)
 					shoot(fps.eng, &fps.player, 1000);
-			}
 			if (fps.eng->event.type == SDL_KEYUP)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
@@ -202,7 +200,7 @@ int		main(void)
 		SDL_GetRelativeMouseState(&x, &y);
 		fps.player.angle += x * 0.03f;
 		yaw = clamp(yaw - y * 0.05f, -5, 5);
-		fps.player.yaw = yaw - (fps.player.velocity.z) * 0.5f;
+		fps.player.yaw = yaw - fps.player.velocity.z * 0.5f;
 		move_player(fps.eng, &fps.player, 0, 0, fps.player.cursector);
 		float move_vec[2] = {0.f, 0.f};
 		if(fps.player.controller.wasd[0])
