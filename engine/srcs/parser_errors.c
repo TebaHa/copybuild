@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:41:27 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/10 21:37:56 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 19:34:21 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,17 @@ void	util_parsing_error_not_hex(char *problem)
 	exit(PARSING_ERROR);
 }
 
+void	util_parsing_error_cant_find(char *problem, int id_problem)
+{
+	ft_putendl("Parsing error:");
+	ft_putstr("Can't find ");
+	ft_putstr(problem);
+	ft_putstr(" ");
+	ft_putnbr(id_problem);
+	ft_putstr("!\n");
+	exit(PARSING_ERROR);
+}
+
 void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 		char *name)
 {
@@ -96,13 +107,11 @@ void	util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
 	exit(PARSING_ERROR);
 }
 
-void	util_parsing_error_count_handler(char *problem, char *problem_from,
-		char **str, int problems_number)
+void	util_parsing_error_count_handler(char *problem_from, char **str,
+		int problems_number)
 {
-	if (!str[ft_atoi(str[problems_number]) + problems_number])
-	{
-		util_parsing_error_little_data(problem, problem_from, str);
-	}
-	if (str[ft_atoi(str[problems_number]) + problems_number + 1])
-		util_parsing_error_extra_data(problem, problem_from, str);
+	if (!str[problems_number])
+		util_parsing_error_little_data("data", problem_from, str);
+	if (str[problems_number + 1])
+		util_parsing_error_extra_data("data", problem_from, str);
 }
