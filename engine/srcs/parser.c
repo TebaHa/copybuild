@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 15:33:51 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 16:21:03 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,13 @@ void		engine_create_world_from_file(t_engine *eng, char *filename)
 	engine_count_all_from_file(eng, buff.str);
 	engine_read_world_from_file(eng, buff.str);
 	buff.vertexes = engine_read_vertexes_from_file(eng, buff.str);
-	buff.sprites = engine_read_sprites_from_file(eng, buff.vertexes, buff.str);
-	buff.polies = engine_read_polygones_from_file(eng, buff.vertexes, buff.str);
-	buff.objects = engine_read_objects_from_file(eng, buff.polies, buff.str);
-	buff.sprobjects = engine_read_sprobjects_from_file(eng, buff.sprites,
-		buff.vertexes, buff.str);
+	buff.sprites = engine_read_sprites_from_file(eng, buff);
+	buff.polies = engine_read_polygones_from_file(eng, buff);
+	buff.objects = engine_read_objects_from_file(eng, buff);
+	buff.sprobjects = engine_read_sprobjects_from_file(eng, buff);
 	engine_read_sectors_from_file(eng, buff);
 	engine_read_worldbox_from_file(eng, buff);
-	util_release_read_buffers(buff.vertexes, buff.polies, buff.objects);
-	util_release_char_matrix(buff.str);
+	util_release_read_buffers(&buff);
 	ft_putendl("PARSING OK!");
 }
 
@@ -76,4 +74,14 @@ void		engine_count_all_from_file(t_engine *eng, char **json_splited)
 			eng->stats.sprobjects_count++;
 		i++;
 	}
+}
+
+void		util_release_read_buffers(t_buff *buff)
+{
+	free(buff->vertexes);
+	free(buff->polies);
+	free(buff->objects);
+	free(buff->sprobjects);
+	free(buff->sprites);
+	util_release_char_matrix(buff->str);
 }

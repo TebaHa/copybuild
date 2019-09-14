@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/14 15:59:37 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 16:21:03 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 }
 
 t_sprite	*engine_read_sprites_from_file(t_engine *eng,
-			t_point_3d *vertex_array, char **json_splited)
+			t_buff buff)
 {
 	t_sprite	*sprites_buff;
 	char		**splitted_line;
@@ -63,9 +63,9 @@ t_sprite	*engine_read_sprites_from_file(t_engine *eng,
 		eng->stats.skins_count);
 	i = 0;
 	eng->stats.skins_count = 0;
-	while (json_splited[i] != NULL)
+	while (buff.str[i] != NULL)
 	{
-		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
+		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "sprite:") == 0)
 			util_create_sprite(eng, &sprites_buff[eng->stats.skins_count],
 				splitted_line);
@@ -75,8 +75,7 @@ t_sprite	*engine_read_sprites_from_file(t_engine *eng,
 	return (sprites_buff);
 }
 
-t_object	*engine_read_objects_from_file(t_engine *eng,
-			t_polygone *polies_array, char **json_splited)
+t_object	*engine_read_objects_from_file(t_engine *eng, t_buff buff)
 {
 	t_object	*o_array_buffer;
 	char		**splitted_line;
@@ -86,20 +85,19 @@ t_object	*engine_read_objects_from_file(t_engine *eng,
 		eng->stats.objects_count);
 	i = 0;
 	eng->stats.objects_count = 0;
-	while (json_splited[i] != NULL)
+	while (buff.str[i] != NULL)
 	{
-		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
+		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "object:") == 0)
 			util_create_object(eng, &o_array_buffer[eng->stats.objects_count],
-			polies_array, splitted_line);
+			buff.polies, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
 	return (o_array_buffer);
 }
 
-t_polygone	*engine_read_polygones_from_file(t_engine *eng,
-			t_point_3d *vertex_array, char **json_splited)
+t_polygone	*engine_read_polygones_from_file(t_engine *eng, t_buff buff)
 {
 	t_polygone	*p_array_buffer;
 	char		**splitted_line;
@@ -109,12 +107,12 @@ t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 		* eng->stats.polies_count);
 	i = 0;
 	eng->stats.polies_count = 0;
-	while (json_splited[i] != NULL)
+	while (buff.str[i] != NULL)
 	{
-		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
+		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "polygone:") == 0)
 			util_create_polygone(eng, &p_array_buffer[eng->stats.polies_count],
-			vertex_array, splitted_line);
+			buff.vertexes, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
@@ -155,8 +153,7 @@ void		engine_read_worldbox_from_file(t_engine *eng, t_buff buff)
 	}
 }
 
-t_sprobject	*engine_read_sprobjects_from_file(t_engine *eng,
-			t_sprite *sprites_array, t_point_3d *vertex_array, char **json_splited)
+t_sprobject	*engine_read_sprobjects_from_file(t_engine *eng, t_buff buff)
 {
 	t_sprobject	*sprobject_buff;
 	char		**splitted_line;
@@ -166,12 +163,12 @@ t_sprobject	*engine_read_sprobjects_from_file(t_engine *eng,
 			eng->stats.sprobjects_count);
 	i = 0;
 	eng->stats.sprobjects_count = 0;
-	while (json_splited[i] != NULL)
+	while (buff.str[i] != NULL)
 	{
-		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
+		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "sobjct:") == 0)
 			util_create_sprobject(eng, &sprobject_buff[eng->stats.objects_count],
-			sprites_array, vertex_array, splitted_line);
+			buff.sprites, buff.vertexes, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/14 15:56:35 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 15:59:37 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 		util_get_object_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.objects_count, buff.objects, sector->id);
 	util_create_sector_sprobjs(eng, buff, sector, str);
+	eng->stats.sectors_count++;
 }
 
 void		util_create_sector_sprobjs(t_engine *eng, t_buff buff,
@@ -140,7 +141,6 @@ void		util_create_sector_sprobjs(t_engine *eng, t_buff buff,
 		sector->sprobjects_array[sprobj_count++] =
 		util_get_sprobject_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.sprobjects_count, buff.sprobjects, sector->id);
-	eng->stats.sectors_count++;
 }
 
 SDL_Surface	*util_CreateRGBSurface(Uint32 flags, int width, int height,

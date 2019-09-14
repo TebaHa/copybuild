@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:14:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 11:56:19 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 16:15:16 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,85 +67,6 @@ void		util_release_char_matrix(char **mtrx)
 	free(mtrx);
 }
 
-t_point_3d		util_get_vertex_from_buff_by_id(int id, int size, t_point_3d *vertexes)
-{
-	t_point_3d	res;
-	int			i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (vertexes[i].id == id)
-		break;
-		i++;
-	}
-	return (vertexes[i]);
-}
-
-t_polygone		util_get_polygone_from_buff_by_id(int id, int size, t_polygone *polies, int object_id)
-{
-	t_polygone	res;
-	int			i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (polies[i].id == id)
-		break;
-		i++;
-	}
-	return (polies[i]);
-}
-
-t_object		util_get_object_from_buff_by_id(int id, int size, t_object *objects, int sector_id)
-{
-	int			i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (objects[i].id == id)
-		break;
-		i++;
-	}
-	return (objects[i]);
-}
-
-t_sprobject		util_get_sprobject_from_buff_by_id(int id, int size, t_sprobject *sprobjects, int sector_id)
-{
-	int			i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (sprobjects[i].id == id)
-			break;
-		i++;
-	}
-	return (sprobjects[i]);
-}
-
-t_sprite		util_get_sprite_from_buff_by_id(int id, int size, t_sprite *sprites)
-{
-	t_sprite	res;
-	int			i;
-
-	if (id < 0)
-	{
-		/* Дописать кусок обработки, когда просто нет отображения никакого */
-		ft_putendl("Вернуть пустой спрайт");
-		exit(PARSING_ERROR);
-	}
-	i = 0;
-	while (i < size)
-	{
-		if (sprites[i].id == id)
-			break;
-		i++;
-	}
-	return (sprites[i]);
-}
-
 void			util_release_vertex_buffer(t_point_3d *vertex_buff)
 {
 	free(vertex_buff);
@@ -195,14 +116,6 @@ void			util_release_world(t_world *world)
 	util_release_sectors_buffer(world->sectors_array, world->sectors_count);
 	free(world->renderqueue);
 	free(world);
-}
-
-void			util_release_read_buffers(t_point_3d *vertex_buff, t_polygone *polies_buff,
-								t_object *object_buff)
-{
-	free(vertex_buff);
-	free(polies_buff);
-	free(object_buff);
 }
 
 void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1)
