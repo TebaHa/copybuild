@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
-project(DoomNukemParsing)
+project(DoomNukem)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
@@ -8,6 +8,60 @@ include_directories(engine/includes)
 include_directories(engine/includes/SDL2)
 include_directories(game/includes)
 include_directories(lib/libft/includes)
+include_directories(lib/sdl_ttf)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/builds/amiga/include)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/builds/amiga/include/config)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/builds/atari)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/builds/vms)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/devel)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/include)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/include/freetype)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/include/freetype/config)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/autofit)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/base)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/bdf)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/cache)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/cff)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/cid)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/gzip)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/lzw)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/otvalid)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/pcf)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/pfr)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/psaux)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/pshinter)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/psnames)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/raster)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/sfnt)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/smooth)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/truetype)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/type1)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/type42)
+include_directories(lib/sdl_ttf/external/freetype-2.9.1/src/winfonts)
+include_directories(lib/sdl_ttf/VisualC)
+include_directories(lib/sdl_ttf/VisualC/external)
+include_directories(lib/sdl_ttf/VisualC/external/include)
+include_directories(lib/sdl_ttf/VisualC/external/include/freetype)
+include_directories(lib/sdl_ttf/VisualC/external/include/freetype/config)
+include_directories(lib/sdl_ttf/Xcode/Frameworks)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/config)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/config)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype)
+include_directories(lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/config)
+include_directories(lib/sdl_ttf/Xcode/glfont)
+include_directories(lib/sdl_ttf/Xcode/showfont)
 include_directories(lib/stblib)
 include_directories(lib/stblib/deprecated)
 include_directories(lib/stblib/tests/caveview)
@@ -15,9 +69,7 @@ include_directories(lib/stblib/tests/oversample)
 include_directories(lib/stblib/tests/prerelease)
 include_directories(${SDL2_INCLUDE_DIR})
 
-find_package(SDL2 REQUIRED)
-
-add_executable(DoomNukemParsing
+add_executable(DoomNukem
 		engine/includes/SDL2/begin_code.h
 		engine/includes/SDL2/close_code.h
 		engine/includes/SDL2/SDL.h
@@ -87,6 +139,7 @@ add_executable(DoomNukemParsing
 		engine/includes/SDL2/SDL_thread.h
 		engine/includes/SDL2/SDL_timer.h
 		engine/includes/SDL2/SDL_touch.h
+		engine/includes/SDL2/SDL_ttf.h
 		engine/includes/SDL2/SDL_types.h
 		engine/includes/SDL2/SDL_version.h
 		engine/includes/SDL2/SDL_video.h
@@ -97,6 +150,7 @@ add_executable(DoomNukemParsing
 		engine/srcs/draw.c
 		engine/srcs/engine.c
 		engine/srcs/error_handler.c
+		engine/srcs/hud_draw.c
 		engine/srcs/images.c
 		engine/srcs/normal.c
 		engine/srcs/objects.c
@@ -105,7 +159,9 @@ add_executable(DoomNukemParsing
 		engine/srcs/parser_filler.c
 		engine/srcs/parser_reader.c
 		engine/srcs/parser_utility.c
+		engine/srcs/parser_utility_find.c
 		engine/srcs/rasterizer.c
+		engine/srcs/shoot.c
 		engine/srcs/texture.c
 		engine/srcs/utility.c
 		game/includes/game.h
@@ -179,58 +235,691 @@ add_executable(DoomNukemParsing
 		lib/libft/srcs/ft_tolower.c
 		lib/libft/srcs/ft_toupper.c
 		lib/libft/srcs/get_next_line.c
+		lib/sdl_ttf/external/freetype-2.9.1/builds/amiga/include/config/ftconfig.h
+		lib/sdl_ttf/external/freetype-2.9.1/builds/amiga/include/config/ftmodule.h
+		lib/sdl_ttf/external/freetype-2.9.1/builds/amiga/src/base/ftdebug.c
+		lib/sdl_ttf/external/freetype-2.9.1/builds/amiga/src/base/ftsystem.c
+		lib/sdl_ttf/external/freetype-2.9.1/builds/atari/ATARI.H
+		lib/sdl_ttf/external/freetype-2.9.1/builds/mac/ftmac.c
+		lib/sdl_ttf/external/freetype-2.9.1/builds/unix/ftsystem.c
+		lib/sdl_ttf/external/freetype-2.9.1/builds/vms/ftconfig.h
+		lib/sdl_ttf/external/freetype-2.9.1/builds/vms/ftsystem.c
+		lib/sdl_ttf/external/freetype-2.9.1/builds/wince/ftdebug.c
+		lib/sdl_ttf/external/freetype-2.9.1/builds/windows/ftdebug.c
+		lib/sdl_ttf/external/freetype-2.9.1/devel/ft2build.h
+		lib/sdl_ttf/external/freetype-2.9.1/devel/ftoption.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/config/ftconfig.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/config/ftheader.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/config/ftmodule.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/config/ftoption.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/config/ftstdlib.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svbdf.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svcfftl.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svcid.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svfntfmt.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svgldict.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svgxval.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svkern.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svmetric.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svmm.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svotval.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svpfr.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svpostnm.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svprop.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svpscmap.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svpsinfo.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svsfnt.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svttcmap.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svtteng.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svttglyf.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/services/svwinfnt.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/autohint.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/cffotypes.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/cfftypes.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftcalc.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftdebug.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftdrv.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftgloadr.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/fthash.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftmemory.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftobjs.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftpic.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftpsprop.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftrfork.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftserv.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftstream.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/fttrace.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/ftvalid.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/internal.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/psaux.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/pshints.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/sfnt.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/t1types.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/internal/tttypes.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/freetype.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftadvanc.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftbbox.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftbdf.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftbitmap.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftbzip2.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftcache.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftchapters.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftcid.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftdriver.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/fterrdef.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/fterrors.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftfntfmt.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftgasp.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftglyph.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftgxval.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftgzip.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftimage.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftincrem.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftlcdfil.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftlist.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftlzw.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftmac.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftmm.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftmodapi.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftmoderr.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftotval.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftoutln.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftparams.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftpfr.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftrender.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftsizes.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftsnames.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftstroke.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftsynth.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftsystem.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/fttrigon.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/fttypes.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ftwinfnt.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/t1tables.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/ttnameid.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/tttables.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/freetype/tttags.h
+		lib/sdl_ttf/external/freetype-2.9.1/include/ft2build.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afangles.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afangles.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afblue.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afblue.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afcjk.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afcjk.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afcover.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afdummy.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afdummy.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/aferrors.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afglobal.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afglobal.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afhints.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afhints.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afindic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afindic.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/aflatin.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/aflatin.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/aflatin2.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/aflatin2.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afloader.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afloader.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afmodule.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afmodule.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afpic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afpic.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afranges.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afranges.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afscript.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afshaper.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afshaper.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afstyles.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/aftypes.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afwarp.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afwarp.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/afwrtsys.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/autofit/autofit.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/basepic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/basepic.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftadvanc.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftapi.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftbase.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftbase.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftbbox.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftbdf.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftbitmap.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftcalc.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftcid.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftdbgmem.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftdebug.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftfntfmt.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftfstype.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftgasp.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftgloadr.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftglyph.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftgxval.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/fthash.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftinit.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftlcdfil.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftmac.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftmm.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftobjs.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftotval.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftoutln.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftpatent.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftpfr.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftpic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftpsprop.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftrfork.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftsnames.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftstream.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftstroke.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftsynth.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftsystem.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/fttrigon.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/fttype1.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftutil.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/ftwinfnt.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/md5.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/base/md5.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/bdf/bdf.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/bdf/bdf.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/bdf/bdfdrivr.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/bdf/bdfdrivr.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/bdf/bdferror.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/bdf/bdflib.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/bzip2/ftbzip2.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcache.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcbasic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftccache.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftccache.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftccback.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftccmap.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcerror.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcglyph.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcglyph.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcimage.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcimage.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcmanag.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcmanag.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcmru.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcmru.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcsbits.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cache/ftcsbits.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cff.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffcmap.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffcmap.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffdrivr.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffdrivr.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cfferrs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffgload.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffgload.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffload.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffload.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffobjs.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffobjs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffparse.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffparse.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffpic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cffpic.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cff/cfftoken.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/ciderrs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidgload.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidgload.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidload.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidload.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidobjs.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidobjs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidparse.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidparse.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidriver.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidriver.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/cidtoken.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/cid/type1cid.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvalid.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvalid.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvbsln.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvcommn.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvcommn.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxverror.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvfeat.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvfeat.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvfgen.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvjust.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvkern.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvlcar.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmod.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmod.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmort.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmort.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmort0.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmort1.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmort2.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmort4.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmort5.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmorx.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmorx.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmorx0.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmorx1.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmorx2.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmorx4.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvmorx5.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvopbd.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvprop.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gxvalid/gxvtrak.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/adler32.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/ftgzip.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/ftzconf.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/infblock.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/infblock.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/infcodes.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/infcodes.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/inffixed.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/inflate.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/inftrees.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/inftrees.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/infutil.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/infutil.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/zlib.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/zutil.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/gzip/zutil.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/lzw/ftlzw.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/lzw/ftzopen.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/lzw/ftzopen.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvalid.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvalid.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvbase.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvcommn.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvcommn.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otverror.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvgdef.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvgpos.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvgpos.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvgsub.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvjstf.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvmath.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvmod.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/otvalid/otvmod.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pcf/pcf.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pcf/pcf.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pcf/pcfdrivr.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pcf/pcfdrivr.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pcf/pcferror.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pcf/pcfread.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pcf/pcfread.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pcf/pcfutil.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pcf/pcfutil.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfr.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrcmap.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrcmap.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrdrivr.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrdrivr.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrerror.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrgload.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrgload.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrload.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrload.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrobjs.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrobjs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrsbit.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrsbit.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pfr/pfrtypes.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/afmparse.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/afmparse.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/cffdecode.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/cffdecode.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psarrst.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psarrst.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psaux.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psauxerr.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psauxmod.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psauxmod.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psblues.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psblues.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psconv.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psconv.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/pserror.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/pserror.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psfixed.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psfont.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psfont.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psft.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psft.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psglue.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/pshints.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/pshints.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psintrp.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psintrp.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psobjs.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psobjs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psread.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psread.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psstack.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/psstack.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/pstypes.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/t1cmap.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/t1cmap.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/t1decode.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psaux/t1decode.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshalgo.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshalgo.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshglob.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshglob.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshinter.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshmod.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshmod.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshnterr.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshpic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshpic.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshrec.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/pshinter/pshrec.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psnames/psmodule.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psnames/psmodule.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psnames/psnamerr.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psnames/psnames.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psnames/pspic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/psnames/pspic.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/psnames/pstables.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/raster/ftmisc.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/raster/ftraster.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/raster/ftraster.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/raster/ftrend1.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/raster/ftrend1.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/raster/raster.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/raster/rasterrs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/raster/rastpic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/raster/rastpic.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/pngshim.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/pngshim.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/sfdriver.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/sfdriver.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/sferrors.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/sfnt.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/sfntpic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/sfntpic.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/sfobjs.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/sfobjs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttbdf.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttbdf.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttcmap.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttcmap.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttcmapc.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttkern.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttkern.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttload.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttload.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttmtx.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttmtx.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttpost.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttpost.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttsbit.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/sfnt/ttsbit.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/smooth/ftgrays.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/smooth/ftgrays.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/smooth/ftsmerrs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/smooth/ftsmooth.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/smooth/ftsmooth.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/smooth/ftspic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/smooth/ftspic.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/smooth/smooth.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/tools/ftfuzzer/ftfuzzer.cc
+		lib/sdl_ttf/external/freetype-2.9.1/src/tools/ftfuzzer/ftmutator.cc
+		lib/sdl_ttf/external/freetype-2.9.1/src/tools/ftfuzzer/rasterfuzzer.cc
+		lib/sdl_ttf/external/freetype-2.9.1/src/tools/ftfuzzer/runinput.cc
+		lib/sdl_ttf/external/freetype-2.9.1/src/tools/ftrandom/ftrandom.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/tools/apinames.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/tools/test_afm.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/tools/test_bbox.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/tools/test_trig.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/truetype.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttdriver.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttdriver.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/tterrors.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttgload.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttgload.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttgxvar.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttgxvar.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttinterp.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttinterp.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttobjs.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttobjs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttpic.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttpic.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttpload.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttpload.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttsubpix.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/truetype/ttsubpix.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1afm.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1afm.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1driver.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1driver.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1errors.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1gload.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1gload.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1load.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1load.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1objs.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1objs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1parse.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1parse.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/t1tokens.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type1/type1.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/type42/t42drivr.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/type42/t42drivr.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type42/t42error.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type42/t42objs.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/type42/t42objs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type42/t42parse.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/type42/t42parse.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type42/t42types.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/type42/type42.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/winfonts/fnterrs.h
+		lib/sdl_ttf/external/freetype-2.9.1/src/winfonts/winfnt.c
+		lib/sdl_ttf/external/freetype-2.9.1/src/winfonts/winfnt.h
+		lib/sdl_ttf/VisualC/external/include/freetype/config/ftconfig.h
+		lib/sdl_ttf/VisualC/external/include/freetype/config/ftheader.h
+		lib/sdl_ttf/VisualC/external/include/freetype/config/ftmodule.h
+		lib/sdl_ttf/VisualC/external/include/freetype/config/ftoption.h
+		lib/sdl_ttf/VisualC/external/include/freetype/config/ftstdlib.h
+		lib/sdl_ttf/VisualC/external/include/freetype/freetype.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftadvanc.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftbbox.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftbdf.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftbitmap.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftbzip2.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftcache.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftchapters.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftcid.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftdriver.h
+		lib/sdl_ttf/VisualC/external/include/freetype/fterrdef.h
+		lib/sdl_ttf/VisualC/external/include/freetype/fterrors.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftfntfmt.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftgasp.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftglyph.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftgxval.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftgzip.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftimage.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftincrem.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftlcdfil.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftlist.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftlzw.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftmac.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftmm.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftmodapi.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftmoderr.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftotval.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftoutln.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftparams.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftpfr.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftrender.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftsizes.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftsnames.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftstroke.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftsynth.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftsystem.h
+		lib/sdl_ttf/VisualC/external/include/freetype/fttrigon.h
+		lib/sdl_ttf/VisualC/external/include/freetype/fttypes.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ftwinfnt.h
+		lib/sdl_ttf/VisualC/external/include/freetype/t1tables.h
+		lib/sdl_ttf/VisualC/external/include/freetype/ttnameid.h
+		lib/sdl_ttf/VisualC/external/include/freetype/tttables.h
+		lib/sdl_ttf/VisualC/external/include/freetype/tttags.h
+		lib/sdl_ttf/VisualC/external/include/ft2build.h
+		lib/sdl_ttf/VisualC/resource.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/config/ftconfig.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/config/ftheader.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/config/ftmodule.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/config/ftoption.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/config/ftstdlib.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/freetype.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftadvanc.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftbbox.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftbdf.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftbitmap.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftbzip2.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftcache.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftchapters.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftcid.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftdriver.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/fterrdef.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/fterrors.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftfntfmt.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftgasp.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftglyph.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftgxval.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftgzip.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftimage.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftincrem.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftlcdfil.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftlist.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftlzw.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftmac.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftmm.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftmodapi.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftmoderr.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftotval.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftoutln.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftparams.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftpfr.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftrender.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftsizes.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftsnames.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftstroke.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftsynth.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftsystem.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/fttrigon.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/fttypes.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ftwinfnt.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/t1tables.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/ttnameid.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/tttables.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Headers/freetype/tttags.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/config/ftconfig.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/config/ftheader.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/config/ftmodule.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/config/ftoption.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/config/ftstdlib.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/freetype.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftadvanc.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftbbox.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftbdf.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftbitmap.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftbzip2.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftcache.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftchapters.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftcid.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftdriver.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/fterrdef.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/fterrors.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftfntfmt.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftgasp.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftglyph.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftgxval.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftgzip.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftimage.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftincrem.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftlcdfil.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftlist.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftlzw.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftmac.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftmm.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftmodapi.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftmoderr.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftotval.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftoutln.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftparams.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftpfr.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftrender.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftsizes.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftsnames.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftstroke.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftsynth.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftsystem.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/fttrigon.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/fttypes.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ftwinfnt.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/t1tables.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/ttnameid.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/tttables.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/freetype/tttags.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/A/Headers/ft2build.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/config/ftconfig.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/config/ftheader.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/config/ftmodule.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/config/ftoption.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/config/ftstdlib.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/freetype.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftadvanc.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftbbox.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftbdf.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftbitmap.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftbzip2.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftcache.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftchapters.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftcid.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftdriver.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/fterrdef.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/fterrors.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftfntfmt.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftgasp.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftglyph.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftgxval.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftgzip.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftimage.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftincrem.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftlcdfil.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftlist.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftlzw.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftmac.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftmm.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftmodapi.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftmoderr.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftotval.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftoutln.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftparams.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftpfr.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftrender.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftsizes.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftsnames.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftstroke.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftsynth.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftsystem.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/fttrigon.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/fttypes.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ftwinfnt.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/t1tables.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/ttnameid.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/tttables.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/freetype/tttags.h
+		lib/sdl_ttf/Xcode/Frameworks/FreeType.framework/Versions/Current/Headers/ft2build.h
+		lib/sdl_ttf/Xcode/glfont/SDLMain.h
+		lib/sdl_ttf/Xcode/glfont/SDLMain.m
+		lib/sdl_ttf/Xcode/showfont/SDLMain.h
+		lib/sdl_ttf/Xcode/showfont/SDLMain.m
+		lib/sdl_ttf/glfont.c
+		lib/sdl_ttf/SDL_ttf.c
+		lib/sdl_ttf/SDL_ttf.h
+		lib/sdl_ttf/showfont.c
 		lib/stblib/deprecated/rrsprintf.h
 		lib/stblib/deprecated/stb_image.c
-		lib/stblib/tests/caveview/win32/SDL_windows_main.c
-		lib/stblib/tests/caveview/cave_main.c
-		lib/stblib/tests/caveview/cave_mesher.c
-		lib/stblib/tests/caveview/cave_parse.c
-		lib/stblib/tests/caveview/cave_parse.h
-		lib/stblib/tests/caveview/cave_render.c
-		lib/stblib/tests/caveview/caveview.h
-		lib/stblib/tests/caveview/glext.h
-		lib/stblib/tests/caveview/glext_list.h
-		lib/stblib/tests/caveview/main.c
-		lib/stblib/tests/caveview/stb_gl.h
-		lib/stblib/tests/caveview/stb_glprog.h
-		lib/stblib/tests/oversample/main.c
-		lib/stblib/tests/oversample/stb_wingraph.h
-		lib/stblib/tests/pg_test/pg_test.c
-		lib/stblib/tests/prerelease/stb_lib.h
-		lib/stblib/tests/sdf/sdf_test.c
-		lib/stblib/tests/vorbseek/vorbseek.c
-		lib/stblib/tests/c_lexer_test.c
-		lib/stblib/tests/grid_reachability.c
-		lib/stblib/tests/herringbone_generator.c
-		lib/stblib/tests/herringbone_map.c
-		lib/stblib/tests/image_test.c
-		lib/stblib/tests/image_write_test.c
-		lib/stblib/tests/resample_test.cpp
-		lib/stblib/tests/resample_test_c.c
-		lib/stblib/tests/stb.c
-		lib/stblib/tests/stb_cpp.cpp
-		lib/stblib/tests/stb_static.c
-		lib/stblib/tests/stblib_test.c
-		lib/stblib/tests/stblib_test_companion.c
-		lib/stblib/tests/stretch_test.c
-		lib/stblib/tests/stretchy_buffer_test.c
-		lib/stblib/tests/test_c_compilation.c
-		lib/stblib/tests/test_c_lexer.c
-		lib/stblib/tests/test_cpp_compilation.cpp
-		lib/stblib/tests/test_ds.c
-		lib/stblib/tests/test_ds_cpp.cpp
-		lib/stblib/tests/test_dxt.c
-		lib/stblib/tests/test_easyfont.c
-		lib/stblib/tests/test_image.c
-		lib/stblib/tests/test_image_write.c
-		lib/stblib/tests/test_perlin.c
-		lib/stblib/tests/test_siphash.c
-		lib/stblib/tests/test_sprintf.c
-		lib/stblib/tests/test_truetype.c
-		lib/stblib/tests/test_vorbis.c
-		lib/stblib/tests/test_voxel.c
-		lib/stblib/tests/textedit_sample.c
-		lib/stblib/tests/tilemap_editor_integration_example.c
 		lib/stblib/tools/build_matrix.c
 		lib/stblib/tools/easy_font_maker.c
 		lib/stblib/tools/make_readme.c
@@ -256,6 +945,6 @@ add_executable(DoomNukemParsing
 		lib/stblib/stb_truetype.h
 		lib/stblib/stb_vorbis.c
 		lib/stblib/stb_voxel_render.h
-		lib/stblib/stretchy_buffer.h engine/srcs/parser_utility_find.c)
+		lib/stblib/stretchy_buffer.h)
 
-target_link_libraries(DoomNukemParsing ${SDL2_LIBRARY})
+target_link_libraries(DoomNukem ${SDL2_LIBRARY})
