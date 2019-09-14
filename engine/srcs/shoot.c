@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/13 08:46:39 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 08:39:35 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,17 @@ float	dot_product(t_point_3d a, t_point_3d b)
 
 void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 {
-	t_point_3d	p_int;
+	t_point_3d	int_p;
 	t_line		shoot;
+	t_plane		plane;
 	t_sector	*sect;
-	t_item		sect_id;
+	int			sect_id;
 	int			prev;
 	int			i;
+	int			res;
 
 	i = 0;
+	res = 0;
 	shoot.a = plr->position;
 	double angle_xy = atan2f(plr->sinangle, plr->cosangle);
 	double angle_z = atanf(plr->yaw);
@@ -40,20 +43,38 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 	double dy = weapon_range * sinf(angle_xy) + shoot.a.y;
 	double dz = weapon_range * angle_z + shoot.a.z;
 	shoot.b = (t_point_3d){0, shoot.a.x + dx, shoot.a.y + dy, shoot.a.z + dz};
-	sect = &eng->world->sectors_array[plr->cursector];
-	sect_id.sectorno = plr->cursector;
-	engine_push_renderstack(eng->world->renderqueue, sect_id);
-	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)).sectorno >= 0))
+	prev = plr->cursector;
+	engine_clear_checkstack(eng->world->checkqueue);
+	engine_push_checkstack(eng->world->checkqueue, plr->cursector);
+	while (((sect_id = engine_pop_checkstack(eng->world->checkqueue)) >= 0))
 	{
 		i = 0;
-		while (i < eng->world->sectors_array[sect_id.sectorno].objects_count)
+		sect = &eng->world->sectors_array[sect_id];
+		printf("sect %d prev %d\n", sect_id, prev);
+		while (i < sect->objects_count)
 		{
-			intersect_3d_seg_plane(sect);
+			plane.n = calc_normal_dots((t_point_3d){0, sect->objects_array[i].polies_array[0].vertices_array[0].x,
+			sect->objects_array[i].polies_array[0].vertices_array[0].y, sect->floor},
+			(t_point_3d){0, sect->objects_array[i].polies_array[0].vertices_array[1].x,
+			sect->objects_array[i].polies_array[0].vertices_array[1].y, sect->floor},
+			(t_point_3d){0, sect->objects_array[i].polies_array[0].vertices_array[1].x,
+			sect->objects_array[i].polies_array[0].vertices_array[1].y, sect->ceil});
+			plane.p = (t_point_3d){0, sect->objects_array[i].polies_array[0].vertices_array[1].x,
+			sect->objects_array[i].polies_array[0].vertices_array[1].y, sect->floor};
+			res = intersect_3d_seg_plane(shoot, plane, &int_p);
+			if (res > 0)
+			{
+				if (sect->objects_array[i].portal != -1 && prev != sect->objects_array[i].portal)
+					engine_push_checkstack(eng->world->checkqueue, sect->objects_array[i].portal);
+				else
+					engine_push_particlestack(sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
+				break;
+			}
 			i++;
 		}
-		prev = sect_id.sectorno;
+		prev = sect_id;
 	}
-	engine_clear_renderstack(eng->world->renderqueue);
+	printf("X: %f Y: %f Z: %f\n", int_p.x, int_p.y, int_p.z);
 }
 
 int		intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res)

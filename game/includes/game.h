@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/13 09:05:31 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 02:48:13 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define TOP_ARROW 126
 # define TWO_DIM_KEY 19
 # define THREE_DIM_KEY 20
-# define HeadMargin 10
+# define HeadMargin 25
 # define EyeHeight  6 // Camera height from floor when standing
 # define DuckHeight 2.5 // And when crouching
 # define KneeHeight 10

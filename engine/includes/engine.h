@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/13 08:53:23 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 08:22:04 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ typedef struct		s_object
 	int				id;
 	int				polies_count;
 	int				visible;
+	int				status;
 	t_point_3d		particles[10];
 	t_image			*floor_wall_texture;
 	t_image			*ceil_wall_texture;
@@ -221,6 +222,7 @@ typedef	struct		s_world
 	t_sector		*world_box;
 	int				sectors_count;
 	t_item			*renderqueue;
+	int				checkqueue[MAXSECTORS];
 	int				id;
 }					t_world;
 
@@ -409,6 +411,11 @@ void			engine_render_polygone(t_engine *eng, t_player *plr, t_polygone *wall, in
 void			engine_vline(t_engine *eng, SDL_Surface *surf, t_fix_point_3d a, t_fix_point_3d b, int color);
 void			engine_render_world_walls(t_engine *eng, t_polygone *polygone, t_player *plr, t_item sect);
 void			engine_render_world_box(t_engine *eng, t_player *plr);
+t_point_3d		calc_normal_dots(t_point_3d a, t_point_3d b, t_point_3d c);
+void			engine_push_particlestack(t_point_3d *particlestack, int *status, t_point_3d point);
+void			engine_push_checkstack(int *checkqueue, int item);
+int				engine_pop_checkstack(int *checkqueue);
+void			engine_clear_checkstack(int *checkqueue);
 
 /*
 **Image-processing functions
@@ -432,6 +439,9 @@ t_image			*engine_cut_texture(t_image *world_texture, int xstart, int xsize, int
 void			game_stop_threads(t_thread_pool	*render_thread, int thread_count);
 void			engine_draw_hud(t_engine *eng, SDL_Surface *surf);
 void			engine_read_sprites(t_engine **eng);
+void			shoot(t_engine *eng, t_player *plr, int weapon_range);
+int				intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
+
 /*
 **	Parsing functions
 */

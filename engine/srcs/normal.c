@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 15:38:11 by zytrams           #+#    #+#             */
-/*   Updated: 2019/08/19 18:58:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 05:25:19 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,26 @@ void			normalize_vec3(t_point_3d *normal)
 	normal->x /= magn;
 	normal->y /= magn;
 	normal->z /= magn;
+}
+
+t_point_3d		calc_normal_dots(t_point_3d a, t_point_3d b, t_point_3d c)
+{
+	t_point_3d		vec1;
+	t_point_3d		vec2;
+	t_point_3d		normal;
+	t_point_3d		t[3];
+
+	vec1 = create_vector(&(a), &(b));
+	vec2 = create_vector(&(b), &(c));
+	normal = cross_vec3(vec1, vec2);
+	normalize_vec3(&normal);
+	if (normal.y < 0)
+		normal.y = -normal.y;
+	if (normal.x < 0)
+		normal.x = -normal.x;
+	if (normal.z < 0)
+		normal.z = -normal.z;
+	return (normal);
 }
 
 t_point_3d		calc_normal(t_polygone *poly)

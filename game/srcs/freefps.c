@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/13 09:06:29 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 08:39:58 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int		main(void)
 			sectprev = fps.player.cursector;
 			if((sect = engine_object_get_sector(fps.eng->world, (t_point_3d){0.f, px + dx, py + dy, 0.f}, fps.player.cursector)) >= 0)
 			{
-				if (fps.eng->world->sectors_array[sect].floor <= fps.player.position.z + KneeHeight - 50 - duck_shift)
+				if (fps.eng->world->sectors_array[sect].floor - duck_shift <= fps.player.position.z + KneeHeight - 50)
 					move_player(fps.eng, &fps.player, dx, dy, sect);
 			}
 		}
@@ -105,6 +105,11 @@ int		main(void)
 			fps.player.controller.falling = 1;
 		if (SDL_PollEvent(&fps.eng->event))
 		{
+			if (fps.eng->event.button.type == SDL_MOUSEBUTTONDOWN)
+			{
+				if (fps.eng->event.button.button == SDL_BUTTON_LEFT)
+					shoot(fps.eng, &fps.player, 1000);
+			}
 			if (fps.eng->event.type == SDL_KEYUP)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
@@ -177,7 +182,7 @@ int		main(void)
 							fps.player.position.z += fps.eng->world->sectors_array[fps.player.cursector].ceil - fps.player.position.z - HeadMargin;
 						}
 						else
-							fps.player.position.z += 100;
+							fps.player.position.z += 150;
 					}
 				}
 			}
@@ -275,13 +280,3 @@ void	change_ceil(t_engine *eng, int sect, int change)
 {
 	eng->world->sectors_array[sect].ceil += change;
 }
-/*
-int		main(void)
-{
-	t_game	fps;
-
-	engine_sdl_init(&fps.eng);
-	engine_create_world_from_file(fps.eng, "game/resources/1.lvl");
-	return (0);
-}
- */
