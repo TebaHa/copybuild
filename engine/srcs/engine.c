@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/12 21:22:00 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 15:17:55 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,24 @@ void		engine_read_textures(t_engine **eng)
 	if (d)
 	{
 		while ((dir = readdir(d)) != NULL)
-			count++;
+		{
+			if (dir->d_name[0] != '.')
+				count++;
+		}
 		closedir(d);
 	}
 	d = opendir(TEXTURE_PACK_PATH);
 	if (d)
 	{
-		(*eng)->texture_buffer = (t_txtr_pkg **)ft_memalloc(sizeof(t_txtr_pkg *) * (count - 2));
+		(*eng)->texture_buffer = (t_txtr_pkg **)ft_memalloc(sizeof(t_txtr_pkg *) * (count));
 		if ((*eng)->texture_buffer == NULL)
 			error_handler("malloc error: ", "allocation", (*eng));
 		while (i < count)
 		{
 			if ((dir = readdir(d)) != NULL)
 			{
-				if (ft_strcmp(dir->d_name, ".") == 0 || ft_strcmp(dir->d_name, "..") == 0 || ft_strcmp(dir->d_name, ".DS_Store") == 0)
-				{
-					i++;
+				if (dir->d_name[0] == '.')
 					continue;
-				}
 				buffer_name = ft_strjoin(TEXTURE_PACK_PATH, dir->d_name);
 				(*eng)->texture_buffer[real_i] = (t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
 				(*eng)->texture_buffer[real_i]->filename = ft_strdup(dir->d_name);
@@ -103,24 +103,24 @@ void		engine_read_sprites(t_engine **eng)
 	if (d)
 	{
 		while ((dir = readdir(d)) != NULL)
-			count++;
+		{
+			if (dir->d_name[0] != '.')
+				count++;
+		}
 		closedir(d);
 	}
 	d = opendir(TEXTURE_SPRITE_PATH);
 	if (d)
 	{
-		(*eng)->sprites_buffer = (t_txtr_pkg **)ft_memalloc(sizeof(t_txtr_pkg *) * (count - 2));
+		(*eng)->sprites_buffer = (t_txtr_pkg **)ft_memalloc(sizeof(t_txtr_pkg *) * (count));
 		if ((*eng)->sprites_buffer == NULL)
 			error_handler("malloc error: ", "allocation", (*eng));
 		while (i < count)
 		{
 			if ((dir = readdir(d)) != NULL)
 			{
-				if (ft_strcmp(dir->d_name, ".") == 0 || ft_strcmp(dir->d_name, "..") == 0 || ft_strcmp(dir->d_name, ".DS_Store") == 0)
-				{
-					i++;
+				if (dir->d_name[0] == '.')
 					continue;
-				}
 				buffer_name = ft_strjoin(TEXTURE_SPRITE_PATH, dir->d_name);
 				(*eng)->sprites_buffer[real_i] = (t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
 				(*eng)->sprites_buffer[real_i]->filename = ft_strdup(dir->d_name);
