@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/12 20:47:43 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 15:33:51 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,22 @@ char		**engine_read_level_file(char *filename)
 
 void		engine_create_world_from_file(t_engine *eng, char *filename)
 {
-	t_point_3d	*vertex_buff;
-	t_sprite	*sprites_buff;
-	t_polygone	*polies_buff;
-	t_object	*object_buff;
-	t_sprobject	*sprobject_buff;
-	char		**config;
+	t_buff		buff;
 
-	config = engine_read_level_file(filename);
-	engine_count_all_from_file(eng, config);
-	engine_read_world_from_file(eng, config);
-	vertex_buff = engine_read_vertexes_from_file(eng, config);
-	sprites_buff = engine_read_sprites_from_file(eng, vertex_buff, config);
-	polies_buff = engine_read_polygones_from_file(eng, vertex_buff, config);
-	object_buff = engine_read_objects_from_file(eng, polies_buff, config);
-	sprobject_buff = engine_read_sprobjects_from_file(eng, sprites_buff, vertex_buff, config);
-	engine_read_sectors_from_file(eng, object_buff, sprobject_buff, config);
-	engine_read_worldbox_from_file(eng, object_buff, sprobject_buff, config);
-	util_release_read_buffers(vertex_buff, polies_buff, object_buff);
-	util_release_char_matrix(config);
+	buff.str = engine_read_level_file(filename);
+	engine_count_all_from_file(eng, buff.str);
+	engine_read_world_from_file(eng, buff.str);
+	buff.vertexes = engine_read_vertexes_from_file(eng, buff.str);
+	buff.sprites = engine_read_sprites_from_file(eng, buff.vertexes, buff.str);
+	buff.polies = engine_read_polygones_from_file(eng, buff.vertexes, buff.str);
+	buff.objects = engine_read_objects_from_file(eng, buff.polies, buff.str);
+	buff.sprobjects = engine_read_sprobjects_from_file(eng, buff.sprites,
+		buff.vertexes, buff.str);
+	engine_read_sectors_from_file(eng, buff);
+	engine_read_worldbox_from_file(eng, buff);
+	util_release_read_buffers(buff.vertexes, buff.polies, buff.objects);
+	util_release_char_matrix(buff.str);
+	ft_putendl("PARSING OK!");
 }
 
 void		engine_count_all_from_file(t_engine *eng, char **json_splited)

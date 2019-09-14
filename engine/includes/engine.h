@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 08:22:04 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 15:55:13 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,16 @@ typedef struct		s_object
 	t_image			*floor_wall_texture;
 	t_image			*ceil_wall_texture;
 }					t_object;
+
+typedef struct		s_buff
+{
+	t_point_3d		*vertexes;
+	t_sprite		*sprites;
+	t_polygone		*polies;
+	t_object		*objects;
+	t_sprobject		*sprobjects;
+	char 			**str;
+}					t_buff;
 
 typedef	struct		s_sector
 {
@@ -456,14 +466,12 @@ t_object	*engine_read_objects_from_file(t_engine *eng,
 			t_polygone *polies_array, char **json_splited);
 t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 			t_point_3d *vertex_array, char **json_splited);
-void		engine_read_sectors_from_file(t_engine *eng,
-			t_object *objects_array, t_sprobject *sprobject_array, char **json_splited);
-void		engine_read_worldbox_from_file(t_engine *eng,
-			t_object *objects_array, t_sprobject *sprobjects_array,char **json_splited);
+void		engine_read_sectors_from_file(t_engine *eng, t_buff buff);
+void		engine_read_worldbox_from_file(t_engine *eng, t_buff buff);
 void		util_float10_data_filler(float *data, char *str);
 void		util_int10_data_filler(int *data, char *str);
 void		util_int16_data_filler(int *data, char *str);
-void		util_parsing_error_count_handler(char *problem, char *problem_from,
+void		util_parsing_error_count_handler(char *problem_from,
 			char **str, int problems_number);
 void		util_parsing_error_lost_handler(char *problem, int id_problem,
 			char *problem_from, int id_problem_from);
@@ -481,8 +489,10 @@ void		util_create_polygone(t_engine *eng, t_polygone *polygone,
 			t_point_3d *vertex_array, char **str);
 void		util_create_object(t_engine *eng, t_object *object,
 			t_polygone *polygone_array, char **str);
-void		util_create_sector(t_engine *eng, t_sector *sector,
-			t_object *objects_array, t_sprobject *sprobject_array, char **str);
+void		util_create_sector(t_engine *eng, t_buff buff,
+			t_sector *sector, char **str);
+void		util_create_sector_sprobjs(t_engine *eng, t_buff buff,
+			t_sector *sector, char **str);
 t_point_3d	util_get_vertex_from_buff_by_id(int id, int size,
 			t_point_3d *vertexes);
 t_polygone	util_get_polygone_from_buff_by_id(int id, int size,
@@ -506,6 +516,8 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 			t_sprite *sprite_array, t_point_3d *vertex_array, char **str);
 t_sprobject	util_get_sprobject_from_buff_by_id(int id, int size,
 			t_sprobject *sprobjects, int sector_id);
+SDL_Surface	*util_CreateRGBSurface(Uint32 flags, int width, int height,
+									  int depth);
 
 /*
 **	Parsing functions end

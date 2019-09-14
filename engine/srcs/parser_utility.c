@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/12 22:00:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/14 15:56:35 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		util_create_world(t_world **world, char **str)
 	*world = (t_world *)ft_memalloc(sizeof(t_world));
 	util_int10_data_filler(&(*world)->id, str[1]);
 	util_int10_data_filler(&(*world)->sectors_count, str[2]);
-	util_parsing_error_count_handler("sector", "world", str, 2);
+	util_parsing_error_count_handler("world", str, 2 + (*world)->sectors_count);
 	(*world)->renderqueue = (t_item *)ft_memalloc(sizeof(t_item)
 		* (*world)->sectors_count);
 	(*world)->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector)
@@ -29,10 +29,7 @@ void		util_create_world(t_world **world, char **str)
 
 void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str)
 {
-	if (!str[4])
-		util_parsing_error_little_data("coordinate", "vertex", str);
-	if (str[5])
-		util_parsing_error_extra_data("coordinate", "vertex", str);
+	util_parsing_error_count_handler("vertex", str, 4);
 	util_int10_data_filler(&point->id, str[1]);
 	util_float10_data_filler(&point->x, str[2]);
 	util_float10_data_filler(&point->y, str[3]);
@@ -42,6 +39,7 @@ void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str)
 
 void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 {
+	util_parsing_error_count_handler("sprite", str, 4);
 	util_int10_data_filler(&sprite->id, str[1]);
 	util_int10_data_filler(&sprite->frames_num, str[2]);
 	util_int10_data_filler(&sprite->frames_delay, str[3]);
@@ -51,7 +49,6 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	else
 		sprite->frames_type = 0;
 	util_find_sprite_by_name(sprite->surface, eng, str[4]);
-	/* Добавить обработку лишней и недостаточной инфы */
 	eng->stats.skins_count++;
 }
 
@@ -66,7 +63,7 @@ void		util_create_polygone(t_engine *eng, t_polygone *polygone,
 	util_int16_data_filler(&polygone->color, str[3]);
 	util_find_texture_by_name(&polygone->texture, eng, str[4]);
 	util_int10_data_filler(&polygone->vertices_count, str[5]);
-	util_parsing_error_count_handler("vertex", "polygone", str, 5);
+	util_parsing_error_count_handler("polygone", str, 5 + polygone->vertices_count);
 	polygone->vertices_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d)
 		* polygone->vertices_count);
 	str_count = 6;
@@ -91,7 +88,7 @@ void		util_create_object(t_engine *eng, t_object *object,
 	util_find_texture_by_name(&object->floor_wall_texture, eng, str[5]);
 	util_find_texture_by_name(&object->ceil_wall_texture, eng, str[6]);
 	util_int10_data_filler(&object->polies_count, str[7]);
-	util_parsing_error_count_handler("polygone", "object", str, 7);
+	util_parsing_error_count_handler("object", str, 7 + object->polies_count);
 	object->polies_array = (t_polygone *)ft_memalloc(sizeof(t_polygone)
 		* object->polies_count);
 	str_count = 8;
@@ -103,11 +100,10 @@ void		util_create_object(t_engine *eng, t_object *object,
 	eng->stats.objects_count++;
 }
 
-void		util_create_sector(t_engine *eng, t_sector *sector,
-			t_object *objects_array, t_sprobject *sprobjects_array, char **str)
+void		util_create_sector(t_engine *eng, t_buff buff,
+			t_sector *sector, char **str)
 {
 	int			obj_count;
-	int			sprobj_count;
 	int			str_count;
 
 	util_int10_data_filler(&sector->id, str[1]);
@@ -117,32 +113,45 @@ void		util_create_sector(t_engine *eng, t_sector *sector,
 	util_find_texture_by_name(&sector->ceil_texture, eng, str[5]);
 	util_int10_data_filler(&sector->objects_count, str[6]);
 	util_int10_data_filler(&sector->sprobjects_count, str[7]);
-	if (!str[7 + sector->objects_count + sector->sprobjects_count])
-		util_parsing_error_little_data("objects", "sector", str);
-	if (str[8 + sector->objects_count + sector->sprobjects_count])
-		util_parsing_error_extra_data("objects", "sector", str);
+	util_parsing_error_count_handler("sector", str, 7 + sector->objects_count
+		+ sector->sprobjects_count);
 	sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object)
 		* sector->objects_count);
-	sector->sprobjects_array = (t_sprobject *)ft_memalloc(sizeof(t_sprobject)
-		* sector->sprobjects_count);
 	str_count = 8;
 	obj_count = 0;
 	while (str_count < 8 + sector->objects_count)
 		sector->objects_array[obj_count++] =
 		util_get_object_from_buff_by_id(ft_atoi(str[str_count++]),
-		eng->stats.objects_count, objects_array, sector->id);
+		eng->stats.objects_count, buff.objects, sector->id);
+	util_create_sector_sprobjs(eng, buff, sector, str);
+}
+
+void		util_create_sector_sprobjs(t_engine *eng, t_buff buff,
+			t_sector *sector, char **str)
+{
+	int			sprobj_count;
+	int			str_count;
+
+	sector->sprobjects_array = (t_sprobject *)ft_memalloc(sizeof(t_sprobject)
+		* sector->sprobjects_count);
+	str_count = 8 + sector->objects_count;
 	sprobj_count = 0;
 	while (str_count < 8 + sector->objects_count + sector->sprobjects_count)
 		sector->sprobjects_array[sprobj_count++] =
 		util_get_sprobject_from_buff_by_id(ft_atoi(str[str_count++]),
-		eng->stats.sprobjects_count, sprobjects_array, sector->id);
-//	util_parsing_error_count_handler("object", "sector", str, 8 + sector->objects_count + sector->sprobjects_count);
+		eng->stats.sprobjects_count, buff.sprobjects, sector->id);
 	eng->stats.sectors_count++;
+}
+
+SDL_Surface	*util_CreateRGBSurface(Uint32 flags, int width, int height,
+		int depth)
+{
+	return (SDL_CreateRGBSurface(flags, width, height, depth,
+		(Uint32)0xff000000, (Uint32)0xff0000, (Uint32)0xff00, (Uint32)0xff));
 }
 
 SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 {
-	/* Функция перевода текстуры в спрайт не готова сосвсем */
 	SDL_Surface	*sprite;
 	int 		x;
 	int 		y;
@@ -152,8 +161,7 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 
 	if (texture == NULL)
 		return (NULL);
-	sprite = SDL_CreateRGBSurface(0, texture->width, texture->height, 32, (Uint32)0xff000000,
-								  (Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff);
+	sprite = util_CreateRGBSurface(0, texture->width, texture->height, 32);
 	pix = sprite->pixels;
 	x = 0;
 	while (x < sprite->w)
@@ -164,8 +172,7 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 			offsets = y * sprite->w + x;
 			offseti = y * texture->channels * sprite->w + x * texture->channels;
 			pix[offsets] = get_rgb(texture->data[offseti],
-									texture->data[offseti + 1],
-									texture->data[offseti + 2],
+					texture->data[offseti + 1], texture->data[offseti + 2],
 									texture->data[offseti + 3]);
 			y++;
 		}
@@ -179,11 +186,7 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 {
 	int			pol_count;
 	int			str_count;
-
-	if (!str[8])
-		util_parsing_error_little_data("sprites", "sprite object", str);
-	if (str[9])
-		util_parsing_error_extra_data("sprites", "sprite object", str);
+	util_parsing_error_count_handler("sprite object", str, 8);
 	util_int10_data_filler(&sprobject->id, str[1]);
 	util_int10_data_filler(&sprobject->angle, str[2]);
 	util_int10_data_filler(&sprobject->class, str[3]);
@@ -198,6 +201,5 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 		eng->stats.sprites_count, sprite_array);
 	sprobject->hurt = util_get_sprite_from_buff_by_id(ft_atoi(str[8]),
 		eng->stats.sprites_count, sprite_array);
-//	util_parsing_error_count_handler("sprites", "sprite object", str, 8);
 	eng->stats.objects_count++;
 }

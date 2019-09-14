@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/12 20:48:44 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/14 15:59:37 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,38 +121,35 @@ t_polygone	*engine_read_polygones_from_file(t_engine *eng,
 	return (p_array_buffer);
 }
 
-void		engine_read_sectors_from_file(t_engine *eng,
-			t_object *objects_array, t_sprobject *sprobject_array, char **json_splited)
+void		engine_read_sectors_from_file(t_engine *eng, t_buff buff)
 {
 	char		**splitted_line;
 	int			i;
 
 	i = 0;
 	eng->stats.sectors_count = 0;
-	while (json_splited[i] != NULL)
+	while (buff.str[i] != NULL)
 	{
-		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
+		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "sector:") == 0)
-			util_create_sector(eng, &eng->world->sectors_array
-			[eng->stats.sectors_count], objects_array, sprobject_array, splitted_line);
+			util_create_sector(eng, buff, &eng->world->sectors_array
+			[eng->stats.sectors_count], splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
 }
 
-void		engine_read_worldbox_from_file(t_engine *eng,
-			t_object *objects_array, t_sprobject *sprobjects_array,char **json_splited)
+void		engine_read_worldbox_from_file(t_engine *eng, t_buff buff)
 {
 	char		**splitted_line;
 	int			i;
 
 	i = 0;
-	while (json_splited[i] != NULL)
+	while (buff.str[i] != NULL)
 	{
-		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
+		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "wrldbx:") == 0)
-			util_create_sector(eng, eng->world->world_box,
-			objects_array, sprobjects_array, splitted_line);
+			util_create_sector(eng, buff, eng->world->world_box, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
