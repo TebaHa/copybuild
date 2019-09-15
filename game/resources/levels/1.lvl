@@ -117,7 +117,7 @@ object:	21	-1		0		1		floor_wall		ceil_wall	1		21
 #		id,	frames,	delay,	sprite_name
 sprite:	0	1		50		rifle_idle
 sprite:	1	1		50		rifle_no_ammo
-sprite:	2	1		10		rifle_fire
+sprite:	2	3		10		rifle_fire
 
 sprite:	3	1		50		barrel_idle
 sprite:	4	1		50		barrel_destroyed
