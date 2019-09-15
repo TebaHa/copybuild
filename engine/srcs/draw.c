@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 19:34:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/15 18:57:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf)
 	t_item		sect_id;
 	int			prev;
 	int			i;
+	int			j;
 
 	x = 0;
 	prev = -1;
@@ -174,6 +175,56 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 		}
 		else
 			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, polygone->texture);
+	}
+	if (eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[0].id == 1)
+			engine_render_particle(eng, surf, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[0],
+					&eng->world->sectors_array[sect.sectorno].objects_array[obj_id], plr);
+}
+
+void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_point_3d particle, t_object *obj, t_player *plr)
+{
+	t_point_2d	v1;
+	t_point_2d	v2;
+	t_point_2d	t1;
+	t_point_2d	t2;
+	t_point_2d	c1;
+	t_point_2d	c2;
+
+	v1.x = particle.x;
+	v1.y = particle.y;
+	/* Is the wall at least partially in front of the player? */
+	if(t1.y <= 0 && t2.y <= 0)
+		return ;
+	int u0 = 0, u1 = eng->sprites_buffer[4]->texture.height - 1;
+	/* If it's partially behind the player, clip it against player's view frustrum */
+	/* Do perspective transformation */
+	float xscale1 = (WIDTH * hfov) / t1.y, yscale1 = (HEIGHT * vfov) / t1.y;
+	int x1 = t1.x;
+	float xscale2 = (WIDTH * hfov) / t2.y, yscale2 = (HEIGHT * vfov) / t2.y;
+	int x2 = t2.x;
+	if(x1 >= x2 || x2 < 0 || x1 > WIDTH - 1)
+		return; // Only render if it's visible
+	/* Acquire the floor and ceiling heights, relative to where the player's view is */
+	float yceil = (particle.z + 16) - plr->position.z;
+	float yfloor = (particle.z - 16) - plr->position.z;
+	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
+	int y1a  = HEIGHT / 2 + (int)(-(yceil + t1.y * plr->yaw) * yscale1), y1b = HEIGHT / 2 + (int)(-(yfloor + t1.y * plr->yaw)  * yscale1);
+	int y2a  = HEIGHT / 2 + (int)(-(yceil + t2.y * plr->yaw)  * yscale2), y2b = HEIGHT / 2 + (int)(-(yfloor + t2.y * plr->yaw)  * yscale2);
+	/* Is the wall at least partially in front of the player? */
+	int beginx = max(x1, 0), endx = min(x2, WIDTH - 1);
+	unsigned r;
+	t_scaler ya_int = Scaler_Init(x1, beginx, x2, y1a, y2a);
+	t_scaler yb_int = Scaler_Init(x1, beginx, x2, y1b, y2b);
+
+	for(int x = beginx; x <= endx; ++x)
+	{
+		/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
+		int ya = scaler_next(&ya_int);
+		int yb = scaler_next(&yb_int);
+		int cya = clamp(ya, 0, WIDTH - 1); // top
+		int cyb = clamp(yb, 0, WIDTH - 1); // bottom
+		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
+		engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, eng->sprites_buffer[4]->texture.width - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, &eng->sprites_buffer[4]->texture);
 	}
 }
 

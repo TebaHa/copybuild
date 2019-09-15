@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 19:34:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/15 17:26:20 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (0.83f * HEIGHT / WIDTH)
-# define vfov (0.2f)
+# define hfov (0.53f * HEIGHT / WIDTH)
+# define vfov (0.1f)
 # define TEXTURE_PACK_PATH "./game/resources/images/"
 # define TEXTURE_SPRITE_PATH "./game/resources/sprites/"
 # define GAME_PATH "./game/resources/levels/1.lvl"
@@ -34,6 +34,7 @@
 # define PARSING_ERROR_SPRITE	"!teal"
 # define THREAD_POOL_SIZE 2
 # define DELAY 15
+# define FIRERATE 10
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
@@ -61,6 +62,13 @@ typedef enum		e_sprite_type
 	NOT_ANIMATBLE,
 	ANIMATBLE
 }					t_sprite_type;
+
+typedef enum		e_player_state
+{
+	P_IDLE,
+	P_FIRE,
+	P_RELOAD
+}					t_player_state;
 
 typedef enum		e_sprt_obj_type
 {
@@ -259,6 +267,9 @@ typedef	struct		s_player
 	float			sinangle;
 	float			yaw;
 	unsigned		cursector; // sectornumber
+	int				firetime;
+	int				shoot;
+	t_player_state	plr_state;
 }					t_player;
 
 typedef struct		s_stats
@@ -391,10 +402,10 @@ void			swapper(t_point_3d *a, t_point_3d *b, int *steep);
 t_bcontex		bresenham_init(t_point_3d *beg, t_point_3d *end);
 t_bcontex		bresenham_init(t_point_3d *beg, t_point_3d *end);
 void			bresenham_put_pixel(t_bcontex *c,
-								t_engine *eng, int color, int zmax);
+								SDL_Surface *surf, int color, int zmax);
 void			bresenham_line(t_point_3d *beg, t_point_3d *end,
-							t_engine *eng, int color);
-void			triangle_lines(t_polygone *t, t_engine *eng);
+							SDL_Surface *surf, int color);
+void			triangle_lines(t_polygone *t, SDL_Surface *surf);
 void			engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 void			ft_swap(float *a, float *b);
 t_point_3d		engine_barycentric(t_fix_point_2d pts[3], t_fix_point_2d *p);
@@ -424,7 +435,7 @@ void			engine_push_checkstack(int *checkqueue, int item);
 int				engine_pop_checkstack(int *checkqueue);
 void			engine_clear_checkstack(int *checkqueue);
 int				check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
-
+void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_point_3d particle, t_object *obj, t_player *plr);
 /*
 **Image-processing functions
 */
@@ -445,9 +456,9 @@ int				engine_pop_checkstack(int *stack);
 void			engine_clear_checkstack(int *stack);
 t_image			*engine_cut_texture(t_image *world_texture, int xstart, int xsize, int ystart, int ysize);
 void			game_stop_threads(t_thread_pool	*render_thread, int thread_count);
-void			engine_draw_hud(t_engine *eng, SDL_Surface *surf);
+void			engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf);
 void			engine_read_sprites(t_engine **eng);
-void			shoot(t_engine *eng, t_player *plr, int weapon_range);
+void			shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range);
 int				intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
 
 /*

@@ -6,13 +6,13 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 19:34:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/15 16:35:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <engine.h>
 
-void		engine_draw_hud(t_engine *eng, SDL_Surface *surf)
+void		engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf)
 {
 	int		i;
 	int		x;
@@ -27,10 +27,14 @@ void		engine_draw_hud(t_engine *eng, SDL_Surface *surf)
 	t_image	*img;
 
 	i = 0;
+	bresenham_line(&(t_point_3d){0, (WIDTH / 2) - 10, (HEIGHT / 2), 0}, &(t_point_3d){0, (WIDTH / 2) + 10, (HEIGHT / 2), 0}, surf, get_rgb(255, 255, 255, 255));
+	bresenham_line(&(t_point_3d){0, (WIDTH / 2), (HEIGHT / 2) - 10, 0}, &(t_point_3d){0, (WIDTH / 2), (HEIGHT / 2) + 10, 0}, surf, get_rgb(255, 255, 255, 255));
 	pix = (int *)surf->pixels;
 	while (i < eng->stats.sprites_count)
 	{
-		if (ft_strcmp(eng->sprites_buffer[i]->filename, "hud.png") == 0)
+		if ((plr->plr_state == P_IDLE && ft_strcmp(eng->sprites_buffer[i]->filename, "rifle_idle.png") == 0)
+		|| (plr->plr_state == P_FIRE && ft_strcmp(eng->sprites_buffer[i]->filename, "rifle_fire.png") == 0)
+		|| (plr->plr_state == P_RELOAD && ft_strcmp(eng->sprites_buffer[i]->filename, "rifle_no_ammo.png") == 0))
 		{
 			img = &eng->sprites_buffer[i]->texture;
 			break;

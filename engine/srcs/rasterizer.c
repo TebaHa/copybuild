@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 19:34:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/15 12:58:58 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,7 +357,7 @@ void		fill_triangle(t_engine *eng, t_fix_point_2d a, t_fix_point_2d b, t_fix_poi
 	{
 		begin = (t_point_3d){0, a.x, a.y, 0};
 		end = (t_point_3d){0, a.x, b.y, 0};
-		bresenham_line(&begin, &end, eng, color);
+		//bresenham_line(&begin, &end, eng, color);
 		a.x = a.x + dx;
 		a.y = a.y + dy;
 	}

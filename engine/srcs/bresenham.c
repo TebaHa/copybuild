@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 00:12:42 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 19:34:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/15 12:57:26 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	ft_swap(float *a, float *b)
 	*a = tmp;
 }
 
-void		triangle_lines(t_polygone *t, t_engine *eng)
+void		triangle_lines(t_polygone *t, SDL_Surface *surf)
 {
 	if (t->vertices_array[0].y == t->vertices_array[1].y
 	&& t->vertices_array[0].y == t->vertices_array[2].y)
 		return ;
-	bresenham_line(&(t->vertices_array[0]), &(t->vertices_array[1]), eng, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
-	bresenham_line(&(t->vertices_array[1]), &(t->vertices_array[2]), eng, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
-	bresenham_line(&(t->vertices_array[2]), &(t->vertices_array[0]), eng, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
+	bresenham_line(&(t->vertices_array[0]), &(t->vertices_array[1]), surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
+	bresenham_line(&(t->vertices_array[1]), &(t->vertices_array[2]), surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
+	bresenham_line(&(t->vertices_array[2]), &(t->vertices_array[0]), surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
 }
 
 void		swapper(t_point_3d *a, t_point_3d *b, int *steep)
@@ -66,29 +66,30 @@ t_bcontex	bresenham_init(t_point_3d *beg, t_point_3d *end)
 }
 
 void		bresenham_put_pixel(t_bcontex *c,
-								t_engine *eng, int color, int zmax)
+								SDL_Surface *surf, int color, int zmax)
 {
+	int		*pix;
+
+	pix = surf->pixels;
 	if (((c->steep && ((c->x >= 0 && c->x < HEIGHT)
-	&& (c->y >= 0 && c->y < WIDTH) &&
-	(eng->z_buff[c->y + c->x * WIDTH] < zmax + 1)))
+	&& (c->y >= 0 && c->y < WIDTH)))
 	|| (!c->steep && ((c->y >= 0 && c->y < HEIGHT)
-	&& (c->x >= 0 && c->x < WIDTH))
-	&& (eng->z_buff[c->x + c->y * WIDTH] < zmax + 1))))
+	&& (c->x >= 0 && c->x < WIDTH)))))
 	{
-		//sdl_put_pixel(eng->surface, c->steep ? c->y : c->x,
-		//c->steep ? c->x : c->y, color);
+		sdl_put_pixel(surf, c->steep ? c->y : c->x,
+		c->steep ? c->x : c->y, color);
 	}
 }
 
 void		bresenham_line(t_point_3d *beg, t_point_3d *end,
-							t_engine *eng, int color)
+							SDL_Surface *surf, int color)
 {
 	t_bcontex	c;
 
 	c = bresenham_init(beg, end);
 	while (c.x <= c.e.x)
 	{
-		bresenham_put_pixel(&c, eng, color, fmaxf(beg->z, end->z));
+		bresenham_put_pixel(&c, surf, color, fmaxf(beg->z, end->z));
 		c.error2 += c.derror2;
 		if (c.error2 > c.dx)
 		{

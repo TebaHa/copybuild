@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 19:34:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/15 17:28:23 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.moving = 0;
 	plr->controller.running = 7;
 	plr->controller.fakefall = 0;
+	plr->plr_state = P_IDLE;
 	plr->yaw = 5;
+	plr->shoot = 0;
 }
 
 static	int		game_thread_wrapper(void *ptr)
@@ -107,7 +109,16 @@ int		main(void)
 		{
 			if (fps.eng->event.button.type == SDL_MOUSEBUTTONDOWN)
 				if (fps.eng->event.button.button == SDL_BUTTON_LEFT)
-					shoot(fps.eng, &fps.player, 1000);
+				{
+					fps.player.shoot = 1;
+					fps.player.plr_state = P_FIRE;
+				}
+			if (fps.eng->event.button.type == SDL_MOUSEBUTTONUP)
+				if (fps.eng->event.button.button == SDL_BUTTON_LEFT)
+				{
+					fps.player.shoot = 0;
+					fps.player.firetime = FIRERATE;
+				}
 			if (fps.eng->event.type == SDL_KEYUP)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
@@ -196,6 +207,15 @@ int		main(void)
 					dz = 0;
 				}
 		}
+		if (fps.player.shoot == 1)
+		{
+			fps.player.firetime = FIRERATE;
+			shoot(fps.eng, fps.render_thread_pool[thread_end_index].surface, &fps.player, 1000);
+		}
+		if (fps.player.firetime != 0)
+			fps.player.firetime--;
+		else
+			fps.player.plr_state = P_IDLE;
 		int x, y;
 		SDL_GetRelativeMouseState(&x, &y);
 		fps.player.angle += x * 0.03f;
@@ -234,7 +254,7 @@ int		main(void)
 		if (thread_start_index == (THREAD_POOL_SIZE - 1) || init == 1)
 		{
 			SDL_WaitThread(fps.render_thread_pool[thread_end_index].thread, &fps.render_thread_pool[thread_end_index].value);
-			engine_draw_hud(fps.eng, fps.render_thread_pool[thread_end_index].surface);
+			engine_draw_hud(fps.eng, &fps.player, fps.render_thread_pool[thread_end_index].surface);
 			engine_render_frame(fps.eng, fps.render_thread_pool[thread_end_index].surface);
 			thread_start_index = thread_end_index;
 			thread_end_index = thread_end_index < (THREAD_POOL_SIZE - 1) ? thread_end_index + 1 : 0;
