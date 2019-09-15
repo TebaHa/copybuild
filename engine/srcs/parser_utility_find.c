@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 20:56:36 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/14 19:34:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/15 19:10:26 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,10 @@ void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 	int		find;
 	char	*name_png;
 
-	/* Не реализовано несколько спрайтов на одно событие */
 	i = 0;
 	find = 0;
 	if (!name)
 	{
-		/* Обработка ситуации, когда нет текстуры */
 		dst = NULL;
 		return ;
 	}
@@ -59,7 +57,8 @@ void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 	{
 		if (!ft_strcmp(name_png, eng->sprites_buffer[i]->filename))
 		{
-			dst = util_transform_texture_to_sprite(&eng->sprites_buffer[i]->texture);
+			dst = util_transform_texture_to_sprite(
+				&eng->sprites_buffer[i]->texture);
 			find = 1;
 		}
 		i++;

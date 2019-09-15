@@ -123,9 +123,9 @@ sprite:	3	1		50		barrel_idle
 sprite:	4	1		50		barrel_destroyed
 sprite:	5	1		50		barrel_under_fire
 
-#Sprites objects	(1-enemy|0-thing)
+#Sprites objects	(0-thing|1-enemy|2-hud)
 #		id,	angle,	class,	vert,	s_idle,	s_deth,	s_atck,	s_hurt
-sobjct:	0	0		0		21		0		1		0		2
+sobjct:	0	0		2		21		0		1		0		2
 sobjct:	1	0		0		25		3		4		5		3
 
 #Sectors
