@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:41:27 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/15 19:10:26 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/16 21:41:20 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	util_parsing_error_cant_find(char *problem, int id_problem)
 void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 		char *name)
 {
+	util_parsing_error_no_cap("texture", eng);
 	ft_putendl("Parsing error:");
 	ft_putstr("Cant find texture: ");
 	ft_putstr(name);
@@ -99,6 +100,7 @@ void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 void	util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
 		char *name)
 {
+	util_parsing_error_no_cap("sprite", eng);
 	ft_putendl("Parsing error:");
 	ft_putstr("Cant find sprite: ");
 	ft_putstr(name);
@@ -114,4 +116,16 @@ void	util_parsing_error_count_handler(char *problem_from, char **str,
 		util_parsing_error_little_data("data", problem_from, str);
 	if (str[problems_number + 1])
 		util_parsing_error_extra_data("data", problem_from, str);
+}
+
+void util_parsing_error_no_cap(char *problem, t_engine *eng)
+{
+	if (eng->stats.cycle_detector > 1)
+	{
+		ft_putstr("Really cant find ");
+		ft_putstr(problem);
+		ft_putendl("s! Exit.");
+		exit(CYCLE_READING_ERROR);
+	}
+	eng->stats.cycle_detector++;
 }

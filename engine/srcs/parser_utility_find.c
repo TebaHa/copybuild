@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 20:56:36 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/15 19:10:26 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/16 20:04:56 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 	}
 	if (i >= eng->stats.textures_count && !find)
 		util_parsing_error_no_texture(dst, eng, name);
+	else
+		eng->stats.cycle_detector = 0;
 	free(name_png);
 }
 
@@ -65,6 +67,8 @@ void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 	}
 	if (!find)
 		util_parsing_error_no_sprite(dst, eng, name);
+	else
+		eng->stats.cycle_detector = 0;
 	free(name_png);
 }
 

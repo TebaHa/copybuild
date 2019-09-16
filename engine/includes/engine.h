@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/15 19:10:26 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/16 21:43:28 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define TEXTURE_SPRITE_PATH "./game/resources/sprites/"
 # define GAME_PATH "./game/resources/levels/1.lvl"
 # define PARSING_ERROR 40
+# define READING_ERROR 41
+# define CYCLE_READING_ERROR 42
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
 # define THREAD_POOL_SIZE 2
@@ -282,6 +284,8 @@ typedef struct		s_stats
 	int 			textures_count;
 	int 			skins_count;
 	int 			sprites_count;
+	int 			cycle_detector;
+	int 			parsing_debug;
 }					t_stats;
 
 typedef struct		s_txtr_pkg
@@ -481,6 +485,7 @@ void		util_parsing_error_little_data(char *problem, char *problem_from,
 			char **str);
 void		util_parsing_error_not_digit(char *problem);
 void		util_parsing_error_not_hex(char *problem);
+void		util_parsing_error_no_cap(char *problem, t_engine *eng);
 SDL_Surface	*util_transform_texture_to_sprite(t_image *texture);
 SDL_Surface	*util_CreateRGBSurface(Uint32 flags, int width, int height,
 			int depth);
