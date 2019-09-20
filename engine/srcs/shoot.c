@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/20 18:40:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/20 22:24:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 	int			res;
 	int			hit;
 
+	if (plr->delay == 0)
+		plr->delay = 5;
+	else
+	{
+		plr->delay--;
+		return ;
+	}
 	i = 0;
 	res = 0;
 	hit = 0;
@@ -43,7 +50,7 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 	double angle_z = -atanf(plr->yaw);
 	double dx = weapon_range * cosf(angle_xy) + shoot.a.x;
 	double dy = weapon_range * sinf(angle_xy) + shoot.a.y;
-	double dz = weapon_range * tanf(angle_z) + (shoot.a.z + 150);
+	double dz = weapon_range * tanf(angle_z) + shoot.a.z;
 	shoot.b = (t_point_3d){0, shoot.a.x + dx, shoot.a.y + dy, shoot.a.z + dz};
 	prev = -1;
 	engine_clear_checkstack(eng->world->checkqueue);
@@ -56,8 +63,8 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 		{
 			plane.n = calc_normal_dots((t_point_3d){0, sect->objects_array[i].polies_array[0].vertices_array[0].x,
 			sect->objects_array[i].polies_array[0].vertices_array[0].y, sect->floor},
-			(t_point_3d){0, sect->objects_array[i].polies_array[0].vertices_array[1].x,
-			sect->objects_array[i].polies_array[0].vertices_array[1].y, sect->floor},
+			(t_point_3d){0, sect->objects_array[i].polies_array[0].vertices_array[0].x,
+			sect->objects_array[i].polies_array[0].vertices_array[0].y, sect->ceil},
 			(t_point_3d){0, sect->objects_array[i].polies_array[0].vertices_array[1].x,
 			sect->objects_array[i].polies_array[0].vertices_array[1].y, sect->ceil});
 			plane.p = (t_point_3d){0, sect->objects_array[i].polies_array[0].vertices_array[1].x,
@@ -157,7 +164,7 @@ void	engine_push_particlestack(t_point_3d *particlestack, int *status, t_point_3
 {
 	particlestack[*status] = point;
 	particlestack[*status].id = 1;
-	if ((*status) >= 9)
+	if ((*status) >= 128)
 		*status = 0;
 	else
 		*status = *status + 1;

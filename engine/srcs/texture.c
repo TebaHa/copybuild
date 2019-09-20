@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 19:34:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/20 21:33:38 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,15 @@ void	engine_vline_textured(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_
 	{
 		unsigned txty = scaler_next(&ty);
 		unsigned offset = (((txty % texture->height) * texture->width) + (txtx % texture->width)) * texture->channels;
-		red = (texture->data)[offset];
-		green = (texture->data)[offset + 1];
-		blue = (texture->data)[offset + 2];
-		color = get_rgb((int)red, (int)green, (int)blue, 255);
-		*pix = color;
-		pix += WIDTH;
+		if ((texture->data)[offset + 3] == 255)
+		{
+			red = (texture->data)[offset];
+			green = (texture->data)[offset + 1];
+			blue = (texture->data)[offset + 2];
+			color = get_rgb((int)red, (int)green, (int)blue, 255);
+			*pix = color;
+			pix += WIDTH;
+		}
 	}
 }
 

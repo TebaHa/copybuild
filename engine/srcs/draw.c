@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/17 19:42:25 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/20 22:21:55 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf)
 	while (x < WIDTH)
 		ybottom[x++] = HEIGHT;
 	sect_id = (t_item){plr.cursector, 0, WIDTH - 1};
-	//engine_render_world_box(eng, plr);
 	engine_push_renderstack(eng->world->renderqueue, sect_id);
 	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)).sectorno >= 0))
 	{
@@ -176,12 +175,13 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 		else
 			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, polygone->texture);
 	}
-	if (eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[0].id == 1)
-			engine_render_particle(eng, surf, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[0],
-					&eng->world->sectors_array[sect.sectorno].objects_array[obj_id], plr);
+	int		i = 0;
+	while (eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].id == 1 && i < 128)
+			engine_render_particle(eng, surf, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i++],
+					&eng->world->sectors_array[sect.sectorno].objects_array[obj_id], plr, sect);
 }
 
-void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_point_3d particle, t_object *obj, t_player *plr)
+void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_point_3d particle, t_object *obj, t_player *plr, t_item sect)
 {
 	t_point_2d	v1;
 	t_point_2d	v2;
@@ -190,32 +190,71 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_point_3d partic
 	t_point_2d	c1;
 	t_point_2d	c2;
 
-	v1.x = particle.x;
-	v1.y = particle.y;
+	double dx1 = obj->polies_array[0].vertices_array[0].x - particle.x;
+	double dy1 = obj->polies_array[0].vertices_array[0].y - particle.y;
+	double dx2 = particle.x - obj->polies_array[0].vertices_array[1].x;
+	double dy2 = particle.y - obj->polies_array[0].vertices_array[1].y;
+	double dist1 = sqrtf(dx1 * dx1 + dy1 * dy1);
+	double dist2 = sqrtf(dx2 * dx2 + dy2 * dy2);
+	double half_w = 2.0;
+	v1.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[0].x)) / dist1);
+	v1.y = particle.y - ((half_w * (particle.y - obj->polies_array[0].vertices_array[0].y)) / dist1);
+	v2.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[1].x)) / dist2);
+	v2.y = particle.y - ((half_w * (particle.y - obj->polies_array[0].vertices_array[1].y)) / dist2);
+	c1.x = v1.x - plr->position.x;
+	c1.y = v1.y - plr->position.y;
+	c2.x = v2.x - plr->position.x;
+	c2.y = v2.y - plr->position.y;
+	t1.x = c1.x * plr->sinangle - c1.y * plr->cosangle;
+	t1.y = c1.x * plr->cosangle + c1.y * plr->sinangle;
+	t2.x = c2.x * plr->sinangle - c2.y * plr->cosangle;
+	t2.y = c2.x * plr->cosangle + c2.y * plr->sinangle;
 	/* Is the wall at least partially in front of the player? */
 	if(t1.y <= 0 && t2.y <= 0)
 		return ;
 	int u0 = 0, u1 = eng->sprites_buffer[4]->texture.height - 1;
-	/* If it's partially behind the player, clip it against player's view frustrum */
+	if(t1.y <= 0 || t2.y <= 0)
+	{
+		float nearz = 1e-4f, farz = 5, nearside = 1e-5f, farside = 60.f;
+		// Find an intersection between the wall and the approximate edges of player's view
+		t_point_2d i1 = Intersect(t1.x, t1.y, t2.x, t2.y, -nearside, nearz, -farside, farz);
+		t_point_2d i2 = Intersect(t1.x, t1.y, t2.x, t2.y, nearside, nearz, farside, farz);
+		t_point_2d org1 = {t1.x, t1.y}, org2 = {t2.x, t2.y};
+		if(t1.y < nearz)
+		{
+			if(i1.y > 0)
+				t1 = i1;
+			else
+				t1 = i2;
+		}
+		if(t2.y < nearz)
+		{
+			if(i1.y > 0)
+				t2 = i1;
+			else
+				t2 = i2;
+		}
+		if(fabsf(t2.x - t1.x) > fabsf(t2.y - t1.y))
+			u0 = (t1.x - org1.x) * (eng->sprites_buffer[4]->texture.height - 1) / (org2.x-org1.x), u1 = (t2.x - org1.x) * (eng->sprites_buffer[4]->texture.height - 1) / (org2.x - org1.x);
+		else
+			u0 = (t1.y - org1.y) * (eng->sprites_buffer[4]->texture.width - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (eng->sprites_buffer[4]->texture.width - 1) / (org2.y - org1.y);
+	}
 	/* Do perspective transformation */
 	float xscale1 = (WIDTH * hfov) / t1.y, yscale1 = (HEIGHT * vfov) / t1.y;
-	int x1 = t1.x;
+	int x1 = WIDTH / 2 + (-t1.x * xscale1);
 	float xscale2 = (WIDTH * hfov) / t2.y, yscale2 = (HEIGHT * vfov) / t2.y;
-	int x2 = t2.x;
-	if(x1 >= x2 || x2 < 0 || x1 > WIDTH - 1)
+	int x2 = WIDTH / 2 + (-t2.x * xscale2);
+	if(x1 >= x2 || x2 < sect.sx1 || x1 > sect.sx2)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil = (particle.z + 16) - plr->position.z;
-	float yfloor = (particle.z - 16) - plr->position.z;
+	float yceil =  (particle.z + 6) - plr->position.z;
+	float yfloor = (particle.z - 6) - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	int y1a  = HEIGHT / 2 + (int)(-(yceil + t1.y * plr->yaw) * yscale1), y1b = HEIGHT / 2 + (int)(-(yfloor + t1.y * plr->yaw)  * yscale1);
 	int y2a  = HEIGHT / 2 + (int)(-(yceil + t2.y * plr->yaw)  * yscale2), y2b = HEIGHT / 2 + (int)(-(yfloor + t2.y * plr->yaw)  * yscale2);
-	/* Is the wall at least partially in front of the player? */
-	int beginx = max(x1, 0), endx = min(x2, WIDTH - 1);
-	unsigned r;
+	int beginx = max(x1, sect.sx1), endx = min(x2, sect.sx2);
 	t_scaler ya_int = Scaler_Init(x1, beginx, x2, y1a, y2a);
 	t_scaler yb_int = Scaler_Init(x1, beginx, x2, y1b, y2b);
-
 	for(int x = beginx; x <= endx; ++x)
 	{
 		/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */

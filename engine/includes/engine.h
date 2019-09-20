@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/20 18:54:31 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/20 21:38:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ typedef struct		s_object
 	int				polies_count;
 	int				visible;
 	int				status;
-	t_point_3d		particles[10];
+	t_point_3d		particles[128];
 	t_image			*floor_wall_texture;
 	t_image			*ceil_wall_texture;
 }					t_object;
@@ -272,6 +272,7 @@ typedef	struct		s_player
 	int				firetime;
 	int				shoot;
 	int				anim;
+	int				delay;
 	t_player_state	plr_state;
 }					t_player;
 
@@ -440,7 +441,7 @@ void			engine_push_checkstack(int *checkqueue, int item);
 int				engine_pop_checkstack(int *checkqueue);
 void			engine_clear_checkstack(int *checkqueue);
 int				check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
-void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_point_3d particle, t_object *obj, t_player *plr);
+void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_point_3d particle, t_object *obj, t_player *plr, t_item sect);
 /*
 **Image-processing functions
 */

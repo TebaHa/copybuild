@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/20 18:55:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/20 21:39:06 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		game_create_test_player(t_player *plr)
 	plr->anim = 0;
 	plr->yaw = 5;
 	plr->shoot = 0;
+	plr->delay = 3;
 }
 
 static	int		game_thread_wrapper(void *ptr)
