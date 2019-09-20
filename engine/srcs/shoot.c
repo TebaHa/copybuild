@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/15 19:10:26 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/20 18:40:09 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 	double angle_z = -atanf(plr->yaw);
 	double dx = weapon_range * cosf(angle_xy) + shoot.a.x;
 	double dy = weapon_range * sinf(angle_xy) + shoot.a.y;
-	double dz = weapon_range * angle_z + shoot.a.z;
+	double dz = weapon_range * tanf(angle_z) + (shoot.a.z + 150);
 	shoot.b = (t_point_3d){0, shoot.a.x + dx, shoot.a.y + dy, shoot.a.z + dz};
 	prev = -1;
 	engine_clear_checkstack(eng->world->checkqueue);
@@ -67,11 +67,10 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 			{
 				if (sect->objects_array[i].portal >= 0)
 				{
-					if (((int_p.z < eng->world->sectors_array[sect->objects_array[i].portal].floor && int_p.z > sect->floor)
-					|| (int_p.z > eng->world->sectors_array[sect->objects_array[i].portal].ceil && int_p.z < sect->ceil)))
+					if ((int_p.z < eng->world->sectors_array[sect->objects_array[i].portal].floor && int_p.z > sect->floor)
+					|| (int_p.z > eng->world->sectors_array[sect->objects_array[i].portal].ceil && int_p.z < sect->ceil))
 					{
 						//printf("id: %d X: %f Y: %f Z: %f\n", sect->objects_array[i].id, int_p.x, int_p.y, int_p.z);
-						hit = 1;
 						engine_push_particlestack(sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
 						break;
 					}
@@ -151,12 +150,6 @@ int		intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res)
 	if (si < 0 || si > 1)
 		return 0; // no intersection
 	*res = (t_point_3d){0, s.a.x + si * u.x, s.a.y + si * u.y, s.a.z + si * u.z}; // compute segment intersect point
-	/*
-	dir = (t_point_3d){0, s.b.x - s.a.x, s.b.y - s.a.y, s.b.z - s.a.z};
-	d = dot_product(pn.n, pn.p);
-	k = (d - dot_product(pn.n, s.a)) / dot_product(pn.n, dir);
-	*res = (t_point_3d){0, s.a.x + dir.x * k, s.a.y + dir.y * k, s.a.z + dir.z * k};
-	*/
 	return (1);
 }
 

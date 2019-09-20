@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 21:48:37 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/14 19:34:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/20 18:41:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,6 @@ void		image_load(t_image *img, const char *fname)
 	{
 		img->size = img->height * img->width * img->channels;
 		img->allocation_ = STB_ALLOCATED;
-	}
-}
-
-void		image_create(t_image *img, int width, int height, int channels)
-{
-	size_t size;
-
-	size = width * height * channels;
-	img->data = ft_memalloc(size);
-	if (img->data)
-	{
-		img->width = width;
-		img->height = height;
-		img->size = size;
-		img->channels = channels;
-		img->allocation_ = SELF_ALLOCATED;
 	}
 }
 

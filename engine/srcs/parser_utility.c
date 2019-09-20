@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/16 20:04:56 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/20 18:40:43 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,5 +220,5 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 		eng->stats.sprites_count, sprite_array, sprobject->id);
 	sprobject->hurt = util_get_sprite_from_buff_by_id(ft_atoi(str[8]),
 		eng->stats.sprites_count, sprite_array, sprobject->id);
-	eng->stats.objects_count++;
+	eng->stats.sprobjects_count++;
 }

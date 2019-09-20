@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/16 20:04:56 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/20 18:55:09 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		game_create_test_player(t_player *plr)
 	plr->controller.running = 7;
 	plr->controller.fakefall = 0;
 	plr->plr_state = P_IDLE;
+	plr->anim = 0;
 	plr->yaw = 5;
 	plr->shoot = 0;
 }
@@ -43,7 +44,7 @@ static	int		game_thread_wrapper(void *ptr)
 
 	fps = (t_game *)ptr;
 	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface);
-	SDL_Delay(15);
+	SDL_Delay(5);
 	return (fps->thread_num);
 }
 
@@ -107,6 +108,11 @@ int		main(void)
 			fps.player.controller.falling = 1;
 		if (SDL_PollEvent(&fps.eng->event))
 		{
+			if (fps.eng->event.type == SDL_QUIT)
+			{
+				game_stop_threads(fps.render_thread_pool, THREAD_POOL_SIZE);
+				break;
+			}
 			if (fps.eng->event.button.type == SDL_MOUSEBUTTONDOWN)
 				if (fps.eng->event.button.button == SDL_BUTTON_LEFT)
 				{
@@ -210,16 +216,20 @@ int		main(void)
 		if (fps.player.shoot == 1)
 		{
 			fps.player.firetime = FIRERATE;
+			fps.player.anim += 1;
 			shoot(fps.eng, fps.render_thread_pool[thread_end_index].surface, &fps.player, 1000);
 		}
 		if (fps.player.firetime != 0)
+		{
+			fps.player.anim += 1;
 			fps.player.firetime--;
+		}
 		else
 			fps.player.plr_state = P_IDLE;
 		int x, y;
 		SDL_GetRelativeMouseState(&x, &y);
 		fps.player.angle += x * 0.03f;
-		yaw = clamp(yaw - y * 0.05f, -5, 5);
+		yaw = clamp(yaw - y * 0.05f, -10, 10);
 		fps.player.yaw = yaw - fps.player.velocity.z * 0.5f;
 		move_player(fps.eng, &fps.player, 0, 0, fps.player.cursector);
 		float move_vec[2] = {0.f, 0.f};

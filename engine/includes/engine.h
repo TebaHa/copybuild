@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/16 21:43:28 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/20 18:54:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (0.53f * HEIGHT / WIDTH)
-# define vfov (0.1f)
+# define hfov (0.83f * HEIGHT / WIDTH)
+# define vfov (0.2f)
 # define TEXTURE_PACK_PATH "./game/resources/images/"
 # define TEXTURE_SPRITE_PATH "./game/resources/sprites/"
 # define GAME_PATH "./game/resources/levels/1.lvl"
@@ -34,7 +34,7 @@
 # define CYCLE_READING_ERROR 42
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
-# define THREAD_POOL_SIZE 2
+# define THREAD_POOL_SIZE 4
 # define DELAY 15
 # define FIRERATE 10
 
@@ -271,6 +271,7 @@ typedef	struct		s_player
 	unsigned		cursector; // sectornumber
 	int				firetime;
 	int				shoot;
+	int				anim;
 	t_player_state	plr_state;
 }					t_player;
 
