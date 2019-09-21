@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/21 22:04:38 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/21 22:16:36 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,25 @@ void		engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf)
 				}
 			}
 		}
-		if ((plr->plr_state == P_IDLE && ft_strcmp(eng->sprites_buffer[i]->filename, "rifle_idle.png") == 0)
-		|| (plr->plr_state == P_RELOAD && ft_strcmp(eng->sprites_buffer[i]->filename, "rifle_no_ammo.png") == 0))
+		if (plr->plr_state == P_IDLE)
+		{
+			if ((plr->anim % 60) >= 0 && (plr->anim % 60) <= 19 && ft_strcmp(eng->sprites_buffer[i]->filename, "rifle_idle.png") == 0)
+			{
+				img = &eng->sprites_buffer[i]->texture;
+				break;
+			}
+			else if ((plr->anim % 60) >= 20 && (plr->anim % 60) <= 39 && ft_strcmp(eng->sprites_buffer[i]->filename, "rifle_idle_1.png") == 0)
+			{
+				img = &eng->sprites_buffer[i]->texture;
+				break;
+			}
+			else if ((plr->anim % 60) >= 40 && (plr->anim % 60) <= 59 && ft_strcmp(eng->sprites_buffer[i]->filename, "rifle_idle_2.png") == 0)
+			{
+				img = &eng->sprites_buffer[i]->texture;
+				break;
+			}
+		}
+		if (plr->plr_state == P_RELOAD && ft_strcmp(eng->sprites_buffer[i]->filename, "rifle_no_ammo.png") == 0)
 		{
 			img = &eng->sprites_buffer[i]->texture;
 			break;

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/21 22:04:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/21 22:13:40 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,12 +217,10 @@ int		main(void)
 		if (fps.player.shoot == 1)
 		{
 			fps.player.firetime = FIRERATE;
-			fps.player.anim += 1;
 			shoot(fps.eng, fps.render_thread_pool[thread_end_index].surface, &fps.player, 1000);
 		}
 		if (fps.player.firetime != 0)
 		{
-			fps.player.anim += 1;
 			fps.player.firetime--;
 		}
 		else
@@ -274,6 +272,7 @@ int		main(void)
 		}
 		else
 			thread_start_index++;
+		fps.player.anim += 1;
 	}
 	engine_sdl_uninit(fps.eng);
 	return (0);
