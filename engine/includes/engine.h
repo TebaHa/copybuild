@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/21 18:13:34 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/21 20:19:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,15 +126,6 @@ typedef enum		e_animtn_state
 	ANIMATE
 }					t_animtn_state;
 
-typedef struct		s_wallobj
-{
-	int				id;
-	t_point_2d		a;
-	t_point_2d		b;
-	float			z;
-	float			abs_w;
-	float			abs_h;
-}					t_wallobj;
 
 typedef struct		s_image
 {
@@ -194,6 +185,17 @@ typedef struct		s_sprite
 	int 			frames_delay;
 	int 			frames_type;
 }					t_sprite;
+
+typedef struct		s_wallobj
+{
+	int				id;
+	t_point_2d		a;
+	t_point_2d		b;
+	float			z;
+	float			abs_w;
+	float			abs_h;
+	t_sprite		*texture;
+}					t_wallobj;
 
 typedef struct		s_sprobject
 {
@@ -451,7 +453,7 @@ void			engine_push_checkstack(int *checkqueue, int item);
 int				engine_pop_checkstack(int *checkqueue);
 void			engine_clear_checkstack(int *checkqueue);
 int				check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
-void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particle, t_object *obj, t_player *plr, t_item sect);
+void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particle,  t_object *obj, int *ytop, int *ybottom, t_player *plr, t_item sect);
 /*
 **Image-processing functions
 */

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/20 21:39:06 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/21 21:07:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,8 +229,8 @@ int		main(void)
 			fps.player.plr_state = P_IDLE;
 		int x, y;
 		SDL_GetRelativeMouseState(&x, &y);
-		fps.player.angle += x * 0.03f;
-		yaw = clamp(yaw - y * 0.05f, -10, 10);
+		fps.player.angle += x * 0.02f;
+		yaw = clamp(yaw - y * 0.02f, -5, 5);
 		fps.player.yaw = yaw - fps.player.velocity.z * 0.5f;
 		move_player(fps.eng, &fps.player, 0, 0, fps.player.cursector);
 		float move_vec[2] = {0.f, 0.f};

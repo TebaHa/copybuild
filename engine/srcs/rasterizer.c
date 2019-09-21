@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:24:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/15 19:10:26 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/21 20:20:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ t_point_3d		engine_barycentric(t_fix_point_2d pts[3], t_fix_point_2d *p)
 	pts[0].x - p->x}, (t_point_3d){0, pts[2].y - pts[0].y, pts[1].y - pts[0].y, pts[0].y - p->y});
 	if (fabsf(u.z) > 1e-2)
 		return ((t_point_3d){(int)0, (float)(1.f - (u.x + u.y) / u.z), (float)(u.y / u.z), (float)(u.x / u.z)});
-	return ((t_point_3d){(int)0, (float)-1, (float)1, (float)1}); // triangle is degenerate, in this case return smth with negative coordinates
+	return ((t_point_3d){(int)0, (float)-1, (float)1, (float)1});
 }
 
 void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t)

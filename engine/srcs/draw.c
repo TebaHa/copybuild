@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/21 18:12:49 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/21 21:06:46 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,10 +166,8 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 			int nyb = scaler_next(&nyb_int);
 			int cnya = clamp(nya, ytop[x], ybottom[x]);
 			int cnyb = clamp(nyb, ytop[x], ybottom[x]);
-			/* If our ceiling is higher than their ceiling, render upper wall */
 			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya, z}, (t_fix_point_3d){x, cnya-1, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
-			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);// Shrink the remaining window below these ceilings
-			/* If our floor is lower than their floor, render bottom wall */
+			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);
 			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cnyb + 1, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cnyb + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
@@ -179,11 +177,16 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 	renderbox = (t_line){(t_point_3d){0, beginx,}, (t_point_3d){0, endx, }};
 	int		i = 0;
 	while (eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].id == 1 && i < 128)
-			engine_render_particle(eng, surf, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i++],
-					&eng->world->sectors_array[sect.sectorno].objects_array[obj_id], plr, sect);
+	{
+		if (eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].z > eng->world->sectors_array[sect.sectorno].floor &&
+		eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].z < eng->world->sectors_array[sect.sectorno].ceil)
+			engine_render_particle(eng, surf, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i],
+					&eng->world->sectors_array[sect.sectorno].objects_array[obj_id], ytop, ybottom, plr, sect);
+		i++;
+	}
 }
 
-void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particle, t_object *obj, t_player *plr, t_item sect)
+void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particle,  t_object *obj, int *ytop, int *ybottom, t_player *plr, t_item sect)
 {
 	t_point_2d	t1;
 	t_point_2d	t2;
@@ -236,23 +239,39 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particl
 	if(x1 >= x2 || x2 < sect.sx1 || x1 > sect.sx2)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil =  (particle.z + 6) - plr->position.z;
-	float yfloor = (particle.z - 6) - plr->position.z;
+	float yceil =  (particle.z + 8) - plr->position.z;
+	float yfloor = (particle.z - 8) - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	int y1a  = HEIGHT / 2 + (int)(-(yceil + t1.y * plr->yaw) * yscale1), y1b = HEIGHT / 2 + (int)(-(yfloor + t1.y * plr->yaw)  * yscale1);
 	int y2a  = HEIGHT / 2 + (int)(-(yceil + t2.y * plr->yaw)  * yscale2), y2b = HEIGHT / 2 + (int)(-(yfloor + t2.y * plr->yaw)  * yscale2);
 	int beginx = max(x1, sect.sx1), endx = min(x2, sect.sx2);
 	t_scaler ya_int = Scaler_Init(x1, beginx, x2, y1a, y2a);
 	t_scaler yb_int = Scaler_Init(x1, beginx, x2, y1b, y2b);
-	for(int x = beginx; x <= endx; ++x)
+	if (obj->portal == -1)
 	{
-		/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
-		int ya = scaler_next(&ya_int);
-		int yb = scaler_next(&yb_int);
-		int cya = clamp(ya, 0, WIDTH - 1); // top
-		int cyb = clamp(yb, 0, WIDTH - 1); // bottom
-		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
-		engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, eng->sprites_buffer[4]->texture.width - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, &eng->sprites_buffer[4]->texture);
+		for(int x = beginx; x <= endx; ++x)
+		{
+			/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
+			int ya = scaler_next(&ya_int);
+			int yb = scaler_next(&yb_int);
+			int cya = clamp(ya, ytop[x], ybottom[x]); // top
+			int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
+			int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
+			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, eng->sprites_buffer[4]->texture.width - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, &eng->sprites_buffer[4]->texture);
+		}
+	}
+	else
+	{
+		for(int x = beginx; x <= endx; ++x)
+		{
+			/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
+			int ya = scaler_next(&ya_int);
+			int yb = scaler_next(&yb_int);
+			int cya = clamp(ya, 0, WIDTH - 1); // top
+			int cyb = clamp(yb, 0, WIDTH - 1); // bottom
+			int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
+			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, eng->sprites_buffer[4]->texture.width - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, &eng->sprites_buffer[4]->texture);
+		}
 	}
 }
 

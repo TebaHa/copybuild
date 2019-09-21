@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/21 18:14:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/21 19:31:58 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 	float dx = weapon_range * cosf(angle_xy) + shoot.a.x;
 	float dy = weapon_range * sinf(angle_xy) + shoot.a.y;
 	float dz = weapon_range * tanf(angle_z) + shoot.a.z;
-	shoot.b = (t_point_3d){0, shoot.a.x + dx, shoot.a.y + dy, shoot.a.z + dz};
+	shoot.b = (t_point_3d){0, dx, dy, dz};
 	prev = -1;
 	engine_clear_checkstack(eng->world->checkqueue);
 	engine_push_checkstack(eng->world->checkqueue, plr->cursector);
@@ -178,8 +178,5 @@ void	engine_push_particlestack(t_object *obj, t_wallobj *particlestack, int *sta
 	w_partcle.id = 1;
 	w_partcle.z = particle.z;
 	particlestack[*status] = w_partcle;
-	if ((*status) >= 128)
-		*status = 0;
-	else
-		*status = *status + 1;
+	*status = (*status > 126) ? 0 : *status + 1;
 }
