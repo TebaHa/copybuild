@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/20 21:38:52 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/21 18:13:34 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,16 @@ typedef enum		e_animtn_state
 	ANIMATE
 }					t_animtn_state;
 
+typedef struct		s_wallobj
+{
+	int				id;
+	t_point_2d		a;
+	t_point_2d		b;
+	float			z;
+	float			abs_w;
+	float			abs_h;
+}					t_wallobj;
+
 typedef struct		s_image
 {
 	int				width;
@@ -207,7 +217,7 @@ typedef struct		s_object
 	int				polies_count;
 	int				visible;
 	int				status;
-	t_point_3d		particles[128];
+	t_wallobj		particles[128];
 	t_image			*floor_wall_texture;
 	t_image			*ceil_wall_texture;
 }					t_object;
@@ -436,12 +446,12 @@ void			engine_vline(t_engine *eng, SDL_Surface *surf, t_fix_point_3d a, t_fix_po
 void			engine_render_world_walls(t_engine *eng, t_polygone *polygone, t_player *plr, t_item sect);
 void			engine_render_world_box(t_engine *eng, t_player *plr);
 t_point_3d		calc_normal_dots(t_point_3d a, t_point_3d b, t_point_3d c);
-void			engine_push_particlestack(t_point_3d *particlestack, int *status, t_point_3d point);
+void			engine_push_particlestack(t_object *obj, t_wallobj *particlestack, int *status, t_point_3d particle);
 void			engine_push_checkstack(int *checkqueue, int item);
 int				engine_pop_checkstack(int *checkqueue);
 void			engine_clear_checkstack(int *checkqueue);
 int				check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
-void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_point_3d particle, t_object *obj, t_player *plr, t_item sect);
+void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particle, t_object *obj, t_player *plr, t_item sect);
 /*
 **Image-processing functions
 */

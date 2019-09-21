@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/20 22:21:55 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/21 18:12:49 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 	t_point_2d	v2;
 	t_point_2d	t1;
 	t_point_2d	t2;
+	t_line		renderbox;
 	int			push;
 
 	push = 0;
@@ -175,36 +176,24 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 		else
 			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, polygone->texture);
 	}
+	renderbox = (t_line){(t_point_3d){0, beginx,}, (t_point_3d){0, endx, }};
 	int		i = 0;
 	while (eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].id == 1 && i < 128)
 			engine_render_particle(eng, surf, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i++],
 					&eng->world->sectors_array[sect.sectorno].objects_array[obj_id], plr, sect);
 }
 
-void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_point_3d particle, t_object *obj, t_player *plr, t_item sect)
+void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particle, t_object *obj, t_player *plr, t_item sect)
 {
-	t_point_2d	v1;
-	t_point_2d	v2;
 	t_point_2d	t1;
 	t_point_2d	t2;
 	t_point_2d	c1;
 	t_point_2d	c2;
 
-	double dx1 = obj->polies_array[0].vertices_array[0].x - particle.x;
-	double dy1 = obj->polies_array[0].vertices_array[0].y - particle.y;
-	double dx2 = particle.x - obj->polies_array[0].vertices_array[1].x;
-	double dy2 = particle.y - obj->polies_array[0].vertices_array[1].y;
-	double dist1 = sqrtf(dx1 * dx1 + dy1 * dy1);
-	double dist2 = sqrtf(dx2 * dx2 + dy2 * dy2);
-	double half_w = 2.0;
-	v1.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[0].x)) / dist1);
-	v1.y = particle.y - ((half_w * (particle.y - obj->polies_array[0].vertices_array[0].y)) / dist1);
-	v2.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[1].x)) / dist2);
-	v2.y = particle.y - ((half_w * (particle.y - obj->polies_array[0].vertices_array[1].y)) / dist2);
-	c1.x = v1.x - plr->position.x;
-	c1.y = v1.y - plr->position.y;
-	c2.x = v2.x - plr->position.x;
-	c2.y = v2.y - plr->position.y;
+	c1.x = particle.a.x - plr->position.x;
+	c1.y = particle.a.y - plr->position.y;
+	c2.x = particle.b.x - plr->position.x;
+	c2.y = particle.b.y - plr->position.y;
 	t1.x = c1.x * plr->sinangle - c1.y * plr->cosangle;
 	t1.y = c1.x * plr->cosangle + c1.y * plr->sinangle;
 	t2.x = c2.x * plr->sinangle - c2.y * plr->cosangle;

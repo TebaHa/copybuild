@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/20 22:24:57 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/21 18:14:09 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 	res = 0;
 	hit = 0;
 	shoot.a = plr->position;
-	double angle_xy = atan2f(plr->sinangle, plr->cosangle);
-	double angle_z = -atanf(plr->yaw);
-	double dx = weapon_range * cosf(angle_xy) + shoot.a.x;
-	double dy = weapon_range * sinf(angle_xy) + shoot.a.y;
-	double dz = weapon_range * tanf(angle_z) + shoot.a.z;
+	float angle_xy = atan2f(plr->sinangle, plr->cosangle);
+	float angle_z = -atanf(plr->yaw);
+	float dx = weapon_range * cosf(angle_xy) + shoot.a.x;
+	float dy = weapon_range * sinf(angle_xy) + shoot.a.y;
+	float dz = weapon_range * tanf(angle_z) + shoot.a.z;
 	shoot.b = (t_point_3d){0, shoot.a.x + dx, shoot.a.y + dy, shoot.a.z + dz};
 	prev = -1;
 	engine_clear_checkstack(eng->world->checkqueue);
@@ -78,7 +78,7 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 					|| (int_p.z > eng->world->sectors_array[sect->objects_array[i].portal].ceil && int_p.z < sect->ceil))
 					{
 						//printf("id: %d X: %f Y: %f Z: %f\n", sect->objects_array[i].id, int_p.x, int_p.y, int_p.z);
-						engine_push_particlestack(sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
+						engine_push_particlestack(&sect->objects_array[i], sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
 						break;
 					}
 					else if (prev != sect->objects_array[i].portal)
@@ -92,7 +92,7 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 				{
 					//printf("id: %d X: %f Y: %f Z: %f\n", sect->objects_array[i].id, int_p.x, int_p.y, int_p.z);
 					hit = 1;
-					engine_push_particlestack(sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
+					engine_push_particlestack(&sect->objects_array[i], sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
 					break;
 				}
 			}
@@ -160,10 +160,24 @@ int		intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res)
 	return (1);
 }
 
-void	engine_push_particlestack(t_point_3d *particlestack, int *status, t_point_3d point)
+void	engine_push_particlestack(t_object *obj, t_wallobj *particlestack, int *status, t_point_3d particle)
 {
-	particlestack[*status] = point;
-	particlestack[*status].id = 1;
+	t_wallobj	w_partcle;
+	double dx1 = obj->polies_array[0].vertices_array[0].x - particle.x;
+	double dy1 = obj->polies_array[0].vertices_array[0].y - particle.y;
+	double dx2 = particle.x - obj->polies_array[0].vertices_array[1].x;
+	double dy2 = particle.y - obj->polies_array[0].vertices_array[1].y;
+	double dist1 = sqrtf(dx1 * dx1 + dy1 * dy1);
+	double dist2 = sqrtf(dx2 * dx2 + dy2 * dy2);
+	double half_w = 2;
+
+	w_partcle.a.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[0].x)) / dist1);
+	w_partcle.a.y = particle.y - ((half_w * (particle.y - obj->polies_array[0].vertices_array[0].y)) / dist1);
+	w_partcle.b.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[1].x)) / dist2);
+	w_partcle.b.y = particle.y - ((half_w * (particle.y - obj->polies_array[0].vertices_array[1].y)) / dist2);
+	w_partcle.id = 1;
+	w_partcle.z = particle.z;
+	particlestack[*status] = w_partcle;
 	if ((*status) >= 128)
 		*status = 0;
 	else
