@@ -15,7 +15,7 @@ find_package(SDL2 REQUIRED)
 
 set(GAME_INC game/includes/game.h)
 
-set(ENG_INC engine/includes/engine.h)
+set(ENG_INC engine/includes/engine.h )
 
 set(GAME_SRC game/srcs/freefps.c)
 
@@ -37,7 +37,8 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/rasterizer.c
 			engine/srcs/shoot.c
 			engine/srcs/texture.c
-			engine/srcs/utility.c)
+			engine/srcs/utility.c
+			engine/srcs/parser_resources.c engine/srcs/parser_weapon.c)
 
 set(SDL ${SDL_DIRECTORY}libmlx.a)
 set(SDL_DIRECTORY lib/sdl2/)

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/21 15:55:29 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/21 19:55:58 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,16 @@ typedef enum		e_sobj_state
 	HURT
 }					t_sobj_state;
 
+typedef enum		e_wpn_state
+{
+	W_IDLE,
+	W_RUN,
+	W_FIRE,
+	W_NO_AMMO,
+	W_RELOAD,
+	W_HURT
+}					t_wpn_state;
+
 typedef enum		e_animtn_state
 {
 	STATIC,
@@ -178,6 +188,7 @@ typedef struct		s_polygone
 typedef struct		s_sprite
 {
 	int				id;
+	char 			*name;
 	SDL_Surface		*surface;
 	t_animtn_state	a_state;
 	int 			frames_num;
@@ -296,6 +307,28 @@ typedef struct		s_txtr_pkg
 	char			*filename;
 }					t_txtr_pkg;
 
+typedef struct		s_hud_sprite
+{
+	t_sprite		*sprite;
+	int 			frame;
+	int 			frames_num;
+	int 			frames_delay;
+}					t_hud_sprite;
+
+typedef struct		s_weapon
+{
+	int 			id;
+	char 			*name;
+	int 			ammo;
+	int 			max_ammo;
+	int 			containers;
+	t_wpn_state 	state;
+	t_hud_sprite	*anmtn;
+	t_sprite		bullet_hole;
+	struct s_weapon	*next;
+	struct s_weapon	*prev;
+}					t_weapon;
+
 typedef struct		s_engine
 {
 	SDL_Event 		event;
@@ -305,6 +338,7 @@ typedef struct		s_engine
 	short			view_type;
 	t_stats			stats;
 	int				*z_buff;
+	t_weapon		*weapon;
 	t_txtr_pkg		**texture_buffer;
 	t_txtr_pkg		**sprites_buffer;
 }					t_engine;
@@ -449,7 +483,6 @@ void			image_load(t_image *img, const char *fname);
 void			image_create(t_image *img, int width, int height, int channels);
 void			image_free(t_image *img);
 t_image			load_textures(const char *fname);
-void			engine_read_textures(t_engine **eng);
 int				scaler_next(t_scaler *i);
 void			engine_vline_textured(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture);
 void			move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect);
@@ -463,12 +496,28 @@ void			engine_clear_checkstack(int *stack);
 t_image			*engine_cut_texture(t_image *world_texture, int xstart, int xsize, int ystart, int ysize);
 void			game_stop_threads(t_thread_pool	*render_thread, int thread_count);
 void			engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf);
-void			engine_read_sprites(t_engine **eng);
 void			shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range);
 int				intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
 
 /*
-**	Parsing functions
+**	---------------------------------------------------------------------------
+**	Resources parsing functions start
+*/
+
+void 			engine_create_resources_from_file(t_engine *eng);
+void			eng_read_sprites(t_engine *eng);
+void			eng_read_textures(t_engine *eng);
+void 			eng_create_rifle(t_engine *eng);
+void			eng_create_plazma(t_engine *eng);
+t_hud_sprite	util_get_hud_sprite_from_buff(char *name, t_txtr_pkg *buff,
+				int size);
+t_sprite		util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
+				 int size);
+
+/*
+**	Resources parsing functions end
+**	===========================================================================
+**	Parsing map functions
 */
 
 void		util_release_char_matrix(char **mtrx);
@@ -544,7 +593,8 @@ void		util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
 			char *name);
 
 /*
-**	Parsing functions end
+**	Parsing map functions end
+**	---------------------------------------------------------------------------
 */
 
 # endif

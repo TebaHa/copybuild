@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 20:56:36 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/16 20:04:56 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/21 19:55:58 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,34 @@ t_sprite		util_get_sprite_from_buff_by_id(int id, int size,
 	if (i == size)
 		util_parsing_error_lost_handler("sprite", id, "sprobject", sprobj_id);
 	return (sprites[i]);
+}
+
+t_hud_sprite	util_get_hud_sprite_from_buff(char *name, t_txtr_pkg *buff,
+				int size)
+{
+	t_hud_sprite res;
+//	int			i;
+//	int 		frames;
+//
+//	i = 0;
+//	frames = 0;
+//	while (i < size)
+//	{
+//		if (!ft_strcmp(buff[i].filename, ft_strcat(name, "_")))
+//			break;
+//		i++;
+//	}
+////	if (i == size)
+////		util_parsing_error_lost_handler("sprite", id, "sprobject", sprobj_id);
+	return (res);
+}
+
+t_sprite		util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
+				int size)
+{
+	t_sprite	res;
+//
+	return (res);
 }
 
 t_point_3d		util_get_vertex_from_buff_by_id(int id, int size,
