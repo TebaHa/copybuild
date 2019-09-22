@@ -190,13 +190,13 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 			offsets = y * sprite->w + x;
 			offseti = y * texture->channels * sprite->w + x * texture->channels;
 			pix[offsets] = get_rgb(texture->data[offseti],
-					texture->data[offseti + 1], texture->data[offseti + 2],
-									texture->data[offseti + 3]);
+				texture->data[offseti + 1], texture->data[offseti + 2],
+				texture->data[offseti + 3]);
 			y++;
 		}
 		x++;
 	}
-	printf("%s\n", "DONE!");
+//	printf("%s\n", "DONE!");
 	return(sprite);
 }
 

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 20:56:36 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/22 15:37:25 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/22 19:34:10 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,31 @@ void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 			char *name)
 {
 	int		i;
-	int		find;
 	char	*name_png;
 
 	i = 0;
-	find = 0;
 	if (!name)
 	{
 		dst = NULL;
 		return ;
 	}
-	name_png = ft_strnew(ft_strlen(name) + ft_strlen(".png"));
-	name_png = ft_strcat(ft_strcpy(name_png, name), ".png");
+	name_png = util_add_png_to_name(name);
 	while (i < eng->stats.sprites_count)
 	{
 		if (!ft_strcmp(name_png, eng->sprites_buffer[i]->filename))
 		{
+			/* Место утечки */
 			dst = util_transform_texture_to_sprite(
 				&eng->sprites_buffer[i]->texture);
-			find = 1;
+			break;
 		}
 		i++;
 	}
-	if (!find)
+	free(name_png);
+	if (i == eng->stats.sprites_count)
 		util_parsing_error_no_sprite(dst, eng, name);
 	else
 		eng->stats.cycle_detector = 0;
-	free(name_png);
 }
 
 t_sprobject		util_get_sprobject_from_buff_by_id(int id, int size,

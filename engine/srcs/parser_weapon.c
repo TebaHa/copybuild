@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:44:08 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/22 19:04:59 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/22 19:25:31 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,13 +138,14 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 				}
 				i++;
 			}
-
 		}
+		free(name);
 		if (srfc_count)
 		{
 			res->frames_num = srfc_count;
 			res->frames_delay = DEFAULT_SPRITE_DELAY;
 			res->a_state = ANIMATE;
+			/* Вероятное место утечки. Малочу под массив, но потом переопределяю */
 			res->surface = (SDL_Surface *) ft_memalloc(sizeof(SDL_Surface)
 				* srfc_count);
 			srfc_count = 0;
@@ -156,7 +157,9 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 				{
 					if (!ft_strcmp(name, eng->sprites_buffer[i]->filename))
 					{
-						res->surface[srfc_count] = *util_transform_texture_to_sprite(
+						/* Вероятное место утечки. Малочу под массив, но потом переопределяю */
+						res->surface[srfc_count] =
+							*util_transform_texture_to_sprite(
 							&eng->sprites_buffer[i]->texture);
 						srfc_count++;
 						i = 0;
@@ -170,9 +173,9 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 			return (res);
 		}
 	}
-//	res->frames_num = 1;
-//	res->a_state = STATIC;
-//	util_parsing_error_no_sprite(res->surface, eng, str);
-//	res->name = util_add_png_to_name(PARSING_ERROR_SPRITE);
+	res->frames_num = 1;
+	res->a_state = STATIC;
+	util_parsing_error_no_sprite(res->surface, eng, str);
+	res->name = util_add_png_to_name(PARSING_ERROR_SPRITE);
 	return (res);
 }
