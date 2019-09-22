@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:54:24 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/21 18:50:34 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/22 18:15:24 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ void 	engine_create_resources_from_file(t_engine *eng)
 {
 	eng_read_textures(eng);
 	eng_read_sprites(eng);
-	eng->weapon = (t_weapon *)sizeof(t_weapon);
-	eng->weapon->next = eng->weapon;
-	eng->weapon->prev = eng->weapon;
+	eng->weapon = (t_weapon *)ft_memalloc(sizeof(t_weapon));
+//	eng->weapon->next = eng->weapon;
+//	eng->weapon->prev = eng->weapon;
 	eng_create_rifle(eng);
-	eng_create_plazma(eng);
+//	ft_putendl(eng->weapon->bullet_hole->name);
+	ft_putendl("!");
+//	eng_create_plazma(eng);
 }

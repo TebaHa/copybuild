@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/21 19:55:58 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/22 17:51:42 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # define MAXSECTORS 32
 # define hfov (0.83f * HEIGHT / WIDTH)
 # define vfov (0.2f)
-# define TEXTURE_PACK_PATH "./game/resources/images/"
-# define TEXTURE_SPRITE_PATH "./game/resources/sprites/"
-# define GAME_PATH "./game/resources/levels/1.lvl"
+# define TEXTURE_PACK_PATH "../game/resources/images/"
+# define TEXTURE_SPRITE_PATH "../game/resources/sprites/"
+# define GAME_PATH "../game/resources/levels/1.lvl"
 # define PARSING_ERROR 40
 # define READING_ERROR 41
 # define CYCLE_READING_ERROR 42
@@ -36,6 +36,7 @@
 # define PARSING_ERROR_SPRITE	"!teal"
 # define THREAD_POOL_SIZE 4
 # define DELAY 15
+# define DEFAULT_SPRITE_DELAY	10
 # define FIRERATE 10
 
 // Utility functions. Because C doesn't have templates,
@@ -127,13 +128,15 @@ typedef enum		e_wpn_state
 	W_FIRE,
 	W_NO_AMMO,
 	W_RELOAD,
-	W_HURT
+	W_HURT,
+	W_STATES_NUM
 }					t_wpn_state;
 
 typedef enum		e_animtn_state
 {
 	STATIC,
-	ANIMATE
+	ANIMATE,
+	CYCLE
 }					t_animtn_state;
 
 typedef struct		s_image
@@ -193,7 +196,6 @@ typedef struct		s_sprite
 	t_animtn_state	a_state;
 	int 			frames_num;
 	int 			frames_delay;
-	int 			frames_type;
 }					t_sprite;
 
 typedef struct		s_sprobject
@@ -324,7 +326,7 @@ typedef struct		s_weapon
 	int 			containers;
 	t_wpn_state 	state;
 	t_hud_sprite	*anmtn;
-	t_sprite		bullet_hole;
+	t_sprite		*bullet_hole;
 	struct s_weapon	*next;
 	struct s_weapon	*prev;
 }					t_weapon;
@@ -419,7 +421,6 @@ void			util_release_objects_buffer(t_object *object_buff, int size);
 void			util_release_polies_buffer(t_polygone *polies_buff, int size);
 void			util_release_vertex_buffer(t_point_3d *vertex_buff);
 void			util_release_world(t_world *world);
-void			engine_create_world_from_file(t_engine *eng, char *filename);
 void			engine_clear_frame(t_engine *eng);
 
 void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
@@ -511,8 +512,11 @@ void 			eng_create_rifle(t_engine *eng);
 void			eng_create_plazma(t_engine *eng);
 t_hud_sprite	util_get_hud_sprite_from_buff(char *name, t_txtr_pkg *buff,
 				int size);
-t_sprite		util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
-				 int size);
+t_sprite		*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
+				int size);
+char			*util_add_png_to_name(char *old_name);
+char			*util_add_png_num_to_name(char *old_name, int num);
+t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
 
 /*
 **	Resources parsing functions end

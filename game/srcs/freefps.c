@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/21 18:01:29 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/22 18:14:23 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ int		main(void)
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
 	engine_create_resources_from_file(fps.eng);
+	while (1)
+		;
+	/*
 	engine_create_world_from_file(fps.eng, GAME_PATH);
 	game_init_threads(fps.render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
@@ -309,4 +312,5 @@ void	change_floor(t_engine *eng, int sect, int change)
 void	change_ceil(t_engine *eng, int sect, int change)
 {
 	eng->world->sectors_array[sect].ceil += change;
+	 */
 }

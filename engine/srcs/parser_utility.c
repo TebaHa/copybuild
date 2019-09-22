@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/21 17:38:55 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/22 13:01:18 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	sprite->a_state = STATIC;
 	if (sprite->frames_num > 1)
 	{
-		sprite->frames_type = ANIMATE;
+		sprite->a_state = ANIMATE;
 		srfc_count = 1;
 		while (srfc_count <= sprite->frames_num)
 		{
@@ -64,7 +64,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	}
 	else
 	{
-		sprite->frames_type = STATIC;
+		sprite->a_state = STATIC;
 		util_find_sprite_by_name(sprite->surface, eng, str[4]);
 	}
 	eng->stats.skins_count++;
