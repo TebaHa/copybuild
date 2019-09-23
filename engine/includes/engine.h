@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/23 19:44:19 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/23 20:40:47 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,30 @@ typedef enum		e_sobj_state
 	ATTACK,
 	HURT
 }					t_sobj_state;
+
+typedef enum		e_enm_type
+{
+	BARREL,
+	AFRIT,
+	ENEMY_NUM
+}					t_enm_type;
+
+typedef enum		e_enm_state
+{
+	E_IDLE,
+	E_RUN,
+	E_FIRE,
+	E_HURT,
+	E_DEAD,
+	E_STATES_NUM
+}					t_enm_state;
+
+typedef enum		e_wpn_type
+{
+	RIFLE,
+	PLASMA,
+	WEAPON_NUM
+}					t_wpn_type;
 
 typedef enum		e_wpn_state
 {
@@ -310,6 +334,14 @@ typedef struct		s_txtr_pkg
 	char			*filename;
 }					t_txtr_pkg;
 
+typedef struct		s_enemy
+{
+	int 			id;
+	char 			*name;
+	t_enm_state 	state;
+	t_sprite		**anmtn;
+}					t_enemy;
+
 typedef struct		s_weapon
 {
 	int 			id;
@@ -334,6 +366,7 @@ typedef struct		s_engine
 	t_stats			stats;
 	int				*z_buff;
 	t_weapon		*weapon;
+	t_enemy			**enemy;
 	t_txtr_pkg		**texture_buffer;
 	t_txtr_pkg		**sprites_buffer;
 }					t_engine;
@@ -502,12 +535,15 @@ void 			engine_create_resources_from_file(t_engine *eng);
 void			eng_read_sprites(t_engine *eng);
 void			eng_read_textures(t_engine *eng);
 void 			eng_create_rifle(t_engine *eng);
-void			eng_create_plazma(t_engine *eng);
+void			eng_create_plasma(t_engine *eng);
 t_sprite		*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
 				int size);
 char			*util_add_png_to_name(char *old_name);
 char			*util_add_png_num_to_name(char *old_name, int num);
 t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
+
+void 			eng_create_barrel(t_engine *eng);
+void 			eng_create_afrit(t_engine *eng);
 
 /*
 **	Resources parsing functions end

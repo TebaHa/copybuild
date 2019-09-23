@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:44:08 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/23 19:00:07 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/23 21:43:29 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,57 @@
 
 void 		eng_create_rifle(t_engine *eng)
 {
-	eng->weapon->id = 0;
-	eng->weapon->name = ft_strdup("Rifle");
-	eng->weapon->ammo = 30;
-	eng->weapon->max_ammo = 30;
-	eng->weapon->containers = 0;
-	eng->weapon->state = W_IDLE;
-	eng->weapon->anmtn = (t_sprite **) ft_memalloc(sizeof(t_sprite *) *
-		W_STATES_NUM);
-	eng->weapon->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
-	eng->weapon->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
-	eng->weapon->anmtn[W_RUN] = util_create_sprite_by_name(eng, "rifle_run");
-	eng->weapon->anmtn[W_FIRE] = util_create_sprite_by_name(eng, "rifle_fire");
-	eng->weapon->anmtn[W_NO_AMMO] = util_create_sprite_by_name(eng, "rifle_no_ammo");
-	eng->weapon->anmtn[W_RELOAD] = util_create_sprite_by_name(eng, "rifle_reload");
-	eng->weapon->anmtn[W_HURT] = util_create_sprite_by_name(eng, "rifle_hurt");
+	t_weapon	*rifle;
+
+	rifle = (t_weapon *)ft_memalloc(sizeof(t_weapon));
+	rifle->id = RIFLE;
+	rifle->name = ft_strdup("Rifle");
+	rifle->ammo = 30;
+	rifle->max_ammo = 30;
+	rifle->containers = 0;
+	rifle->state = W_IDLE;
+	rifle->anmtn = (t_sprite **) ft_memalloc(sizeof(t_sprite *) *	W_STATES_NUM);
+	rifle->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
+	rifle->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
+//	rifle->anmtn[W_RUN] = util_create_sprite_by_name(eng, "rifle_run");
+	rifle->anmtn[W_RUN] = rifle->anmtn[W_IDLE];
+	rifle->anmtn[W_FIRE] = util_create_sprite_by_name(eng, "rifle_fire");
+	rifle->anmtn[W_NO_AMMO] = util_create_sprite_by_name(eng, "rifle_no_ammo");
+//	rifle->anmtn[W_RELOAD] = util_create_sprite_by_name(eng, "rifle_reload");
+	rifle->anmtn[W_RELOAD] = rifle->anmtn[W_IDLE];
+//	rifle->anmtn[W_HURT] = util_create_sprite_by_name(eng, "rifle_hurt");
+	rifle->anmtn[W_HURT] = rifle->anmtn[W_IDLE];
+	eng->weapon = rifle;
 }
-void 		eng_create_plazma(t_engine *eng)
+
+void 		eng_create_plasma(t_engine *eng)
 {
-//	eng->weapon->id = 0;
-//	eng->weapon->name = ft_strdup("Plazma gun");
-//	eng->weapon->ammo = 30;
-//	eng->weapon->max_ammo = 30;
-//	eng->weapon->containers = 0;
-//	eng->weapon->state = W_IDLE;
+	t_weapon	*plasma;
+
+	plasma = (t_weapon *)ft_memalloc(sizeof(t_weapon));
+	plasma->id = PLASMA;
+	plasma->name = ft_strdup("Plazma gun");
+	plasma->ammo = 5;
+	plasma->max_ammo = 5;
+	plasma->containers = 0;
+	plasma->state = W_IDLE;
+	plasma->anmtn = (t_sprite **) ft_memalloc(sizeof(t_sprite *) * W_STATES_NUM);
+//	plasma->bullet_hole = util_create_sprite_by_name(eng, "plasma_hole");
+	plasma->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
+	plasma->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "plasma_idle");
+//	plasma->anmtn[W_RUN] = util_create_sprite_by_name(eng, "plasma_run");
+	plasma->anmtn[W_RUN] = plasma->anmtn[W_IDLE];
+	plasma->anmtn[W_FIRE] = util_create_sprite_by_name(eng, "plasma_fire");
+	plasma->anmtn[W_NO_AMMO] = util_create_sprite_by_name(eng, "plasma_no_ammo");
+//	plasma->anmtn[W_RELOAD] = util_create_sprite_by_name(eng, "plasma_reload");
+	plasma->anmtn[W_RELOAD] = plasma->anmtn[W_IDLE];
+//	plasma->anmtn[W_HURT] = util_create_sprite_by_name(eng, "plasma_hurt");
+	plasma->anmtn[W_HURT] = plasma->anmtn[W_IDLE];
+	/* 4 строки ниже подтекает */
+	plasma->next = eng->weapon;
+	plasma->prev = eng->weapon;
+	eng->weapon->next = plasma;
+	eng->weapon->prev = plasma;
 
 }
 
@@ -45,9 +72,7 @@ char		*util_add_png_to_name(char *old_name)
 {
 	char	*new_name;
 
-	new_name = ft_strnew(ft_strlen(old_name) + ft_strlen(".png"));
-	new_name = ft_strcpy(new_name, old_name);
-	new_name = ft_strcat(new_name, ".png");
+	new_name = ft_strjoin(old_name, ".png");
 	return (new_name);
 }
 
