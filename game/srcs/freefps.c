@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/23 21:43:27 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/23 22:17:49 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void			game_init_threads(t_thread_pool *render_thread_pool)
 int		main(void)
 {
 	t_game			fps;
+	t_fix_point_2d	xy;
 	int				dz;
 	int				duck_shift;
 	int				movement_dz;
@@ -227,7 +228,6 @@ int		main(void)
 		}
 		else
 			fps.player.plr_state = P_IDLE;
-		t_fix_point_2d xy;
 		get_relative_xy(fps.eng, &xy);
 		fps.player.angle += xy.x * 0.02f;
 		yaw = clamp(yaw - xy.y * 0.02f, -5, 5);
