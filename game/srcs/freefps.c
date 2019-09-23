@@ -82,9 +82,9 @@ int		main(void)
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
 	engine_create_resources_from_file(fps.eng);
-	while (1)
-		;
-	/*
+//	while (1)
+//		;
+//	/*
 	engine_create_world_from_file(fps.eng, GAME_PATH);
 	game_init_threads(fps.render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
@@ -279,6 +279,7 @@ int		main(void)
 		else
 			thread_start_index++;
 	}
+	//	 */
 	engine_sdl_uninit(fps.eng);
 	return (0);
 }
@@ -312,5 +313,4 @@ void	change_floor(t_engine *eng, int sect, int change)
 void	change_ceil(t_engine *eng, int sect, int change)
 {
 	eng->world->sectors_array[sect].ceil += change;
-	 */
 }

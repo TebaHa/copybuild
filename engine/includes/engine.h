@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/22 17:51:42 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/23 19:44:19 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ typedef struct		s_sprite
 	char 			*name;
 	SDL_Surface		*surface;
 	t_animtn_state	a_state;
+	int 			frame;
 	int 			frames_num;
 	int 			frames_delay;
 }					t_sprite;
@@ -309,14 +310,6 @@ typedef struct		s_txtr_pkg
 	char			*filename;
 }					t_txtr_pkg;
 
-typedef struct		s_hud_sprite
-{
-	t_sprite		*sprite;
-	int 			frame;
-	int 			frames_num;
-	int 			frames_delay;
-}					t_hud_sprite;
-
 typedef struct		s_weapon
 {
 	int 			id;
@@ -325,7 +318,7 @@ typedef struct		s_weapon
 	int 			max_ammo;
 	int 			containers;
 	t_wpn_state 	state;
-	t_hud_sprite	*anmtn;
+	t_sprite		**anmtn;
 	t_sprite		*bullet_hole;
 	struct s_weapon	*next;
 	struct s_weapon	*prev;
@@ -510,8 +503,6 @@ void			eng_read_sprites(t_engine *eng);
 void			eng_read_textures(t_engine *eng);
 void 			eng_create_rifle(t_engine *eng);
 void			eng_create_plazma(t_engine *eng);
-t_hud_sprite	util_get_hud_sprite_from_buff(char *name, t_txtr_pkg *buff,
-				int size);
 t_sprite		*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
 				int size);
 char			*util_add_png_to_name(char *old_name);

@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:54:24 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/22 18:15:24 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/23 19:44:19 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void 	engine_create_resources_from_file(t_engine *eng)
 //	eng->weapon->next = eng->weapon;
 //	eng->weapon->prev = eng->weapon;
 	eng_create_rifle(eng);
-//	ft_putendl(eng->weapon->bullet_hole->name);
-	ft_putendl("!");
 //	eng_create_plazma(eng);
+	ft_putendl(eng->weapon->anmtn[IDLE]->name);
+//	ft_putnbr(eng->weapon->anmtn[IDLE]->frames_num);
+//	ft_putendl("!");
+
 }

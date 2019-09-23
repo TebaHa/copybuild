@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:44:08 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/22 19:25:31 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/23 19:00:07 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,16 @@ void 		eng_create_rifle(t_engine *eng)
 	eng->weapon->max_ammo = 30;
 	eng->weapon->containers = 0;
 	eng->weapon->state = W_IDLE;
-	eng->weapon->anmtn = (t_hud_sprite *)ft_memalloc(sizeof(t_hud_sprite) *
+	eng->weapon->anmtn = (t_sprite **) ft_memalloc(sizeof(t_sprite *) *
 		W_STATES_NUM);
 	eng->weapon->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
-
-//	util_create_sprite(eng, eng->weapon->bullet_hole, "bullet_hole");
-//	eng->weapon->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
-//	eng->weapon->anmtn[W_RUN] = util_get_hud_sprite_from_buff("rifle_run",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->anmtn[W_FIRE] = util_get_hud_sprite_from_buff("rifle_fire",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->anmtn[W_NO_AMMO] = util_get_hud_sprite_from_buff("rifle_no_ammo",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->anmtn[W_RELOAD] = util_get_hud_sprite_from_buff("rifle_reload",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->anmtn[W_HURT] = util_get_hud_sprite_from_buff("rifle_hurt",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->bullet_hole = util_get_sprite_from_buff_by_name("bullet_hole",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
+	eng->weapon->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
+	eng->weapon->anmtn[W_RUN] = util_create_sprite_by_name(eng, "rifle_run");
+	eng->weapon->anmtn[W_FIRE] = util_create_sprite_by_name(eng, "rifle_fire");
+	eng->weapon->anmtn[W_NO_AMMO] = util_create_sprite_by_name(eng, "rifle_no_ammo");
+	eng->weapon->anmtn[W_RELOAD] = util_create_sprite_by_name(eng, "rifle_reload");
+	eng->weapon->anmtn[W_HURT] = util_create_sprite_by_name(eng, "rifle_hurt");
 }
-
 void 		eng_create_plazma(t_engine *eng)
 {
 //	eng->weapon->id = 0;
@@ -48,20 +38,7 @@ void 		eng_create_plazma(t_engine *eng)
 //	eng->weapon->max_ammo = 30;
 //	eng->weapon->containers = 0;
 //	eng->weapon->state = W_IDLE;
-//	eng->weapon->anmtn[W_IDLE] = util_get_hud_sprite_from_buff("rifle_idle",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->anmtn[W_RUN] = util_get_hud_sprite_from_buff("rifle_run",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->anmtn[W_FIRE] = util_get_hud_sprite_from_buff("rifle_fire",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->anmtn[W_NO_AMMO] = util_get_hud_sprite_from_buff("rifle_no_ammo",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->anmtn[W_RELOAD] = util_get_hud_sprite_from_buff("rifle_reload",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->anmtn[W_HURT] = util_get_hud_sprite_from_buff("rifle_hurt",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
-//	eng->weapon->bullet_hole = util_get_sprite_from_buff_by_name("bullet_hole",
-//		*eng->sprites_buffer, eng->stats.sprites_count);
+
 }
 
 char		*util_add_png_to_name(char *old_name)
@@ -99,6 +76,7 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 
 	res = (t_sprite *) ft_memalloc(sizeof(t_sprite));
 	res->frames_delay = DEFAULT_SPRITE_DELAY;
+	res->frame = 0;
 	/* Поиск статичного спрайта*/
 	i = 0;
 	name = util_add_png_to_name(str);
@@ -162,7 +140,6 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 							*util_transform_texture_to_sprite(
 							&eng->sprites_buffer[i]->texture);
 						srfc_count++;
-						i = 0;
 						break;
 					}
 					i++;

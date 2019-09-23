@@ -109,46 +109,6 @@ t_sprite		util_get_sprite_from_buff_by_id(int id, int size,
 	return (sprites[i]);
 }
 
-t_hud_sprite	util_get_hud_sprite_from_buff(char *name, t_txtr_pkg *buff,
-				int size)
-{
-	t_hud_sprite res;
-//	int			i;
-//	int 		frames;
-//
-//	i = 0;
-//	frames = 0;
-//	while (i < size)
-//	{
-//		if (!ft_strcmp(buff[i].filename, ft_strcat(name, "_")))
-//			break;
-//		i++;
-//	}
-////	if (i == size)
-////		util_parsing_error_lost_handler("sprite", id, "sprobject", sprobj_id);
-	return (res);
-}
-
-//t_sprite		*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
-//				int size)
-//{
-//	t_sprite	*res;
-//	int			i;
-//
-//	i = 0;
-//	while (i < size)
-//	{
-//		if (!ft_strcmp(buff[i].filename, name))
-//			break;
-//		i++;
-//	}
-//	if (i == size)
-//		util_parsing_error_lost_handler("sprite", id, "sprobject", sprobj_id);
-//	util_find_sprite_by_name();
-//	res. = util_transform_texture_to_sprite(&buff[i].texture);
-//	return (buff[i].texture);
-//}
-
 t_point_3d		util_get_vertex_from_buff_by_id(int id, int size,
 				t_point_3d *vertexes, int polygone_id)
 {
