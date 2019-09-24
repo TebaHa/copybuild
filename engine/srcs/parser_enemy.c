@@ -19,8 +19,6 @@ void 		eng_create_barrel(t_engine *eng)
 	barrel = (t_enemy *)ft_memalloc(sizeof(t_enemy));
 	barrel->id = BARREL;
 	barrel->name = ft_strdup("Barrel");
-	barrel->state = E_IDLE;
-	barrel->anmtn = (t_sprite **) ft_memalloc(sizeof(t_sprite *) * E_STATES_NUM);
 	barrel->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "barrel_idle");
 	barrel->anmtn[E_RUN] = barrel->anmtn[E_IDLE];
 	barrel->anmtn[E_FIRE] = barrel->anmtn[E_IDLE];
@@ -36,8 +34,6 @@ void 		eng_create_afrit(t_engine *eng)
 	afrit = (t_enemy *)ft_memalloc(sizeof(t_enemy));
 	afrit->id = AFRIT;
 	afrit->name = ft_strdup("Afrit");
-	afrit->state = E_IDLE;
-	afrit->anmtn = (t_sprite **) ft_memalloc(sizeof(t_sprite *) * E_STATES_NUM);
 	afrit->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "afrit_idle");
 //	afrit->anmtn[E_RUN] = util_create_sprite_by_name(eng, "afrit_run");
 	afrit->anmtn[E_RUN] = afrit->anmtn[E_IDLE];

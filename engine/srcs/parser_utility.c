@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/22 13:01:18 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/24 19:46:24 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,20 +205,13 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 {
 	int			pol_count;
 	int			str_count;
-	util_parsing_error_count_handler("sprite object", str, 8);
+	util_parsing_error_count_handler("sprite object", str, 4);
 	util_int10_data_filler(&sprobject->id, str[1]);
 	util_int10_data_filler(&sprobject->angle, str[2]);
-	util_int10_data_filler(&sprobject->class, str[3]);
-	sprobject->state = IDLE;
+	sprobject->type = eng->enemy[ft_atoi(str[3])];
 	sprobject->position = util_get_vertex_from_buff_by_id(ft_atoi(str[4]),
 		eng->stats.vertexes_count, vertex_array, sprobject->id);
-	sprobject->idle = util_get_sprite_from_buff_by_id(ft_atoi(str[5]),
-		eng->stats.sprites_count, sprite_array, sprobject->id);
-	sprobject->death = util_get_sprite_from_buff_by_id(ft_atoi(str[6]),
-		eng->stats.sprites_count, sprite_array, sprobject->id);
-	sprobject->attack = util_get_sprite_from_buff_by_id(ft_atoi(str[7]),
-		eng->stats.sprites_count, sprite_array, sprobject->id);
-	sprobject->hurt = util_get_sprite_from_buff_by_id(ft_atoi(str[8]),
-		eng->stats.sprites_count, sprite_array, sprobject->id);
+	sprobject->state = E_IDLE;
+	sprobject->frame = 0;
 	eng->stats.sprobjects_count++;
 }

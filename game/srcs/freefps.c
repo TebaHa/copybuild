@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/23 19:47:34 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/24 19:54:38 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ int		main(void)
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
 	engine_create_resources_from_file(fps.eng);
+	engine_create_world_from_file(fps.eng, GAME_PATH);
 	while (1)
 		;
 	/*
-	engine_create_world_from_file(fps.eng, GAME_PATH);
 	game_init_threads(fps.render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
 	float yaw = 0;

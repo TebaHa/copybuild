@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:44:08 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/23 21:43:29 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/24 21:04:38 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void 		eng_create_rifle(t_engine *eng)
 	rifle->max_ammo = 30;
 	rifle->containers = 0;
 	rifle->state = W_IDLE;
-	rifle->anmtn = (t_sprite **) ft_memalloc(sizeof(t_sprite *) *	W_STATES_NUM);
+	rifle->frame = 0;
 	rifle->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
 	rifle->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
 //	rifle->anmtn[W_RUN] = util_create_sprite_by_name(eng, "rifle_run");
@@ -34,7 +34,9 @@ void 		eng_create_rifle(t_engine *eng)
 	rifle->anmtn[W_RELOAD] = rifle->anmtn[W_IDLE];
 //	rifle->anmtn[W_HURT] = util_create_sprite_by_name(eng, "rifle_hurt");
 	rifle->anmtn[W_HURT] = rifle->anmtn[W_IDLE];
-	eng->weapon = rifle;
+	eng->weapon[RIFLE] = rifle;
+	eng->weapon[RIFLE]->next = eng->weapon[PLASMA];
+	eng->weapon[RIFLE]->prev = eng->weapon[PLASMA];
 }
 
 void 		eng_create_plasma(t_engine *eng)
@@ -48,7 +50,6 @@ void 		eng_create_plasma(t_engine *eng)
 	plasma->max_ammo = 5;
 	plasma->containers = 0;
 	plasma->state = W_IDLE;
-	plasma->anmtn = (t_sprite **) ft_memalloc(sizeof(t_sprite *) * W_STATES_NUM);
 //	plasma->bullet_hole = util_create_sprite_by_name(eng, "plasma_hole");
 	plasma->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
 	plasma->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "plasma_idle");
@@ -60,12 +61,9 @@ void 		eng_create_plasma(t_engine *eng)
 	plasma->anmtn[W_RELOAD] = plasma->anmtn[W_IDLE];
 //	plasma->anmtn[W_HURT] = util_create_sprite_by_name(eng, "plasma_hurt");
 	plasma->anmtn[W_HURT] = plasma->anmtn[W_IDLE];
-	/* 4 строки ниже подтекает */
-	plasma->next = eng->weapon;
-	plasma->prev = eng->weapon;
-	eng->weapon->next = plasma;
-	eng->weapon->prev = plasma;
-
+	eng->weapon[PLASMA] = plasma;
+	eng->weapon[PLASMA]->next = eng->weapon[RIFLE];
+	eng->weapon[PLASMA]->prev = eng->weapon[RIFLE];
 }
 
 char		*util_add_png_to_name(char *old_name)
@@ -101,7 +99,6 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 
 	res = (t_sprite *) ft_memalloc(sizeof(t_sprite));
 	res->frames_delay = DEFAULT_SPRITE_DELAY;
-	res->frame = 0;
 	/* Поиск статичного спрайта*/
 	i = 0;
 	name = util_add_png_to_name(str);

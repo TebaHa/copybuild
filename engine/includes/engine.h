@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/23 20:40:47 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/24 21:04:38 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,6 @@ typedef enum		e_alloc_type
 	STB_ALLOCATED
 }					t_alloc_type;
 
-typedef enum		e_sobj_state
-{
-	IDLE,
-	DEATH,
-	ATTACK,
-	HURT
-}					t_sobj_state;
-
 typedef enum		e_enm_type
 {
 	BARREL,
@@ -218,22 +210,40 @@ typedef struct		s_sprite
 	char 			*name;
 	SDL_Surface		*surface;
 	t_animtn_state	a_state;
-	int 			frame;
 	int 			frames_num;
 	int 			frames_delay;
 }					t_sprite;
 
+typedef struct		s_enemy
+{
+	int 			id;
+	char 			*name;
+	t_sprite		*anmtn[E_STATES_NUM];
+}					t_enemy;
+
+typedef struct		s_weapon
+{
+	int 			id;
+	char 			*name;
+	int 			ammo;
+	int 			max_ammo;
+	int 			containers;
+	int 			frame;
+	t_wpn_state 	state;
+	t_sprite		*anmtn[W_STATES_NUM];
+	t_sprite		*bullet_hole;
+	struct s_weapon	*next;
+	struct s_weapon	*prev;
+}					t_weapon;
+
 typedef struct		s_sprobject
 {
 	int				id;
-	t_point_3d		position;
-	t_sprite		idle;
-	t_sprite		death;
-	t_sprite		attack;
-	t_sprite		hurt;
-	t_sobj_state 	state;
 	int 			angle;
-	int				class;
+	t_enemy			*type;
+	int 			frame;
+	t_point_3d		position;
+	t_enm_state 	state;
 }					t_sprobject;
 
 typedef struct		s_object
@@ -334,28 +344,6 @@ typedef struct		s_txtr_pkg
 	char			*filename;
 }					t_txtr_pkg;
 
-typedef struct		s_enemy
-{
-	int 			id;
-	char 			*name;
-	t_enm_state 	state;
-	t_sprite		**anmtn;
-}					t_enemy;
-
-typedef struct		s_weapon
-{
-	int 			id;
-	char 			*name;
-	int 			ammo;
-	int 			max_ammo;
-	int 			containers;
-	t_wpn_state 	state;
-	t_sprite		**anmtn;
-	t_sprite		*bullet_hole;
-	struct s_weapon	*next;
-	struct s_weapon	*prev;
-}					t_weapon;
-
 typedef struct		s_engine
 {
 	SDL_Event 		event;
@@ -365,8 +353,8 @@ typedef struct		s_engine
 	short			view_type;
 	t_stats			stats;
 	int				*z_buff;
-	t_weapon		*weapon;
-	t_enemy			**enemy;
+	t_weapon		*weapon[WEAPON_NUM];
+	t_enemy			*enemy[ENEMY_NUM];
 	t_txtr_pkg		**texture_buffer;
 	t_txtr_pkg		**sprites_buffer;
 }					t_engine;
