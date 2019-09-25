@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/24 21:04:38 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/25 19:38:54 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # define MAXSECTORS 32
 # define hfov (0.83f * HEIGHT / WIDTH)
 # define vfov (0.2f)
-# define TEXTURE_PACK_PATH "../game/resources/images/"
-# define TEXTURE_SPRITE_PATH "../game/resources/sprites/"
-# define GAME_PATH "../game/resources/levels/1.lvl"
+# define TEXTURE_PACK_PATH "./game/resources/images/"
+# define TEXTURE_SPRITE_PATH "./game/resources/sprites/"
+# define GAME_PATH "./game/resources/levels/1.lvl"
 # define PARSING_ERROR 40
 # define READING_ERROR 41
 # define CYCLE_READING_ERROR 42
@@ -286,7 +286,6 @@ typedef	struct		s_sector
 typedef	struct		s_world
 {
 	t_sector		*sectors_array;
-	t_sprobject		*sprobjects_array;
 	t_sector		*world_box;
 	int				sectors_count;
 	t_item			*renderqueue;

@@ -49,6 +49,8 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					parser_reader.c \
 					parser_utility.c \
 					parser_utility_find.c \
+					parser_enemy.c \
+					parser_weapon.c \
 					engine.c \
 					draw.c \
 					objects.c \

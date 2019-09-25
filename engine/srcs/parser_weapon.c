@@ -6,11 +6,11 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:44:08 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/24 21:04:38 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/25 19:49:57 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <game.h>
+#include <engine.h>
 
 void 		eng_create_rifle(t_engine *eng)
 {
@@ -139,7 +139,8 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 				i++;
 			}
 		}
-		free(name);
+		ft_putendl("Я РОДИЛСЯ!");
+//		free(name);
 		if (srfc_count)
 		{
 			res->frames_num = srfc_count;

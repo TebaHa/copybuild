@@ -167,7 +167,7 @@ t_sprobject	*engine_read_sprobjects_from_file(t_engine *eng, t_buff buff)
 	{
 		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "sobjct:") == 0)
-			util_create_sprobject(eng, &sprobject_buff[eng->stats.objects_count],
+			util_create_sprobject(eng, &sprobject_buff[eng->stats.sprobjects_count],
 			buff.sprites, buff.vertexes, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
