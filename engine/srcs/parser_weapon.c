@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:44:08 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/25 19:49:57 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/25 21:10:21 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void 		eng_create_rifle(t_engine *eng)
 	rifle->frame = 0;
 	rifle->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
 	rifle->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
+	rifle->anmtn[W_IDLE]->a_state = CYCLE;
 //	rifle->anmtn[W_RUN] = util_create_sprite_by_name(eng, "rifle_run");
 	rifle->anmtn[W_RUN] = rifle->anmtn[W_IDLE];
 	rifle->anmtn[W_FIRE] = util_create_sprite_by_name(eng, "rifle_fire");
@@ -50,8 +51,7 @@ void 		eng_create_plasma(t_engine *eng)
 	plasma->max_ammo = 5;
 	plasma->containers = 0;
 	plasma->state = W_IDLE;
-//	plasma->bullet_hole = util_create_sprite_by_name(eng, "plasma_hole");
-	plasma->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
+	plasma->bullet_hole = util_create_sprite_by_name(eng, "plasma_hole");
 	plasma->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "plasma_idle");
 //	plasma->anmtn[W_RUN] = util_create_sprite_by_name(eng, "plasma_run");
 	plasma->anmtn[W_RUN] = plasma->anmtn[W_IDLE];
@@ -139,7 +139,7 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 				i++;
 			}
 		}
-		ft_putendl("Я РОДИЛСЯ!");
+		/* Подтекаем прямо на строчку ниже!!! */
 //		free(name);
 		if (srfc_count)
 		{
