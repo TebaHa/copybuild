@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/21 22:04:48 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/25 19:35:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,14 +163,21 @@ int		intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res)
 void	engine_push_particlestack(t_object *obj, t_wallobj *particlestack, int *status, t_point_3d particle)
 {
 	t_wallobj	w_partcle;
-	double dx1 = obj->polies_array[0].vertices_array[0].x - particle.x;
-	double dy1 = obj->polies_array[0].vertices_array[0].y - particle.y;
-	double dx2 = particle.x - obj->polies_array[0].vertices_array[1].x;
-	double dy2 = particle.y - obj->polies_array[0].vertices_array[1].y;
-	double dist1 = sqrtf(dx1 * dx1 + dy1 * dy1);
-	double dist2 = sqrtf(dx2 * dx2 + dy2 * dy2);
-	double half_w = 2;
+	double dx1;
+	double dy1;
+	double dx2;
+	double dy2;
+	double dist1;
+	double dist2;
+	double half_w;
 
+	dx1 = obj->polies_array[0].vertices_array[0].x - particle.x;
+	dy1 = obj->polies_array[0].vertices_array[0].y - particle.y;
+	dx2 = particle.x - obj->polies_array[0].vertices_array[1].x;
+	dy2 = particle.y - obj->polies_array[0].vertices_array[1].y;
+	dist1 = sqrtf(dx1 * dx1 + dy1 * dy1);
+	dist2 = sqrtf(dx2 * dx2 + dy2 * dy2);
+	half_w = 2;
 	w_partcle.a.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[0].x)) / dist1);
 	w_partcle.a.y = particle.y - ((half_w * (particle.y - obj->polies_array[0].vertices_array[0].y)) / dist1);
 	w_partcle.b.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[1].x)) / dist2);

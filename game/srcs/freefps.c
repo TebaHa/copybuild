@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/23 22:17:49 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/09/24 20:16:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,8 +229,8 @@ int		main(void)
 		else
 			fps.player.plr_state = P_IDLE;
 		get_relative_xy(fps.eng, &xy);
-		fps.player.angle += xy.x * 0.02f;
-		yaw = clamp(yaw - xy.y * 0.02f, -5, 5);
+		fps.player.angle += xy.x * 0.03f;
+		yaw = clamp(yaw - xy.y * 0.03f, -5, 5);
 		fps.player.yaw = yaw - fps.player.velocity.z * 0.5f;
 		move_player(fps.eng, &fps.player, 0, 0, fps.player.cursector);
 		float move_vec[2] = {0.f, 0.f};
