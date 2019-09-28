@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/21 15:55:29 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/28 12:35:34 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	sprite->a_state = STATIC;
 	if (sprite->frames_num > 1)
 	{
-		sprite->frames_type = ANIMATE;
+		sprite->a_state = ANIMATE;
 		srfc_count = 1;
 		while (srfc_count <= sprite->frames_num)
 		{
@@ -64,7 +64,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	}
 	else
 	{
-		sprite->frames_type = STATIC;
+		sprite->a_state = STATIC;
 		util_find_sprite_by_name(sprite->surface, eng, str[4]);
 	}
 	eng->stats.skins_count++;
@@ -190,13 +190,12 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 			offsets = y * sprite->w + x;
 			offseti = y * texture->channels * sprite->w + x * texture->channels;
 			pix[offsets] = get_rgb(texture->data[offseti],
-					texture->data[offseti + 1], texture->data[offseti + 2],
-									texture->data[offseti + 3]);
+				texture->data[offseti + 1], texture->data[offseti + 2],
+				texture->data[offseti + 3]);
 			y++;
 		}
 		x++;
 	}
-	printf("%s\n", "DONE!");
 	return(sprite);
 }
 
@@ -205,20 +204,15 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 {
 	int			pol_count;
 	int			str_count;
-	util_parsing_error_count_handler("sprite object", str, 8);
+	util_parsing_error_count_handler("sprite object", str, 4);
 	util_int10_data_filler(&sprobject->id, str[1]);
 	util_int10_data_filler(&sprobject->angle, str[2]);
-	util_int10_data_filler(&sprobject->class, str[3]);
-	sprobject->state = IDLE;
+	if (ft_atoi(str[3]) < 0 || ft_atoi(str[3]) > ENEMY_NUM)
+		util_parsing_error_cant_find("texture from sprobject", ft_atoi(str[3]));
+	sprobject->type = eng->enemy[ft_atoi(str[3])];
 	sprobject->position = util_get_vertex_from_buff_by_id(ft_atoi(str[4]),
 		eng->stats.vertexes_count, vertex_array, sprobject->id);
-	sprobject->idle = util_get_sprite_from_buff_by_id(ft_atoi(str[5]),
-		eng->stats.sprites_count, sprite_array, sprobject->id);
-	sprobject->death = util_get_sprite_from_buff_by_id(ft_atoi(str[6]),
-		eng->stats.sprites_count, sprite_array, sprobject->id);
-	sprobject->attack = util_get_sprite_from_buff_by_id(ft_atoi(str[7]),
-		eng->stats.sprites_count, sprite_array, sprobject->id);
-	sprobject->hurt = util_get_sprite_from_buff_by_id(ft_atoi(str[8]),
-		eng->stats.sprites_count, sprite_array, sprobject->id);
+	sprobject->state = E_IDLE;
+	sprobject->frame = 0;
 	eng->stats.sprobjects_count++;
 }

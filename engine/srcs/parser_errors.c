@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:41:27 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/16 21:41:20 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/28 12:35:34 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
 	ft_putstr(name);
 	ft_putstr("!\n");
 	util_find_sprite_by_name(dst, eng, PARSING_ERROR_SPRITE);
-	exit(PARSING_ERROR);
+	if (!ft_strcmp(name, PARSING_ERROR_SPRITE))
+		exit(PARSING_ERROR);
 }
 
 void	util_parsing_error_count_handler(char *problem_from, char **str,

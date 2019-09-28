@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler.c                                    :+:      :+:    :+:   */
+/*   parser_resources.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/09 18:03:24 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/28 12:35:34 by fsmith           ###   ########.fr       */
+/*   Created: 2019/09/21 17:54:24 by fsmith            #+#    #+#             */
+/*   Updated: 2019/09/28 12:25:55 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void	error_handler(char *error_type, const char *str_error, t_engine *eng)
+void 	engine_create_resources_from_file(t_engine *eng)
 {
-	ft_putstr(error_type);
-	ft_putstr("\n");
-	ft_putstr(str_error);
-	ft_putstr("\n");
-	engine_sdl_uninit(eng);
-	exit(1);
+	eng_read_textures(eng);
+	eng_read_sprites(eng);
+	eng_create_rifle(eng);
+	eng_create_plasma(eng);
+	eng_create_barrel(eng);
+	eng_create_afrit(eng);
+	ft_putendl("!");
 }
