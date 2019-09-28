@@ -40,7 +40,8 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/utility.c
 			engine/srcs/parser_resources.c
 			engine/srcs/parser_weapon.c
-			engine/srcs/parser_enemy.c)
+			engine/srcs/parser_enemy.c
+			engine/srcs/relative_coord.c)
 
 set(SDL ${SDL_DIRECTORY}libmlx.a)
 set(SDL_DIRECTORY lib/sdl2/)

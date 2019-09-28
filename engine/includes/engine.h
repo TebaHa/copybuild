@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/28 12:38:57 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/28 15:33:05 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,17 @@ typedef enum		e_alloc_type
 
 typedef enum		e_enm_type
 {
+	MEDKIT,
+	ARMOR,
+	POWER_UP,
+	RIFLE_AMMO,
+	PLASMA_AMMO,
+	PLASMA_GUN,
 	BARREL,
 	AFRIT,
+	CACODEMON,
+	IMP,
+
 	ENEMY_NUM
 }					t_enm_type;
 
@@ -152,7 +161,8 @@ typedef enum		e_animtn_state
 {
 	STATIC,
 	ANIMATE,
-	CYCLE
+	CYCLE,
+	PENDULUM
 }					t_animtn_state;
 
 
@@ -545,8 +555,17 @@ char			*util_add_png_to_name(char *old_name);
 char			*util_add_png_num_to_name(char *old_name, int num);
 t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
 
+void			eng_create_medkit(t_engine *eng);
+void			eng_create_armor(t_engine *eng);
+void			eng_create_powerup(t_engine *eng);
+void			eng_create_rifle_ammo(t_engine *eng);
+void			eng_create_plasma_ammo(t_engine *eng);
+void			eng_create_plasma_gun(t_engine *eng);
+
 void 			eng_create_barrel(t_engine *eng);
 void 			eng_create_afrit(t_engine *eng);
+void 			eng_create_cacodemon(t_engine *eng);
+void 			eng_create_imp(t_engine *eng);
 
 /*
 **	Resources parsing functions end
