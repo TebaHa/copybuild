@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 20:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/28 13:57:04 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/28 16:10:19 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,7 @@ void 		eng_create_cacodemon(t_engine *eng)
 	demon->id = CACODEMON;
 	demon->name = ft_strdup("Cacodemon");
 	demon->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "cacodemon_idle");
-	demon->anmtn[E_IDLE]->a_state = CYCLE;
-	demon->anmtn[E_RUN] = util_create_sprite_by_name(eng, "cacodemon_run");
-	demon->anmtn[E_RUN]->a_state = CYCLE;
+	demon->anmtn[E_RUN] = demon->anmtn[E_IDLE];
 	demon->anmtn[E_FIRE] = util_create_sprite_by_name(eng, "cacodemon_fire");
 	demon->anmtn[E_HURT] = util_create_sprite_by_name(eng, "cacodemon_hurt");
 	demon->anmtn[E_DEAD] = util_create_sprite_by_name(eng, "cacodemon_dead");
@@ -161,7 +159,6 @@ void 		eng_create_imp(t_engine *eng)
 	imp->id = IMP;
 	imp->name = ft_strdup("Imp");
 	imp->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "imp_idle");
-	imp->anmtn[E_IDLE]->a_state = CYCLE;
 	imp->anmtn[E_RUN] = util_create_sprite_by_name(eng, "imp_run");
 	imp->anmtn[E_RUN]->a_state = CYCLE;
 	imp->anmtn[E_FIRE] = util_create_sprite_by_name(eng, "imp_fire");
