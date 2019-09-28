@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/24 19:46:24 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/28 12:25:54 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,6 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 		}
 		x++;
 	}
-//	printf("%s\n", "DONE!");
 	return(sprite);
 }
 
@@ -208,6 +207,8 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 	util_parsing_error_count_handler("sprite object", str, 4);
 	util_int10_data_filler(&sprobject->id, str[1]);
 	util_int10_data_filler(&sprobject->angle, str[2]);
+	if (ft_atoi(str[3]) < 0 || ft_atoi(str[3]) > ENEMY_NUM)
+		util_parsing_error_cant_find("texture from sprobject", ft_atoi(str[3]));
 	sprobject->type = eng->enemy[ft_atoi(str[3])];
 	sprobject->position = util_get_vertex_from_buff_by_id(ft_atoi(str[4]),
 		eng->stats.vertexes_count, vertex_array, sprobject->id);

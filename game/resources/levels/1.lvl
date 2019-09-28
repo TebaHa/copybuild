@@ -117,7 +117,7 @@ object:	19	-1		0		1		floor_wall		ceil_wall	1		19
 object:	20	-1		0		1		floor_wall		ceil_wall	1		20
 object:	21	-1		0		1		floor_wall		ceil_wall	1		21
 
-#Sprites objects	(0-thing|1-enemy)
+#Sprites objects	(types from t_enm_type)
 #		id,	angle,	type,	vert
 sobjct:	0	0		0		38
 sobjct:	1	0		1		39
