@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/28 15:33:05 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/29 17:19:20 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,28 @@ typedef enum		e_wpn_state
 	W_STATES_NUM
 }					t_wpn_state;
 
+typedef enum		e_emo_state
+{
+	F_IDLE,
+	F_HAPPY,
+	F_LEFT,
+	F_RIGHT,
+	F_SHOOT,
+	F_HURT,
+	F_STATES_NUM
+}					t_emo_state;
+
+typedef enum		e_health_state
+{
+	H_100,
+	H_80,
+	H_60,
+	H_40,
+	H_20,
+	H_0,
+	H_STATES_NUM
+}					t_health_state;
+
 typedef enum		e_animtn_state
 {
 	STATIC,
@@ -257,6 +279,13 @@ typedef struct		s_weapon
 	struct s_weapon	*next;
 	struct s_weapon	*prev;
 }					t_weapon;
+
+typedef struct		s_hud
+{
+	t_emo_state 	emo_state;
+	t_health_state	health_state;
+	t_sprite		*face[H_STATES_NUM][F_STATES_NUM];
+}					t_hud;
 
 typedef struct		s_sprobject
 {
@@ -378,6 +407,7 @@ typedef struct		s_engine
 	int				*z_buff;
 	t_weapon		*weapon[WEAPON_NUM];
 	t_enemy			*enemy[ENEMY_NUM];
+	t_hud			*hud;
 	t_txtr_pkg		**texture_buffer;
 	t_txtr_pkg		**sprites_buffer;
 }					t_engine;
@@ -547,14 +577,16 @@ int				intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
 void 			engine_create_resources_from_file(t_engine *eng);
 void			eng_read_sprites(t_engine *eng);
 void			eng_read_textures(t_engine *eng);
+
+void			eng_create_hud(t_engine *eng);
+void			eng_create_face(t_engine *eng);
+void			eng_create_face_100_0(t_engine *eng);
+
+void			eng_create_weapons(t_engine *eng);
 void 			eng_create_rifle(t_engine *eng);
 void			eng_create_plasma(t_engine *eng);
-t_sprite		*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
-				int size);
-char			*util_add_png_to_name(char *old_name);
-char			*util_add_png_num_to_name(char *old_name, int num);
-t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
 
+void			eng_create_items(t_engine *eng);
 void			eng_create_medkit(t_engine *eng);
 void			eng_create_armor(t_engine *eng);
 void			eng_create_powerup(t_engine *eng);
@@ -562,10 +594,17 @@ void			eng_create_rifle_ammo(t_engine *eng);
 void			eng_create_plasma_ammo(t_engine *eng);
 void			eng_create_plasma_gun(t_engine *eng);
 
+void			eng_create_enemies(t_engine *eng);
 void 			eng_create_barrel(t_engine *eng);
 void 			eng_create_afrit(t_engine *eng);
 void 			eng_create_cacodemon(t_engine *eng);
 void 			eng_create_imp(t_engine *eng);
+
+t_sprite		*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
+				int size);
+char			*util_add_png_to_name(char *old_name);
+char			*util_add_png_num_to_name(char *old_name, int num);
+t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
 
 /*
 **	Resources parsing functions end

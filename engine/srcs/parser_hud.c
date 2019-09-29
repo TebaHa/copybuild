@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_resources.c                                 :+:      :+:    :+:   */
+/*   parser_hud.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/21 17:54:24 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/29 16:29:09 by fsmith           ###   ########.fr       */
+/*   Created: 2019/09/29 16:37:20 by fsmith            #+#    #+#             */
+/*   Updated: 2019/09/29 17:06:43 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void 	engine_create_resources_from_file(t_engine *eng)
+void		eng_create_hud(t_engine *eng)
 {
-	eng_read_textures(eng);
-	eng_read_sprites(eng);
-	eng_create_hud(eng);
-	eng_create_weapons(eng);
-	eng_create_items(eng);
-	eng_create_enemies(eng);
+	eng->hud = (t_hud *)ft_memalloc(sizeof(t_hud));
+	eng->hud->emo_state = F_IDLE;
+	eng->hud->health_state = H_100;
+	eng_create_face(eng);
 }

@@ -12,6 +12,12 @@
 
 #include <engine.h>
 
+void		eng_create_weapons(t_engine *eng)
+{
+	eng_create_rifle(eng);
+	eng_create_plasma(eng);
+}
+
 void 		eng_create_rifle(t_engine *eng)
 {
 	t_weapon	*rifle;
