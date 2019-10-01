@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/24 20:16:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/01 21:06:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static	int		game_thread_wrapper(void *ptr)
 	t_game *fps;
 
 	fps = (t_game *)ptr;
-	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface);
+	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface, fps->render_thread_pool[fps->thread_num].z_buff);
 	SDL_Delay(5);
 	return (fps->thread_num);
 }
@@ -57,8 +57,10 @@ void			game_init_threads(t_thread_pool *render_thread_pool)
 
 	while (i < THREAD_POOL_SIZE)
 	{
-		render_thread_pool[i++].surface = SDL_CreateRGBSurface(0, WIDTH, HEIGHT, 32, (Uint32)0xff000000,
+		render_thread_pool[i].surface = SDL_CreateRGBSurface(0, WIDTH, HEIGHT, 32, (Uint32)0xff000000,
 							(Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff);
+		render_thread_pool[i].z_buff = (int *)ft_memalloc(sizeof(int) * WIDTH * HEIGHT);
+		i++;
 	}
 }
 
@@ -267,6 +269,7 @@ int		main(void)
 			SDL_WaitThread(fps.render_thread_pool[thread_end_index].thread, &fps.render_thread_pool[thread_end_index].value);
 			engine_draw_hud(fps.eng, &fps.player, fps.render_thread_pool[thread_end_index].surface);
 			engine_render_frame(fps.eng, fps.render_thread_pool[thread_end_index].surface);
+			SDL_Delay(3);
 			thread_start_index = thread_end_index;
 			thread_end_index = thread_end_index < (THREAD_POOL_SIZE - 1) ? thread_end_index + 1 : 0;
 			if (init == 0)

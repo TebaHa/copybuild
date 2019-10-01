@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/25 19:29:33 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/01 23:33:43 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			get_rgb(int r, int g, int b, int a)
 	return (((((int)r) << 24) & 0xFF000000) | ((((int)g) << 16) & 0x00FF0000) | (((b) << 8) & 0x0000FF00) | (((a)) & 0x000000FF));
 }
 
-void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf)
+void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf, int *zbuff)
 {
 	int			ytop[WIDTH] = {0};
 	int			ybottom[WIDTH];
@@ -40,16 +40,19 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf)
 		while (i < eng->world->sectors_array[sect_id.sectorno].objects_count)
 		{
 			engine_render_wall(eng, surf, eng->world->sectors_array[sect_id.sectorno].objects_array[i].polies_array, &plr,
-				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, NULL, sect_id, i, prev);
+				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, NULL, sect_id, i, prev, zbuff);
+			if (sect_id.sectorno == 1)
+				animator_render_sprite_object(eng, surf, plr, (eng)->tmp, sect_id, zbuff);
 			i++;
 		}
 		prev = sect_id.sectorno;
 	}
+	zbuff_zeroed(zbuff);
 	engine_clear_renderstack(eng->world->renderqueue);
 	SDL_UnlockSurface(surf);
 }
 
-void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id, int prev)
+void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id, int prev, int *zbuff)
 {
 	t_point_2d	v1;
 	t_point_2d	v2;
@@ -132,13 +135,11 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 	t_scaler nyb_int = Scaler_Init(x1, beginx, x2, ny1b, ny2b);
 	for(int x = beginx; x <= endx; ++x)
 	{
-		/* Calculate the Z coordinate for this point. (Only used for lighting.) */
 		int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;
-		/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
 		int ya = scaler_next(&ya_int);
 		int yb = scaler_next(&yb_int);
-		int cya = clamp(ya, ytop[x], ybottom[x]); // top
-		int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
+		int cya = clamp(ya, ytop[x], ybottom[x]);
+		int cyb = clamp(yb, ytop[x], ybottom[x]);
 		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2-x) * t2.y + (x - x1) * t1.y);
 		t_image *tex = NULL;
 		for(int y = ytop[x]; y <= ybottom[x] - 1; ++y)
@@ -159,34 +160,32 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 			int color = get_rgb((int)red, (int)green, (int)blue, 255);
 			((int*)surf->pixels)[y * WIDTH + x] = color;
 		}
-		/* There's no neighbor. Render wall from top (cya = ceiling level) to bottom (cyb = floor level). */
 		if (portal >= 0)
 		{
 			int nya = scaler_next(&nya_int);
 			int nyb = scaler_next(&nyb_int);
 			int cnya = clamp(nya, ytop[x], ybottom[x]);
 			int cnyb = clamp(nyb, ytop[x], ybottom[x]);
-			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya, z}, (t_fix_point_3d){x, cnya-1, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
+			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya, z}, (t_fix_point_3d){x, cnya-1, z}, txtx, z, zbuff, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
 			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);
-			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cnyb + 1, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cnyb + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
+			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cnyb + 1, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cnyb + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, z, zbuff, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
-			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, polygone->texture);
+			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, z, zbuff, polygone->texture);
 	}
-	renderbox = (t_line){(t_point_3d){0, beginx,}, (t_point_3d){0, endx, }};
 	int		i = 0;
 	while (eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].id == 1 && i < 128)
 	{
 		if (eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].z > eng->world->sectors_array[sect.sectorno].floor &&
 		eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].z < eng->world->sectors_array[sect.sectorno].ceil)
 			engine_render_particle(eng, surf, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i],
-					&eng->world->sectors_array[sect.sectorno].objects_array[obj_id], ytop, ybottom, plr, sect);
+					&eng->world->sectors_array[sect.sectorno].objects_array[obj_id], ytop, ybottom, plr, sect, zbuff);
 		i++;
 	}
 }
 
-void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particle,  t_object *obj, int *ytop, int *ybottom, t_player *plr, t_item sect)
+void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particle, t_object *obj, int *ytop, int *ybottom, t_player *plr, t_item sect, int *zbuff)
 {
 	t_point_2d	t1;
 	t_point_2d	t2;
@@ -251,26 +250,28 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particl
 	{
 		for(int x = beginx; x <= endx; ++x)
 		{
+			int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;
 			/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
 			int ya = scaler_next(&ya_int);
 			int yb = scaler_next(&yb_int);
 			int cya = clamp(ya, ytop[x], ybottom[x]); // top
 			int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
 			int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
-			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, eng->sprites_buffer[4]->texture.width - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, &eng->sprites_buffer[4]->texture);
+			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, eng->sprites_buffer[4]->texture.width - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, z, zbuff, &eng->sprites_buffer[4]->texture);
 		}
 	}
 	else
 	{
 		for(int x = beginx; x <= endx; ++x)
 		{
+			int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;
 			/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
 			int ya = scaler_next(&ya_int);
 			int yb = scaler_next(&yb_int);
 			int cya = clamp(ya, 0, WIDTH - 1); // top
 			int cyb = clamp(yb, 0, WIDTH - 1); // bottom
 			int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
-			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, eng->sprites_buffer[4]->texture.width - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, &eng->sprites_buffer[4]->texture);
+			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, eng->sprites_buffer[4]->texture.width - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, z, zbuff, &eng->sprites_buffer[4]->texture);
 		}
 	}
 }

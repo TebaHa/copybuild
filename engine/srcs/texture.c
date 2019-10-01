@@ -6,13 +6,13 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/21 15:55:29 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/01 22:17:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void	engine_vline_textured(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture)
+void	engine_vline_textured(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, t_image *texture)
 {
 	int		y1;
 	int		y2;

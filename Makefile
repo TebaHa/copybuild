@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/09/23 20:37:35 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/01 21:32:08 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,8 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					hud_draw.c \
 					shoot.c \
 					relative_coord.c \
+					animator.c \
+					zbuff.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/

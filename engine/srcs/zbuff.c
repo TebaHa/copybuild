@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler.c                                    :+:      :+:    :+:   */
+/*   zbuff.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/09 18:03:24 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/01 20:24:17 by zytrams          ###   ########.fr       */
+/*   Created: 2019/10/01 19:28:28 by zytrams           #+#    #+#             */
+/*   Updated: 2019/10/01 20:56:24 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void	error_handler(char *error_type, const char *str_error, t_engine *eng)
+void		zbuff_zeroed(int *zbuff)
 {
-	ft_putstr(error_type);
-	ft_putstr("\n");
-	ft_putstr(str_error);
-	ft_putstr("\n");
-	engine_sdl_uninit(eng);
-	exit(1);
+	int		x;
+	int		y;
+
+	x = 0;
+	while (x < WIDTH)
+	{
+		y = 0;
+		while (y < HEIGHT)
+		{
+			zbuff[y * WIDTH + x] = INT32_MIN;
+			y++;
+		}
+		x++;
+	}
 }
