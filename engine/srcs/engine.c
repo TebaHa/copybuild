@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/01 23:40:03 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/01 23:48:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void		engine_sdl_init(t_engine **eng)
 	(*eng)->ren = SDL_CreateRenderer((*eng)->win, -1, SDL_RENDERER_SOFTWARE);
 	if ((*eng)->ren == NULL)
 		error_handler("SDL_CreateRenderer Error: ", SDL_GetError(), (*eng));
-	engine_read_textures(eng);
-	engine_read_sprites(eng);
+	eng_read_textures(*eng);
+	eng_read_sprites(*eng);
 	(*eng)->tmp = create_test_sprobj(*eng);
 }
 
