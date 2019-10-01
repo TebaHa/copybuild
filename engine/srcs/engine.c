@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/01 23:38:43 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/01 23:40:03 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void		engine_sdl_init(t_engine **eng)
 	(*eng)->tmp = create_test_sprobj(*eng);
 }
 
+void		engine_sdl_uninit(t_engine *eng)
+{
 	SDL_DestroyRenderer(eng->ren);
 	SDL_DestroyWindow(eng->win);
 	SDL_Quit();
