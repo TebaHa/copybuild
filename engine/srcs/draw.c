@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/01 23:33:43 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/01 23:39:22 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particl
 	/* Is the wall at least partially in front of the player? */
 	if(t1.y <= 0 && t2.y <= 0)
 		return ;
-	int u0 = 0, u1 = eng->sprites_buffer[4]->texture.height - 1;
+	int u0 = 0, u1 = eng->sprites_buffer[20]->texture.height - 1;
 	if(t1.y <= 0 || t2.y <= 0)
 	{
 		float nearz = 1e-4f, farz = 5, nearside = 1e-5f, farside = 60.f;
@@ -226,9 +226,9 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particl
 				t2 = i2;
 		}
 		if(fabsf(t2.x - t1.x) > fabsf(t2.y - t1.y))
-			u0 = (t1.x - org1.x) * (eng->sprites_buffer[4]->texture.height - 1) / (org2.x-org1.x), u1 = (t2.x - org1.x) * (eng->sprites_buffer[4]->texture.height - 1) / (org2.x - org1.x);
+			u0 = (t1.x - org1.x) * (eng->sprites_buffer[20]->texture.height - 1) / (org2.x-org1.x), u1 = (t2.x - org1.x) * (eng->sprites_buffer[20]->texture.height - 1) / (org2.x - org1.x);
 		else
-			u0 = (t1.y - org1.y) * (eng->sprites_buffer[4]->texture.width - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (eng->sprites_buffer[4]->texture.width - 1) / (org2.y - org1.y);
+			u0 = (t1.y - org1.y) * (eng->sprites_buffer[20]->texture.width - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (eng->sprites_buffer[20]->texture.width - 1) / (org2.y - org1.y);
 	}
 	/* Do perspective transformation */
 	float xscale1 = (WIDTH * hfov) / t1.y, yscale1 = (HEIGHT * vfov) / t1.y;

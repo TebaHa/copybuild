@@ -15,7 +15,7 @@ find_package(SDL2 REQUIRED)
 
 set(GAME_INC game/includes/game.h)
 
-set(ENG_INC engine/includes/engine.h)
+set(ENG_INC engine/includes/engine.h )
 
 set(GAME_SRC game/srcs/freefps.c)
 
@@ -37,7 +37,14 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/rasterizer.c
 			engine/srcs/shoot.c
 			engine/srcs/texture.c
-			engine/srcs/utility.c)
+			engine/srcs/utility.c
+			engine/srcs/parser_resources.c
+			engine/srcs/parser_weapon.c
+			engine/srcs/parser_enemy.c
+			engine/srcs/relative_coord.c
+			engine/srcs/parser_hud_face.c
+			engine/srcs/parser_items.c
+			engine/srcs/parser_hud.c)
 
 set(SDL ${SDL_DIRECTORY}libmlx.a)
 set(SDL_DIRECTORY lib/sdl2/)
@@ -45,7 +52,9 @@ set(SDL_INCLUDES engine/includes/SDL2/)
 
 set(SDL_TTF_DIRECTORY lib/sdl_ttf)
 
-add_executable(DoomNukem ${GAME_INC} ${GAME_SRC} ${ENG_INC} ${ENG_SRC} ${SDL_DIRECTORY} ${SDL_INCLUDES})
+add_executable(DoomNukem ${GAME_INC} ${GAME_SRC}
+				${ENG_INC} ${ENG_SRC}
+				${SDL_DIRECTORY} ${SDL_INCLUDES})
 
 add_subdirectory(lib/libft)
 

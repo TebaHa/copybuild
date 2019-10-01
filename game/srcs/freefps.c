@@ -6,7 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/10/01 21:06:30 by zytrams          ###   ########.fr       */
+=======
+/*   Updated: 2019/09/29 18:30:04 by fsmith           ###   ########.fr       */
+>>>>>>> d3683f2794205af1c7c9edaf58fda7f2b7634fcc
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +88,11 @@ int		main(void)
 	init = 0;
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
+	engine_create_resources_from_file(fps.eng);
 	engine_create_world_from_file(fps.eng, GAME_PATH);
+//	while (1)
+//		;
+//	/*
 	game_init_threads(fps.render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
 	fps.eng->x = 0;
@@ -279,6 +287,7 @@ int		main(void)
 			thread_start_index++;
 		fps.player.anim += 1;
 	}
+//		 */
 	engine_sdl_uninit(fps.eng);
 	return (0);
 }

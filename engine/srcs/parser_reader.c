@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/16 20:04:56 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/09/28 12:35:34 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ t_sprobject	*engine_read_sprobjects_from_file(t_engine *eng, t_buff buff)
 	{
 		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "sobjct:") == 0)
-			util_create_sprobject(eng, &sprobject_buff[eng->stats.objects_count],
+			util_create_sprobject(eng, &sprobject_buff[eng->stats.sprobjects_count],
 			buff.sprites, buff.vertexes, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
