@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 05:01:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/03 10:06:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,19 @@ void	engine_vline_textured(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_
 	pix += y1 * WIDTH + a.x;
 	for(int y = y1; y <= y2; ++y)
 	{
-		unsigned txty = scaler_next(&ty);
-		unsigned offset = (((txty % texture->height) * texture->width) + (txtx % texture->width)) * texture->channels;
-		if ((texture->data)[offset + 3] == 255)
+		if (zbuff[y * WIDTH + a.x] < z)
 		{
-			red = (texture->data)[offset];
-			green = (texture->data)[offset + 1];
-			blue = (texture->data)[offset + 2];
-			color = get_rgb((int)red, (int)green, (int)blue, 255);
-			*pix = color;
-			pix += WIDTH;
+			unsigned txty = scaler_next(&ty);
+			unsigned offset = (((txty % texture->height) * texture->width) + (txtx % texture->width)) * texture->channels;
+			if ((texture->data)[offset + 3] == 255)
+			{
+				red = (texture->data)[offset];
+				green = (texture->data)[offset + 1];
+				blue = (texture->data)[offset + 2];
+				color = get_rgb((int)red, (int)green, (int)blue, 255);
+				*pix = color;
+				pix += WIDTH;
+			}
 		}
 	}
 }
@@ -59,17 +62,20 @@ void	engine_vline_textured_sprite(t_engine *eng, SDL_Surface *surf, t_scaler ty,
 	pixd += y1 * WIDTH + a.x;
 	for(int y = y1; y <= y2; ++y)
 	{
-		unsigned txty = scaler_next(&ty);
-		unsigned offset = (((txty % texture->surface->h) * texture->surface->w) + (txtx % texture->surface->w)) * 4;
-		if ((pixs)[offset + 3] == 255)
+		if (zbuff[y * WIDTH + a.x] < z)
 		{
-			red = (pixs)[offset];
-			green = (pixs)[offset + 1];
-			blue = (pixs)[offset + 2];
-			color = get_rgb((int)red, (int)green, (int)blue, 255);
-			*pixd = color;
+			unsigned txty = scaler_next(&ty);
+			unsigned offset = (((txty % texture->surface->h) * texture->surface->w) + (txtx % texture->surface->w)) * 4;
+			if ((pixs)[offset + 3] == 255)
+			{
+				red = (pixs)[offset];
+				green = (pixs)[offset + 1];
+				blue = (pixs)[offset + 2];
+				color = get_rgb((int)red, (int)green, (int)blue, 255);
+				*pixd = color;
+			}
+			pixd += WIDTH;
 		}
-		pixd += WIDTH;
 	}
 }
 
@@ -91,17 +97,20 @@ void	engine_vline_textured_surface(t_engine *eng, SDL_Surface *surf, t_scaler ty
 	pixd += y1 * WIDTH + a.x;
 	for(int y = y1; y <= y2; ++y)
 	{
-		unsigned txty = scaler_next(&ty);
-		unsigned offset = (((txty % texture->h) * texture->w) + (txtx % texture->w)) * 4;
-		if ((pixs)[offset + 3] == 255)
+		if (zbuff[y * WIDTH + a.x] < z)
 		{
-			red = (pixs)[offset];
-			green = (pixs)[offset + 1];
-			blue = (pixs)[offset + 2];
-			color = get_rgb((int)red, (int)green, (int)blue, 255);
-			*pixd = color;
+			unsigned txty = scaler_next(&ty);
+			unsigned offset = (((txty % texture->h) * texture->w) + (txtx % texture->w)) * 4;
+			if ((pixs)[offset + 3] == 255)
+			{
+				red = (pixs)[offset];
+				green = (pixs)[offset + 1];
+				blue = (pixs)[offset + 2];
+				color = get_rgb((int)red, (int)green, (int)blue, 255);
+				*pixd = color;
+			}
+			pixd += WIDTH;
 		}
-		pixd += WIDTH;
 	}
 }
 

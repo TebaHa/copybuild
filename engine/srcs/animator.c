@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:00:51 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/02 20:16:34 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/03 10:41:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_sprobject	*create_test_sprobj(t_engine *eng)
 	x = 0;
 	res->type = (t_enemy *)ft_memalloc(sizeof(t_enemy));
 	res->type->anmtn[0] = (t_sprite *)ft_memalloc(sizeof(t_sprite));
-	res->position = (t_point_3d){0, 100, 100, 0};
+	res->position = (t_point_3d){0, -200.0f, 0.f, 200.0f};
 	res->type->anmtn[0]->surface = SDL_CreateRGBSurface(0, w, h, 32, (Uint32)0xff000000,
 							(Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff);
 	pix = (int *)res->type->anmtn[0]->surface->pixels;
@@ -59,37 +59,25 @@ t_sprobject	*create_test_sprobj(t_engine *eng)
 
 void		animator_render_sprite_object(t_engine *eng, SDL_Surface *surf, t_player plr, t_sprobject *spr_obj, t_item sect, int *zbuff)
 {
-	t_wallobj	w_partcle;
-	t_point_2d	d1;
 	t_point_2d	t1;
 	t_point_2d	t2;
 	t_point_2d	c1;
 	t_point_2d	c2;
 
-	w_partcle.a.x = spr_obj->position.x;
-	w_partcle.a.y = spr_obj->position.y;
-	w_partcle.b.x = spr_obj->position.x + spr_obj->type->anmtn[0]->surface->w;
-	w_partcle.b.y = spr_obj->position.y + spr_obj->type->anmtn[0]->surface->h;
-	t1.x = w_partcle.a.x - plr.position.x;
-	t1.y = w_partcle.a.y - plr.position.y;
-	t2.x = w_partcle.b.x - plr.position.x;
-	t2.y = w_partcle.b.y - plr.position.y;
+	t1.x = spr_obj->position.x - plr.position.x;
+	t1.y = spr_obj->position.y - plr.position.y;
 	c1.x = t1.x * plr.sinangle - t1.y * plr.cosangle;
 	c1.y = t1.x * plr.cosangle + t1.y * plr.sinangle;
-	c2.x = t2.x * plr.sinangle - t2.y * plr.cosangle;
-	c2.y = t2.x * plr.cosangle + t2.y * plr.sinangle;
-	if (c1.y <= 0 && c2.y <= 0)
-		return ;
 	float xscale1 = (WIDTH * hfov) / c1.y, yscale1 = (HEIGHT * vfov) / c1.y;
 	int x1 = WIDTH / 2 + (-c1.x * xscale1);
-	float xscale2 = (WIDTH * hfov) / c2.y, yscale2 = (HEIGHT * vfov) / c2.y;
-	int x2 = WIDTH / 2 + (-c2.x * xscale2);
-	if(x1 >= x2 || x2 < sect.sx1 || x1 > sect.sx2)
-		return ;
-	engine_render_rescale(spr_obj->type->anmtn[0]->surface, surf, spr_obj->position.z, zbuff, (t_fix_point_2d){100, 100}, spr_obj->type->anmtn[0]->surface->w / 2, spr_obj->type->anmtn[0]->surface->h / 2);
+	float yceil = eng->world->sectors_array[sect.sectorno].floor + spr_obj->type->anmtn[0]->surface->h / 4 - plr.position.z;
+	float yfloor = eng->world->sectors_array[sect.sectorno].floor - plr.position.z;
+	int y1a  = HEIGHT / 2 - (int)((yceil + c1.y * plr.yaw) * yscale1),  y1b = HEIGHT / 2 - (int)((yfloor + c1.y * plr.yaw)  * yscale1);
+	int beginx = max(x1, 0);
+	engine_render_rescale(spr_obj->type->anmtn[0]->surface, surf, 0, zbuff, (t_fix_point_2d){beginx, y1a}, spr_obj->type->anmtn[0]->surface->w * yscale1, spr_obj->type->anmtn[0]->surface->h * yscale1);
 }
 
-void		engine_render_rescale(SDL_Surface *surf, SDL_Surface *dest, int z, int *zbuff, t_fix_point_2d point, int newWidth, int newHeight)
+void		engine_render_rescale(SDL_Surface *surf, SDL_Surface *dest, int z, int *zbuff, t_fix_point_2d point, int new_width, int new_height)
 {
 	double			scaleWidth;
 	double			scaleHeight;
@@ -105,21 +93,25 @@ void		engine_render_rescale(SDL_Surface *surf, SDL_Surface *dest, int z, int *zb
 	pixd = (unsigned char *)dest->pixels;
 	if(surf == NULL)
 		return ;
-	scaleWidth = (double)newWidth / (double)surf->w;
-	scaleHeight = (double)newHeight / (double)surf->h;
-	while (cy < newHeight)
+	scaleWidth = (double)new_width / (double)surf->w;
+	scaleHeight = (double)new_height / (double)surf->h;
+	while (cy < new_height)
 	{
 		cx = 0;
-		while (cx < newWidth)
+		while (cx < new_width)
 		{
-			pixel = ((cy + point.y) * (WIDTH) + (cx + point.x)) * 4;
-			nearestMatch =  (((int)(cy / scaleHeight) * (surf->w)) + ((int)(cx / scaleWidth))) * 4;
-			if (pixs[nearestMatch + 3] != 0)
+			if (zbuff[(cy + point.y) * (WIDTH) + (cx + point.x)] < z && cx >= 0 && cx <= WIDTH)
 			{
-				pixd[pixel] = pixs[nearestMatch];
-				pixd[pixel + 1] = pixs[nearestMatch + 1];
-				pixd[pixel + 2] = pixs[nearestMatch + 2];
-				pixd[pixel + 3] = pixs[nearestMatch + 3];
+				pixel = ((cy + point.y) * (WIDTH) + (cx + point.x)) * 4;
+				nearestMatch =  (((int)(cy / scaleHeight) * (surf->w)) + ((int)(cx / scaleWidth))) * 4;
+				if (pixs[nearestMatch + 3] != 0)
+				{
+					pixd[pixel] = pixs[nearestMatch];
+					pixd[pixel + 1] = pixs[nearestMatch + 1];
+					pixd[pixel + 2] = pixs[nearestMatch + 2];
+					pixd[pixel + 3] = pixs[nearestMatch + 3];
+				}
+				zbuff[((cy + point.y) * (WIDTH) + (cx + point.x))] = z;
 			}
 			cx++;
 		}

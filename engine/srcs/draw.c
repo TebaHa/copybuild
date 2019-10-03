@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 05:19:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/03 10:43:09 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf, int *z
 	int			prev;
 	int			i;
 	int			j;
+	int			ren;
 
 	x = 0;
+	ren = 0;
 	prev = -1;
 	SDL_LockSurface(surf);
 	while (x < WIDTH)
@@ -41,8 +43,6 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf, int *z
 		{
 			engine_render_wall(eng, surf, eng->world->sectors_array[sect_id.sectorno].objects_array[i].polies_array, &plr,
 				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, sect_id, i, prev, zbuff);
-			if (sect_id.sectorno == 1)
-				animator_render_sprite_object(eng, surf, plr, (eng)->tmp, sect_id, zbuff);
 			i++;
 		}
 		prev = sect_id.sectorno;
