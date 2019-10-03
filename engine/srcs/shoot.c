@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/01 23:40:26 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/03 05:52:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ float	dot_product(t_point_3d a, t_point_3d b)
 	return (res);
 }
 
-void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
+void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 {
 	t_point_3d	int_p;
 	t_line		shoot;
@@ -78,7 +78,7 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 					|| (int_p.z > eng->world->sectors_array[sect->objects_array[i].portal].ceil && int_p.z < sect->ceil))
 					{
 						//printf("id: %d X: %f Y: %f Z: %f\n", sect->objects_array[i].id, int_p.x, int_p.y, int_p.z);
-						engine_push_particlestack(&sect->objects_array[i], sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
+						engine_push_particlestack(&sect->objects_array[i], plr->wpn, sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
 						break;
 					}
 					else if (prev != sect->objects_array[i].portal)
@@ -92,7 +92,7 @@ void	shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range)
 				{
 					//printf("id: %d X: %f Y: %f Z: %f\n", sect->objects_array[i].id, int_p.x, int_p.y, int_p.z);
 					hit = 1;
-					engine_push_particlestack(&sect->objects_array[i], sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
+					engine_push_particlestack(&sect->objects_array[i], plr->wpn, sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
 					break;
 				}
 			}
@@ -160,7 +160,7 @@ int		intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res)
 	return (1);
 }
 
-void	engine_push_particlestack(t_object *obj, t_wallobj *particlestack, int *status, t_point_3d particle)
+void	engine_push_particlestack(t_object *obj, t_weapon *wpn, t_wallobj *particlestack, int *status, t_point_3d particle)
 {
 	t_wallobj	w_partcle;
 	double dx1;
@@ -178,12 +178,15 @@ void	engine_push_particlestack(t_object *obj, t_wallobj *particlestack, int *sta
 	dist1 = sqrtf(dx1 * dx1 + dy1 * dy1);
 	dist2 = sqrtf(dx2 * dx2 + dy2 * dy2);
 	half_w = 2;
+	w_partcle.texture = wpn->bullet_hole;
 	w_partcle.a.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[0].x)) / dist1);
 	w_partcle.a.y = particle.y - ((half_w * (particle.y - obj->polies_array[0].vertices_array[0].y)) / dist1);
 	w_partcle.b.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[1].x)) / dist2);
 	w_partcle.b.y = particle.y - ((half_w * (particle.y - obj->polies_array[0].vertices_array[1].y)) / dist2);
 	w_partcle.id = 1;
 	w_partcle.z = particle.z;
+	w_partcle.timer = 0;
+	w_partcle.frame_num = 0;
 	particlestack[*status] = w_partcle;
 	*status = (*status > 126) ? 0 : *status + 1;
 }

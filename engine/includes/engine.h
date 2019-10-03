@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/01 23:38:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/03 05:52:27 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,8 @@ typedef struct		s_wallobj
 	float			z;
 	float			abs_w;
 	float			abs_h;
+	int				timer;
+	int				frame_num;
 	t_sprite		*texture;
 }					t_wallobj;
 
@@ -362,6 +364,7 @@ typedef	struct		s_player
 	t_point_3d		position; // current position
 	t_point_3d		velocity; // current motion vector
 	t_point_3d		real_position;
+	t_weapon		*wpn;
 	float			angle; // view angle
 	float			cosangle;
 	float			sinangle;
@@ -496,7 +499,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 int				engine_init_triangle(t_polygone *t, t_tric *trg);
 void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
 void			engine_do_calc(t_tric *trg);
-void			engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id, int prev, int *zbuff);
+void			engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, t_item sect, int obj_id, int prev, int *zbuff);
 void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
 void			point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
 int				get_rgb(int r, int g, int b, int a);
@@ -540,17 +543,20 @@ void			engine_vline(t_engine *eng, SDL_Surface *surf, t_fix_point_3d a, t_fix_po
 void			engine_render_world_walls(t_engine *eng, t_polygone *polygone, t_player *plr, t_item sect);
 void			engine_render_world_box(t_engine *eng, t_player *plr);
 t_point_3d		calc_normal_dots(t_point_3d a, t_point_3d b, t_point_3d c);
-void			engine_push_particlestack(t_object *obj, t_wallobj *particlestack, int *status, t_point_3d particle);
+void			engine_push_particlestack(t_object *obj, t_weapon *wpn, t_wallobj *particlestack, int *status, t_point_3d particle);
 void			engine_push_checkstack(int *checkqueue, int item);
 int				engine_pop_checkstack(int *checkqueue);
 void			engine_clear_checkstack(int *checkqueue);
 int				check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
-void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particle,  t_object *obj, int *ytop, int *ybottom, t_player *plr, t_item sect, int *zbuff);
+void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *particle,  t_object *obj, int *ytop, int *ybottom, t_player *plr, t_item sect, int *zbuff);
 void			get_relative_xy(t_engine *eng, t_fix_point_2d *p);
 void			zbuff_zeroed(int *zbuff);
 void			engine_render_rescale(SDL_Surface *surf, SDL_Surface *dest, int z, int *zbuff, t_fix_point_2d point, int newWidth, int newHeight);
 void			animator_render_sprite_object(t_engine *eng, SDL_Surface *surf, t_player plr, t_sprobject *spr_obj, t_item sect, int *zbuff);
 t_sprobject		*create_test_sprobj(t_engine *eng);
+void			engine_vline_textured_sprite(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, t_sprite *texture);
+void			engine_vline_textured_surface(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, SDL_Surface *texture);
+void			switch_weapon(t_engine *eng, t_player *plr, int weapon_num);
 
 /*
 **Image-processing functions
@@ -572,7 +578,7 @@ void			engine_clear_checkstack(int *stack);
 t_image			*engine_cut_texture(t_image *world_texture, int xstart, int xsize, int ystart, int ysize);
 void			game_stop_threads(t_thread_pool	*render_thread, int thread_count);
 void			engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf);
-void			shoot(t_engine *eng, SDL_Surface *surf, t_player *plr, int weapon_range);
+void			shoot(t_engine *eng, t_player *plr, int weapon_range);
 int				intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
 
 /*

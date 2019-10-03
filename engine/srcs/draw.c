@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/01 23:39:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/03 05:19:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf, int *z
 		while (i < eng->world->sectors_array[sect_id.sectorno].objects_count)
 		{
 			engine_render_wall(eng, surf, eng->world->sectors_array[sect_id.sectorno].objects_array[i].polies_array, &plr,
-				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, NULL, sect_id, i, prev, zbuff);
+				ytop, ybottom, eng->world->sectors_array[sect_id.sectorno].objects_array[i].portal, sect_id, i, prev, zbuff);
 			if (sect_id.sectorno == 1)
 				animator_render_sprite_object(eng, surf, plr, (eng)->tmp, sect_id, zbuff);
 			i++;
@@ -52,7 +52,7 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf, int *z
 	SDL_UnlockSurface(surf);
 }
 
-void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, int *rendered, t_item sect, int obj_id, int prev, int *zbuff)
+void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, t_item sect, int obj_id, int prev, int *zbuff)
 {
 	t_point_2d	v1;
 	t_point_2d	v2;
@@ -179,23 +179,23 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 	{
 		if (eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].z > eng->world->sectors_array[sect.sectorno].floor &&
 		eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].z < eng->world->sectors_array[sect.sectorno].ceil)
-			engine_render_particle(eng, surf, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i],
+			engine_render_particle(eng, surf, &eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i],
 					&eng->world->sectors_array[sect.sectorno].objects_array[obj_id], ytop, ybottom, plr, sect, zbuff);
 		i++;
 	}
 }
 
-void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particle, t_object *obj, int *ytop, int *ybottom, t_player *plr, t_item sect, int *zbuff)
+void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *particle, t_object *obj, int *ytop, int *ybottom, t_player *plr, t_item sect, int *zbuff)
 {
 	t_point_2d	t1;
 	t_point_2d	t2;
 	t_point_2d	c1;
 	t_point_2d	c2;
 
-	c1.x = particle.a.x - plr->position.x;
-	c1.y = particle.a.y - plr->position.y;
-	c2.x = particle.b.x - plr->position.x;
-	c2.y = particle.b.y - plr->position.y;
+	c1.x = particle->a.x - plr->position.x;
+	c1.y = particle->a.y - plr->position.y;
+	c2.x = particle->b.x - plr->position.x;
+	c2.y = particle->b.y - plr->position.y;
 	t1.x = c1.x * plr->sinangle - c1.y * plr->cosangle;
 	t1.y = c1.x * plr->cosangle + c1.y * plr->sinangle;
 	t2.x = c2.x * plr->sinangle - c2.y * plr->cosangle;
@@ -203,7 +203,7 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particl
 	/* Is the wall at least partially in front of the player? */
 	if(t1.y <= 0 && t2.y <= 0)
 		return ;
-	int u0 = 0, u1 = eng->sprites_buffer[20]->texture.height - 1;
+	int u0 = 0, u1 = particle->texture->surface[particle->frame_num].h - 1;
 	if(t1.y <= 0 || t2.y <= 0)
 	{
 		float nearz = 1e-4f, farz = 5, nearside = 1e-5f, farside = 60.f;
@@ -226,9 +226,9 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particl
 				t2 = i2;
 		}
 		if(fabsf(t2.x - t1.x) > fabsf(t2.y - t1.y))
-			u0 = (t1.x - org1.x) * (eng->sprites_buffer[20]->texture.height - 1) / (org2.x-org1.x), u1 = (t2.x - org1.x) * (eng->sprites_buffer[20]->texture.height - 1) / (org2.x - org1.x);
+			u0 = (t1.x - org1.x) * (particle->texture->surface[particle->frame_num].h - 1) / (org2.x-org1.x), u1 = (t2.x - org1.x) * (particle->texture->surface[particle->frame_num].h - 1) / (org2.x - org1.x);
 		else
-			u0 = (t1.y - org1.y) * (eng->sprites_buffer[20]->texture.width - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (eng->sprites_buffer[20]->texture.width - 1) / (org2.y - org1.y);
+			u0 = (t1.y - org1.y) * (particle->texture->surface[particle->frame_num].w - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (particle->texture->surface[particle->frame_num].w - 1) / (org2.y - org1.y);
 	}
 	/* Do perspective transformation */
 	float xscale1 = (WIDTH * hfov) / t1.y, yscale1 = (HEIGHT * vfov) / t1.y;
@@ -238,41 +238,31 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj particl
 	if(x1 >= x2 || x2 < sect.sx1 || x1 > sect.sx2)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil =  (particle.z + 8) - plr->position.z;
-	float yfloor = (particle.z - 8) - plr->position.z;
+	float yceil =  (particle->z + 8) - plr->position.z;
+	float yfloor = (particle->z - 8) - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	int y1a  = HEIGHT / 2 + (int)(-(yceil + t1.y * plr->yaw) * yscale1), y1b = HEIGHT / 2 + (int)(-(yfloor + t1.y * plr->yaw)  * yscale1);
 	int y2a  = HEIGHT / 2 + (int)(-(yceil + t2.y * plr->yaw)  * yscale2), y2b = HEIGHT / 2 + (int)(-(yfloor + t2.y * plr->yaw)  * yscale2);
 	int beginx = max(x1, sect.sx1), endx = min(x2, sect.sx2);
 	t_scaler ya_int = Scaler_Init(x1, beginx, x2, y1a, y2a);
 	t_scaler yb_int = Scaler_Init(x1, beginx, x2, y1b, y2b);
-	if (obj->portal == -1)
+	for(int x = beginx; x <= endx; ++x)
 	{
-		for(int x = beginx; x <= endx; ++x)
-		{
-			int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;
-			/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
-			int ya = scaler_next(&ya_int);
-			int yb = scaler_next(&yb_int);
-			int cya = clamp(ya, ytop[x], ybottom[x]); // top
-			int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
-			int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
-			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, eng->sprites_buffer[4]->texture.width - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, z, zbuff, &eng->sprites_buffer[4]->texture);
-		}
+		int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;
+		/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
+		int ya = scaler_next(&ya_int);
+		int yb = scaler_next(&yb_int);
+		int cya = clamp(ya, ytop[x], ybottom[x]); // top
+		int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
+		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
+		engine_vline_textured_surface(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, particle->texture->surface[particle->frame_num].w - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, z, zbuff, &particle->texture->surface[particle->frame_num]);
 	}
-	else
+	if (particle->texture->a_state == ANIMATE)
 	{
-		for(int x = beginx; x <= endx; ++x)
-		{
-			int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;
-			/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
-			int ya = scaler_next(&ya_int);
-			int yb = scaler_next(&yb_int);
-			int cya = clamp(ya, 0, WIDTH - 1); // top
-			int cyb = clamp(yb, 0, WIDTH - 1); // bottom
-			int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
-			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, eng->sprites_buffer[4]->texture.width - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, z, zbuff, &eng->sprites_buffer[4]->texture);
-		}
+		if (((particle->timer % particle->texture->frames_delay) == 0) && (particle->frame_num < particle->texture->frames_num - 1))
+			particle->frame_num++;
+		else
+			particle->timer++;
 	}
 }
 

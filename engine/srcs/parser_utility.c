@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/01 23:42:54 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/03 03:39:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ SDL_Surface	*util_CreateRGBSurface(Uint32 flags, int width, int height,
 		int depth)
 {
 	return (SDL_CreateRGBSurface(flags, width, height, depth,
-		(Uint32)0xff000000, (Uint32)0xff0000, (Uint32)0xff00, (Uint32)0xff));
+		(Uint32)0xff000000, (Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff));
 }
 
 SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
@@ -175,7 +175,7 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 	int 		y;
 	int 		offsets;
 	int 		offseti;
-	int 		*pix;
+	unsigned	*pix;
 
 	if (texture == NULL)
 		return (NULL);
@@ -188,10 +188,8 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 		while (y < sprite->h)
 		{
 			offsets = y * sprite->w + x;
-			offseti = y * texture->channels * sprite->w + x * texture->channels;
-			pix[offsets] = get_rgb(texture->data[offseti],
-				texture->data[offseti + 1], texture->data[offseti + 2],
-				texture->data[offseti + 3]);
+			offseti = y * texture->width + x;
+			pix[offsets] = ((unsigned *)texture->data)[offseti];
 			y++;
 		}
 		x++;

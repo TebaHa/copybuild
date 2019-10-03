@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:00:51 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/01 23:54:05 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/02 20:16:34 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void		animator_render_sprite_object(t_engine *eng, SDL_Surface *surf, t_player p
 	int x2 = WIDTH / 2 + (-c2.x * xscale2);
 	if(x1 >= x2 || x2 < sect.sx1 || x1 > sect.sx2)
 		return ;
-	engine_render_rescale(spr_obj->type->anmtn[0]->surface, surf, spr_obj->position.z, zbuff, (t_fix_point_2d){100, 100}, spr_obj->type->anmtn[0]->surface->w, spr_obj->type->anmtn[0]->surface->h);
+	engine_render_rescale(spr_obj->type->anmtn[0]->surface, surf, spr_obj->position.z, zbuff, (t_fix_point_2d){100, 100}, spr_obj->type->anmtn[0]->surface->w / 2, spr_obj->type->anmtn[0]->surface->h / 2);
 }
 
 void		engine_render_rescale(SDL_Surface *surf, SDL_Surface *dest, int z, int *zbuff, t_fix_point_2d point, int newWidth, int newHeight)

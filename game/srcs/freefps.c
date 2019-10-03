@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/01 23:40:36 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/03 06:01:45 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static	int		game_thread_wrapper(void *ptr)
 
 	fps = (t_game *)ptr;
 	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface, fps->render_thread_pool[fps->thread_num].z_buff);
-	SDL_Delay(5);
+	engine_draw_hud(fps->eng, &fps->player, fps->render_thread_pool[fps->thread_num].surface);
+	SDL_Delay(10 * THREAD_POOL_SIZE);
 	return (fps->thread_num);
 }
 
@@ -86,9 +87,7 @@ int		main(void)
 	game_create_test_player(&fps.player);
 	engine_create_resources_from_file(fps.eng);
 	engine_create_world_from_file(fps.eng, GAME_PATH);
-//	while (1)
-//		;
-//	/*
+	fps.player.wpn = fps.eng->weapon[1];
 	game_init_threads(fps.render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
 	fps.eng->x = 0;
@@ -125,16 +124,10 @@ int		main(void)
 			}
 			if (fps.eng->event.button.type == SDL_MOUSEBUTTONDOWN)
 				if (fps.eng->event.button.button == SDL_BUTTON_LEFT)
-				{
-					fps.player.shoot = 1;
-					fps.player.plr_state = P_FIRE;
-				}
+					fire(fps.eng, &fps.player, 1);
 			if (fps.eng->event.button.type == SDL_MOUSEBUTTONUP)
 				if (fps.eng->event.button.button == SDL_BUTTON_LEFT)
-				{
-					fps.player.shoot = 0;
-					fps.player.firetime = FIRERATE;
-				}
+					fire(fps.eng, &fps.player, 0);
 			if (fps.eng->event.type == SDL_KEYUP)
 			{
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
@@ -150,6 +143,10 @@ int		main(void)
 			}
 			if (fps.eng->event.type == SDL_KEYDOWN)
 			{
+				if (fps.eng->event.key.keysym.sym == SDLK_1)
+					switch_weapon(fps.eng, &fps.player, 0);
+				if (fps.eng->event.key.keysym.sym == SDLK_2)
+					switch_weapon(fps.eng, &fps.player, 1);
 				if (fps.eng->event.key.keysym.sym == SDLK_o)
 					change_floor(fps.eng, fps.player.cursector, 10);
 				if (fps.eng->event.key.keysym.sym == SDLK_l)
@@ -223,17 +220,9 @@ int		main(void)
 					dz = 0;
 				}
 		}
-		if (fps.player.shoot == 1)
-		{
-			fps.player.firetime = FIRERATE;
-			shoot(fps.eng, fps.render_thread_pool[thread_end_index].surface, &fps.player, 1000);
-		}
-		if (fps.player.firetime != 0)
-		{
-			fps.player.firetime--;
-		}
 		else
 			fps.player.plr_state = P_IDLE;
+		fire_anim_change(fps.player, &fps.player);
 		get_relative_xy(fps.eng, &xy);
 		fps.player.angle += xy.x * 0.03f;
 		yaw = clamp(yaw - xy.y * 0.03f, -5, 5);
@@ -271,9 +260,8 @@ int		main(void)
 		if (thread_start_index == (THREAD_POOL_SIZE - 1) || init == 1)
 		{
 			SDL_WaitThread(fps.render_thread_pool[thread_end_index].thread, &fps.render_thread_pool[thread_end_index].value);
-			engine_draw_hud(fps.eng, &fps.player, fps.render_thread_pool[thread_end_index].surface);
 			engine_render_frame(fps.eng, fps.render_thread_pool[thread_end_index].surface);
-			SDL_Delay(3);
+			SDL_Delay(THREAD_POOL_SIZE);
 			thread_start_index = thread_end_index;
 			thread_end_index = thread_end_index < (THREAD_POOL_SIZE - 1) ? thread_end_index + 1 : 0;
 			if (init == 0)
@@ -281,9 +269,7 @@ int		main(void)
 		}
 		else
 			thread_start_index++;
-		fps.player.anim += 1;
 	}
-//		 */
 	engine_sdl_uninit(fps.eng);
 	return (0);
 }
@@ -317,4 +303,9 @@ void	change_floor(t_engine *eng, int sect, int change)
 void	change_ceil(t_engine *eng, int sect, int change)
 {
 	eng->world->sectors_array[sect].ceil += change;
+}
+
+void	switch_weapon(t_engine *eng, t_player *plr, int weapon_num)
+{
+	plr->wpn = eng->weapon[weapon_num];
 }
