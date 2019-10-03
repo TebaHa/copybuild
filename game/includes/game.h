@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/28 12:35:34 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/03 06:10:51 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ typedef	struct		s_game
 
 void			game_create_test_player(t_player *plr);
 static	int		game_thread_wrapper(void *ptr);
+void			fire(t_engine *eng, t_player *plr, int state);
+void			fire_anim_change(t_engine *eng, t_player *plr);
 
 #endif

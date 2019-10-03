@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 05:52:27 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/03 06:25:50 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,6 +374,7 @@ typedef	struct		s_player
 	int				shoot;
 	int				anim;
 	int				delay;
+	int				frame_num;
 	t_player_state	plr_state;
 }					t_player;
 

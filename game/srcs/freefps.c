@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 06:01:45 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/03 06:42:11 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ int		main(void)
 		}
 		else
 			fps.player.plr_state = P_IDLE;
-		fire_anim_change(fps.player, &fps.player);
+		fire_anim_change(fps.eng, &fps.player);
 		get_relative_xy(fps.eng, &xy);
 		fps.player.angle += xy.x * 0.03f;
 		yaw = clamp(yaw - xy.y * 0.03f, -5, 5);
@@ -308,4 +308,6 @@ void	change_ceil(t_engine *eng, int sect, int change)
 void	switch_weapon(t_engine *eng, t_player *plr, int weapon_num)
 {
 	plr->wpn = eng->weapon[weapon_num];
+	plr->wpn->state = W_IDLE;
+	plr->frame_num = 0;
 }
