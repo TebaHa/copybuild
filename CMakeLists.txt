@@ -44,7 +44,8 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/relative_coord.c
 			engine/srcs/parser_hud_face.c
 			engine/srcs/parser_items.c
-			engine/srcs/parser_hud.c)
+			engine/srcs/parser_hud.c
+			engine/srcs/sound.c)
 
 set(SDL ${SDL_DIRECTORY}libmlx.a)
 set(SDL_DIRECTORY lib/sdl2/)

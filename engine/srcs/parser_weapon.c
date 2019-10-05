@@ -42,6 +42,7 @@ void 		eng_create_rifle(t_engine *eng)
 //	rifle->anmtn[W_HURT] = util_create_sprite_by_name(eng, "rifle_hurt");
 	rifle->anmtn[W_HURT] = rifle->anmtn[W_IDLE];
 	eng->weapon[RIFLE] = rifle;
+	sound_init(eng);
 	eng->weapon[RIFLE]->next = eng->weapon[PLASMA];
 	eng->weapon[RIFLE]->prev = eng->weapon[PLASMA];
 }

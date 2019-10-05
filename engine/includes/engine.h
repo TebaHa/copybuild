@@ -17,6 +17,7 @@
 # include <SDL2/SDL.h>
 # include <dirent.h>
 # include <SDL2/SDL_ttf.h>
+# include <SDL2/SDL_mixer.h>
 # define ENGINE_H
 # define WIDTH 1024
 # define HEIGHT 768
@@ -276,6 +277,7 @@ typedef struct		s_weapon
 	t_wpn_state 	state;
 	t_sprite		*anmtn[W_STATES_NUM];
 	t_sprite		*bullet_hole;
+	Mix_Chunk		*shoot_sound;
 	struct s_weapon	*next;
 	struct s_weapon	*prev;
 }					t_weapon;
@@ -605,6 +607,11 @@ t_sprite		*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
 char			*util_add_png_to_name(char *old_name);
 char			*util_add_png_num_to_name(char *old_name, int num);
 t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
+
+void			sound_init(t_engine *eng);
+void			sound_play(t_engine *eng);
+void			sound_free(t_engine *eng);
+
 
 /*
 **	Resources parsing functions end

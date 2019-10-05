@@ -224,6 +224,7 @@ int		main(void)
 		if (fps.player.shoot == 1)
 		{
 			fps.player.firetime = FIRERATE;
+			sound_play(fps.eng);
 			shoot(fps.eng, fps.render_thread_pool[thread_end_index].surface, &fps.player, 1000);
 		}
 		if (fps.player.firetime != 0)
