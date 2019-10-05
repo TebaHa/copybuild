@@ -14,6 +14,7 @@ NAME = freefps
 CC = gcc
 FLAGS =
 
+
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./lib/libft/
 LIBFT_DIRECTORY_HEADERS = $(LIBFT_DIRECTORY)includes
