@@ -26,9 +26,9 @@
 # define MAXSECTORS 32
 # define hfov (0.83f * HEIGHT / WIDTH)
 # define vfov (0.2f)
-# define TEXTURE_PACK_PATH "./game/resources/images/"
-# define TEXTURE_SPRITE_PATH "./game/resources/sprites/"
-# define GAME_PATH "./game/resources/levels/1.lvl"
+# define TEXTURE_PACK_PATH "../game/resources/images/"
+# define TEXTURE_SPRITE_PATH "../game/resources/sprites/"
+# define GAME_PATH "../game/resources/levels/1.lvl"
 # define PARSING_ERROR 40
 # define READING_ERROR 41
 # define CYCLE_READING_ERROR 42

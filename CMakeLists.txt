@@ -17,7 +17,8 @@ set(GAME_INC game/includes/game.h)
 
 set(ENG_INC engine/includes/engine.h )
 
-set(GAME_SRC game/srcs/freefps.c)
+set(GAME_SRC game/srcs/freefps.c
+			game/srcs/weapon_fire.c)
 
 set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/color.c
@@ -44,7 +45,9 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/relative_coord.c
 			engine/srcs/parser_hud_face.c
 			engine/srcs/parser_items.c
-			engine/srcs/parser_hud.c)
+			engine/srcs/parser_hud.c
+			engine/srcs/animator.c
+			engine/srcs/zbuff.c)
 
 set(SDL ${SDL_DIRECTORY}libmlx.a)
 set(SDL_DIRECTORY lib/sdl2/)

@@ -25,7 +25,7 @@ void		engine_sdl_init(t_engine **eng)
 		error_handler("SDL_CreateRenderer Error: ", SDL_GetError(), (*eng));
 	eng_read_textures(*eng);
 	eng_read_sprites(*eng);
-	(*eng)->tmp = create_test_sprobj(*eng);
+//	(*eng)->tmp = create_test_sprobj(*eng);
 }
 
 void		engine_sdl_uninit(t_engine *eng)
