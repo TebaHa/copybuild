@@ -27,9 +27,10 @@
 # define MAXSECTORS 32
 # define hfov (0.83f * HEIGHT / WIDTH)
 # define vfov (0.2f)
-# define TEXTURE_PACK_PATH "./game/resources/images/"
-# define TEXTURE_SPRITE_PATH "./game/resources/sprites/"
-# define GAME_PATH "./game/resources/levels/1.lvl"
+# define TEXTURE_PACK_PATH		"./game/resources/images/"
+# define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
+# define SOUND_PATH				"./game/resources/sounds/"
+# define GAME_PATH				"./game/resources/levels/1.lvl"
 # define PARSING_ERROR 40
 # define READING_ERROR 41
 # define CYCLE_READING_ERROR 42
@@ -158,6 +159,17 @@ typedef enum		e_wpn_state
 	W_STATES_NUM
 }					t_wpn_state;
 
+typedef enum		e_sound_ch
+{
+	S_WEAPON_SHOT,
+	S_WEAPON_EXTRA,
+	S_PLAYER,
+	S_ENEMY_1,
+	S_ENEMY_2,
+	S_ENEMY_3,
+	SOUNDS_NUM
+}					t_sound_ch;
+
 typedef enum		e_emo_state
 {
 	F_IDLE,
@@ -277,7 +289,7 @@ typedef struct		s_weapon
 	t_wpn_state 	state;
 	t_sprite		*anmtn[W_STATES_NUM];
 	t_sprite		*bullet_hole;
-	Mix_Chunk		*shoot_sound;
+	Mix_Chunk		*shot_sound;
 	struct s_weapon	*next;
 	struct s_weapon	*prev;
 }					t_weapon;
@@ -373,6 +385,7 @@ typedef	struct		s_player
 	int				shoot;
 	int				anim;
 	int				delay;
+	Mix_Chunk		*steps_sound;
 	t_player_state	plr_state;
 }					t_player;
 
@@ -608,8 +621,9 @@ char			*util_add_png_to_name(char *old_name);
 char			*util_add_png_num_to_name(char *old_name, int num);
 t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
 
-void			sound_init(t_engine *eng);
-void			sound_play(t_engine *eng);
+Mix_Chunk		*sound_init(char *name);
+char			*util_add_wav_to_name(char *old_name);
+void			sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
 void			sound_free(t_engine *eng);
 
 

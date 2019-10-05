@@ -37,6 +37,7 @@ void		game_create_test_player(t_player *plr)
 	plr->yaw = 0;
 	plr->shoot = 0;
 	plr->delay = 3;
+	plr->steps_sound = sound_init("player_steps");
 }
 
 static	int		game_thread_wrapper(void *ptr)
@@ -138,7 +139,10 @@ int		main(void)
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
 					fps.player.controller.running = 5;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
+				{
+					sound_play(fps.player.steps_sound, S_PLAYER);
 					fps.player.controller.wasd[0] = 0;
+				}
 				if (fps.eng->event.key.keysym.sym == SDLK_s)
 					fps.player.controller.wasd[3] = 0;
 				if (fps.eng->event.key.keysym.sym == SDLK_a)
@@ -224,7 +228,7 @@ int		main(void)
 		if (fps.player.shoot == 1)
 		{
 			fps.player.firetime = FIRERATE;
-			sound_play(fps.eng);
+			sound_play(fps.eng->weapon[0]->shot_sound, S_WEAPON_SHOT);
 			shoot(fps.eng, fps.render_thread_pool[thread_end_index].surface, &fps.player, 1000);
 		}
 		if (fps.player.firetime != 0)

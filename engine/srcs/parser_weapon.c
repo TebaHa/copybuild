@@ -41,8 +41,8 @@ void 		eng_create_rifle(t_engine *eng)
 	rifle->anmtn[W_RELOAD] = rifle->anmtn[W_IDLE];
 //	rifle->anmtn[W_HURT] = util_create_sprite_by_name(eng, "rifle_hurt");
 	rifle->anmtn[W_HURT] = rifle->anmtn[W_IDLE];
+	rifle->shot_sound = sound_init("rifle_shot_single");
 	eng->weapon[RIFLE] = rifle;
-	sound_init(eng);
 	eng->weapon[RIFLE]->next = eng->weapon[PLASMA];
 	eng->weapon[RIFLE]->prev = eng->weapon[PLASMA];
 }
@@ -68,6 +68,7 @@ void 		eng_create_plasma(t_engine *eng)
 	plasma->anmtn[W_RELOAD] = plasma->anmtn[W_IDLE];
 //	plasma->anmtn[W_HURT] = util_create_sprite_by_name(eng, "plasma_hurt");
 	plasma->anmtn[W_HURT] = plasma->anmtn[W_IDLE];
+	plasma->shot_sound = sound_init("plasma_shot_single");
 	eng->weapon[PLASMA] = plasma;
 	eng->weapon[PLASMA]->next = eng->weapon[RIFLE];
 	eng->weapon[PLASMA]->prev = eng->weapon[RIFLE];

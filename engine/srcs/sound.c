@@ -1,31 +1,47 @@
 
 #include <engine.h>
 
-#define WAV_PATH "./game/resources/sounds/gun_single_shot.wav"
-
-void	sound_init(t_engine *eng)
+Mix_Chunk		*sound_init(char *name)
 {
-	Mix_Chunk *sound = NULL;
+	Mix_Chunk	*sound = NULL;
+	char		*sound_name;
 
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
-		ft_putendl("Fuck1");
-	if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 )
-		ft_putendl("Fuck2");
-	sound = Mix_LoadWAV(WAV_PATH);
+		ft_putendl("Can't initialize SDL audio");
+	if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, SOUNDS_NUM, 4096 ) == -1 )
+		ft_putendl("Can't initialize SDL_mixer");
+	sound_name = util_add_wav_to_name(name);
+	sound = Mix_LoadWAV(sound_name);
 	if (sound == NULL)
-		ft_putendl("Fuck3");
-	eng->weapon[0]->shoot_sound = sound;
+	{
+		ft_putstr("Can't load ");
+		ft_putstr(sound_name);
+		ft_putendl("!");
+	}
+	free(sound_name);
+	return sound;
 }
 
-void	sound_play(t_engine *eng)
+char		*util_add_wav_to_name(char *old_name)
 {
-	if ( Mix_PlayChannel(-1, eng->weapon[0]->shoot_sound, 0) == -1 )
-		ft_putendl("Fuck4");
+	char	*new_name;
+	char	*new_wav_name;
+
+	new_name = ft_strjoin(SOUND_PATH, old_name);
+	new_wav_name = ft_strjoin(new_name, ".wav");
+	free(new_name);
+	return (new_wav_name);
+}
+
+void	sound_play(Mix_Chunk *sound_name, t_sound_ch channel)
+{
+	if ( Mix_PlayChannel(channel, sound_name, 0) == -1 )
+		ft_putendl("Audio play error");
 }
 
 void	sound_free(t_engine *eng)
 {
-	Mix_FreeChunk(eng->weapon[0]->shoot_sound);
-//	Mix_FreeChunk(eng->weapon[1]->shoot_sound);
+	Mix_FreeChunk(eng->weapon[0]->shot_sound);
+//	Mix_FreeChunk(eng->weapon[1]->shot_sound);
 	Mix_CloseAudio();
 }
