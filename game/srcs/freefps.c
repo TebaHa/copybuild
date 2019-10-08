@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 12:19:30 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/08 21:57:18 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void		game_create_test_player(t_player *plr)
 	plr->yaw = 0;
 	plr->shoot = 0;
 	plr->delay = 3;
+	plr->steps_sound = sound_init("player_steps");
 }
 
 static	int		game_thread_wrapper(void *ptr)
@@ -45,7 +46,7 @@ static	int		game_thread_wrapper(void *ptr)
 
 	fps = (t_game *)ptr;
 	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface, fps->render_thread_pool[fps->thread_num].z_buff);
-	SDL_Delay(2 * THREAD_POOL_SIZE);
+	SDL_Delay(1 * THREAD_POOL_SIZE);
 	return (fps->thread_num);
 }
 
@@ -132,7 +133,10 @@ int		main(void)
 				if (fps.eng->event.key.keysym.sym == SDLK_LSHIFT)
 					fps.player.controller.running = 5;
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
+				{
+					//sound_play(fps.player.steps_sound, S_PLAYER);
 					fps.player.controller.wasd[0] = 0;
+				}
 				if (fps.eng->event.key.keysym.sym == SDLK_s)
 					fps.player.controller.wasd[3] = 0;
 				if (fps.eng->event.key.keysym.sym == SDLK_a)
@@ -261,7 +265,7 @@ int		main(void)
 			SDL_WaitThread(fps.render_thread_pool[thread_end_index].thread, &fps.render_thread_pool[thread_end_index].value);
 			engine_draw_hud(fps.eng, &fps.player, fps.render_thread_pool[thread_end_index].surface);
 			engine_render_frame(fps.eng, fps.render_thread_pool[thread_end_index].surface);
-			SDL_Delay(THREAD_POOL_SIZE * 2);
+			//DL_Delay(THREAD_POOL_SIZE * 2);
 			thread_start_index = thread_end_index;
 			thread_end_index = thread_end_index < (THREAD_POOL_SIZE - 1) ? thread_end_index + 1 : 0;
 			if (init == 0)
