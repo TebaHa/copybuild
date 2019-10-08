@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/03 03:39:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/08 22:49:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,8 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 		}
 		x++;
 	}
-	return(sprite);
+	//image_free(texture);
+	return (sprite);
 }
 
 void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,

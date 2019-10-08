@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 21:48:37 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/28 12:35:34 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/08 22:39:28 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		image_free(t_image *img)
 {
 	if (img->allocation_ != NO_ALLOCATION && img->data != NULL)
 	{
-		if (img->allocation_ != STB_ALLOCATED)
+		if (img->allocation_ == STB_ALLOCATED)
 			stbi_image_free(img->data);
 		else
 			free(img->data);

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/08 21:44:39 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/08 23:43:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void		engine_sdl_init(t_engine **eng)
 {
 	*eng = (t_engine *)ft_memalloc(sizeof(t_engine));
-	if (Mix_Init(SDL_INIT_AUDIO) == 0)
-		error_handler("SDL_Mixer Error: ", SDL_GetError(), (*eng));
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		error_handler("SDL_Init Error: ", SDL_GetError(), (*eng));
 	(*eng)->win = SDL_CreateWindow("doka 2", 800, 400, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
@@ -25,9 +23,6 @@ void		engine_sdl_init(t_engine **eng)
 	(*eng)->ren = SDL_CreateRenderer((*eng)->win, -1, SDL_RENDERER_SOFTWARE);
 	if ((*eng)->ren == NULL)
 		error_handler("SDL_CreateRenderer Error: ", SDL_GetError(), (*eng));
-	eng_read_textures(*eng);
-	eng_read_sprites(*eng);
-	(*eng)->tmp = create_test_sprobj(*eng);
 }
 
 void		engine_sdl_uninit(t_engine *eng)
