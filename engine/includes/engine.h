@@ -254,7 +254,7 @@ typedef struct		s_sprite
 {
 	int				id;
 	char 			*name;
-	SDL_Surface		*surface;
+	SDL_Surface		**surface;
 	t_animtn_state	a_state;
 	int 			frames_num;
 	int 			frames_delay;
