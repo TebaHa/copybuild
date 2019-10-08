@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:44:08 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/08 21:01:36 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/08 21:12:23 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,8 @@ int 		util_create_animated_sprite(t_engine *eng, char *str, t_sprite *res)
 			i++;
 		}
 	}
-	/* Подтекаем прямо на строчку ниже!!! */
-//		free(name);
+	if (srfc_count)
+		free(name);
 	if (srfc_count)
 	{
 		res->frames_num = srfc_count;
@@ -175,9 +175,7 @@ int 		util_create_animated_sprite(t_engine *eng, char *str, t_sprite *res)
 				}
 				i++;
 			}
-//			free(name);
 		}
-//		free(name);
 		return (1);
 	}
 	return (0);
@@ -270,6 +268,7 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 //			return (res);
 //		}
 //	}
+	ft_putendl("!!!");
 	res->frames_num = 1;
 	res->a_state = STATIC;
 	util_parsing_error_no_sprite(*res->surface, eng, str);

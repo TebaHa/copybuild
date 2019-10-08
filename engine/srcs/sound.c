@@ -8,7 +8,7 @@ Mix_Chunk		*sound_init(char *name)
 
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
 		ft_putendl("Can't initialize SDL audio");
-	if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, SOUNDS_NUM, 4096 ) == -1 )
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, SOUNDS_NUM, 4096) == -1 )
 		ft_putendl("Can't initialize SDL_mixer");
 	sound_name = util_add_wav_to_name(name);
 	sound = Mix_LoadWAV(sound_name);
