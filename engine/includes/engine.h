@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/29 17:19:20 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/08 20:47:59 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ typedef struct		s_sprite
 {
 	int				id;
 	char 			*name;
-	SDL_Surface		*surface;
+	SDL_Surface		**surface;
 	t_animtn_state	a_state;
 	int 			frames_num;
 	int 			frames_delay;
@@ -620,11 +620,15 @@ t_sprite		*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
 char			*util_add_png_to_name(char *old_name);
 char			*util_add_png_num_to_name(char *old_name, int num);
 t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
+int 			util_create_static_sprite(t_engine *eng, char *str, t_sprite *res);
+int 			util_create_animated_sprite(t_engine *eng, char *str, t_sprite *res);
 
 Mix_Chunk		*sound_init(char *name);
 char			*util_add_wav_to_name(char *old_name);
 void			sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
 void			sound_free(t_engine *eng);
+
+void 			util_infinite_loop(void);
 
 
 /*

@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:44:08 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/28 12:25:55 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/08 21:01:36 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,92 +98,181 @@ char		*util_add_png_num_to_name(char *old_name, int num)
 	return (new_name);
 }
 
-t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
+int 		util_create_static_sprite(t_engine *eng, char *str, t_sprite *res)
 {
-	t_sprite *res;
-	char *name;
 	int i;
-	int srfc_count;
 
-	res = (t_sprite *) ft_memalloc(sizeof(t_sprite));
-	res->frames_delay = DEFAULT_SPRITE_DELAY;
-	/* Поиск статичного спрайта*/
 	i = 0;
-	name = util_add_png_to_name(str);
+	res->name = util_add_png_to_name(str);
 	while (i < eng->stats.sprites_count)
 	{
-		if (!ft_strcmp(name, eng->sprites_buffer[i]->filename))
+		if (!ft_strcmp(res->name, eng->sprites_buffer[i]->filename))
 		{
 			res->frames_num = 1;
 			res->a_state = STATIC;
-			res->surface = util_transform_texture_to_sprite(
-				&eng->sprites_buffer[i]->texture);
-			res->name = util_add_png_to_name(str);
+			res->surface = (SDL_Surface **) ft_memalloc(sizeof(SDL_Surface *));
+			res->surface[0] = util_transform_texture_to_sprite(
+					&eng->sprites_buffer[i]->texture);
 			break;
 		}
 		i++;
 	}
-	free (name);
 	if (i < eng->stats.sprites_count)
-		return (res);
-	/* Поиск динамичного спрайта*/
-	else
+		return (1);
+	return (0);
+}
+
+int 		util_create_animated_sprite(t_engine *eng, char *str, t_sprite *res)
+{
+	int i;
+	int srfc_count;
+	char *name;
+
+	i = 0;
+	srfc_count = 0;
+	/* Подсчет количества фреймов */
+	while (i != eng->stats.sprites_count)
 	{
-		i = 0;
+		name = util_add_png_num_to_name(str, srfc_count + 1);
+		while (i < eng->stats.sprites_count)
+		{
+			if (!ft_strcmp(name, eng->sprites_buffer[i]->filename))
+			{
+				srfc_count++;
+				free(name);
+				i = 0;
+				break;
+			}
+			i++;
+		}
+	}
+	/* Подтекаем прямо на строчку ниже!!! */
+//		free(name);
+	if (srfc_count)
+	{
+		res->frames_num = srfc_count;
+		res->frames_delay = DEFAULT_SPRITE_DELAY;
+		res->a_state = ANIMATE;
+		/* Вероятное место утечки. Малочу под массив, но потом переопределяю */
+		res->surface = (SDL_Surface **) ft_memalloc(sizeof(SDL_Surface *)
+												   * srfc_count);
 		srfc_count = 0;
-		/* Подсчет количества фреймов */
-		while (i != eng->stats.sprites_count)
+		while (srfc_count < res->frames_num)
 		{
 			name = util_add_png_num_to_name(str, srfc_count + 1);
+			i = 0;
 			while (i < eng->stats.sprites_count)
 			{
 				if (!ft_strcmp(name, eng->sprites_buffer[i]->filename))
 				{
+					/* Вероятное место утечки. Малочу под массив, но потом переопределяю */
+					res->surface[srfc_count] =
+							util_transform_texture_to_sprite(
+									&eng->sprites_buffer[i]->texture);
 					srfc_count++;
 					free(name);
-					i = 0;
 					break;
 				}
 				i++;
 			}
+//			free(name);
 		}
-		/* Подтекаем прямо на строчку ниже!!! */
 //		free(name);
-		if (srfc_count)
-		{
-			res->frames_num = srfc_count;
-			res->frames_delay = DEFAULT_SPRITE_DELAY;
-			res->a_state = ANIMATE;
-			/* Вероятное место утечки. Малочу под массив, но потом переопределяю */
-			res->surface = (SDL_Surface *) ft_memalloc(sizeof(SDL_Surface)
-				* srfc_count);
-			srfc_count = 0;
-			while (srfc_count < res->frames_num)
-			{
-				name = util_add_png_num_to_name(str, srfc_count + 1);
-				i = 0;
-				while (i < eng->stats.sprites_count)
-				{
-					if (!ft_strcmp(name, eng->sprites_buffer[i]->filename))
-					{
-						/* Вероятное место утечки. Малочу под массив, но потом переопределяю */
-						res->surface[srfc_count] =
-							*util_transform_texture_to_sprite(
-							&eng->sprites_buffer[i]->texture);
-						srfc_count++;
-						break;
-					}
-					i++;
-				}
-				free(name);
-			}
-			res->name = util_add_png_to_name(str);
-			return (res);
-		}
+		return (1);
 	}
+	return (0);
+}
+
+t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
+{
+	t_sprite *res;
+//	char *name;
+//	int i;
+//	int srfc_count;
+
+	res = (t_sprite *) ft_memalloc(sizeof(t_sprite));
+	res->frames_delay = DEFAULT_SPRITE_DELAY;
+	/* Поиск статичного спрайта*/
+//	i = 0;
+//	name = util_add_png_to_name(str);
+//	while (i < eng->stats.sprites_count)
+//	{
+//		if (!ft_strcmp(name, eng->sprites_buffer[i]->filename))
+//		{
+//			res->frames_num = 1;
+//			res->a_state = STATIC;
+//			res->surface = util_transform_texture_to_sprite(
+//				&eng->sprites_buffer[i]->texture);
+//			res->name = util_add_png_to_name(str);
+//			break;
+//		}
+//		i++;
+//	}
+//	free (name);
+//	if (i < eng->stats.sprites_count)
+//		return (res);
+	if (util_create_static_sprite(eng, str, res))
+		return (res);
+	else if (util_create_animated_sprite(eng, str, res))
+		return (res);
+	/* Поиск динамичного спрайта*/
+//	else
+//	{
+//		i = 0;
+//		srfc_count = 0;
+//		/* Подсчет количества фреймов */
+//		while (i != eng->stats.sprites_count)
+//		{
+//			name = util_add_png_num_to_name(str, srfc_count + 1);
+//			while (i < eng->stats.sprites_count)
+//			{
+//				if (!ft_strcmp(name, eng->sprites_buffer[i]->filename))
+//				{
+//					srfc_count++;
+//					free(name);
+//					i = 0;
+//					break;
+//				}
+//				i++;
+//			}
+//		}
+//		/* Подтекаем прямо на строчку ниже!!! */
+////		free(name);
+//		if (srfc_count)
+//		{
+//			res->frames_num = srfc_count;
+//			res->frames_delay = DEFAULT_SPRITE_DELAY;
+//			res->a_state = ANIMATE;
+//			/* Вероятное место утечки. Малочу под массив, но потом переопределяю */
+//			res->surface = (SDL_Surface *) ft_memalloc(sizeof(SDL_Surface)
+//				* srfc_count);
+//			srfc_count = 0;
+//			while (srfc_count < res->frames_num)
+//			{
+//				name = util_add_png_num_to_name(str, srfc_count + 1);
+//				i = 0;
+//				while (i < eng->stats.sprites_count)
+//				{
+//					if (!ft_strcmp(name, eng->sprites_buffer[i]->filename))
+//					{
+//						/* Вероятное место утечки. Малочу под массив, но потом переопределяю */
+//						res->surface[srfc_count] =
+//							*util_transform_texture_to_sprite(
+//							&eng->sprites_buffer[i]->texture);
+//						srfc_count++;
+//						break;
+//					}
+//					i++;
+//				}
+//				free(name);
+//			}
+//			res->name = util_add_png_to_name(str);
+//			return (res);
+//		}
+//	}
 	res->frames_num = 1;
 	res->a_state = STATIC;
-	util_parsing_error_no_sprite(res->surface, eng, str);
+	util_parsing_error_no_sprite(*res->surface, eng, str);
 	res->name = util_add_png_to_name(PARSING_ERROR_SPRITE);
 	return (res);
 }

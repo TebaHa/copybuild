@@ -60,3 +60,7 @@ add_executable(DoomNukem ${GAME_INC} ${GAME_SRC}
 add_subdirectory(lib/libft)
 
 target_link_libraries(DoomNukem ${SDL2_LIBRARY} libft)
+
+#add_custom_target(DoomNukem
+#		COMMAND make
+#		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

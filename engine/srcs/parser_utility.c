@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/28 12:35:34 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/08 20:00:30 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	util_int10_data_filler(&sprite->id, str[1]);
 	util_int10_data_filler(&sprite->frames_num, str[2]);
 	util_int10_data_filler(&sprite->frames_delay, str[3]);
-	sprite->surface = (SDL_Surface *)ft_memalloc(sizeof(SDL_Surface)
+	sprite->surface = (SDL_Surface **)ft_memalloc(sizeof(SDL_Surface *)
 		* sprite->frames_num);
 	sprite->a_state = STATIC;
 	if (sprite->frames_num > 1)
@@ -57,7 +57,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 		{
 			name = ft_strcpy(ft_strnew(ft_strlen(str[4]) + 2), str[4]);
 			name = ft_strcat(ft_strcat(name, "_"), ft_itoa(srfc_count));
-			util_find_sprite_by_name(&sprite->surface[srfc_count], eng, name);
+			util_find_sprite_by_name(sprite->surface[srfc_count], eng, name);
 			free(name);
 			srfc_count++;
 		}
@@ -65,7 +65,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	else
 	{
 		sprite->a_state = STATIC;
-		util_find_sprite_by_name(sprite->surface, eng, str[4]);
+		util_find_sprite_by_name(*sprite->surface, eng, str[4]);
 	}
 	eng->stats.skins_count++;
 }
@@ -197,6 +197,12 @@ SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)
 		x++;
 	}
 	return(sprite);
+}
+
+void 		util_infinite_loop(void)
+{
+	while (1)
+		;
 }
 
 void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,

@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 16:20:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/29 17:19:20 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/08 20:59:05 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		eng_create_face_100_0(t_engine *eng)
 	eng->hud->face[H_100][F_RIGHT] = util_create_sprite_by_name(eng, "face_100_right");
 	eng->hud->face[H_100][F_SHOOT] = util_create_sprite_by_name(eng, "face_100_shoot");
 	eng->hud->face[H_100][F_HURT] = util_create_sprite_by_name(eng, "face_100_hurt");
-
+	util_infinite_loop();
 	eng->hud->face[H_80][F_IDLE] = util_create_sprite_by_name(eng, "face_80_idle");
 	eng->hud->face[H_80][F_HAPPY] = util_create_sprite_by_name(eng, "face_80_happy");
 	eng->hud->face[H_80][F_LEFT] = util_create_sprite_by_name(eng, "face_80_left");
