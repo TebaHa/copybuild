@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 11:59:34 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/08 21:03:51 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # include <unistd.h>
 # include <math.h>
 # include <libft.h>
-# include <SDL2/SDL.h>
+# include <SDL.h>
 # include <dirent.h>
-# include <SDL2/SDL_ttf.h>
+# include <SDL_ttf.h>
+# include <SDL_mixer.h>
 # define ENGINE_H
 # define WIDTH 1024
 # define HEIGHT 768

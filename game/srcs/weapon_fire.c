@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 03:03:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 07:31:20 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/08 19:13:42 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	fire(t_engine *eng, t_player *plr, int state)
 {
 	plr->shoot = state;
 	plr->frame_num = 0;
-	if (plr->shoot)
+	if (plr->shoot == 1)
 	{
 		plr->plr_state = P_FIRE;
 		plr->wpn->state = W_FIRE;
