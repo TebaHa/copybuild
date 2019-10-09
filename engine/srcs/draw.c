@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/08 22:13:21 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/09 20:58:01 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *partic
 		int cya = clamp(ya, ytop[x], ybottom[x]); // top
 		int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
 		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
-		engine_vline_textured_surface(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, particle->texture->surface[particle->frame_num]->w - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, z, zbuff, &particle->texture->surface[particle->frame_num]);
+		engine_vline_textured_surface(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, particle->texture->surface[particle->frame_num]->w - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, z, zbuff, particle->texture->surface[particle->frame_num]);
 	}
 	if (particle->texture->a_state == ANIMATE)
 	{

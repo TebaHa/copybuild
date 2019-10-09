@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 07:33:50 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/09 20:57:32 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf)
 		}
 	}
 	//printf("%d %d\n", img->frames_num, plr->frame_num);
-	surfs = &img->surface[plr->frame_num];
+	surfs = img->surface[plr->frame_num];
 	x = 0;
 	tx = (WIDTH - surfs->w) / 2;
 	while (x < surfs->w)
