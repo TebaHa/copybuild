@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/08 22:49:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/09 20:45:27 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	util_int10_data_filler(&sprite->id, str[1]);
 	util_int10_data_filler(&sprite->frames_num, str[2]);
 	util_int10_data_filler(&sprite->frames_delay, str[3]);
-	sprite->surface = (SDL_Surface *)ft_memalloc(sizeof(SDL_Surface)
+	sprite->surface = (SDL_Surface **)ft_memalloc(sizeof(SDL_Surface *)
 		* sprite->frames_num);
 	sprite->a_state = STATIC;
 	if (sprite->frames_num > 1)
@@ -57,7 +57,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 		{
 			name = ft_strcpy(ft_strnew(ft_strlen(str[4]) + 2), str[4]);
 			name = ft_strcat(ft_strcat(name, "_"), ft_itoa(srfc_count));
-			util_find_sprite_by_name(&sprite->surface[srfc_count], eng, name);
+			util_find_sprite_by_name(sprite->surface[srfc_count], eng, name);
 			free(name);
 			srfc_count++;
 		}
@@ -65,7 +65,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	else
 	{
 		sprite->a_state = STATIC;
-		util_find_sprite_by_name(sprite->surface, eng, str[4]);
+		util_find_sprite_by_name(*sprite->surface, eng, str[4]);
 	}
 	eng->stats.skins_count++;
 }

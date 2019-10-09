@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/08 19:01:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/08 22:13:21 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *partic
 	/* Is the wall at least partially in front of the player? */
 	if(t1.y <= 0 && t2.y <= 0)
 		return ;
-	int u0 = 0, u1 = particle->texture->surface[particle->frame_num].h - 1;
+	int u0 = 0, u1 = particle->texture->surface[particle->frame_num]->h - 1;
 	if(t1.y <= 0 || t2.y <= 0)
 	{
 		float nearz = 1e-4f, farz = 5, nearside = 1e-5f, farside = 60.f;
@@ -226,9 +226,9 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *partic
 				t2 = i2;
 		}
 		if(fabsf(t2.x - t1.x) > fabsf(t2.y - t1.y))
-			u0 = (t1.x - org1.x) * (particle->texture->surface[particle->frame_num].h - 1) / (org2.x-org1.x), u1 = (t2.x - org1.x) * (particle->texture->surface[particle->frame_num].h - 1) / (org2.x - org1.x);
+			u0 = (t1.x - org1.x) * (particle->texture->surface[particle->frame_num]->h - 1) / (org2.x-org1.x), u1 = (t2.x - org1.x) * (particle->texture->surface[particle->frame_num]->h - 1) / (org2.x - org1.x);
 		else
-			u0 = (t1.y - org1.y) * (particle->texture->surface[particle->frame_num].w - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (particle->texture->surface[particle->frame_num].w - 1) / (org2.y - org1.y);
+			u0 = (t1.y - org1.y) * (particle->texture->surface[particle->frame_num]->w - 1) / (org2.y-org1.y), u1 = (t2.y - org1.y) * (particle->texture->surface[particle->frame_num]->w - 1) / (org2.y - org1.y);
 	}
 	/* Do perspective transformation */
 	float xscale1 = (WIDTH * hfov) / t1.y, yscale1 = (HEIGHT * vfov) / t1.y;
@@ -255,7 +255,7 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *partic
 		int cya = clamp(ya, ytop[x], ybottom[x]); // top
 		int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
 		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
-		engine_vline_textured_surface(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, particle->texture->surface[particle->frame_num].w - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, z, zbuff, &particle->texture->surface[particle->frame_num]);
+		engine_vline_textured_surface(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, particle->texture->surface[particle->frame_num]->w - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, z, zbuff, &particle->texture->surface[particle->frame_num]);
 	}
 	if (particle->texture->a_state == ANIMATE)
 	{

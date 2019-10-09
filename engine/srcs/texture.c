@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 12:16:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/08 22:17:49 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	engine_vline_textured_sprite(t_engine *eng, SDL_Surface *surf, t_scaler ty,
 	uint8_t			*pixs;
 	int				*pixd;
 
-	pixs = (unsigned char *)texture->surface->pixels;
+	pixs = (unsigned char *)texture->surface[0]->pixels;
 	pixd = (int *)surf->pixels;
 	y1 = clamp(a.y, 0, HEIGHT - 1);
 	y2 = clamp(b.y, 0, HEIGHT - 1);
@@ -60,7 +60,7 @@ void	engine_vline_textured_sprite(t_engine *eng, SDL_Surface *surf, t_scaler ty,
 	for(int y = y1; y <= y2; ++y)
 	{
 		unsigned txty = scaler_next(&ty);
-		unsigned offset = (((txty % texture->surface->h) * texture->surface->w) + (txtx % texture->surface->w)) * 4;
+		unsigned offset = (((txty % texture->surface[0]->h) * texture->surface[0]->w) + (txtx % texture->surface[0]->w)) * 4;
 		if ((pixs)[offset + 3] == 255)
 		{
 			red = (pixs)[offset];

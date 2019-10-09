@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:00:51 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 10:41:29 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/08 22:21:24 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ t_sprobject	*create_test_sprobj(t_engine *eng)
 	res->type = (t_enemy *)ft_memalloc(sizeof(t_enemy));
 	res->type->anmtn[0] = (t_sprite *)ft_memalloc(sizeof(t_sprite));
 	res->position = (t_point_3d){0, -200.0f, 0.f, 200.0f};
-	res->type->anmtn[0]->surface = SDL_CreateRGBSurface(0, w, h, 32, (Uint32)0xff000000,
+	res->type->anmtn[0]->surface[0] = SDL_CreateRGBSurface(0, w, h, 32, (Uint32)0xff000000,
 							(Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff);
-	pix = (int *)res->type->anmtn[0]->surface->pixels;
+	pix = (int *)res->type->anmtn[0]->surface[0]->pixels;
 	while (x < w)
 	{
 		y = 0;
@@ -70,11 +70,11 @@ void		animator_render_sprite_object(t_engine *eng, SDL_Surface *surf, t_player p
 	c1.y = t1.x * plr.cosangle + t1.y * plr.sinangle;
 	float xscale1 = (WIDTH * hfov) / c1.y, yscale1 = (HEIGHT * vfov) / c1.y;
 	int x1 = WIDTH / 2 + (-c1.x * xscale1);
-	float yceil = eng->world->sectors_array[sect.sectorno].floor + spr_obj->type->anmtn[0]->surface->h / 4 - plr.position.z;
+	float yceil = eng->world->sectors_array[sect.sectorno].floor + spr_obj->type->anmtn[0]->surface[0]->h / 4 - plr.position.z;
 	float yfloor = eng->world->sectors_array[sect.sectorno].floor - plr.position.z;
 	int y1a  = HEIGHT / 2 - (int)((yceil + c1.y * plr.yaw) * yscale1),  y1b = HEIGHT / 2 - (int)((yfloor + c1.y * plr.yaw)  * yscale1);
 	int beginx = max(x1, 0);
-	engine_render_rescale(spr_obj->type->anmtn[0]->surface, surf, 0, zbuff, (t_fix_point_2d){beginx, y1a}, spr_obj->type->anmtn[0]->surface->w * yscale1, spr_obj->type->anmtn[0]->surface->h * yscale1);
+	engine_render_rescale(spr_obj->type->anmtn[0]->surface[0], surf, 0, zbuff, (t_fix_point_2d){beginx, y1a}, spr_obj->type->anmtn[0]->surface[0]->w * yscale1, spr_obj->type->anmtn[0]->surface[0]->h * yscale1);
 }
 
 void		engine_render_rescale(SDL_Surface *surf, SDL_Surface *dest, int z, int *zbuff, t_fix_point_2d point, int new_width, int new_height)

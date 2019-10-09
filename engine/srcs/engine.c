@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/08 23:43:05 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/09 20:43:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		eng_read_textures(t_engine *eng)
 				if (eng->texture_buffer[real_i] == NULL)
 					error_handler("malloc error: ", "allocation", eng);
 				image_load(&eng->texture_buffer[real_i]->texture, buffer_name);
-				printf("%s\n",eng->texture_buffer[real_i]->filename);
+//				printf("%s\n",eng->texture_buffer[real_i]->filename);
 				free(buffer_name);
 				real_i++;
 				i++;
@@ -126,7 +126,7 @@ void		eng_read_sprites(t_engine *eng)
 				if (eng->sprites_buffer[real_i] == NULL)
 					error_handler("malloc error: ", "allocation", eng);
 				image_load(&eng->sprites_buffer[real_i]->texture, buffer_name);
-				printf("%s\n", eng->sprites_buffer[real_i]->filename);
+//				printf("%s\n", eng->sprites_buffer[real_i]->filename);
 				free(buffer_name);
 				real_i++;
 				i++;
