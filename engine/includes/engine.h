@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/08 22:49:03 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/09 21:47:05 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -634,9 +634,11 @@ char			*util_add_png_to_name(char *old_name);
 char			*util_add_png_num_to_name(char *old_name, int num);
 t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
 
+void			sound_mixer_init(void);
 Mix_Chunk		*sound_init(char *name);
 char			*util_add_wav_to_name(char *old_name);
 void			sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
+void			sound_shoot(t_player *plr);
 void			sound_free(t_engine *eng);
 
 
