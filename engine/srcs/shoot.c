@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/03 05:52:30 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/09 21:55:49 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 	int			res;
 	int			hit;
 
+	sound_shoot(plr);
 	if (plr->delay == 0)
 		plr->delay = 5;
 	else
@@ -53,6 +54,7 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 	float dz = weapon_range * tanf(angle_z) + shoot.a.z;
 	shoot.b = (t_point_3d){0, dx, dy, dz};
 	prev = -1;
+
 	engine_clear_checkstack(eng->world->checkqueue);
 	engine_push_checkstack(eng->world->checkqueue, plr->cursector);
 	while (((sect_id = engine_pop_checkstack(eng->world->checkqueue)) >= 0))
@@ -99,6 +101,7 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 			i++;
 		}
 	}
+
 	//printf("id: %d X: %f Y: %f Z: %f\n", sect->objects_array[i].id, sect->objects_array[i].particles[sect->objects_array[i].status - 1].x, sect->objects_array[i].particles[sect->objects_array[i].status - 1].y, sect->objects_array[i].particles[sect->objects_array[i].status - 1].z);
 }
 

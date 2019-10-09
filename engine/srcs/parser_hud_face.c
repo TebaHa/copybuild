@@ -41,18 +41,18 @@ void		eng_create_face_100_0(t_engine *eng)
 	eng->hud->face[H_60][F_HURT] = util_create_sprite_by_name(eng, "face_60_hurt");
 
 	eng->hud->face[H_40][F_IDLE] = util_create_sprite_by_name(eng, "face_40_idle");
-	eng->hud->face[H_80][F_HAPPY] = util_create_sprite_by_name(eng, "face_40_happy");
+	eng->hud->face[H_40][F_HAPPY] = util_create_sprite_by_name(eng, "face_40_happy");
 	eng->hud->face[H_40][F_LEFT] = util_create_sprite_by_name(eng, "face_40_left");
 	eng->hud->face[H_40][F_RIGHT] = util_create_sprite_by_name(eng, "face_40_right");
-	eng->hud->face[H_80][F_SHOOT] = util_create_sprite_by_name(eng, "face_40_shoot");
-	eng->hud->face[H_80][F_HURT] = util_create_sprite_by_name(eng, "face_40_hurt");
+	eng->hud->face[H_40][F_SHOOT] = util_create_sprite_by_name(eng, "face_40_shoot");
+	eng->hud->face[H_40][F_HURT] = util_create_sprite_by_name(eng, "face_40_hurt");
 
 	eng->hud->face[H_20][F_IDLE] = util_create_sprite_by_name(eng, "face_20_idle");
-	eng->hud->face[H_80][F_HAPPY] = util_create_sprite_by_name(eng, "face_20_happy");
+	eng->hud->face[H_20][F_HAPPY] = util_create_sprite_by_name(eng, "face_20_happy");
 	eng->hud->face[H_20][F_LEFT] = util_create_sprite_by_name(eng, "face_20_left");
 	eng->hud->face[H_20][F_RIGHT] = util_create_sprite_by_name(eng, "face_20_right");
-	eng->hud->face[H_80][F_SHOOT] = util_create_sprite_by_name(eng, "face_20_shoot");
-	eng->hud->face[H_80][F_HURT] = util_create_sprite_by_name(eng, "face_20_hurt");
+	eng->hud->face[H_20][F_SHOOT] = util_create_sprite_by_name(eng, "face_20_shoot");
+	eng->hud->face[H_20][F_HURT] = util_create_sprite_by_name(eng, "face_20_hurt");
 
 	eng->hud->face[H_0][F_IDLE] = util_create_sprite_by_name(eng, "face_dead");
 	eng->hud->face[H_0][F_HAPPY] = eng->hud->face[H_0][F_IDLE];
