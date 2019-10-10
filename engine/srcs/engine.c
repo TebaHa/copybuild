@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/09 20:58:05 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/10 05:03:23 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void		engine_sdl_init(t_engine **eng)
 	if ((*eng)->ren == NULL)
 		error_handler("SDL_CreateRenderer Error: ", SDL_GetError(), (*eng));
 	sound_mixer_init();
+	//engine_clear_renderstack((*eng)->world->renderqueue);
+	//engine_clear_renderstack((*eng)->world->sprite_renderqueue);
 }
 
 void		engine_sdl_uninit(t_engine *eng)

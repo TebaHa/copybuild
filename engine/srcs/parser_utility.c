@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/09 20:58:05 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/10 05:04:12 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void		util_create_world(t_world **world, char **str)
 		* (*world)->sectors_count);
 	(*world)->world_box = (t_sector *)ft_memalloc(sizeof(t_sector));
 	(*world)->renderqueue = (t_item *)ft_memalloc(sizeof(t_item) * MAXSECTORS);
+	(*world)->sprite_renderqueue = (t_item *)ft_memalloc(sizeof(t_item) * MAXSECTORS);
 	engine_clear_renderstack((*world)->renderqueue);
+	engine_clear_renderstack((*world)->sprite_renderqueue);
 }
 
 void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str)
@@ -142,6 +144,8 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 		util_get_object_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.objects_count, buff.objects, sector->id);
 	util_create_sector_sprobjs(eng, buff, sector, str);
+	sector->dist = (double *)ft_memalloc(sizeof(double) * sector->objects_count);
+	sector->order = (int *)ft_memalloc(sizeof(int) * sector->objects_count);
 	eng->stats.sectors_count++;
 }
 

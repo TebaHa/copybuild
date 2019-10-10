@@ -6,11 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/09 21:11:23 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/10 02:53:45 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <game.h>
+# include <game.h>
 
 void		game_create_test_player(t_player *plr)
 {
@@ -164,7 +164,6 @@ int		main(void)
 				}
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
 				{
-					sound_play(fps.player.steps_sound, S_PLAYER);
 					fps.player.controller.wasd[0] = 1;
 				}
 				if (fps.eng->event.key.keysym.sym == SDLK_s)

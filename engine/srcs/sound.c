@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sound.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/10 01:20:09 by zytrams           #+#    #+#             */
+/*   Updated: 2019/10/10 02:02:11 by zytrams          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <engine.h>
 
@@ -44,7 +55,7 @@ char		*util_add_wav_to_name(char *old_name)
 
 void	sound_play(Mix_Chunk *sound_name, t_sound_ch channel)
 {
-	if ( Mix_PlayChannel(channel, sound_name, 0) == -1 )
+	if (Mix_PlayChannel(channel, sound_name, 0) == -1 )
 		ft_putendl("Audio play error");
 }
 

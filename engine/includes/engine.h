@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/09 21:47:05 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/10 05:03:02 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,8 @@ typedef	struct		s_sector
 	t_sprobject		*sprobjects_array;
 	int				objects_count;
 	int				sprobjects_count;
+	int				*order;
+	double			*dist;
 	int				id;
 	int				floor;
 	int				ceil;
@@ -356,6 +358,7 @@ typedef	struct		s_world
 	t_sector		*world_box;
 	int				sectors_count;
 	t_item			*renderqueue;
+	t_item			*sprite_renderqueue;
 	int				checkqueue[MAXSECTORS];
 	int				id;
 }					t_world;
@@ -486,6 +489,18 @@ typedef struct		s_plane
 	t_point_3d		n;
 }					t_plane;
 
+typedef struct		s_mixer_thread
+{
+	Mix_Chunk		*sound_name;
+	t_sound_ch		channel;
+}					t_mixer_thread;
+
+typedef struct		s_spr_info
+{
+	int				*order;
+	double			*dist;
+	int				amount;
+}					t_spr_info;
 
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
@@ -573,7 +588,7 @@ t_sprobject		*create_test_sprobj(t_engine *eng);
 void			engine_vline_textured_sprite(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, t_sprite *texture);
 void			engine_vline_textured_surface(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, SDL_Surface *texture);
 void			switch_weapon(t_engine *eng, t_player *plr, int weapon_num);
-
+int				sound_play_thread_wrapper(void *ptr);
 /*
 **Image-processing functions
 */
@@ -722,6 +737,22 @@ void			util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
 
 /*
 **	Parsing map functions end
+**	---------------------------------------------------------------------------
+*/
+
+/*
+**	Sprite funs start
+**	---------------------------------------------------------------------------
+*/
+
+void		sprite_comb_sort(t_sector *sect);
+void		sprite_double_swap(double *a, double *b);
+void		sprite_int_swap(int *a, int *b);
+void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_player *plr, int *ytop, int *ybottom, t_item sect_id);
+void		engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf, int *ytop, int *ybottom);
+
+/*
+**	Sprite funs end
 **	---------------------------------------------------------------------------
 */
 

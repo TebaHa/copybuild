@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/10 01:05:50 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/10 04:57:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf, int *z
 {
 	int			ytop[WIDTH] = {0};
 	int			ybottom[WIDTH];
-	unsigned	x;
 	t_item		sect_id;
 	int			prev;
 	int			i;
 	int			j;
 	int			ren;
 
-	x = 0;
+	i = 0;
 	ren = 0;
 	prev = -1;
 	SDL_LockSurface(surf);
-	while (x < WIDTH)
-		ybottom[x++] = HEIGHT;
+	while (i < WIDTH)
+		ybottom[i++] = HEIGHT;
 	sect_id = (t_item){plr.cursector, 0, WIDTH - 1};
 	engine_push_renderstack(eng->world->renderqueue, sect_id);
+	engine_push_renderstack(eng->world->sprite_renderqueue, sect_id);
 	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)).sectorno >= 0))
 	{
 		i = 0;
@@ -47,8 +47,9 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf, int *z
 		}
 		prev = sect_id.sectorno;
 	}
-	zbuff_zeroed(zbuff);
+	engine_render_sprites(eng, &plr, surf, ytop, ybottom);
 	engine_clear_renderstack(eng->world->renderqueue);
+	engine_clear_renderstack(eng->world->sprite_renderqueue);
 	SDL_UnlockSurface(surf);
 }
 
@@ -127,7 +128,10 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 	int ny2a = HEIGHT / 2 + (int)(-(nyceil + t2.y * plr->yaw)  * yscale2), ny2b = HEIGHT / 2 + (int)(-(nyfloor + t2.y * plr->yaw) * yscale2);
 	int beginx = max(x1, sect.sx1), endx = min(x2, sect.sx2);
 	if (push)
+	{
 		engine_push_renderstack(eng->world->renderqueue, (t_item){portal, beginx, endx});
+		engine_push_renderstack(eng->world->sprite_renderqueue, (t_item){portal, beginx, endx});
+	}
 	unsigned r;
 	t_scaler ya_int = Scaler_Init(x1, beginx, x2, y1a, y2a);
 	t_scaler yb_int = Scaler_Init(x1, beginx, x2, y1b, y2b);
