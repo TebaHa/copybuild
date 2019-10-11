@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 14:48:52 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 15:10:43 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_playe
 	{
 		sect->order[i] = i;
 		sect->dist[i] = ((plr->position.x - sect->sprobjects_array[i].position.x) * (plr->position.x - sect->sprobjects_array[i].position.x)
-		+ (plr->position.y - sect->sprobjects_array[i].position.y) * (plr->position.x  - sect->sprobjects_array[i].position.y));
+		+ (plr->position.y - sect->sprobjects_array[i].position.y) * (plr->position.y - sect->sprobjects_array[i].position.y));
 		i++;
 	}
 	sprite_comb_sort(sect);

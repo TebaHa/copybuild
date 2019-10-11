@@ -4,9 +4,9 @@ world:	1	5				0 1 2 3 4
 
 #Vertexes
 #		id	X,		Y,		Z
-vertex: 40	-130	50		300
+vertex: 40	300		50		300
 vertex: 39	-130	-50		300
-vertex: 38	-130	0		300
+vertex: 38	-300	100		300
 
 vertex: 37	-1524	-1524	600
 vertex: 36	-1524	1524	600
@@ -125,9 +125,9 @@ sobjct:	2	0		0		40
 
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture, #objs, #sprobjs,	id of obj,	id of sprobj
-sector:	0	0		500		floor_wall		ceil_wall		5		0		0 1 2 3 4
-sector:	1	0		600		floor_wall		ceil_wall		5		3		5 6 7 8 9	0 1 2
-sector:	2	-25		1125	ceil_wall		ceil_wall		4		0		10 11 12 13
+sector:	0	0		500		floor_wall		ceil_wall		5		1		0 1 2 3 4	2
+sector:	1	0		600		floor_wall		ceil_wall		5		1		5 6 7 8 9	1
+sector:	2	-25		1125	ceil_wall		ceil_wall		4		1		10 11 12 13	0
 sector:	3	25		1000	floor_wall		ceil_wall		4		0		14 15 16 17
 sector:	4	-2000	2548	skybox_top		skybox_top		4		0		18 19 20 21
 #remove sector4 and use wrldbx after correcting all uses in code
