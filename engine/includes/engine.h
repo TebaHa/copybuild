@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/10 05:03:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 01:44:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,7 @@ typedef struct		s_wallobj
 	int				timer;
 	int				frame_num;
 	t_sprite		*texture;
+	int				size;
 }					t_wallobj;
 
 typedef struct		s_enemy

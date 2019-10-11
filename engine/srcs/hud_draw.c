@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/09 20:58:31 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/11 02:14:35 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,10 @@ void		engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf)
 	img = plr->wpn->anmtn[plr->wpn->state];
 	if (img->a_state != STATIC)
 	{
-		if (img->a_state == ANIMATE)
-		{
-			if (((plr->anim % img->frames_delay) == 0) && (plr->frame_num < img->frames_num - 1))
-				plr->frame_num++;
-		}
-		if (img->a_state == CYCLE)
-		{
-			if (((plr->anim % img->frames_delay) == 0) && (plr->frame_num < img->frames_num - 1))
-				plr->frame_num++;
-			if (plr->frame_num == img->frames_num - 1)
-				plr->frame_num = 0;
-		}
+		if (((plr->anim % img->frames_delay / 2) == 0) && (plr->frame_num < img->frames_num - 1))
+			plr->frame_num++;
+		if (plr->frame_num == img->frames_num - 1)
+			plr->frame_num = 0;
 	}
 	//printf("%d %d\n", img->frames_num, plr->frame_num);
 	surfs = img->surface[plr->frame_num];

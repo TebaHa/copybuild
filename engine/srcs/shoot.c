@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/09 21:55:49 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/11 01:45:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void	engine_push_particlestack(t_object *obj, t_weapon *wpn, t_wallobj *particle
 	dy2 = particle.y - obj->polies_array[0].vertices_array[1].y;
 	dist1 = sqrtf(dx1 * dx1 + dy1 * dy1);
 	dist2 = sqrtf(dx2 * dx2 + dy2 * dy2);
-	half_w = 2;
+	half_w = 4;
 	w_partcle.texture = wpn->bullet_hole;
 	w_partcle.a.x = particle.x - ((half_w * (particle.x - obj->polies_array[0].vertices_array[0].x)) / dist1);
 	w_partcle.a.y = particle.y - ((half_w * (particle.y - obj->polies_array[0].vertices_array[0].y)) / dist1);

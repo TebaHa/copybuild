@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/10 04:57:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 01:45:28 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,8 +242,8 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *partic
 	if(x1 >= x2 || x2 < sect.sx1 || x1 > sect.sx2)
 		return; // Only render if it's visible
 	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil =  (particle->z + 8) - plr->position.z;
-	float yfloor = (particle->z - 8) - plr->position.z;
+	float yceil =  (particle->z + 16) - plr->position.z;
+	float yfloor = (particle->z - 16) - plr->position.z;
 	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
 	int y1a  = HEIGHT / 2 + (int)(-(yceil + t1.y * plr->yaw) * yscale1), y1b = HEIGHT / 2 + (int)(-(yfloor + t1.y * plr->yaw)  * yscale1);
 	int y2a  = HEIGHT / 2 + (int)(-(yceil + t2.y * plr->yaw)  * yscale2), y2b = HEIGHT / 2 + (int)(-(yfloor + t2.y * plr->yaw)  * yscale2);
