@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/09 21:25:28 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/11 18:50:32 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ void		engine_create_world_from_file(t_engine *eng, char *filename)
 	eng->stats.parsing_debug = 0;
 	buff.str = engine_read_level_file(filename);
 	parsing_checker(eng, "Read from file OK");
-//	while (1)
-//		;
 	engine_count_all_from_file(eng, buff.str);
-
 	parsing_checker(eng, "Count everything OK");
 	engine_read_world_from_file(eng, buff.str);
 	parsing_checker(eng, "World OK");

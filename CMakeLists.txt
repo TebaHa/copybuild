@@ -47,7 +47,12 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/parser_items.c
 			engine/srcs/parser_hud.c
 			engine/srcs/sound.c
-			engine/srcs/animator.c)
+			engine/srcs/animator.c
+			engine/srcs/zbuff.c
+			engine/srcs/sprite_render.c
+			engine/srcs/sprite_render_stack.c
+			engine/srcs/sort.c
+			engine/srcs/render_stack.c)
 
 set(SDL ${SDL_DIRECTORY}libmlx.a)
 set(SDL_DIRECTORY lib/sdl2/)
