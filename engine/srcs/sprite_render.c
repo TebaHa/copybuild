@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 15:10:43 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 15:16:34 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf)
 	t_item_sprts	*restr;
 	t_sector		*sect;
 
-	while (((restr = engine_pop_spriterenderstack(eng->world->sprite_renderqueue)) != NULL))
+	while (((restr = engine_pop_spriterenderstack(eng->world->sprite_renderstack)) != NULL))
 	{
 		sect = eng->world->sectors_array + restr->sect_id.sectorno;
 		engine_render_sprites_in_sector(sect, surf, plr, restr);

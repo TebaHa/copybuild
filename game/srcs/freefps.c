@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 15:13:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 15:19:09 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		main(void)
 	{
 		fps.thread_num = thread_start_index;
 		fps.render_thread_pool[thread_start_index].thread = SDL_CreateThread(game_thread_wrapper, NULL, (void *)&fps);
-		printf("%f %f %u\n", fps.player.position.x, fps.player.position.y, fps.player.cursector);
+		//printf("%f %f %u\n", fps.player.position.x, fps.player.position.y, fps.player.cursector);
 		if (fps.player.controller.moving)
 		{
 			float px = fps.player.position.x, py = fps.player.position.y;

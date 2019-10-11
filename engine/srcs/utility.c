@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:14:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 13:13:34 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 15:17:20 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void			util_release_sectors_buffer(t_sector *sector_buff, int size)
 void			util_release_world(t_world *world)
 {
 	util_release_sectors_buffer(world->sectors_array, world->sectors_count);
-	free(world->renderqueue);
+	free(world->renderstack);
 	free(world);
 }
 

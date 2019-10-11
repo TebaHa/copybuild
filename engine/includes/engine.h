@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 13:31:27 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 15:16:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,8 +366,8 @@ typedef	struct		s_world
 	t_sector		*sectors_array;
 	t_sector		*world_box;
 	int				sectors_count;
-	t_item			*renderqueue;
-	t_item_sprts	**sprite_renderqueue;
+	t_item			*renderstack;
+	t_item_sprts	**sprite_renderstack;
 	int				checkqueue[MAXSECTORS];
 	int				id;
 }					t_world;
