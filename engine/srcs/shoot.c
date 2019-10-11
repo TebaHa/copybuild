@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 01:45:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 14:53:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,9 @@ int		check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor
 	}
 	t0.z = ceil;
 	t1.z = floor;
-	if (a.x <= t0.x && a.x >= t1.x && a.y <= t0.y && a.y >= t1.y && a.z <= t0.z && a.z >= t1.z)
+	if (a.x <= t0.x + 0.1 && a.x >= t1.x - 0.1
+	&& a.y <= t0.y + 0.1 && a.y >= t1.y - 0.1
+	&& a.z <= t0.z + 0.1 && a.z >= t1.z - 0.1)
 		return (1);
 	return (0);
 }

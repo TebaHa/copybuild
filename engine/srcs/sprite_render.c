@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 13:40:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 14:48:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_playe
 		spritey = sect->sprobjects_array[sect->order[i]].position.y - plr->position.y;
 		dirx = spritex * plr->sinangle - spritey * plr->cosangle;
 		diry = spritex * plr->cosangle + spritey * plr->sinangle;
-		stry = dirx + (double)sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w / 2.0;
-		endy = dirx - (double)sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w / 2.0;
+		stry = dirx + (double)sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w * 0.25;
+		endy = dirx - (double)sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w * 0.25;
 		if (diry <= 0)
 		{
 			i++;
@@ -67,7 +67,7 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_playe
 			i++;
 			continue ;
 		}
-		double ceil = sect->floor + sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->h * 2 - plr->position.z;
+		double ceil = sect->floor + sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->h * 1.5 - plr->position.z;
 		double floor = sect->floor - plr->position.z;
 		int ya = HEIGHT / 2 - (int)((ceil + diry * plr->yaw) * scaledy);
 		int yb = HEIGHT / 2 - (int)((floor + diry * plr->yaw) * scaledy);
