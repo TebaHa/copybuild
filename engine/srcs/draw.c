@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 09:49:47 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 13:30:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf, int *z
 		ybottom[i++] = HEIGHT;
 	sect_id = (t_item){plr.cursector, 0, WIDTH - 1};
 	engine_push_renderstack(eng->world->renderqueue, sect_id);
-	engine_push_renderstack(eng->world->sprite_renderqueue, sect_id);
+	one_dim_zbuffers_copy(&eng->world->sectors_array[sect_id.sectorno].item_sprts, ytop, ybottom);
+	eng->world->sectors_array[sect_id.sectorno].item_sprts.sect_id = sect_id;
+	engine_push_spriterenderstack(eng->world->sprite_renderqueue, &eng->world->sectors_array[sect_id.sectorno].item_sprts);
 	while (((sect_id = engine_pop_renderstack(eng->world->renderqueue)).sectorno >= 0))
 	{
 		i = 0;
@@ -47,10 +49,23 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf, int *z
 		}
 		prev = sect_id.sectorno;
 	}
-	engine_render_sprites(eng, &plr, surf, ytop, ybottom);
+	engine_render_sprites(eng, &plr, surf);
 	engine_clear_renderstack(eng->world->renderqueue);
-	engine_clear_renderstack(eng->world->sprite_renderqueue);
+	engine_clear_spriterenderstack(eng->world->sprite_renderqueue);
 	SDL_UnlockSurface(surf);
+}
+
+void		one_dim_zbuffers_copy(t_item_sprts *sprt, int *ytop, int *ybottom)
+{
+	int		i;
+
+	i = 0;
+	while (i < WIDTH)
+	{
+		sprt->ytop[i] = ytop[i];
+		sprt->ybottom[i] = ybottom[i];
+		i++;
+	}
 }
 
 void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, t_item sect, int obj_id, int prev, int *zbuff)
@@ -127,11 +142,6 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 	int ny1a = HEIGHT / 2 + (int)(-(nyceil + t1.y * plr->yaw)  * yscale1), ny1b = HEIGHT / 2 + (int)(-(nyfloor + t1.y * plr->yaw) * yscale1);
 	int ny2a = HEIGHT / 2 + (int)(-(nyceil + t2.y * plr->yaw)  * yscale2), ny2b = HEIGHT / 2 + (int)(-(nyfloor + t2.y * plr->yaw) * yscale2);
 	int beginx = max(x1, sect.sx1), endx = min(x2, sect.sx2);
-	if (push)
-	{
-		engine_push_renderstack(eng->world->renderqueue, (t_item){portal, beginx, endx});
-		engine_push_renderstack(eng->world->sprite_renderqueue, (t_item){portal, beginx, endx});
-	}
 	unsigned r;
 	t_scaler ya_int = Scaler_Init(x1, beginx, x2, y1a, y2a);
 	t_scaler yb_int = Scaler_Init(x1, beginx, x2, y1b, y2b);
@@ -185,6 +195,13 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 			engine_render_particle(eng, surf, &eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i],
 					&eng->world->sectors_array[sect.sectorno].objects_array[obj_id], ytop, ybottom, plr, sect, zbuff);
 		i++;
+	}
+	if (push)
+	{
+		engine_push_renderstack(eng->world->renderqueue, (t_item){portal, beginx, endx});
+		eng->world->sectors_array[portal].item_sprts.sect_id = (t_item){portal, beginx, endx};
+		one_dim_zbuffers_copy(&eng->world->sectors_array[portal].item_sprts, ytop, ybottom);
+		engine_push_spriterenderstack(eng->world->sprite_renderqueue, &eng->world->sectors_array[portal].item_sprts);
 	}
 }
 

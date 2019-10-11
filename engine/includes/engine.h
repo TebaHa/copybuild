@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 11:30:48 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 13:31:27 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,13 @@ typedef struct		s_item
 	int				sx2;
 }					t_item;
 
+typedef struct		s_item_sprts
+{
+	t_item			sect_id;
+	int				ytop[WIDTH];
+	int				ybottom[WIDTH];
+}					t_item_sprts;
+
 typedef	struct		s_fix_point_3d
 {
 	int				x;
@@ -351,6 +358,7 @@ typedef	struct		s_sector
 	int				ceil;
 	t_image			*ceil_texture;
 	t_image			*floor_texture;
+	t_item_sprts	item_sprts;
 }					t_sector;
 
 typedef	struct		s_world
@@ -359,7 +367,7 @@ typedef	struct		s_world
 	t_sector		*world_box;
 	int				sectors_count;
 	t_item			*renderqueue;
-	t_item			*sprite_renderqueue;
+	t_item_sprts	**sprite_renderqueue;
 	int				checkqueue[MAXSECTORS];
 	int				id;
 }					t_world;
@@ -590,6 +598,12 @@ void			engine_vline_textured_sprite(SDL_Surface *surf, t_scaler ty, t_fix_point_
 void			engine_vline_textured_surface(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, SDL_Surface *texture);
 void			switch_weapon(t_engine *eng, t_player *plr, int weapon_num);
 int				sound_play_thread_wrapper(void *ptr);
+
+void			engine_push_spriterenderstack(t_item_sprts **renderqueue, t_item_sprts *item);
+void			engine_clear_spriterenderstack(t_item_sprts **renderqueue);
+t_item_sprts	*engine_pop_spriterenderstack(t_item_sprts **renderqueue);
+void			one_dim_zbuffers_copy(t_item_sprts *sprt, int *ytop, int *ybottom);
+
 /*
 **Image-processing functions
 */
@@ -749,8 +763,8 @@ void			util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
 void		sprite_comb_sort(t_sector *sect);
 void		sprite_double_swap(double *a, double *b);
 void		sprite_int_swap(int *a, int *b);
-void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_player *plr, int *ytop, int *ybottom, t_item sect_id);
-void		engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf, int *ytop, int *ybottom);
+void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_player *plr, t_item_sprts *restr);
+void		engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf);
 
 /*
 **	Sprite funs end

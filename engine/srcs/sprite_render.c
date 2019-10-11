@@ -6,26 +6,25 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 11:51:04 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 13:40:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <engine.h>
 
-void		engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf, int *ytop, int *ybottom)
+void		engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf)
 {
-	t_item		sect_id;
-	t_sector	*sect;
+	t_item_sprts	*restr;
+	t_sector		*sect;
 
-	while (((sect_id = engine_pop_renderstack(eng->world->sprite_renderqueue)).sectorno >= 0))
+	while (((restr = engine_pop_spriterenderstack(eng->world->sprite_renderqueue)) != NULL))
 	{
-		sect = eng->world->sectors_array + sect_id.sectorno;
-		engine_render_sprites_in_sector(sect, surf, plr,
-		ytop, ybottom, sect_id);
+		sect = eng->world->sectors_array + restr->sect_id.sectorno;
+		engine_render_sprites_in_sector(sect, surf, plr, restr);
 	}
 }
 
-void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_player *plr, int *ytop, int *ybottom, t_item sect_id)
+void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_player *plr, t_item_sprts *restr)
 {
 	int				i;
 	int				j;
@@ -63,22 +62,22 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_playe
 		scaledy = HEIGHT * vfov / diry;
 		double x1 = WIDTH / 2 - (int)((stry) * scaledx);
 		double x2 = WIDTH / 2 - (int)((endy) * scaledx);
-		if (x1 > sect_id.sx2 || x2 < sect_id.sx1)
+		if (x1 > restr->sect_id.sx2 || x2 < restr->sect_id.sx1)
 		{
 			i++;
 			continue ;
 		}
-		double ceil = sect->floor + sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->h - plr->position.z;
+		double ceil = sect->floor + sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->h * 2 - plr->position.z;
 		double floor = sect->floor - plr->position.z;
 		int ya = HEIGHT / 2 - (int)((ceil + diry * plr->yaw) * scaledy);
 		int yb = HEIGHT / 2 - (int)((floor + diry * plr->yaw) * scaledy);
-		int begx = max(x1, sect_id.sx1);
-		int endx = min(x2, sect_id.sx2);
+		int begx = max(x1, restr->sect_id.sx1);
+		int endx = min(x2, restr->sect_id.sx2);
 		int x = begx;
 		while (x < endx)
 		{
-			int cya = clamp(ya, ytop[x], ybottom[x]);
-			int cyb = clamp(yb, ytop[x], ybottom[x]);
+			int cya = clamp(ya, restr->ytop[x], restr->ybottom[x]);
+			int cyb = clamp(yb, restr->ytop[x], restr->ybottom[x]);
 			int txtx = (int)((double)(x - x1) /
 						(double)(x2 - x1) * sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w);
 			engine_vline_textured_surface(surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->h - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]);
