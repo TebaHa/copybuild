@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 01:45:28 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 09:49:47 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 	t_scaler nyb_int = Scaler_Init(x1, beginx, x2, ny1b, ny2b);
 	for(int x = beginx; x <= endx; ++x)
 	{
-		int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;
 		int ya = scaler_next(&ya_int);
 		int yb = scaler_next(&yb_int);
 		int cya = clamp(ya, ytop[x], ybottom[x]);
@@ -170,13 +169,13 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 			int nyb = scaler_next(&nyb_int);
 			int cnya = clamp(nya, ytop[x], ybottom[x]);
 			int cnyb = clamp(nyb, ytop[x], ybottom[x]);
-			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya, z}, (t_fix_point_3d){x, cnya-1, z}, txtx, z, zbuff, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
+			engine_vline_textured(surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya, 0}, (t_fix_point_3d){x, cnya-1, 0}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
 			ytop[x] = clamp(max(cya, cnya), ytop[x], HEIGHT - 1);
-			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cnyb + 1, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cnyb + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, z, zbuff, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
+			engine_vline_textured(surf, (t_scaler)Scaler_Init(ya, cnyb + 1, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cnyb + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, eng->world->sectors_array[sect.sectorno].objects_array[obj_id].floor_wall_texture);
 			ybottom[x] = clamp(min(cyb, cnyb), 0, ybottom[x]);
 		}
 		else
-			engine_vline_textured(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya + 1, z}, (t_fix_point_3d){x, cyb, z}, txtx, z, zbuff, polygone->texture);
+			engine_vline_textured(surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, polygone->texture->height - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, polygone->texture);
 	}
 	int		i = 0;
 	while (eng->world->sectors_array[sect.sectorno].objects_array[obj_id].particles[i].id == 1 && i < 128)
@@ -259,7 +258,7 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *partic
 		int cya = clamp(ya, ytop[x], ybottom[x]); // top
 		int cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
 		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
-		engine_vline_textured_surface(eng, surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, particle->texture->surface[particle->frame_num]->w - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, z, zbuff, particle->texture->surface[particle->frame_num]);
+		engine_vline_textured_surface(surf, (t_scaler)Scaler_Init(ya, cya, yb, 0, particle->texture->surface[particle->frame_num]->w - 1) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, particle->texture->surface[particle->frame_num]);
 	}
 	if (particle->texture->a_state == ANIMATE)
 	{

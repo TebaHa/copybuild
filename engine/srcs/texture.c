@@ -6,13 +6,13 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/08 22:17:49 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/11 11:27:59 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void	engine_vline_textured(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, t_image *texture)
+void	engine_vline_textured(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture)
 {
 	int		y1;
 	int		y2;
@@ -41,7 +41,7 @@ void	engine_vline_textured(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_
 	}
 }
 
-void	engine_vline_textured_sprite(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, t_sprite *texture)
+void	engine_vline_textured_sprite(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_sprite *texture)
 {
 	int				y1;
 	int				y2;
@@ -73,7 +73,7 @@ void	engine_vline_textured_sprite(t_engine *eng, SDL_Surface *surf, t_scaler ty,
 	}
 }
 
-void	engine_vline_textured_surface(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, SDL_Surface *texture)
+void	engine_vline_textured_surface(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, SDL_Surface *texture)
 {
 	int				y1;
 	int				y2;
@@ -103,6 +103,17 @@ void	engine_vline_textured_surface(t_engine *eng, SDL_Surface *surf, t_scaler ty
 		}
 		pixd += WIDTH;
 	}
+}
+
+void	engine_vline_sprite_surface(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, SDL_Surface *texture)
+{
+	int	y;
+	int	*pixs;
+	int	*pixd;
+	int	txty;
+
+	pixs = (int *)surf->pixels;
+	pixd = (int *)texture->pixels;
 }
 
 int		scaler_next(t_scaler *i)

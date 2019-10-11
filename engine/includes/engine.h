@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 01:44:31 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/11 11:30:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define hfov (0.83f * HEIGHT / WIDTH)
-# define vfov (0.2f)
+# define hfov (1.0 * 0.83f * HEIGHT / WIDTH)
+# define vfov (1.0 * 0.2f)
 # define TEXTURE_PACK_PATH		"./game/resources/images/"
 # define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
 # define SOUND_PATH				"./game/resources/sounds/"
@@ -586,8 +586,8 @@ void			zbuff_zeroed(int *zbuff);
 void			engine_render_rescale(SDL_Surface *surf, SDL_Surface *dest, int z, int *zbuff, t_fix_point_2d point, int newWidth, int newHeight);
 void			animator_render_sprite_object(t_engine *eng, SDL_Surface *surf, t_player plr, t_sprobject *spr_obj, t_item sect, int *zbuff);
 t_sprobject		*create_test_sprobj(t_engine *eng);
-void			engine_vline_textured_sprite(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, t_sprite *texture);
-void			engine_vline_textured_surface(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, SDL_Surface *texture);
+void			engine_vline_textured_sprite(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_sprite *texture);
+void			engine_vline_textured_surface(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, SDL_Surface *texture);
 void			switch_weapon(t_engine *eng, t_player *plr, int weapon_num);
 int				sound_play_thread_wrapper(void *ptr);
 /*
@@ -598,7 +598,7 @@ void			image_create(t_image *img, int width, int height, int channels);
 void			image_free(t_image *img);
 t_image			load_textures(const char *fname);
 int				scaler_next(t_scaler *i);
-void			engine_vline_textured(t_engine *eng, SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, int z, int *zbuff, t_image *texture);
+void			engine_vline_textured(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture);
 void			move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect);
 t_costil		relative_map_coordinate_to_absolute(t_player *plr, float map_y, float screen_x, float screen_y);
 t_costil		ceiling_floor_screen_coordinates_to_map_coordinates(t_player *plr, float tz, float tx);
