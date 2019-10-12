@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 14:40:21 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 17:40:40 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,6 +405,8 @@ typedef	struct		s_player
 	int				frame_num;
 	Mix_Chunk		*steps_sound;
 	t_player_state	plr_state;
+	int				health;
+	int				armor;
 }					t_player;
 
 typedef struct		s_stats
@@ -536,7 +538,7 @@ void			util_release_objects_buffer(t_object *object_buff, int size);
 void			util_release_polies_buffer(t_polygone *polies_buff, int size);
 void			util_release_vertex_buffer(t_point_3d *vertex_buff);
 void			util_release_world(t_world *world);
-void			engine_clear_frame(t_engine *eng);
+void			engine_present_and_clear_frame(t_engine *eng);
 
 void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 int				engine_init_triangle(t_polygone *t, t_tric *trg);
@@ -609,7 +611,9 @@ void			one_dim_zbuffers_copy(t_item_sprts *sprt, int *ytop, int *ybottom);
 
 /*
 **Image-processing functions
+**
 */
+
 void			image_load(t_image *img, const char *fname);
 void			image_create(t_image *img, int width, int height, int channels);
 void			image_free(t_image *img);
@@ -629,6 +633,7 @@ void			game_stop_threads(t_thread_pool	*render_thread, int thread_count);
 void			engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf);
 void			shoot(t_engine *eng, t_player *plr, int weapon_range);
 int				intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
+void			draw_from_surface_to_surface(SDL_Surface *dest, SDL_Surface *src, int dx, int dy);
 
 /*
 **	---------------------------------------------------------------------------
@@ -763,17 +768,33 @@ void			util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
 **	---------------------------------------------------------------------------
 */
 
-void		sprite_comb_sort(t_sector *sect);
-void		sprite_double_swap(double *a, double *b);
-void		sprite_int_swap(int *a, int *b);
-void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_player *plr, t_item_sprts *restr);
-void		engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf);
-void		check_sprite_pick(t_player *plr, t_sprobject *sobj);
-void		apply_sprite_obj(t_player *plr, t_sprobject *sobj);
-void		check_sprites_in_sector(t_player *plr, t_sector *sect);
+void			sprite_comb_sort(t_sector *sect);
+void			sprite_double_swap(double *a, double *b);
+void			sprite_int_swap(int *a, int *b);
+void			engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_player *plr, t_item_sprts *restr);
+void			engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf);
+void			check_sprite_pick(t_player *plr, t_sprobject *sobj);
+void			apply_sprite_obj(t_player *plr, t_sprobject *sobj);
+void			check_sprites_in_sector(t_player *plr, t_sector *sect);
+t_bool			modify_players_stat(int *stat, int addtion, int limit);
 
 /*
 **	Sprite funs end
+**	---------------------------------------------------------------------------
+*/
+
+
+/*
+**	Text funs start
+**	---------------------------------------------------------------------------
+*/
+
+SDL_Surface		*create_text(t_engine *eng, char *str, int color);
+void			draw_player_stats(t_engine *eng, SDL_Surface *surf, SDL_Surface *hp, SDL_Surface *armor);
+void			engine_render_hud_stats(t_engine *eng, t_player *plr, SDL_Surface *surf);
+
+/*
+**	Text funs end
 **	---------------------------------------------------------------------------
 */
 

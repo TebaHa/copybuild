@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 10:36:15 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 14:38:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 17:12:40 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 SDL_Surface		*create_text(t_engine *eng, char *str, int color)
 {
 	SDL_Color	sdl_color;
-	SDL_Surface	*res;
 
 	sdl_color = (SDL_Color) {(Uint8)color, (Uint8)(color >> 8), (Uint8)(color >> 16)};
-	res = TTF_RenderText_Solid(eng->font, "Welcome to Gigi Labs", sdl_color);
+	return (TTF_RenderText_Solid(eng->font, str, sdl_color));
 }

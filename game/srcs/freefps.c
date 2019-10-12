@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 14:44:31 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 17:41:42 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void		game_create_test_player(t_player *plr)
 	plr->yaw = 0;
 	plr->shoot = 0;
 	plr->delay = 3;
+	plr->armor = 100;
+	plr->health = 75;
 	plr->steps_sound = sound_init("player_steps");
 }
 
@@ -97,7 +99,6 @@ int		main(void)
 	{
 		fps.thread_num = thread_start_index;
 		fps.render_thread_pool[thread_start_index].thread = SDL_CreateThread(game_thread_wrapper, NULL, (void *)&fps);
-		//printf("%f %f %u\n", fps.player.position.x, fps.player.position.y, fps.player.cursector);
 		if (fps.player.controller.moving)
 		{
 			float px = fps.player.position.x, py = fps.player.position.y;
@@ -107,7 +108,6 @@ int		main(void)
 			sectprev = fps.player.cursector;
 			if((sect = engine_object_get_sector(fps.eng->world, (t_point_3d){0.f, px + dx, py + dy, 0.f}, fps.player.cursector)) >= 0)
 			{
-				check_sprites_in_sector(&fps.player, &fps.eng->world->sectors_array[fps.player.cursector]);
 				if (fps.eng->world->sectors_array[sect].floor - duck_shift <= fps.player.position.z + KneeHeight - 50)
 					move_player(fps.eng, &fps.player, dx, dy, sect);
 			}
@@ -266,6 +266,8 @@ int		main(void)
 			SDL_WaitThread(fps.render_thread_pool[thread_end_index].thread, &fps.render_thread_pool[thread_end_index].value);
 			engine_draw_hud(fps.eng, &fps.player, fps.render_thread_pool[thread_end_index].surface);
 			engine_render_frame(fps.eng, fps.render_thread_pool[thread_end_index].surface);
+			engine_render_hud_stats(fps.eng, &fps.player, fps.render_thread_pool[thread_end_index].surface);
+			engine_present_and_clear_frame(fps.eng);
 			//DL_Delay(THREAD_POOL_SIZE * 2);
 			thread_start_index = thread_end_index;
 			thread_end_index = thread_end_index < (THREAD_POOL_SIZE - 1) ? thread_end_index + 1 : 0;
@@ -298,6 +300,7 @@ void	move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect
 	plr->cursector = sect;
 	plr->sinangle = sinf(plr->angle);
 	plr->cosangle = cosf(plr->angle);
+	check_sprites_in_sector(plr, &eng->world->sectors_array[plr->cursector]);
 }
 
 void	change_floor(t_engine *eng, int sect, int change)
