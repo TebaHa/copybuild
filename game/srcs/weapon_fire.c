@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 03:03:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/08 19:13:42 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 14:38:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ void	fire(t_engine *eng, t_player *plr, int state)
 		plr->wpn->state = W_FIRE;
 	}
 	else
-	{
 		plr->firetime = FIRERATE;
-	}
 }
 
 void	fire_anim_change(t_engine *eng, t_player *plr)

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 15:16:34 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 14:52:11 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_playe
 	i = 0;
 	while (i < sect->sprobjects_count)
 	{
+		if (sect->sprobjects_array[sect->order[i]].norender == true)
+		{
+			i++;
+			continue;
+		}
 		double dirx, diry;
 		double stry, endy;
 		double scaledx, scaledy;

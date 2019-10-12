@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 13:41:54 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 14:40:21 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define THREAD_POOL_SIZE 4
 # define DELAY 15
 # define DEFAULT_SPRITE_DELAY	10
-# define FIRERATE 10
+# define FIRERATE 30
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
@@ -320,6 +320,7 @@ typedef struct		s_sprobject
 	int 			frame;
 	t_point_3d		position;
 	t_enm_state 	state;
+	t_bool			norender;
 }					t_sprobject;
 
 typedef struct		s_object
@@ -767,10 +768,14 @@ void		sprite_double_swap(double *a, double *b);
 void		sprite_int_swap(int *a, int *b);
 void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_player *plr, t_item_sprts *restr);
 void		engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf);
+void		check_sprite_pick(t_player *plr, t_sprobject *sobj);
+void		apply_sprite_obj(t_player *plr, t_sprobject *sobj);
+void		check_sprites_in_sector(t_player *plr, t_sector *sect);
 
 /*
 **	Sprite funs end
 **	---------------------------------------------------------------------------
 */
+
 
 # endif

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 15:40:19 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 14:44:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int		main(void)
 			sectprev = fps.player.cursector;
 			if((sect = engine_object_get_sector(fps.eng->world, (t_point_3d){0.f, px + dx, py + dy, 0.f}, fps.player.cursector)) >= 0)
 			{
+				check_sprites_in_sector(&fps.player, &fps.eng->world->sectors_array[fps.player.cursector]);
 				if (fps.eng->world->sectors_array[sect].floor - duck_shift <= fps.player.position.z + KneeHeight - 50)
 					move_player(fps.eng, &fps.player, dx, dy, sect);
 			}
