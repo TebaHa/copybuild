@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 18:23:27 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 20:36:28 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -521,7 +521,7 @@ void			engine_sdl_uninit(t_engine *eng);
 void			engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color);
 void			engine_render_object(t_engine *eng, t_object obj, t_player *plr);
 void			engine_render_frame(t_engine *eng, SDL_Surface 	*surf);
-void			engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf, int *zbuff);
+void			engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf);
 void			sdl_clear_window(SDL_Surface *surf);
 void			sdl_put_pixel(SDL_Surface *surf, int x, int y, int color);
 void			error_handler(char *error_type, const char *str_error, t_engine *eng);
@@ -544,7 +544,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 int				engine_init_triangle(t_polygone *t, t_tric *trg);
 void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
 void			engine_do_calc(t_tric *trg);
-void			engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, t_item sect, int obj_id, int prev, int *zbuff);
+void			engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, t_item sect, int obj_id, int prev);
 void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
 void			point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
 int				get_rgb(int r, int g, int b, int a);
@@ -593,7 +593,7 @@ void			engine_push_checkstack(int *checkqueue, int item);
 int				engine_pop_checkstack(int *checkqueue);
 void			engine_clear_checkstack(int *checkqueue);
 int				check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
-void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *particle,  t_object *obj, int *ytop, int *ybottom, t_player *plr, t_item sect, int *zbuff);
+void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *particle,  t_object *obj, t_player *plr, t_item sect);
 void			get_relative_xy(t_engine *eng, t_fix_point_2d *p);
 void			zbuff_zeroed(int *zbuff);
 void			engine_render_rescale(SDL_Surface *surf, SDL_Surface *dest, int z, int *zbuff, t_fix_point_2d point, int newWidth, int newHeight);

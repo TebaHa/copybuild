@@ -11,3 +11,4 @@
 
 * Sprite objects
 <img width="1024" alt="Screen Shot 2019-10-12 at 13 46 13" src="https://user-images.githubusercontent.com/31967575/66700198-c6077c00-ecf6-11e9-8d41-f9f0638eae85.png">
+<img width="1021" alt="Screen Shot 2019-10-12 at 20 38 35" src="https://user-images.githubusercontent.com/31967575/66705513-51513380-ed30-11e9-86c0-a940ac5f9ab0.png">
