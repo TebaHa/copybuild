@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:36:00 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/12 18:55:51 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/12 20:34:30 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			main(int argc, char **argv)
 	}
 }
 
-void 		check_and_add_crc(char *filename)
+int 		check_and_add_crc(char *filename)
 {
 	int		fd;
 	int		number;
@@ -33,60 +33,103 @@ void 		check_and_add_crc(char *filename)
 	char	*buff;
 	char	**splitedbuff;
 
-	fd = open(filename, O_RDWR);
+	if ((fd = open(filename, O_RDWR)) < 0)
+	{
+		message_error_crc(filename, "can't read file!");
+		return (0);
+	}
 	buff = (char*)malloc(sizeof(char) * 10000);
 	if (fd < 2)
 		exit(EDITOR_ERROR);
 	number = read(fd, buff, 10000);
 	buff[number] = '\0';
-	close(fd);
 	splitedbuff = ft_strsplit(buff, '\n');
 	find = find_checksum(buff, splitedbuff, number);
 	if (find == CRC_OK)
+		message_nice_crc(filename, "have proper checksum!");
+	else if (find == CRC_INCORRECT)
+		message_error_crc(filename, "have incorrect checksum!");
+	else if (find == CRC_MULTIPLE)
+		message_error_crc(filename, "have multiple checksum!");
+	else if (find == CRC_NOT_IN_END)
+		message_error_crc(filename, "checksum not in the end of file!");
+	else if (find == CRC_ZERO)
+		message_error_crc(filename, "checksum with empty line!");
+	else if (find == CRC_MISSING)
 	{
-		ft_putstr(filename);
-		ft_putendl(" have proper checksum!");
+		if (!add_checksum(fd, buff, number))
+			message_error_crc(filename, "can't write to file!");
+		else
+			message_nice_crc(filename, "crc added!");
 	}
-	else
-	{
-		ft_putstr(filename);
-		ft_putendl(" have incorrect checksum!");
-	}
+	close(fd);
 	util_release_char_matrix(splitedbuff);
 	free(buff);
+	return (0);
+}
+
+int 		add_checksum(int fd, char *buf, size_t len)
+{
+	char 	*crc;
+
+	if (ft_strncmp(&buf[len - 1], "\n", 1) != 0)
+	{
+		write(fd, "\n", 1);
+	}
+	if (!write(fd, "crc: ", 5))
+		return (0);
+	crc = ft_itoa(crc_calculate(buf, len));
+	write(fd, crc, ft_strlen(crc));
+	free(crc);
+	return (1);
 }
 
 int 		find_checksum(char *buf, char **splitedbuff, size_t len)
 {
 	int		i;
-	char	**splitted_line;
-	int		len2;
+	int 	crc_pos;
 	int 	crc_count;
+	char	**splitted_line;
 
 	i = 0;
 	if (!ft_strnstr(buf, "crc:", len))
 		return(CRC_MISSING);
-	len2 = (int)(ft_strnstr(buf, "crc:", len) - buf);
-	if (len2 < len - 20)
-		return(CRC_MULTIPLE);
-//	ft_putnbr(len2);
+	crc_pos = (int)(ft_strnstr(buf, "crc:", len) - buf);
+	if (crc_pos < len - 20)
+		return(CRC_NOT_IN_END);
 	crc_count = 0;
 	while (splitedbuff[i])
 	{
 		if (ft_strwcmp(splitedbuff[i], "crc:") == 0)
 		{
 			splitted_line = ft_strsplitwhitespaces(splitedbuff[i]);
-//			ft_putnbr(crc_calculate(buf, len2));
 			if (!splitted_line[1])
-				return(CRC_MISSING);
-			else if (crc_calculate(buf, len2) == ft_atoi(splitted_line[1]))
+				return(CRC_ZERO);
+			else if (crc_calculate(buf, crc_pos) == ft_atoi(splitted_line[1]))
 				crc_count++;
 			else
+			{
+				ft_putnbr(crc_calculate(buf, len));
 				return (CRC_INCORRECT);
+			}
 		}
 		i++;
 	}
 	if (crc_count > 1)
 		return(CRC_MULTIPLE);
 	return(CRC_OK);
+}
+
+void	message_nice_crc(char *filename, char *result)
+{
+	ft_putstr(filename);
+	ft_putstr(" OK: ");
+	ft_putendl(result);
+}
+
+void	message_error_crc(char *filename, char *problem)
+{
+	ft_putstr(filename);
+	ft_putstr(" KO: ");
+	ft_putendl(problem);
 }

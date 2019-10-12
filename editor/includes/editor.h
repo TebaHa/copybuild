@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:35:09 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/12 18:21:37 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/12 20:21:39 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,17 @@
 typedef enum		e_crc_state
 {
 	CRC_MISSING,
+	CRC_ZERO,
 	CRC_INCORRECT,
 	CRC_MULTIPLE,
+	CRC_NOT_IN_END,
 	CRC_OK
 }					t_crc_state;
 
-void 		check_and_add_crc(char *filename);
+int 		check_and_add_crc(char *filename);
 int 		find_checksum(char *buf, char **buff_splited, size_t len);
+int 		add_checksum(int fd, char *buf, size_t len);
+void		message_nice_crc(char *filename, char *result);
+void		message_error_crc(char *filename, char *problem);
 
 #endif
