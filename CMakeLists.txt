@@ -52,7 +52,7 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/sprite_render.c
 			engine/srcs/sprite_render_stack.c
 			engine/srcs/sort.c
-			engine/srcs/render_stack.c)
+			engine/srcs/render_stack.c engine/srcs/checksum.c)
 
 set(SDL ${SDL_DIRECTORY}libmlx.a)
 set(SDL_DIRECTORY lib/sdl2/)

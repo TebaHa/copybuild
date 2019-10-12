@@ -629,6 +629,14 @@ int				intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
 
 /*
 **	---------------------------------------------------------------------------
+**	Checksum functions start
+*/
+
+uint_least32_t	Crc32(unsigned char *buf, size_t len);
+
+/*
+** 	Checksum functions end
+**	===========================================================================
 **	Resources parsing functions start
 */
 
