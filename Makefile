@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/12 17:10:28 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/12 18:26:09 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,6 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					shoot.c \
 					relative_coord.c \
 					animator.c \
-					zbuff.c \
 					sound.c \
 					sort.c \
 					sprite_render.c \

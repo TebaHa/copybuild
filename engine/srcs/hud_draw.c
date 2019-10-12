@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 17:45:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 18:30:26 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void		engine_render_hud_stats(t_engine *eng, t_player *plr, SDL_Surface *surf)
 	SDL_Surface		*hp;
 	SDL_Surface		*armor;
 
-	hp = create_text(eng, ft_itoa(plr->health), (int)0xFFFFFFFF);
-	armor = create_text(eng, ft_itoa(plr->armor), (int)0xFFFFFFFF);
+	hp = create_text(eng, ft_itoa(plr->health), 0xE9967AFF);
+	armor = create_text(eng, ft_itoa(plr->armor), 0xE9967AFF);
 	draw_player_stats(eng, surf, hp, armor);
 }
 
