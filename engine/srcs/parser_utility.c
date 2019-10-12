@@ -213,6 +213,7 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 	util_int10_data_filler(&sprobject->angle, str[2]);
 	if (ft_atoi(str[3]) < 0 || ft_atoi(str[3]) > ENEMY_NUM)
 		util_parsing_error_cant_find("texture from sprobject", ft_atoi(str[3]));
+	sprobject->enum_type = ft_atoi(str[3]);
 	sprobject->type = eng->enemy[ft_atoi(str[3])];
 	sprobject->position = util_get_vertex_from_buff_by_id(ft_atoi(str[4]),
 		eng->stats.vertexes_count, vertex_array, sprobject->id);

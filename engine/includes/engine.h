@@ -128,7 +128,6 @@ typedef enum		e_enm_type
 	AFRIT,
 	CACODEMON,
 	IMP,
-
 	ENEMY_NUM
 }					t_enm_type;
 
@@ -317,6 +316,7 @@ typedef struct		s_sprobject
 	int				id;
 	int 			angle;
 	t_enemy			*type;
+	t_enm_type		enum_type;
 	int 			frame;
 	t_point_3d		position;
 	t_enm_state 	state;
