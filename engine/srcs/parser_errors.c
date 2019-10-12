@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:41:27 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/28 12:35:34 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/12 14:02:24 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,4 +129,11 @@ void util_parsing_error_no_cap(char *problem, t_engine *eng)
 		exit(CYCLE_READING_ERROR);
 	}
 	eng->stats.cycle_detector++;
+}
+
+void	util_parsing_error_wrong_crc(void)
+{
+	ft_putendl("Parsing error:");
+	ft_putendl("Wrong checksum!");
+	exit(PARSING_ERROR);
 }

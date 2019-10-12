@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 15:16:30 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 13:50:10 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -632,7 +632,9 @@ int				intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
 **	Checksum functions start
 */
 
-uint_least32_t	Crc32(unsigned char *buf, size_t len);
+uint_least32_t	crc_calculate(char *buf, size_t len);
+void			checksum_check(char *buf, char **buff_splited, size_t len);
+void			util_parsing_error_wrong_crc(void);
 
 /*
 ** 	Checksum functions end

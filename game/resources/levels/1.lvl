@@ -133,3 +133,5 @@ sector:	4	-2000	2548	skybox_top		skybox_top		4		0		18 19 20 21
 #remove sector4 and use wrldbx after correcting all uses in code
 
 wrldbx:	0	-2000	2548	skybox_top		skybox_top		4		0		18 19 20 21
+
+crc: -1114376605

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 18:50:32 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/12 14:02:24 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,18 @@ char		**engine_read_level_file(char *filename)
 	char		*buff;
 	char		**splitedbuff;
 
-	fd = open(filename, O_RDONLY);
+	fd = open(filename, O_RDWR);
 	buff = (char*)malloc(sizeof(char) * 10000);
 	if (fd < 2)
 		exit(READING_ERROR);
 	number = read(fd, buff, 10000);
 	buff[number] = '\0';
+//	ft_putnbr(crc_calculate(buff, number));
+//	ft_putendl(".");
+//	ft_putnbr(write(fd, "hello", 5));
 	close(fd);
 	splitedbuff = ft_strsplit(buff, '\n');
+	checksum_check(buff, splitedbuff, number);
 	free(buff);
 	return (splitedbuff);
 }

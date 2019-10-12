@@ -81,6 +81,7 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					sprite_render.c \
 					render_stack.c \
 					sprite_render_stack.c \
+					checksum.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
