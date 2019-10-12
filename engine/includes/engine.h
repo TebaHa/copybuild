@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 13:50:10 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/12 22:18:40 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,15 @@ typedef enum		e_animtn_state
 	PENDULUM
 }					t_animtn_state;
 
+typedef enum		e_crc_state
+{
+	CRC_MISSING,
+	CRC_ZERO,
+	CRC_INCORRECT,
+	CRC_MULTIPLE,
+	CRC_NOT_IN_END,
+	CRC_OK
+}					t_crc_state;
 
 typedef struct		s_image
 {
@@ -633,7 +642,7 @@ int				intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
 */
 
 uint_least32_t	crc_calculate(char *buf, size_t len);
-void			checksum_check(char *buf, char **buff_splited, size_t len);
+int				checksum_check(char *buf, char **buff_splited, size_t len);
 void			util_parsing_error_wrong_crc(void);
 
 /*
@@ -681,6 +690,7 @@ void			sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
 void			sound_shoot(t_player *plr);
 void			sound_free(t_engine *eng);
 
+void			infinite_loop(void);
 
 /*
 **	Resources parsing functions end

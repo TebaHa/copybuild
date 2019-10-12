@@ -220,3 +220,9 @@ void		util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 	sprobject->frame = 0;
 	eng->stats.sprobjects_count++;
 }
+
+void		infinite_loop(void)
+{
+	while (1)
+		;
+}

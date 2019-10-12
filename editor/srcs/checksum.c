@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 17:36:00 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/12 20:34:30 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/12 22:45:25 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int 		check_and_add_crc(char *filename)
 	number = read(fd, buff, 10000);
 	buff[number] = '\0';
 	splitedbuff = ft_strsplit(buff, '\n');
-	find = find_checksum(buff, splitedbuff, number);
+	find = checksum_check(buff, splitedbuff, number);
 	if (find == CRC_OK)
 		message_nice_crc(filename, "have proper checksum!");
 	else if (find == CRC_INCORRECT)
@@ -84,42 +84,6 @@ int 		add_checksum(int fd, char *buf, size_t len)
 	return (1);
 }
 
-int 		find_checksum(char *buf, char **splitedbuff, size_t len)
-{
-	int		i;
-	int 	crc_pos;
-	int 	crc_count;
-	char	**splitted_line;
-
-	i = 0;
-	if (!ft_strnstr(buf, "crc:", len))
-		return(CRC_MISSING);
-	crc_pos = (int)(ft_strnstr(buf, "crc:", len) - buf);
-	if (crc_pos < len - 20)
-		return(CRC_NOT_IN_END);
-	crc_count = 0;
-	while (splitedbuff[i])
-	{
-		if (ft_strwcmp(splitedbuff[i], "crc:") == 0)
-		{
-			splitted_line = ft_strsplitwhitespaces(splitedbuff[i]);
-			if (!splitted_line[1])
-				return(CRC_ZERO);
-			else if (crc_calculate(buf, crc_pos) == ft_atoi(splitted_line[1]))
-				crc_count++;
-			else
-			{
-				ft_putnbr(crc_calculate(buf, len));
-				return (CRC_INCORRECT);
-			}
-		}
-		i++;
-	}
-	if (crc_count > 1)
-		return(CRC_MULTIPLE);
-	return(CRC_OK);
-}
-
 void	message_nice_crc(char *filename, char *result)
 {
 	ft_putstr(filename);
@@ -133,3 +97,4 @@ void	message_error_crc(char *filename, char *problem)
 	ft_putstr(" KO: ");
 	ft_putendl(problem);
 }
+
