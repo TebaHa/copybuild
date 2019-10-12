@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 19:13:07 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/12 14:30:13 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/12 14:32:17 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,12 @@ void		checksum_check(char *buf, char **buff_splited, size_t len)
 	}
 	if (!buff_splited[i])
 		util_parsing_error_wrong_crc();
+}
+
+int			checksum_add(char *file_name)
+{
+	int 	fd;
+
+
+	ft_putnbr(write(fd, "hello", 5));
 }
