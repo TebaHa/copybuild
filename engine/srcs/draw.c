@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 12:36:35 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 13:45:39 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void		engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone,
 		int cyb = clamp(yb, ytop[x], ybottom[x]);
 		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2-x) * t2.y + (x - x1) * t1.y);
 		t_image *tex = NULL;
-		for(int y = ytop[x]; y <= ybottom[x] - 1; ++y)
+		for(int y = ytop[x]; y <= ybottom[x]; ++y)
 		{
 			if(y >= cya && y <= cyb)
 			{

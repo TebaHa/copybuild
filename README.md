@@ -10,4 +10,4 @@
 <img width="1024" alt="Screen Shot 2019-09-20 at 22 19 34" src="https://user-images.githubusercontent.com/31967575/65353465-e19acd80-dbf5-11e9-9faa-a89d6c273156.png">
 
 * Sprite objects
-<img width="1020" alt="Screen Shot 2019-10-11 at 13 40 18" src="https://user-images.githubusercontent.com/31967575/66645690-c76c7200-ec2c-11e9-9ddd-9129400a3ab1.png">
+<img width="1024" alt="Screen Shot 2019-10-12 at 13 46 13" src="https://user-images.githubusercontent.com/31967575/66700198-c6077c00-ecf6-11e9-8d41-f9f0638eae85.png">
