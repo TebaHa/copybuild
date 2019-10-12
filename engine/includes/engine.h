@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 15:16:30 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 10:42:20 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
 # define SOUND_PATH				"./game/resources/sounds/"
 # define GAME_PATH				"./game/resources/levels/1.lvl"
+# define FONT_PATH				"./game/resources/fonts/SEASRN__.ttf"
 # define PARSING_ERROR 40
 # define READING_ERROR 41
 # define CYCLE_READING_ERROR 42
@@ -442,6 +443,7 @@ typedef struct		s_engine
 	t_txtr_pkg		**texture_buffer;
 	t_txtr_pkg		**sprites_buffer;
 	t_sprobject		*tmp;
+	TTF_Font		*font;
 }					t_engine;
 
 typedef struct		s_tric

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 15:19:00 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 12:36:35 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,11 +256,9 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *partic
 	float xscale2 = (WIDTH * hfov) / t2.y, yscale2 = (HEIGHT * vfov) / t2.y;
 	int x2 = WIDTH / 2 + (-t2.x * xscale2);
 	if(x1 >= x2 || x2 < sect.sx1 || x1 > sect.sx2)
-		return; // Only render if it's visible
-	/* Acquire the floor and ceiling heights, relative to where the player's view is */
-	float yceil =  (particle->z + 16) - plr->position.z;
-	float yfloor = (particle->z - 16) - plr->position.z;
-	/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
+		return;
+	float yceil = (particle->z + particle->texture->surface[particle->frame_num]->h / 4) - plr->position.z;
+	float yfloor = (particle->z - particle->texture->surface[particle->frame_num]->h / 4) - plr->position.z;
 	int y1a  = HEIGHT / 2 + (int)(-(yceil + t1.y * plr->yaw) * yscale1), y1b = HEIGHT / 2 + (int)(-(yfloor + t1.y * plr->yaw)  * yscale1);
 	int y2a  = HEIGHT / 2 + (int)(-(yceil + t2.y * plr->yaw)  * yscale2), y2b = HEIGHT / 2 + (int)(-(yfloor + t2.y * plr->yaw)  * yscale2);
 	int beginx = max(x1, sect.sx1), endx = min(x2, sect.sx2);
@@ -268,8 +266,6 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *partic
 	t_scaler yb_int = Scaler_Init(x1, beginx, x2, y1b, y2b);
 	for(int x = beginx; x <= endx; ++x)
 	{
-		int z = ((x - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 8;
-		/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
 		int ya = scaler_next(&ya_int);
 		int yb = scaler_next(&yb_int);
 		int cya = clamp(ya, ytop[x], ybottom[x]); // top
@@ -284,105 +280,6 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *partic
 		else
 			particle->timer++;
 	}
-}
-
-void		engine_render_polygone(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom)
-{
-	t_polygone	a;
-	t_point_2d	v1;
-	t_point_2d	v2;
-	t_point_2d	t1;
-	t_point_2d	t2;
-
-	v1.x = wall->vertices_array[0].x - plr->position.x;
-	v1.y = wall->vertices_array[0].y - plr->position.y;
-	v2.x = wall->vertices_array[1].x - plr->position.x;
-	v2.y = wall->vertices_array[1].y - plr->position.y;
-	a.vertices_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d) * 3);
-	a.color = wall->color;
-	t1.x = v1.x * plr->sinangle - v1.y * plr->cosangle;
-	t1.y = v1.x * plr->cosangle + v1.y * plr->sinangle;
-	t2.x = v2.x * plr->sinangle - v2.y * plr->cosangle;
-	t2.y = v2.x * plr->cosangle + v2.y * plr->sinangle;
-	/* Is the wall at least partially in front of the player? */
-	if(t1.y <= 0 && t2.y <= 0)
-		return ;
-	/* If it's partially behind the player, clip it against player's view frustrum */
-	if(t1.y <= 0 || t2.y <= 0)
-	{
-		float nearz = 1e-4f, farz = 4, nearside = 1e-5f, farside = 20.f;
-		// Find an intersection between the wall and the approximate edges of player's view
-		t_point_2d i1 = Intersect(t1.x, t1.y, t2.x, t2.y, -nearside, nearz, -farside, farz);
-		t_point_2d i2 = Intersect(t1.x, t1.y, t2.x, t2.y, nearside, nearz, farside, farz);
-		if (t1.y < nearz)
-		{
-			if (i1.y >= 0)
-				t1 = i1;
-			else
-				t1 = i2;
-		}
-		if (t2.y < nearz)
-		{
-			if (i1.y >= 0)
-				t2 = i1;
-			else
-				t2 = i2;
-		}
-	}
-	/* Do perspective transformation */
-	float xscale1 = hfov / t1.y, yscale1 = vfov / t1.y;
-	int x1 = WIDTH / 2 - (int)(t1.x * xscale1);
-	float xscale2 = hfov / t2.y, yscale2 = vfov / t2.y;
-	int x2 = WIDTH / 2 - (int)(t2.x * xscale2);
-	if(x1 >= x2 || x2 <= 0 || x1 > WIDTH)
-		return; // Only render if it's visible
-	float yceil = wall->vertices_array[0].z - plr->position.z;
-	float yfloor = eng->world->sectors_array[plr->cursector].floor - plr->position.z;
-	int y1a  = HEIGHT / 2 - (int)((yceil + t1.y * plr->yaw) * yscale1),  y1b = HEIGHT / 2 - (int)((yfloor + t1.y * plr->yaw)  * yscale1);
-	int y2a  = HEIGHT / 2 - (int)((yceil + t2.y * plr->yaw)  * yscale2),  y2b = HEIGHT / 2 - (int)((yfloor + t2.y * plr->yaw)  * yscale2);
-	int beginx = max(x1, 0), endx = min(x2, WIDTH - 1);
-	int ya1 = (beginx - x1) * (y2a - y1a) / (x2-x1) + y1a, cya1 = clamp(ya1, ytop[beginx], ybottom[beginx]); // top
-	int yb1 = (beginx - x1) * (y2b - y1b) / (x2-x1) + y1b, cyb1 = clamp(yb1, ytop[beginx], ybottom[beginx]); // bottom
-	int z1 = ((beginx - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 100;
-	int ya2 = (endx - x1) * (y2a - y1a) / (x2-x1) + y1a, cya2 = clamp(ya2, ytop[endx], ybottom[endx]); // top
-	int yb2 = (endx - x1) * (y2b - y1b) / (x2-x1) + y1b, cyb2 = clamp(yb2, ytop[endx], ybottom[endx]); // bottom
-	int z2 = ((endx - x1) * (t2.y - t1.y) / (x2 - x1) + t1.y) * 100;
-	a.vertices_array[0].x = beginx;
-	a.vertices_array[0].y = cya1;
-	a.vertices_array[0].z = z1;
-	a.vertices_array[1].x = beginx;
-	a.vertices_array[1].y = cyb1;
-	a.vertices_array[1].z = z1;
-	a.vertices_array[2].x = endx;
-	a.vertices_array[2].y = cya2;
-	a.vertices_array[2].z = z2;
-	engine_triangle(eng, plr, &a);
-	//bresenham_line(eng, &(t_point_3d){0, a->vertices_array[0].x, a->vertices_array[0].y}, (t_point_3d){a->vertices_array[1].x, a->vertices_array[1].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
-	//bresenham_line(eng, &(t_point_3d){0, a->vertices_array[1].x, a->vertices_array[1].y}, (t_point_3d){a->vertices_array[2].x, a->vertices_array[2].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
-	//bresenham_line(eng, &(t_point_3d){a->vertices_array[2].x, a->vertices_array[2].y}, (t_point_3d){a->vertices_array[0].x, a->vertices_array[0].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
-	//triangle_lines(a, eng);
-	//SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[1].x, a->vertices_array[1].y);
-	//SDL_RenderDrawLine(eng->ren, a->vertices_array[2].x, a->vertices_array[2].y, a->vertices_array[1].x, a->vertices_array[1].y);
-	//SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[2].x, a->vertices_array[2].y);
-	//engine_draw_line(eng, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
-	a.vertices_array[0].x = endx;
-	a.vertices_array[0].y = cya2;
-	a.vertices_array[0].z = z2;
-	a.vertices_array[1].x = endx;
-	a.vertices_array[1].y = cyb2;
-	a.vertices_array[1].z = z2;
-	a.vertices_array[2].x = beginx;
-	a.vertices_array[2].y = cyb1;
-	a.vertices_array[2].z = z1;
-	engine_triangle(eng, plr, &a);
-	//triangle_lines(a, eng);
-	//engine_draw_line(eng, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
-	//engine_draw_line(eng, (t_point_2d){a->vertices_array[1].x, a->vertices_array[1].y}, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
-	//engine_draw_line(eng, (t_point_2d){a->vertices_array[2].x, a->vertices_array[2].y}, (t_point_2d){a->vertices_array[0].x, a->vertices_array[0].y}, get_rgb(((a->color) >> 16), ((a->color) >> 8), ((a->color)), 255));
-	//SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[1].x, a->vertices_array[1].y);
-	//SDL_RenderDrawLine(eng->ren, a->vertices_array[2].x, a->vertices_array[2].y, a->vertices_array[1].x, a->vertices_array[1].y);
-	//SDL_RenderDrawLine(eng->ren, a->vertices_array[0].x, a->vertices_array[0].y, a->vertices_array[2].x, a->vertices_array[2].y);
-	//engine_triangle(eng, plr, a);
 }
 
 void		engine_render_frame(t_engine *eng, SDL_Surface *surf)

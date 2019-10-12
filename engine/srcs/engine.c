@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/10 05:03:23 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/12 12:10:50 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ void		engine_sdl_init(t_engine **eng)
 	if ((*eng)->ren == NULL)
 		error_handler("SDL_CreateRenderer Error: ", SDL_GetError(), (*eng));
 	sound_mixer_init();
+	(*eng)->font = TTF_OpenFont(FONT_PATH, 25);
 	//engine_clear_renderstack((*eng)->world->renderqueue);
 	//engine_clear_renderstack((*eng)->world->sprite_renderqueue);
 }
 
 void		engine_sdl_uninit(t_engine *eng)
 {
+	TTF_CloseFont(eng->font);
 	SDL_DestroyRenderer(eng->ren);
 	SDL_DestroyWindow(eng->win);
 	SDL_Quit();
