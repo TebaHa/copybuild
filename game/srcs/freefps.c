@@ -47,7 +47,8 @@ static	int		game_thread_wrapper(void *ptr)
 	t_game *fps;
 
 	fps = (t_game *)ptr;
-	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface, fps->render_thread_pool[fps->thread_num].z_buff);
+//	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface, fps->render_thread_pool[fps->thread_num].z_buff);
+	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface);
 	//SDL_Delay(1 * THREAD_POOL_SIZE);
 	return (fps->thread_num);
 }

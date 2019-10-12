@@ -11,6 +11,8 @@
 # **************************************************************************** #
 
 NAME = freefps
+CRC = checksum
+
 CC = gcc
 FLAGS =
 ID_UN := $(shell id -un)
@@ -82,6 +84,7 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					sprite_render_stack.c \
 					pickup.c \
 					font.c \
+					checksum.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
@@ -96,6 +99,17 @@ ENGINE_SRCS = $(addprefix $(ENGINE_SRCS_DIRECTORY), $(ENGINE_SRCS_LIST))
 ENGINE_OBJS = $(addprefix $(ENGINE_OBJS_DIRECTORY), $(ENGINE_OBJS_LIST))
 
 ENGINE_OBJS_LIST = $(patsubst %.c, %.o, $(ENGINE_SRCS_LIST))
+
+EDITOR_OBJS_DIRECTORY = ./editor/objs/
+EDITOR_SRCS_DIRECTORY = ./editor/srcs/
+EDITOR_HEADERS_DIRECTORY = ./editor/includes/
+EDITOR_HEADERS_LIST = editor.h
+EDITOR_SRCS_LIST = checksum.c
+EDITOR_HEADERS = $(addprefix $(EDITOR_HEADERS_DIRECTORY), $(EDITOR_HEADERS_LIST))
+EDITOR_INCLUDES = -I$(EDITOR_HEADERS_DIRECTORY)
+EDITOR_SRCS = $(addprefix $(EDITOR_SRCS_DIRECTORY), $(EDITOR_SRCS_LIST))
+EDITOR_OBJS = $(addprefix $(EDITOR_OBJS_DIRECTORY), $(EDITOR_OBJS_LIST))
+EDITOR_OBJS_LIST = $(patsubst %.c, %.o, $(EDITOR_SRCS_LIST))
 
 all: $(NAME)
 
@@ -129,3 +143,13 @@ fclean: clean
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) fclean
 
 re: fclean all
+
+crc: $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(EDITOR_OBJS_DIRECTORY) $(EDITOR_OBJS)
+	$(CC) -o $(CRC) $(ENGINE_OBJS) $(EDITOR_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
+
+$(EDITOR_OBJS_DIRECTORY):
+	mkdir -p $(EDITOR_OBJS_DIRECTORY)
+	echo "$(NAME): $(EDITOR_OBJS_DIRECTORY) was created"
+
+$(EDITOR_OBJS_DIRECTORY)%.o: $(EDITOR_SRCS_DIRECTORY)%.c $(EDITOR_HEADERS)
+	$(CC) $(FLAGS) -c $(EDITOR_INCLUDES) -I $(EDITOR_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(ENGINE_HEADERS_DIRECTORY) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@

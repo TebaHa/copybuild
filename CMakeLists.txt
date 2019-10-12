@@ -9,6 +9,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 include_directories(engine/includes)
 include_directories(engine/includes/SDL2)
 include_directories(game/includes)
+include_directories(editor/includes)
 include_directories(lib/libft/includes)
 include_directories(${SDL2_INCLUDE_DIR})
 
@@ -17,6 +18,8 @@ find_package(SDL2 REQUIRED)
 set(GAME_INC game/includes/game.h)
 
 set(ENG_INC engine/includes/engine.h )
+
+set(EDITOR_INC editor/includes/editor.h)
 
 set(GAME_SRC game/srcs/freefps.c)
 
@@ -52,7 +55,10 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/sprite_render.c
 			engine/srcs/sprite_render_stack.c
 			engine/srcs/sort.c
-			engine/srcs/render_stack.c)
+			engine/srcs/render_stack.c
+			engine/srcs/checksum.c)
+
+set(EDITOR_SRC editor/srcs/checksum.c)
 
 set(SDL ${SDL_DIRECTORY}libmlx.a)
 set(SDL_DIRECTORY lib/sdl2/)
@@ -64,6 +70,12 @@ add_executable(DoomNukem ${GAME_INC} ${GAME_SRC}
 				${ENG_INC} ${ENG_SRC}
 				${SDL_DIRECTORY} ${SDL_INCLUDES})
 
+add_executable(editor ${GAME_INC} ${GAME_SRC}
+		${ENG_INC} ${ENG_SRC}
+		${EDITOR_INC} ${EDITOR_SRC}
+		${SDL_DIRECTORY} ${SDL_INCLUDES})
+
 add_subdirectory(lib/libft)
 
 target_link_libraries(DoomNukem ${SDL2_LIBRARY} libft)
+target_link_libraries(editor libft)
