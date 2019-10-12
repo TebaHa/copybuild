@@ -317,6 +317,9 @@ typedef struct		s_hud
 {
 	t_emo_state 	emo_state;
 	t_health_state	health_state;
+	t_sprite		*health;
+	t_sprite		*armor;
+	t_sprite		*ammo;
 	t_sprite		*face[H_STATES_NUM][F_STATES_NUM];
 }					t_hud;
 

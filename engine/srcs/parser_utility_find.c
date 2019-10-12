@@ -56,7 +56,6 @@ void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 	{
 		if (!ft_strcmp(name_png, eng->sprites_buffer[i]->filename))
 		{
-			/* Место утечки */
 			dst = util_transform_texture_to_sprite(
 				&eng->sprites_buffer[i]->texture);
 			break;
