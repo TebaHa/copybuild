@@ -161,12 +161,12 @@ typedef enum		e_wpn_state
 
 typedef enum		e_sound_ch
 {
+	S_BACKGROUND,
 	S_WEAPON_SHOT,
 	S_WEAPON_EXTRA,
 	S_PLAYER,
 	S_ENEMY_1,
 	S_ENEMY_2,
-	S_ENEMY_3,
 	SOUNDS_NUM
 }					t_sound_ch;
 
@@ -459,6 +459,7 @@ typedef struct		s_engine
 	t_txtr_pkg		**sprites_buffer;
 	t_sprobject		*tmp;
 	TTF_Font		*font;
+	Mix_Chunk		*background_music;
 }					t_engine;
 
 typedef struct		s_tric
@@ -700,6 +701,7 @@ char			*util_add_wav_to_name(char *old_name);
 void			sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
 void			sound_shoot(t_player *plr);
 void			sound_free(t_engine *eng);
+void			eng_create_background_music(t_engine *eng);
 
 void			infinite_loop(void);
 

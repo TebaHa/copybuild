@@ -16,7 +16,7 @@ void			sound_mixer_init(void)
 {
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
 		ft_putendl("Can't initialize SDL audio");
-	if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, SOUNDS_NUM, 4096 ) == -1 )
+	if( Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, SOUNDS_NUM, 4096) == -1 )
 		ft_putendl("Can't initialize SDL_mixer");
 }
 
