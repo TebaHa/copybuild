@@ -29,5 +29,5 @@ void	eng_create_background_music(t_engine *eng)
 	eng->background_music = sound_init("background_nervous");
 	if (Mix_PlayChannel(S_BACKGROUND, eng->background_music, -1) == -1 )
 		ft_putendl("Background audio play error");
-	Mix_VolumeChunk(eng->background_music, MIX_MAX_VOLUME / 25);
+	Mix_VolumeChunk(eng->background_music, MIX_MAX_VOLUME * BACKGROUND_MUSIC_VOLUME);
 }

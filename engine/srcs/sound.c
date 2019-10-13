@@ -32,7 +32,9 @@ Mix_Chunk		*sound_init(char *name)
 		ft_putstr("Can't load ");
 		ft_putstr(sound_name);
 		ft_putendl("!");
+		return NULL;
 	}
+	Mix_VolumeChunk(sound, MIX_MAX_VOLUME * GAME_SOUNDS_VOLUME);
 	free(sound_name);
 	return sound;
 }
@@ -63,5 +65,6 @@ void	sound_free(t_engine *eng)
 
 void	sound_shoot(t_player *plr)
 {
-	sound_play(plr->wpn->shot_sound, S_WEAPON_SHOT);
+	if (!Mix_Playing(S_WEAPON_SHOT))
+		sound_play(plr->wpn->shot_sound, S_WEAPON_SHOT);
 }

@@ -41,6 +41,8 @@
 # define DELAY 15
 # define DEFAULT_SPRITE_DELAY	10
 # define FIRERATE 30
+# define BACKGROUND_MUSIC_VOLUME	0.1
+# define GAME_SOUNDS_VOLUME			1
 
 // Utility functions. Because C doesn't have templates,
 // we use the slightly less safe preprocessor macros to
@@ -294,6 +296,7 @@ typedef struct		s_enemy
 {
 	int 			id;
 	char 			*name;
+	Mix_Chunk		*death_sound;
 	t_sprite		*anmtn[E_STATES_NUM];
 }					t_enemy;
 

@@ -35,6 +35,7 @@ void		eng_create_medkit(t_engine *eng)
 	medkit->anmtn[E_FIRE] = medkit->anmtn[E_IDLE];
 	medkit->anmtn[E_HURT] = medkit->anmtn[E_IDLE];
 	medkit->anmtn[E_DEAD] = util_create_sprite_by_name(eng, "empty_place");
+	medkit->death_sound = sound_init("pickup_health");
 	eng->enemy[MEDKIT] = medkit;
 }
 
@@ -50,6 +51,7 @@ void		eng_create_armor(t_engine *eng)
 	armor->anmtn[E_FIRE] = armor->anmtn[E_IDLE];
 	armor->anmtn[E_HURT] = armor->anmtn[E_IDLE];
 	armor->anmtn[E_DEAD] = util_create_sprite_by_name(eng, "empty_place");
+	armor->death_sound = sound_init("pickup_armor");
 	eng->enemy[ARMOR] = armor;
 }
 
@@ -67,6 +69,7 @@ void		eng_create_powerup(t_engine *eng)
 	powerup->anmtn[E_FIRE] = powerup->anmtn[E_IDLE];
 	powerup->anmtn[E_HURT] = powerup->anmtn[E_IDLE];
 	powerup->anmtn[E_DEAD] = util_create_sprite_by_name(eng, "empty_place");
+	powerup->death_sound = sound_init("pickup_powerup");
 	eng->enemy[POWER_UP] = powerup;
 }
 
@@ -82,6 +85,7 @@ void		eng_create_rifle_ammo(t_engine *eng)
 	ammo->anmtn[E_FIRE] = ammo->anmtn[E_IDLE];
 	ammo->anmtn[E_HURT] = ammo->anmtn[E_IDLE];
 	ammo->anmtn[E_DEAD] = util_create_sprite_by_name(eng, "empty_place");
+	ammo->death_sound = sound_init("pickup_ammo");
 	eng->enemy[RIFLE_AMMO] = ammo;
 }
 
@@ -97,6 +101,7 @@ void		eng_create_plasma_ammo(t_engine *eng)
 	ammo->anmtn[E_FIRE] = ammo->anmtn[E_IDLE];
 	ammo->anmtn[E_HURT] = ammo->anmtn[E_IDLE];
 	ammo->anmtn[E_DEAD] = util_create_sprite_by_name(eng, "empty_place");
+	ammo->death_sound = sound_init("pickup_ammo");
 	eng->enemy[PLASMA_AMMO] = ammo;
 }
 
