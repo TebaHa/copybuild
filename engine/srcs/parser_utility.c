@@ -62,7 +62,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 		{
 			name = ft_strcpy(ft_strnew(ft_strlen(str[4]) + 2), str[4]);
 			name = ft_strcat(ft_strcat(name, "_"), ft_itoa(srfc_count));
-			util_find_sprite_by_name(sprite->surface[srfc_count], eng, name);
+			util_find_sprite_by_name(&sprite->surface[srfc_count], eng, name);
 			free(name);
 			srfc_count++;
 		}
@@ -70,7 +70,7 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	else
 	{
 		sprite->a_state = STATIC;
-		util_find_sprite_by_name(*sprite->surface, eng, str[4]);
+		util_find_sprite_by_name(sprite->surface, eng, str[4]);
 	}
 	eng->stats.skins_count++;
 }

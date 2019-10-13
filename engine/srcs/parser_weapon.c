@@ -184,6 +184,7 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 	t_sprite *res;
 
 	res = (t_sprite *) ft_memalloc(sizeof(t_sprite));
+	res->surface = (SDL_Surface **) ft_memalloc(sizeof(SDL_Surface));
 	res->frames_delay = DEFAULT_SPRITE_DELAY;
 	if (util_create_static_sprite(eng, str, res))
 		return (res);
@@ -191,7 +192,7 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 		return (res);
 	res->frames_num = 1;
 	res->a_state = STATIC;
-	util_parsing_error_no_sprite(*(res->surface), eng, str);
+	util_parsing_error_no_sprite(res->surface, eng, str);
 	res->name = util_add_png_to_name(PARSING_ERROR_SPRITE);
 	return (res);
 }

@@ -39,7 +39,7 @@ void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 	free(name_png);
 }
 
-void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
+void		util_find_sprite_by_name(SDL_Surface **dst, t_engine *eng,
 			char *name)
 {
 	int		i;
@@ -48,7 +48,7 @@ void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 	i = 0;
 	if (!name)
 	{
-		dst = NULL;
+		*dst = NULL;
 		return ;
 	}
 	name_png = util_add_png_to_name(name);
@@ -56,7 +56,7 @@ void		util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
 	{
 		if (!ft_strcmp(name_png, eng->sprites_buffer[i]->filename))
 		{
-			dst = util_transform_texture_to_sprite(
+			*dst = util_transform_texture_to_sprite(
 				&eng->sprites_buffer[i]->texture);
 			break;
 		}

@@ -129,7 +129,7 @@ void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 	exit(PARSING_ERROR);
 }
 
-void	util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
+void	util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
 		char *name)
 {
 	util_parsing_error_no_cap("sprite", eng);

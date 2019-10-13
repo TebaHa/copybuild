@@ -788,9 +788,9 @@ t_sprite		*engine_read_sprites_from_file(t_engine *eng, t_buff);
 void			util_create_sprite(t_engine *eng, t_sprite *sprite,	char **str);
 t_sprite		util_get_sprite_from_buff_by_id(int id, int size, t_sprite *sprites,
 				int sprobj_id);
-void			util_find_sprite_by_name(SDL_Surface *dst, t_engine *eng,
+void			util_find_sprite_by_name(SDL_Surface **dst, t_engine *eng,
 				char *name);
-void			util_parsing_error_no_sprite(SDL_Surface *dst, t_engine *eng,
+void			util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
 				char *name);
 
 /*
