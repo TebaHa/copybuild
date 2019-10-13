@@ -120,6 +120,7 @@ int		main(void)
 			fps.player.controller.falling = 1;
 		if (SDL_PollEvent(&fps.eng->event))
 		{
+			sound_player_control(&fps.player);
 			if (fps.eng->event.type == SDL_QUIT)
 			{
 				game_stop_threads(fps.render_thread_pool, THREAD_POOL_SIZE);
@@ -166,9 +167,7 @@ int		main(void)
 					break;
 				}
 				if (fps.eng->event.key.keysym.sym == SDLK_w)
-				{
 					fps.player.controller.wasd[0] = 1;
-				}
 				if (fps.eng->event.key.keysym.sym == SDLK_s)
 					fps.player.controller.wasd[3] = 1;
 				if (fps.eng->event.key.keysym.sym == SDLK_a)

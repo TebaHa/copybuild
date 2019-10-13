@@ -19,10 +19,10 @@ char		**engine_read_level_file(char *filename)
 	char		*buff;
 	char		**splitedbuff;
 
-	fd = open(filename, O_RDWR);
+	fd = open(GAME_PATH, O_RDONLY);
 	buff = (char*)malloc(sizeof(char) * 10000);
 	if (fd < 2)
-		exit(READING_ERROR);
+		util_parsing_error_no_lvl_file(filename);
 	number = read(fd, buff, 10000);
 	buff[number] = '\0';
 	close(fd);
@@ -81,6 +81,7 @@ void		engine_count_all_from_file(t_engine *eng, char **json_splited)
 	eng->stats.sprobjects_count = 0;
 	eng->stats.sectors_count = 0;
 	eng->stats.skins_count = 0;
+	eng->stats.worlds_count = 0;
 	while (json_splited[i])
 	{
 		if (ft_strwcmp(json_splited[i], "vertex:") == 0)
@@ -95,8 +96,20 @@ void		engine_count_all_from_file(t_engine *eng, char **json_splited)
 			eng->stats.skins_count++;
 		else if (ft_strwcmp(json_splited[i], "sobjct:") == 0)
 			eng->stats.sprobjects_count++;
+		else if (ft_strwcmp(json_splited[i], "world:") == 0)
+			eng->stats.worlds_count++;
 		i++;
 	}
+	if (!eng->stats.worlds_count)
+		util_parsing_error_not_enough("worlds");
+	if (!eng->stats.sectors_count)
+		util_parsing_error_not_enough("sectors");
+	if (!eng->stats.objects_count)
+		util_parsing_error_not_enough("objects");
+	if (!eng->stats.polies_count)
+		util_parsing_error_not_enough("polies");
+	if (!eng->stats.vertexes_count)
+		util_parsing_error_not_enough("vertexes");
 }
 
 void		util_release_read_buffers(t_buff *buff)

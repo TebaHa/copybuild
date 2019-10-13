@@ -68,3 +68,11 @@ void	sound_shoot(t_player *plr)
 	if (!Mix_Playing(S_WEAPON_SHOT))
 		sound_play(plr->wpn->shot_sound, S_WEAPON_SHOT);
 }
+
+void	sound_player_control(t_player *plr)
+{
+	if(plr->controller.moving && !Mix_Playing(S_PLAYER))
+		sound_play(plr->steps_sound, S_PLAYER);
+	else if (!plr->controller.moving && Mix_Playing(S_PLAYER))
+		Mix_HaltChannel(S_PLAYER);
+}

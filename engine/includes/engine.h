@@ -426,6 +426,7 @@ typedef	struct		s_player
 
 typedef struct		s_stats
 {
+	int 			worlds_count;
 	int				vertexes_count;
 	int				polies_count;
 	int				objects_count;
@@ -704,6 +705,7 @@ char			*util_add_wav_to_name(char *old_name);
 void			sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
 void			sound_shoot(t_player *plr);
 void			sound_free(t_engine *eng);
+void			sound_player_control(t_player *plr);
 void			eng_create_background_music(t_engine *eng);
 
 void			infinite_loop(void);
@@ -724,12 +726,16 @@ void			util_parsing_error_count_handler(char *problem_from,
 void			util_parsing_error_cant_find(char *problem, int id_problem);
 void			util_parsing_error_lost_handler(char *problem, int id_problem,
 				char *problem_from, int id_problem_from);
+void			util_parsing_error_no_lvl_file(char *problem);
 void			util_parsing_error_extra_data(char *problem, char *problem_from,
 				char **str);
 void			util_parsing_error_little_data(char *problem, char *problem_from,
 				char **str);
 void			util_parsing_error_not_digit(char *problem);
 void			util_parsing_error_not_hex(char *problem);
+void			util_parsing_error_not_enough(char *problem);
+void			util_parsing_error_repetions(char *problem, char *problem_from,
+				int id_problem);
 void			util_parsing_error_no_cap(char *problem, t_engine *eng);
 SDL_Surface		*util_transform_texture_to_sprite(t_image *texture);
 SDL_Surface		*util_CreateRGBSurface(Uint32 flags, int width, int height,
@@ -771,6 +777,7 @@ void			util_create_sector(t_engine *eng, t_buff buff,
 				t_sector *sector, char **str);
 void			util_create_sector_sprobjs(t_engine *eng, t_buff buff,
 				t_sector *sector, char **str);
+void			util_find_repeats_in_sector(t_sector *sector);
 
 void			util_find_texture_by_name(t_image **dst, t_engine *eng,
 				char *name);

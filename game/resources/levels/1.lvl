@@ -1,6 +1,6 @@
 #Worlds
 #		id, num of sects,	sectors
-world:	1	5				0 1 2 3 4
+world:	1	6				0 1 2 3 4 5
 
 #Vertexes
 #		id	X,		Y,		Z
@@ -134,4 +134,4 @@ sector:	4	-2000	2548	skybox_top		skybox_top		4		0		18 19 20 21
 
 wrldbx:	0	-2000	2548	skybox_top		skybox_top		4		0		18 19 20 21
 
-crc: -1114376605
+crc: 1425136176

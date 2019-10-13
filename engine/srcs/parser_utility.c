@@ -17,6 +17,8 @@ void		util_create_world(t_world **world, char **str)
 	*world = (t_world *)ft_memalloc(sizeof(t_world));
 	util_int10_data_filler(&(*world)->id, str[1]);
 	util_int10_data_filler(&(*world)->sectors_count, str[2]);
+	if (!(*world)->sectors_count)
+		util_parsing_error_little_data("sectors", "world", str);
 	util_parsing_error_count_handler("world", str, 2 + (*world)->sectors_count);
 //	(*world)->renderstack = (t_item *)ft_memalloc(sizeof(t_item)
 //		* (*world)->sectors_count);
@@ -84,6 +86,8 @@ void		util_create_polygone(t_engine *eng, t_polygone *polygone,
 	util_int16_data_filler(&polygone->color, str[3]);
 	util_find_texture_by_name(&polygone->texture, eng, str[4]);
 	util_int10_data_filler(&polygone->vertices_count, str[5]);
+	if (!polygone->vertices_count)
+		util_parsing_error_little_data("vertices", "polygone", str);
 	util_parsing_error_count_handler("polygone", str, 5 + polygone->vertices_count);
 	polygone->vertices_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d)
 		* polygone->vertices_count);
@@ -109,6 +113,8 @@ void		util_create_object(t_engine *eng, t_object *object,
 	util_find_texture_by_name(&object->floor_wall_texture, eng, str[5]);
 	util_find_texture_by_name(&object->ceil_wall_texture, eng, str[6]);
 	util_int10_data_filler(&object->polies_count, str[7]);
+	if (!object->polies_count)
+		util_parsing_error_little_data("polies", "object", str);
 	util_parsing_error_count_handler("object", str, 7 + object->polies_count);
 	object->polies_array = (t_polygone *)ft_memalloc(sizeof(t_polygone)
 		* object->polies_count);
@@ -133,6 +139,8 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 	util_find_texture_by_name(&sector->floor_texture, eng, str[4]);
 	util_find_texture_by_name(&sector->ceil_texture, eng, str[5]);
 	util_int10_data_filler(&sector->objects_count, str[6]);
+	if (sector->objects_count < 3)
+		util_parsing_error_little_data("objects", "sector", str);
 	util_int10_data_filler(&sector->sprobjects_count, str[7]);
 	util_parsing_error_count_handler("sector", str, 7 + sector->objects_count
 		+ sector->sprobjects_count);
@@ -147,6 +155,7 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 	util_create_sector_sprobjs(eng, buff, sector, str);
 	sector->dist = (double *)ft_memalloc(sizeof(double) * sector->objects_count);
 	sector->order = (int *)ft_memalloc(sizeof(int) * sector->objects_count);
+	util_find_repeats_in_sector(sector);
 	eng->stats.sectors_count++;
 }
 
@@ -164,6 +173,43 @@ void		util_create_sector_sprobjs(t_engine *eng, t_buff buff,
 		sector->sprobjects_array[sprobj_count++] =
 		util_get_sprobject_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.sprobjects_count, buff.sprobjects, sector->id);
+}
+
+void		util_find_repeats_in_sector(t_sector *sector)
+{
+	int 	j;
+	int 	i;
+
+	i = 0;
+	while (i < sector->objects_count)
+	{
+		j = 0;
+		while (j < sector->objects_count)
+		{
+			if (i != j)
+			{
+				if (sector->objects_array[i].id == sector->objects_array[j].id)
+					util_parsing_error_repetions("objects", "sector", sector->id);
+				if (sector->objects_array[i].polies_array[0].id ==
+					sector->objects_array[j].polies_array[0].id)
+					util_parsing_error_repetions("polies", "sector", sector->id);
+			}
+			j++;
+		}
+		i++;
+	}
+	while (i < sector->sprobjects_count)
+	{
+		j = 0;
+		while (j < sector->sprobjects_count)
+		{
+			if (sector->sprobjects_array[i].id ==
+				sector->sprobjects_array[j].id && i != j)
+				util_parsing_error_repetions("sprobjects", "sector", sector->id);
+			j++;
+		}
+		i++;
+	}
 }
 
 SDL_Surface	*util_CreateRGBSurface(Uint32 flags, int width, int height,
