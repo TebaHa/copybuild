@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 12:32:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/14 18:55:21 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,6 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 	int			res;
 	int			hit;
 
-	sound_shoot(plr);
-	if (plr->delay == 0)
-		plr->delay = 5;
-	else
-	{
-		plr->delay--;
-		return ;
-	}
 	i = 0;
 	res = 0;
 	hit = 0;
@@ -79,7 +71,6 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 					if ((int_p.z < eng->world->sectors_array[sect->objects_array[i].portal].floor && int_p.z > sect->floor)
 					|| (int_p.z > eng->world->sectors_array[sect->objects_array[i].portal].ceil && int_p.z < sect->ceil))
 					{
-						//printf("id: %d X: %f Y: %f Z: %f\n", sect->objects_array[i].id, int_p.x, int_p.y, int_p.z);
 						engine_push_particlestack(&sect->objects_array[i], plr->wpn, sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
 						break;
 					}
@@ -92,7 +83,6 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 				}
 				else if (prev != sect_id)
 				{
-					//printf("id: %d X: %f Y: %f Z: %f\n", sect->objects_array[i].id, int_p.x, int_p.y, int_p.z);
 					hit = 1;
 					engine_push_particlestack(&sect->objects_array[i], plr->wpn, sect->objects_array[i].particles, &sect->objects_array[i].status, int_p);
 					break;
@@ -101,8 +91,6 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 			i++;
 		}
 	}
-
-	//printf("id: %d X: %f Y: %f Z: %f\n", sect->objects_array[i].id, sect->objects_array[i].particles[sect->objects_array[i].status - 1].x, sect->objects_array[i].particles[sect->objects_array[i].status - 1].y, sect->objects_array[i].particles[sect->objects_array[i].status - 1].z);
 }
 
 int		check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor)

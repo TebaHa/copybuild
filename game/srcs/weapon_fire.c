@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 03:03:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 14:38:29 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/14 19:10:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,26 @@ void	fire(t_engine *eng, t_player *plr, int state)
 {
 	plr->shoot = state;
 	plr->frame_num = 0;
-	if (plr->shoot == 1)
+	if (plr->shoot)
 	{
 		plr->plr_state = P_FIRE;
 		plr->wpn->state = W_FIRE;
 	}
-	else
-		plr->firetime = FIRERATE;
 }
 
 void	fire_anim_change(t_engine *eng, t_player *plr)
 {
-	if (plr->shoot == 1)
+	if (plr->shoot)
 	{
-		plr->firetime = FIRERATE;
-		shoot(eng, plr, 1000);
+		if ((plr->firetime % plr->wpn->frame) == 0)
+			sound_shoot(plr);
+		if ((plr->firetime % (plr->wpn->frame)) == 0)
+			shoot(eng, plr, 1000);
 	}
-	if (plr->firetime != 0)
-		plr->firetime--;
-	if (plr->firetime == 0)
+	else
+	{
+		plr->plr_state = P_IDLE;
 		plr->wpn->state = W_IDLE;
+	}
+	plr->firetime++;
 }

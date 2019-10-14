@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 18:04:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/14 19:01:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int		main(void)
 	game_create_test_player(&fps.player);
 	engine_create_resources_from_file(fps.eng);
 	engine_create_world_from_file(fps.eng, GAME_PATH);
+	fps.eng->weapon[0]->frame = 4;
+	fps.eng->weapon[1]->frame = 40;
 	fps.player.wpn = fps.eng->weapon[1];
 	game_init_threads(fps.render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
@@ -268,7 +270,6 @@ int		main(void)
 			engine_render_frame(fps.eng, fps.render_thread_pool[thread_end_index].surface);
 			engine_render_hud_stats(fps.eng, &fps.player, fps.render_thread_pool[thread_end_index].surface);
 			engine_present_and_clear_frame(fps.eng);
-			//DL_Delay(THREAD_POOL_SIZE * 2);
 			thread_start_index = thread_end_index;
 			thread_end_index = thread_end_index < (THREAD_POOL_SIZE - 1) ? thread_end_index + 1 : 0;
 			if (init == 0)
