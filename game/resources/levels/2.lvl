@@ -10,20 +10,20 @@ sector:	0	0		500		floor_wall		ceil_wall		3		0		0 1 2
 #Objects
 #			(if >= 0 where goes)
 #		id,	portal, pasble, visble,	floor_wall,		ceil_wall,	#polys,	id of poly
-object:	0	-1		0		1		floor_wall		ceil_wall	1		1
-object:	1	-1		0		1		floor_wall		ceil_wall	1		0
+object:	0	-1		0		1		floor_wall		ceil_wall	1		0
+object:	1	-1		0		1		floor_wall		ceil_wall	1		1
 object:	2	-1		0		1		floor_wall		ceil_wall	1		2
 
 #Polygones
 #				(types: 0 for triangle and 1 for wall),
 #			id,	type, color,	texture,		#verts,	id of vert
 polygone:	0	1	0xFF0000	bricks			2		0 1
-polygone:	1	1	0xFF0000	bricks			2		2 1
-polygone:	2	1	0xCCFFFF	bricks			2		1 0
+polygone:	1	1	0xFF0000	bricks			2		1 2
+polygone:	2	1	0xCCFFFF	bricks			2		2 0
 
 #Vertexes
 #		id	X,		Y,		Z
-vertex: 0	300		50		300
-vertex: 1	-130	-50		300
-vertex: 2	-300	100		300
+vertex: 0	0		0		300
+vertex: 1	0		100		300
+vertex: 2	100		0		300
 crc: 422446586

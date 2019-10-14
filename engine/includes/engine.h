@@ -736,16 +736,18 @@ void			util_parsing_error_not_hex(char *problem);
 void			util_parsing_error_not_enough(char *problem);
 void			util_parsing_error_repetions(char *problem, char *problem_from,
 				int id_problem);
+void			util_parsing_error_player_outside(void);
 void			util_parsing_error_no_cap(char *problem, t_engine *eng);
 SDL_Surface		*util_transform_texture_to_sprite(t_image *texture);
 SDL_Surface		*util_CreateRGBSurface(Uint32 flags, int width, int height,
 				int depth);
+void			engine_check_plr_pos(t_world *world, t_player *plr);
 
 char			**engine_read_level_file(char *filename);
 void			engine_count_all_from_file(t_engine *eng, char **json_splited);
 
 void			engine_read_world_from_file(t_engine *eng, char **json_splited);
-void			engine_create_world_from_file(t_engine *eng, char *filename);
+void			engine_create_world_from_file(t_engine *eng, t_player *plr, char *filename);
 void			util_create_world(t_world **world, char **str);
 
 t_point_3d		*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);

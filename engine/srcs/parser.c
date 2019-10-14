@@ -39,10 +39,9 @@ void		parsing_checker(t_engine *eng, char *str)
 		ft_putendl(str);
 }
 
-void		engine_create_world_from_file(t_engine *eng, char *filename)
+void		engine_create_world_from_file(t_engine *eng, t_player *plr, char *filename)
 {
 	t_buff		buff;
-
 
 	eng->stats.parsing_debug = 0;
 	buff.str = engine_read_level_file(filename);
@@ -67,6 +66,8 @@ void		engine_create_world_from_file(t_engine *eng, char *filename)
 	parsing_checker(eng, "Worldbox OK");
 	util_release_read_buffers(&buff);
 	parsing_checker(eng, "Releasing buffers OK");
+	engine_check_plr_pos(eng->world, plr);
+	parsing_checker(eng, "Player inside map OK");
 	ft_putendl("PARSING OK!");
 }
 
