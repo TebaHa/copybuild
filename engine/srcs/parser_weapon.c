@@ -29,7 +29,6 @@ void 		eng_create_rifle(t_engine *eng)
 	rifle->max_ammo = 30;
 	rifle->containers = 0;
 	rifle->state = W_IDLE;
-	rifle->frame = 0;
 	rifle->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
 	rifle->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
 	rifle->anmtn[W_IDLE]->a_state = CYCLE;

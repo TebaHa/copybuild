@@ -1,7 +1,7 @@
 #Worlds
 #		id, num of sects,	sectors
 
-world:	1	5				0 1 2 3
+world:	1	5				0 1 2 3 4
 
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture, #objs, #sprobjs,	id of obj,	id of sprobj

@@ -27,11 +27,11 @@
 # define MAXSECTORS 32
 # define hfov (1.0 * 0.83f * HEIGHT / WIDTH)
 # define vfov (1.0 * 0.2f)
-# define TEXTURE_PACK_PATH		"./game/resources/images/"
-# define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
-# define SOUND_PATH				"./game/resources/sounds/"
-# define GAME_PATH				"./game/resources/levels/1.lvl"
-# define FONT_PATH				"./game/resources/fonts/SEASRN__.ttf"
+# define TEXTURE_PACK_PATH		"../game/resources/images/"
+# define TEXTURE_SPRITE_PATH	"../game/resources/sprites/"
+# define SOUND_PATH				"../game/resources/sounds/"
+# define GAME_PATH				"../game/resources/levels/2.lvl"
+# define FONT_PATH				"../game/resources/fonts/SEASRN__.ttf"
 # define PARSING_ERROR 40
 # define READING_ERROR 41
 # define CYCLE_READING_ERROR 42
@@ -307,7 +307,7 @@ typedef struct		s_weapon
 	int 			ammo;
 	int 			max_ammo;
 	int 			containers;
-	int 			frame;
+	int 			cooldown;
 	t_wpn_state 	state;
 	t_sprite		*anmtn[W_STATES_NUM];
 	t_sprite		*bullet_hole;
