@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 22:18:40 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/14 21:37:12 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,6 @@
 # define FIRERATE 30
 # define BACKGROUND_MUSIC_VOLUME	0.1
 # define GAME_SOUNDS_VOLUME			1
-
-// Utility functions. Because C doesn't have templates,
-// we use the slightly less safe preprocessor macros to
-// implement these functions that work with multiple types.
-# define min(a,b)	(((a) < (b)) ? (a) : (b)) // min: Choose smaller of two scalars.
-# define max(a,b)	(((a) > (b)) ? (a) : (b)) // max: Choose greater of two scalars.
-# define clamp(a, mi, ma)	min(max(a,mi),ma) // clamp: Clamp value into set range.
-# define vxs(x0,y0, x1,y1)	((x0)*(y1) - (x1)*(y0)) // vxs: Vector cross product
-// Overlap:  Determine whether the two number ranges overlap.
-# define Overlap(a0, a1, b0, b1)	(min(a0, a1) <= max(b0, b1) && min(b0, b1) <= max(a0, a1))
-// IntersectBox: Determine whether two 2D-boxes intersect.
-# define IntersectBox(x0,y0, x1,y1, x2,y2, x3,y3)	(Overlap(x0,x1,x2,x3) && Overlap(y0,y1,y2,y3))
-// PointSide: Determine which side of a line the point is on. Return value: <0, =0 or >0.
-# define PointSide(px,py, x0,y0, x1,y1) vxs((x1)-(x0), (y1)-(y0), (px)-(x0), (py)-(y0))
-// Intersect: Calculate the point of intersection between two lines.
-# define Intersect(x1,y1, x2,y2, x3,y3, x4,y4) ((t_point_2d) { \
-	vxs(vxs(x1,y1, x2,y2), (x1) - (x2), vxs(x3,y3, x4,y4), (x3)-(x4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)), \
-	vxs(vxs(x1,y1, x2,y2), (y1)-(y2), vxs(x3,y3, x4,y4), (y3)-(y4)) / vxs((x1)-(x2), (y1)-(y2), (x3)-(x4), (y3)-(y4)) })
-# define Scaler_Init(a,b,c,d,f) \
-	{ d + (b-1 - a) * (f-d) / (c-a), ((f<d) ^ (c<a)) ? -1 : 1, \
-		abs(f-d), abs(c-a), (int)((b - 1 - a) * abs(f-d)) % abs(c-a) }
 
 typedef enum		e_sprite_type
 {
@@ -533,6 +512,31 @@ typedef struct		s_spr_info
 	int				amount;
 }					t_spr_info;
 
+typedef struct		s_wall_help1
+{
+	float			nearz;
+	float			farz;
+	float			nearside;
+	float			farside;
+	t_point_2d		i1;
+	t_point_2d		i2;
+	t_point_2d		org1;
+	t_point_2d		org2;
+}					t_wall_help1;
+
+typedef struct		s_wall_help2
+{
+	t_polygone		*polygone;
+	t_player		*plr;
+	int				ytop[WIDTH];
+	int				ybottom[WIDTH];
+	int				portal;
+	t_item			sect;
+	int				obj_id;
+	int				prev;
+}					t_wall_help2;
+
+
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
 void			engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color);
@@ -561,7 +565,7 @@ void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 int				engine_init_triangle(t_polygone *t, t_tric *trg);
 void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
 void			engine_do_calc(t_tric *trg);
-void			engine_render_wall(t_engine *eng, SDL_Surface *surf, t_polygone *polygone, t_player *plr, int *ytop, int *ybottom, int portal, t_item sect, int obj_id, int prev);
+void			engine_render_wall(t_engine *eng, SDL_Surface *surf, t_wall_help2 *data2);
 void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
 void			point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
 int				get_rgb(int r, int g, int b, int a);
@@ -572,6 +576,11 @@ float			percent(int start, int end, int current);
 int				get_light(int start, int end, float percentage);
 int				get_color(int current, int start,
 										int end, int colors[2]);
+
+void			engine_render_wall_recount_intersect(t_polygone *polygone, t_point_2d *t1, t_point_2d *t2, int *u[2]);
+void			engine_render_wall_recount_intersect_help(t_wall_help1 *data,
+				t_point_2d *t1, t_point_2d *t2);
+
 
 void			swapper(t_point_3d *a, t_point_3d *b, int *steep);
 t_bcontex		bresenham_init(t_point_3d *beg, t_point_3d *end);
@@ -612,22 +621,21 @@ void			engine_clear_checkstack(int *checkqueue);
 int				check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
 void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *particle,  t_object *obj, t_player *plr, t_item sect);
 void			get_relative_xy(t_engine *eng, t_fix_point_2d *p);
-void			zbuff_zeroed(int *zbuff);
-void			engine_render_rescale(SDL_Surface *surf, SDL_Surface *dest, int z, int *zbuff, t_fix_point_2d point, int newWidth, int newHeight);
 void			animator_render_sprite_object(t_engine *eng, SDL_Surface *surf, t_player plr, t_sprobject *spr_obj, t_item sect, int *zbuff);
 t_sprobject		*create_test_sprobj(t_engine *eng);
 void			engine_vline_textured_sprite(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_sprite *texture);
 void			engine_vline_textured_surface(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, SDL_Surface *texture);
 void			switch_weapon(t_engine *eng, t_player *plr, int weapon_num);
 int				sound_play_thread_wrapper(void *ptr);
-
+void			engine_render_wall_count_initial_point(t_polygone *polygone, t_player *plr,
+				t_point_2d	*t1, t_point_2d	*t2);
 void			engine_push_spriterenderstack(t_item_sprts **renderqueue, t_item_sprts *item);
 void			engine_clear_spriterenderstack(t_item_sprts **renderqueue);
 t_item_sprts	*engine_pop_spriterenderstack(t_item_sprts **renderqueue);
 void			one_dim_zbuffers_copy(t_item_sprts *sprt, int *ytop, int *ybottom);
 
 /*
-**Image-processing functions
+** Image-processing functions
 **
 */
 
@@ -833,5 +841,24 @@ void			engine_render_hud_stats(t_engine *eng, t_player *plr, SDL_Surface *surf);
 **	---------------------------------------------------------------------------
 */
 
+/*
+**
+**
+*/
+
+float			min(float a, float b);
+float			max(float a, float b);
+float			clamp(float a, float mi, float ma);
+float			vxs(float x0, float y0, float x1, float y1);
+short			overlap(float a0, float a1, float b0, float b1);
+short			intersect_box(t_point_2d x0, t_point_2d x1, t_point_2d x2, t_point_2d x3);
+float			point_side(t_point_2d p, t_point_2d x0, t_point_2d x1);
+t_point_2d		intersect(t_point_2d x1, t_point_2d x2, t_point_2d x3, t_point_2d x4);
+t_scaler		scaler_init(float data[5]);
+/*
+**
+**
+*/
+void			engine_render_world_data(t_engine *eng, t_player *plr, t_wall_help2 *data);
 
 # endif

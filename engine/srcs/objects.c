@@ -6,13 +6,13 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 00:38:38 by zytrams           #+#    #+#             */
-/*   Updated: 2019/09/28 12:35:34 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/14 20:31:46 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-int		intersect(t_point_2d a, t_point_2d b, t_point_2d pos)
+int		intersect_sect(t_point_2d a, t_point_2d b, t_point_2d pos)
 {
 	if (((a.y > pos.y) != (b.y > pos.y)) &&
 	(pos.x < (a.x + (b.x - a.x) * (pos.y - a.y) / (b.y - a.y))))
@@ -40,7 +40,7 @@ int		engine_object_get_sector(t_world *world, t_point_3d pos, int start_sect)
 		i = 0;
 		while (i < world->sectors_array[cursect].objects_count)
 		{
-			if (intersect((t_point_2d){world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[0].x,
+			if (intersect_sect((t_point_2d){world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[0].x,
 			world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[0].y},
 			(t_point_2d){world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[1].x,
 			world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[1].y}, (t_point_2d){pos.x, pos.y}))
