@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/14 21:37:12 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/15 00:05:36 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -536,6 +536,77 @@ typedef struct		s_wall_help2
 	int				prev;
 }					t_wall_help2;
 
+typedef struct		s_wall_help3
+{
+	t_point_2d		t1;
+	t_point_2d		t2;
+	int				push;
+	int				u0;
+	int				u1;
+}					t_wall_help3;
+
+typedef struct		s_wall_mai_data
+{
+	float			xscale1;
+	float			yscale1;
+	float			xscale2;
+	float			yscale2;
+	int				x1;
+	int				x2;
+	float			yceil;
+	float			yfloor;
+	float			nyceil;
+	float			nyfloor;
+	int				y1a;
+	int				y1b;
+	int				y2a;
+	int				y2b;
+	int				ny1a;
+	int				ny1b;
+	int				ny2a;
+	int				ny2b;
+	int				beginx;
+	int				endx;
+	t_scaler		ya_int;
+	t_scaler		yb_int;
+	t_scaler		nya_int;
+	t_scaler		nyb_int;
+	int				ya;
+	int				yb;
+	int				cya;
+	int				cyb;
+	int				txtx;
+	t_image			*tex;
+	int				nya;
+	int				nyb;
+	int				cnya;
+	int				cnyb;
+}					t_wall_mai_data;
+
+typedef struct		s_wall_cycle
+{
+	t_image			*tex;
+	float			hei;
+	t_costil		pnts;
+	int				y;
+	int				x;
+	unsigned		txtx;
+	unsigned		txtz;
+	int				offset;
+	int8_t			red;
+	int8_t			green;
+	int8_t			blue;
+}					t_wall_cycle;
+
+typedef struct		s_wall_clinks
+{
+	t_engine		*eng;
+	SDL_Surface		*surf;
+	t_wall_mai_data	*mdata;
+	t_wall_help2	*data;
+	t_wall_help3	*data_help;
+	t_wall_cycle	*cycler;
+}					t_wall_clinks;
 
 void			engine_sdl_init(t_engine **eng);
 void			engine_sdl_uninit(t_engine *eng);
@@ -580,7 +651,8 @@ int				get_color(int current, int start,
 void			engine_render_wall_recount_intersect(t_polygone *polygone, t_point_2d *t1, t_point_2d *t2, int *u[2]);
 void			engine_render_wall_recount_intersect_help(t_wall_help1 *data,
 				t_point_2d *t1, t_point_2d *t2);
-
+void			*engine_render_wall_count_values(t_engine *eng,
+		t_wall_help3 *data_help, t_wall_help2 *data, t_wall_mai_data *mdata);
 
 void			swapper(t_point_3d *a, t_point_3d *b, int *steep);
 t_bcontex		bresenham_init(t_point_3d *beg, t_point_3d *end);
@@ -860,5 +932,19 @@ t_scaler		scaler_init(float data[5]);
 **
 */
 void			engine_render_world_data(t_engine *eng, t_player *plr, t_wall_help2 *data);
+
+void			engine_render_wall_cycle_6(t_wall_clinks *l);
+void			engine_render_cycle_5(t_wall_clinks *l);
+void			engine_render_wall_cycle_3(t_wall_clinks *l);
+void			engine_render_wall_cycle_4(t_wall_clinks *l);
+void			engine_render_cycle_2(t_wall_clinks *l);
+void			engine_render_cycle_1(t_wall_clinks *l);
+
+void			engine_render_wall_pusher(t_engine *eng,
+				t_wall_help2 *data, t_wall_mai_data *mdata);
+void			engine_render_particles_wall(t_engine *eng, SDL_Surface *surf,
+				t_wall_help2 *data, t_wall_mai_data *mdata);
+void			engine_render_world_help(t_engine *eng, t_player *plr,
+				SDL_Surface *surf, t_wall_help2 *data);
 
 # endif

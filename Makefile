@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/14 20:56:58 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/15 00:10:04 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,11 +68,9 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					render_world.c \
 					render_wall.c \
 					objects.c \
-					rasterizer.c \
 					bresenham.c \
 					bresenham2.c \
 					color.c \
-					normal.c \
 					images.c \
 					texture.c \
 					hud_draw.c \
@@ -88,6 +86,10 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					checksum.c \
 					intersection_funs.c \
 					intersection_funs_help.c \
+					render_cycle.c \
+					render_cycle2.c \
+					render_wall_help.c \
+					normal.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/

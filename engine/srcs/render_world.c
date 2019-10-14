@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/14 21:42:28 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/15 00:08:38 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int			get_rgb(int r, int g, int b, int a)
 {
-	return (((((int)r) << 24) & 0xFF000000) | ((((int)g) << 16) & 0x00FF0000) | (((b) << 8) & 0x0000FF00) | (((a)) & 0x000000FF));
+	return (((((int)r) << 24) & 0xFF000000) |
+	((((int)g) << 16) & 0x00FF0000) |
+	(((b) << 8) & 0x0000FF00) | (((a)) & 0x000000FF));
 }
 
 void		engine_render_world_data(t_engine *eng, t_player *plr, t_wall_help2 *data)
@@ -33,31 +35,43 @@ void		engine_render_world_data(t_engine *eng, t_player *plr, t_wall_help2 *data)
 	}
 }
 
+void		engine_render_world_help(t_engine *eng, t_player *plr,
+			SDL_Surface *surf, t_wall_help2 *data)
+{
+	int		i;
+
+	while (((data->sect = engine_pop_renderstack(
+	eng->world->renderstack)).sectorno >= 0))
+	{
+		i = 0;
+		while (i < eng->world->sectors_array[data->sect.sectorno].objects_count)
+		{
+			data->portal = eng->world->sectors_array
+			[data->sect.sectorno].objects_array[i].portal;
+			data->polygone = eng->world->sectors_array
+			[data->sect.sectorno].objects_array[i].polies_array;
+			data->obj_id = i;
+			engine_render_wall(eng, surf, data);
+			i++;
+		}
+		data->prev = data->sect.sectorno;
+	}
+}
+
 void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf)
 {
-	int				i;
-	int				j;
-	t_wall_help2	data;
+	t_wall_help2 data;
 
 	SDL_LockSurface(surf);
 	engine_render_world_data(eng, &plr, &data);
 	engine_push_renderstack(eng->world->renderstack, data.sect);
-	one_dim_zbuffers_copy(&eng->world->sectors_array[data.sect.sectorno].item_sprts, data.ytop, data.ybottom);
-	eng->world->sectors_array[data.sect.sectorno].item_sprts.sect_id = data.sect;
-	engine_push_spriterenderstack(eng->world->sprite_renderstack, &eng->world->sectors_array[data.sect.sectorno].item_sprts);
-	while (((data.sect = engine_pop_renderstack(eng->world->renderstack)).sectorno >= 0))
-	{
-		i = 0;
-		while (i < eng->world->sectors_array[data.sect.sectorno].objects_count)
-		{
-			data.portal = eng->world->sectors_array[data.sect.sectorno].objects_array[i].portal;
-			data.polygone = eng->world->sectors_array[data.sect.sectorno].objects_array[i].polies_array;
-			data.obj_id = i;
-			engine_render_wall(eng, surf, &data);
-			i++;
-		}
-		data.prev = data.sect.sectorno;
-	}
+	one_dim_zbuffers_copy(&eng->world->sectors_array[data.sect.sectorno].
+	item_sprts, data.ytop, data.ybottom);
+	eng->world->sectors_array[data.sect.sectorno].
+	item_sprts.sect_id = data.sect;
+	engine_push_spriterenderstack(eng->world->sprite_renderstack,
+	&eng->world->sectors_array[data.sect.sectorno].item_sprts);
+	engine_render_world_help(eng, &plr, surf, &data);
 	engine_render_sprites(eng, &plr, surf);
 	engine_clear_renderstack(eng->world->renderstack);
 	engine_clear_spriterenderstack(eng->world->sprite_renderstack);
@@ -168,7 +182,6 @@ void		engine_present_and_clear_frame(t_engine *eng)
 	SDL_RenderClear(eng->ren);
 }
 
-
 void		sdl_put_pixel(SDL_Surface *surf, int x, int y, int color)
 {
 	int		bpp;
@@ -198,14 +211,16 @@ void		engine_vline(t_engine *eng, SDL_Surface *surf, t_fix_point_3d a, t_fix_poi
 	}
 }
 
-t_costil	relative_map_coordinate_to_absolute(t_player *plr, float map_y, float screen_x, float screen_y)
+t_costil	relative_map_coordinate_to_absolute
+			(t_player *plr, float map_y, float screen_x, float screen_y)
 {
 	float z = (map_y * HEIGHT * vfov) / ((HEIGHT / 2 - screen_y) - (plr->yaw * HEIGHT * vfov));
 	float x = z * (WIDTH / 2 - screen_x) / (WIDTH * hfov);
 	return (ceiling_floor_screen_coordinates_to_map_coordinates(plr, z, x));
 }
 
-t_costil	ceiling_floor_screen_coordinates_to_map_coordinates(t_player *plr, float tz, float tx)
+t_costil	ceiling_floor_screen_coordinates_to_map_coordinates
+			(t_player *plr, float tz, float tx)
 {
 	t_costil	res;
 
