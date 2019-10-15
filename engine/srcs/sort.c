@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 12:06:03 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 15:09:04 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/15 20:54:35 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,37 @@ void	sprite_double_swap(double *a, double *b)
 
 void	sprite_comb_sort(t_sector *sect)
 {
-	int		gap;
-	int		j;
-	int		i;
-	t_bool	swapped;
+	t_sorter	data;
 
-	gap = sect->sprobjects_count;
-	swapped = false;
-	while (gap > 1 || swapped)
+	data.gap = sect->sprobjects_count;
+	data.swapped = false;
+	while (data.gap > 1 || data.swapped)
 	{
-		gap = (gap * 10) / 13;
-		if (gap == 9 || gap == 10)
-			gap = 11;
-		if (gap < 1)
-			gap = 1;
-		swapped = false;
-		i = 0;
-		while (i < sect->sprobjects_count - gap)
+		sprite_comb_sort_help(&data);
+		while (data.i < sect->sprobjects_count - data.gap)
 		{
-			j = i + gap;
-			if(sect->dist[i] < sect->dist[j])
+			data.j = data.i + data.gap;
+			if (sect->dist[data.i] < sect->dist[data.j])
 			{
-				sprite_double_swap((sect->dist + i), (sect->dist + j));
-				sprite_int_swap((sect->order + i), (sect->order + j));
-				swapped = true;
+				sprite_double_swap((sect->dist + data.i),
+				(sect->dist + data.j));
+				sprite_int_swap((sect->order + data.i),
+				(sect->order + data.j));
+				data.swapped = true;
 			}
-			i++;
+			data.i++;
 		}
 	}
+}
+
+void	sprite_comb_sort_help(t_sorter *data)
+{
+	data->gap = (data->gap * 10) / 13;
+	if (data->gap == 9 || data->gap == 10)
+		data->gap = 11;
+	if (data->gap < 1)
+		data->gap = 1;
+	data->swapped = false;
+	data->i = 0;
+
 }

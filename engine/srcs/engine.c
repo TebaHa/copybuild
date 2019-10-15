@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/14 18:55:27 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/15 20:41:14 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void		engine_sdl_init(t_engine **eng)
 		error_handler("SDL_Init Error: ", SDL_GetError(), (*eng));
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		error_handler("SDL_Init Error: ", SDL_GetError(), (*eng));
-	(*eng)->win = SDL_CreateWindow("doka 2", 800, 400, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+	(*eng)->win = SDL_CreateWindow("doka 2",
+	800, 400, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
 	if ((*eng)->win == NULL)
 		error_handler("SDL_CreateWindow Error: ", SDL_GetError(), (*eng));
 	(*eng)->ren = SDL_CreateRenderer((*eng)->win, -1, SDL_RENDERER_SOFTWARE);
@@ -40,106 +41,53 @@ void		engine_sdl_uninit(t_engine *eng)
 	SDL_Quit();
 }
 
-void		eng_read_textures(t_engine *eng)
+void		eng_read_sprite(t_engine *eng, t_txtr_pkg ***text_buff, int *stats, char *path)
 {
-	int				i;
-	int				real_i;
-	DIR				*d;
-	struct dirent	*dir;
-	int				count;
-	char			*buffer_name;
+	t_read_data	data;
 
-	count = 0;
-	real_i = 0;
-	d = opendir(TEXTURE_PACK_PATH);
-	i = 0;
-	eng->stats.textures_count = 0;
-	if (d)
+	eng_reader_prep_data(&data, stats, path);
+	if (data.d)
 	{
-		while ((dir = readdir(d)) != NULL)
-		{
-			if (dir->d_name[0] != '.')
-				count++;
-		}
-		closedir(d);
-	}
-	d = opendir(TEXTURE_PACK_PATH);
-	if (d)
-	{
-		eng->texture_buffer = (t_txtr_pkg **)ft_memalloc(sizeof(t_txtr_pkg *) * (count));
-		if (eng->texture_buffer == NULL)
+		text_buff[0] = (t_txtr_pkg **)ft_memalloc(sizeof(t_txtr_pkg *) * (data.count));
+		if (text_buff[0] == NULL)
 			error_handler("malloc error: ", "allocation", eng);
-		while (i < count)
+		while (data.i < data.count)
 		{
-			if ((dir = readdir(d)) != NULL)
+			if ((data.dir = readdir(data.d)) != NULL)
 			{
-				if (dir->d_name[0] == '.')
+				if (data.dir->d_name[0] == '.')
 					continue;
-				buffer_name = ft_strjoin(TEXTURE_PACK_PATH, dir->d_name);
-				eng->texture_buffer[real_i] = (t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
-				eng->texture_buffer[real_i]->filename = ft_strdup(dir->d_name);
-				eng->stats.textures_count++;
-				if (eng->texture_buffer[real_i] == NULL)
+				data.buffer_name = ft_strjoin(path, data.dir->d_name);
+				(text_buff)[0][data.real_i] = (t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
+				(text_buff)[0][data.real_i]->filename = ft_strdup(data.dir->d_name);
+				(*stats)++;
+				if ((text_buff)[0][data.real_i] == NULL)
 					error_handler("malloc error: ", "allocation", eng);
-				image_load(&eng->texture_buffer[real_i]->texture, buffer_name);
-//				printf("%s\n",eng->texture_buffer[real_i]->filename);
-				free(buffer_name);
-				real_i++;
-				i++;
+				image_load(&(text_buff)[0][data.real_i]->texture, data.buffer_name);
+				free(data.buffer_name);
+				data.real_i++;
+				data.i++;
 			}
 		}
-		closedir(d);
+		closedir(data.d);
 	}
 }
 
-void		eng_read_sprites(t_engine *eng)
+void		eng_reader_prep_data(t_read_data *data, int *stats, char *path)
 {
-	int				i;
-	int				real_i;
-	DIR				*d;
-	struct dirent	*dir;
-	int				count;
-	char			*buffer_name;
-
-	count = 0;
-	real_i = 0;
-	d = opendir(TEXTURE_SPRITE_PATH);
-	i = 0;
-	eng->stats.sprites_count = 0;
-	if (d)
+	data->count = 0;
+	data->real_i = 0;
+	data->d = opendir(path);
+	data->i = 0;
+	*stats = 0;
+	if (data->d)
 	{
-		while ((dir = readdir(d)) != NULL)
+		while ((data->dir = readdir(data->d)) != NULL)
 		{
-			if (dir->d_name[0] != '.')
-				count++;
+			if (data->dir->d_name[0] != '.')
+				data->count++;
 		}
-		closedir(d);
+		closedir(data->d);
 	}
-	d = opendir(TEXTURE_SPRITE_PATH);
-	if (d)
-	{
-		eng->sprites_buffer = (t_txtr_pkg **)ft_memalloc(sizeof(t_txtr_pkg *) * (count));
-		if (eng->sprites_buffer == NULL)
-			error_handler("malloc error: ", "allocation", eng);
-		while (i < count)
-		{
-			if ((dir = readdir(d)) != NULL)
-			{
-				if (dir->d_name[0] == '.')
-					continue;
-				buffer_name = ft_strjoin(TEXTURE_SPRITE_PATH, dir->d_name);
-				eng->sprites_buffer[real_i] = (t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
-				eng->sprites_buffer[real_i]->filename = ft_strdup(dir->d_name);
-				eng->stats.sprites_count++;
-				if (eng->sprites_buffer[real_i] == NULL)
-					error_handler("malloc error: ", "allocation", eng);
-				image_load(&eng->sprites_buffer[real_i]->texture, buffer_name);
-//				printf("%s\n", eng->sprites_buffer[real_i]->filename);
-				free(buffer_name);
-				real_i++;
-				i++;
-			}
-		}
-		closedir(d);
-	}
+	data->d = opendir(path);
 }
