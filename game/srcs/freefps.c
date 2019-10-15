@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/14 19:01:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/15 20:51:27 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		game_create_test_player(t_player *plr)
 	plr->yaw = 0;
 	plr->shoot = 0;
 	plr->delay = 3;
-	plr->armor = 100;
+	plr->armor = 50;
 	plr->health = 75;
 	plr->steps_sound = sound_init("player_steps");
 }
@@ -47,9 +47,8 @@ static	int		game_thread_wrapper(void *ptr)
 	t_game *fps;
 
 	fps = (t_game *)ptr;
-//	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface, fps->render_thread_pool[fps->thread_num].z_buff);
 	engine_render_world(fps->eng, fps->player, fps->render_thread_pool[fps->thread_num].surface);
-	//SDL_Delay(1 * THREAD_POOL_SIZE);
+	//SDL_Delay(5);
 	return (fps->thread_num);
 }
 

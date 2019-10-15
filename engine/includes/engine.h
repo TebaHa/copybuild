@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/15 00:05:36 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/15 21:13:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -608,64 +608,101 @@ typedef struct		s_wall_clinks
 	t_wall_cycle	*cycler;
 }					t_wall_clinks;
 
-void			engine_sdl_init(t_engine **eng);
-void			engine_sdl_uninit(t_engine *eng);
-void			engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color);
-void			engine_render_object(t_engine *eng, t_object obj, t_player *plr);
-void			engine_render_frame(t_engine *eng, SDL_Surface 	*surf);
-void			engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf);
-void			sdl_clear_window(SDL_Surface *surf);
-void			sdl_put_pixel(SDL_Surface *surf, int x, int y, int color);
-void			error_handler(char *error_type, const char *str_error, t_engine *eng);
-void			engine_create_test_world(t_world **world);
-void			engine_push_renderstack(t_item *renderqueue, t_item item);
-void			engine_clear_renderstack(t_item *renderqueue);
-void			engine_create_renderstack(t_engine *eng, int render_id, int *rendered);
-t_item			engine_pop_renderstack(t_item *renderqueue);
-int				engine_object_get_sector(t_world *world, t_point_3d pos, int start_sect);
-t_object		engine_create_obj_wall(int portal, t_point_3d a, t_point_3d b, t_point_3d c, t_point_3d d);
-t_point_3d		engine_count_perspective(t_point_3d a, int c);
-void			util_release_sectors_buffer(t_sector *sector_buff, int size);
-void			util_release_objects_buffer(t_object *object_buff, int size);
-void			util_release_polies_buffer(t_polygone *polies_buff, int size);
-void			util_release_vertex_buffer(t_point_3d *vertex_buff);
-void			util_release_world(t_world *world);
-void			engine_present_and_clear_frame(t_engine *eng);
+typedef struct		s_sorter
+{
+	int		gap;
+	int		j;
+	int		i;
+	t_bool	swapped;
+}					t_sorter;
 
-void			engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
-int				engine_init_triangle(t_polygone *t, t_tric *trg);
-void			engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
-void			engine_do_calc(t_tric *trg);
-void			engine_render_wall(t_engine *eng, SDL_Surface *surf, t_wall_help2 *data2);
-void			point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
-void			point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
-int				get_rgb(int r, int g, int b, int a);
-float			edge_function(t_point_3d *a, t_point_3d *b, t_point_3d *c);
-void			zbuffer_zero(int *zbuffer);
+typedef struct		s_read_data
+{
+	int				i;
+	int				real_i;
+	DIR				*d;
+	struct dirent	*dir;
+	int				count;
+	char			*buffer_name;
+}					t_read_data;
 
-float			percent(int start, int end, int current);
-int				get_light(int start, int end, float percentage);
-int				get_color(int current, int start,
+typedef struct		s_shoot_data
+{
+	t_point_3d		int_p;
+	t_line			shoot;
+	t_plane			plane;
+	t_sector		*sect;
+	int				sect_id;
+	int				prev;
+	int				i;
+	int				res;
+	int				hit;
+	float			angle_xy;
+	float			angle_z;
+	float			dx;
+	float			dy;
+	float			dz;
+}					t_shoot_data;
+
+void				engine_sdl_init(t_engine **eng);
+void				engine_sdl_uninit(t_engine *eng);
+void				engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color);
+void				engine_render_object(t_engine *eng, t_object obj, t_player *plr);
+void				engine_render_frame(t_engine *eng, SDL_Surface 	*surf);
+void				engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf);
+void				sdl_clear_window(SDL_Surface *surf);
+void				sdl_put_pixel(SDL_Surface *surf, int x, int y, int color);
+void				error_handler(char *error_type, const char *str_error, t_engine *eng);
+void				engine_create_test_world(t_world **world);
+void				engine_push_renderstack(t_item *renderqueue, t_item item);
+void				engine_clear_renderstack(t_item *renderqueue);
+void				engine_create_renderstack(t_engine *eng, int render_id, int *rendered);
+t_item				engine_pop_renderstack(t_item *renderqueue);
+int					engine_object_get_sector(t_world *world, t_point_3d pos, int start_sect);
+t_object			engine_create_obj_wall(int portal, t_point_3d a, t_point_3d b, t_point_3d c, t_point_3d d);
+t_point_3d			engine_count_perspective(t_point_3d a, int c);
+void				util_release_sectors_buffer(t_sector *sector_buff, int size);
+void				util_release_objects_buffer(t_object *object_buff, int size);
+void				util_release_polies_buffer(t_polygone *polies_buff, int size);
+void				util_release_vertex_buffer(t_point_3d *vertex_buff);
+void				util_release_world(t_world *world);
+void				engine_present_and_clear_frame(t_engine *eng);
+
+void			eng_read_sprite(t_engine *eng, t_txtr_pkg ***text_buff, int *stats, char *path);
+void				engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
+int					engine_init_triangle(t_polygone *t, t_tric *trg);
+void				engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
+void				engine_do_calc(t_tric *trg);
+void				engine_render_wall(t_engine *eng, SDL_Surface *surf, t_wall_help2 *data2);
+void				point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
+void				point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
+int					get_rgb(int r, int g, int b, int a);
+float				edge_function(t_point_3d *a, t_point_3d *b, t_point_3d *c);
+void				zbuffer_zero(int *zbuffer);
+
+float				percent(int start, int end, int current);
+int					get_light(int start, int end, float percentage);
+int					get_color(int current, int start,
 										int end, int colors[2]);
 
-void			engine_render_wall_recount_intersect(t_polygone *polygone, t_point_2d *t1, t_point_2d *t2, int *u[2]);
-void			engine_render_wall_recount_intersect_help(t_wall_help1 *data,
-				t_point_2d *t1, t_point_2d *t2);
-void			*engine_render_wall_count_values(t_engine *eng,
-		t_wall_help3 *data_help, t_wall_help2 *data, t_wall_mai_data *mdata);
+void				engine_render_wall_recount_intersect(t_polygone *polygone, t_point_2d *t1, t_point_2d *t2, int *u[2]);
+void				engine_render_wall_recount_intersect_help(t_wall_help1 *data,
+					t_point_2d *t1, t_point_2d *t2);
+void				*engine_render_wall_count_values(t_engine *eng,
+					t_wall_help3 *data_help, t_wall_help2 *data, t_wall_mai_data *mdata);
 
-void			swapper(t_point_3d *a, t_point_3d *b, int *steep);
-t_bcontex		bresenham_init(t_point_3d *beg, t_point_3d *end);
-t_bcontex		bresenham_init(t_point_3d *beg, t_point_3d *end);
-void			bresenham_put_pixel(t_bcontex *c,
+void				swapper(t_point_3d *a, t_point_3d *b, int *steep);
+t_bcontex			bresenham_init(t_point_3d *beg, t_point_3d *end);
+t_bcontex			bresenham_init(t_point_3d *beg, t_point_3d *end);
+void				bresenham_put_pixel(t_bcontex *c,
 								SDL_Surface *surf, int color, int zmax);
-void			bresenham_line(t_point_3d *beg, t_point_3d *end,
+void				bresenham_line(t_point_3d *beg, t_point_3d *end,
 							SDL_Surface *surf, int color);
-void			triangle_lines(t_polygone *t, SDL_Surface *surf);
-void			engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t);
-void			ft_swap(float *a, float *b);
-t_point_3d		engine_barycentric(t_fix_point_2d pts[3], t_fix_point_2d *p);
-t_point_3d		engine_cross(t_point_3d a, t_point_3d b);
+void				triangle_lines(t_polygone *t, SDL_Surface *surf);
+void				engine_rasterize_triangle(t_engine *eng, t_player *plr, t_polygone *t);
+void				ft_swap(float *a, float *b);
+t_point_3d			engine_barycentric(t_fix_point_2d pts[3], t_fix_point_2d *p);
+t_point_3d			engine_cross(t_point_3d a, t_point_3d b);
 
 t_point_3d		cross_vec3(t_point_3d v1, t_point_3d v2);
 t_point_3d		create_vector(t_point_3d *a, t_point_3d *b);
@@ -748,8 +785,6 @@ void			util_parsing_error_wrong_crc(void);
 */
 
 void 			engine_create_resources_from_file(t_engine *eng);
-void			eng_read_sprites(t_engine *eng);
-void			eng_read_textures(t_engine *eng);
 
 void			eng_create_hud(t_engine *eng);
 void			eng_create_face(t_engine *eng);
@@ -946,5 +981,19 @@ void			engine_render_particles_wall(t_engine *eng, SDL_Surface *surf,
 				t_wall_help2 *data, t_wall_mai_data *mdata);
 void			engine_render_world_help(t_engine *eng, t_player *plr,
 				SDL_Surface *surf, t_wall_help2 *data);
+
+void			eng_reader_prep_data(t_read_data *data, int *stats, char *path);
+void			eng_read_sprite_help(t_engine *eng, t_txtr_pkg ***text_buff,
+				t_read_data *data, int *stats);
+void			sprite_comb_sort_help(t_sorter *data);
+
+void			shoot_help1(t_shoot_data *d, t_engine *eng,
+				t_player *plr, int weapon_range);
+void			shoot_help2(t_shoot_data *d, t_engine *eng,
+				t_player *plr, int weapon_range);
+int				shoot_help3(t_shoot_data *d, t_engine *eng,
+				t_player *plr, int weapon_range);
+int				shoot_help4(t_shoot_data *d, t_engine *eng,
+				t_player *plr, int weapon_range);
 
 # endif

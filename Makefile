@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/15 00:10:04 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/15 21:16:19 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,7 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					render_cycle2.c \
 					render_wall_help.c \
 					normal.c \
+					shoot_main.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
