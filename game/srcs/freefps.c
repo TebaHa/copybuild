@@ -87,11 +87,7 @@ int		main(void)
 	init = 0;
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
-	engine_create_resources_from_file(fps.eng);
-	engine_create_world_from_file(fps.eng, GAME_PATH);
-	fps.eng->weapon[0]->frame = 4;
-	fps.eng->weapon[1]->frame = 40;
-	fps.player.wpn = fps.eng->weapon[1];
+	engine_parser(fps.eng, &fps.player, GAME_PATH);
 	game_init_threads(fps.render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
 	fps.eng->x = 0;

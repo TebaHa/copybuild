@@ -70,7 +70,7 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/render_stack.c
 			engine/srcs/checksum.c
 			engine/srcs/pickup.c
-			engine/srcs/font.c)
+			engine/srcs/font.c engine/srcs/parser_player.c)
 
 #set(EDITOR_SRC editor/srcs/checksum.c)
 

@@ -415,7 +415,6 @@ typedef struct		s_stats
 	int 			skins_count;
 	int 			sprites_count;
 	int 			cycle_detector;
-	int 			parsing_debug;
 }					t_stats;
 
 typedef struct		s_txtr_pkg
@@ -831,6 +830,14 @@ void			infinite_loop(void);
 **	Parsing map functions
 */
 
+void			engine_parser(t_engine *eng, t_player *plr, char *filename);
+void			engine_preparser(t_engine *eng, char **json_splited);
+void			engine_count_all_from_file(t_stats *stats, char **buff);
+char			**engine_read_level_file(char *filename);
+
+
+
+
 void			util_release_char_matrix(char **mtrx);
 void			util_release_read_buffers(t_buff *buff);
 void			util_float10_data_filler(float *data, char *str);
@@ -856,11 +863,11 @@ SDL_Surface		*util_transform_texture_to_sprite(t_image *texture);
 SDL_Surface		*util_CreateRGBSurface(Uint32 flags, int width, int height,
 				int depth);
 
-char			**engine_read_level_file(char *filename);
-void			engine_count_all_from_file(t_engine *eng, char **json_splited);
+void			engine_check_plr_pos(t_world *world, t_player *plr);
+void			util_parsing_error_player_outside(void);
 
 void			engine_read_world_from_file(t_engine *eng, char **json_splited);
-void			engine_create_world_from_file(t_engine *eng, char *filename);
+void			engine_create_world_from_file(t_engine *eng, t_player *plr, char *filename);
 void			util_create_world(t_world **world, char **str);
 
 t_point_3d		*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);

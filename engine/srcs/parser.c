@@ -12,69 +12,47 @@
 
 #include <engine.h>
 
-char		**engine_read_level_file(char *filename)
+void		engine_parser(t_engine *eng, t_player *plr, char *filename)
 {
-	int			fd;
-	int			number;
-	char		*buff;
-	char		**splitedbuff;
-
-	fd = open(GAME_PATH, O_RDONLY);
-	buff = (char*)malloc(sizeof(char) * 10000);
-	if (fd < 2)
-		util_parsing_error_no_lvl_file(filename);
-	number = read(fd, buff, 10000);
-	buff[number] = '\0';
-	close(fd);
-	splitedbuff = ft_strsplit(buff, '\n');
-	if (checksum_check(buff, splitedbuff, number) != CRC_OK)
-		util_parsing_error_wrong_crc();
-	free(buff);
-	return (splitedbuff);
+	engine_create_resources_from_file(eng);
+	engine_create_world_from_file(eng, plr, GAME_PATH);
+	plr->wpn = eng->weapon[1];
 }
 
-void		parsing_checker(t_engine *eng, char *str)
+void		engine_create_resources_from_file(t_engine *eng)
 {
-	if (eng->stats.parsing_debug)
-		ft_putendl(str);
+	eng_read_sprite(eng, &eng->texture_buffer,
+					&eng->stats.textures_count, TEXTURE_PACK_PATH);
+	eng_read_sprite(eng, &eng->sprites_buffer,
+					&eng->stats.sprites_count, TEXTURE_SPRITE_PATH);
+	eng_create_hud(eng);
+	eng_create_weapons(eng);
+	eng_create_items(eng);
+	eng_create_enemies(eng);
+	eng_create_background_music(eng);
 }
 
-void		engine_create_world_from_file(t_engine *eng, char *filename)
+void		engine_create_world_from_file(t_engine *eng, t_player *plr,
+			char *filename)
 {
 	t_buff		buff;
 
-
-	eng->stats.parsing_debug = 0;
 	buff.str = engine_read_level_file(filename);
-	parsing_checker(eng, "Read from file OK");
-	engine_count_all_from_file(eng, buff.str);
-	parsing_checker(eng, "Count everything OK");
+	engine_preparser(eng, buff.str);
 	engine_read_world_from_file(eng, buff.str);
-	parsing_checker(eng, "World OK");
 	buff.vertexes = engine_read_vertexes_from_file(eng, buff.str);
-	parsing_checker(eng, "Vertexes OK");
 	buff.sprites = engine_read_sprites_from_file(eng, buff);
-	parsing_checker(eng, "Sprites OK");
 	buff.polies = engine_read_polygones_from_file(eng, buff);
-	parsing_checker(eng, "Polygones OK");
 	buff.objects = engine_read_objects_from_file(eng, buff);
-	parsing_checker(eng, "Objects OK");
 	buff.sprobjects = engine_read_sprobjects_from_file(eng, buff);
-	parsing_checker(eng, "Sprobjects OK");
 	engine_read_sectors_from_file(eng, buff);
-	parsing_checker(eng, "Sectors OK");
 	engine_read_worldbox_from_file(eng, buff);
-	parsing_checker(eng, "Worldbox OK");
+	engine_check_plr_pos(eng->world, plr);
 	util_release_read_buffers(&buff);
-	parsing_checker(eng, "Releasing buffers OK");
-	ft_putendl("PARSING OK!");
 }
 
-void		engine_count_all_from_file(t_engine *eng, char **json_splited)
+void		engine_preparser(t_engine *eng, char **buff)
 {
-	int		i;
-
-	i = 0;
 	eng->stats.vertexes_count = 0;
 	eng->stats.polies_count = 0;
 	eng->stats.objects_count = 0;
@@ -82,24 +60,7 @@ void		engine_count_all_from_file(t_engine *eng, char **json_splited)
 	eng->stats.sectors_count = 0;
 	eng->stats.skins_count = 0;
 	eng->stats.worlds_count = 0;
-	while (json_splited[i])
-	{
-		if (ft_strwcmp(json_splited[i], "vertex:") == 0)
-			eng->stats.vertexes_count++;
-		else if (ft_strwcmp(json_splited[i], "polygone:") == 0)
-			eng->stats.polies_count++;
-		else if (ft_strwcmp(json_splited[i], "object:") == 0)
-			eng->stats.objects_count++;
-		else if (ft_strwcmp(json_splited[i], "sector:") == 0)
-			eng->stats.sectors_count++;
-		else if (ft_strwcmp(json_splited[i], "sprite:") == 0)
-			eng->stats.skins_count++;
-		else if (ft_strwcmp(json_splited[i], "sobjct:") == 0)
-			eng->stats.sprobjects_count++;
-		else if (ft_strwcmp(json_splited[i], "world:") == 0)
-			eng->stats.worlds_count++;
-		i++;
-	}
+	engine_count_all_from_file(&eng->stats, buff);
 	if (!eng->stats.worlds_count)
 		util_parsing_error_not_enough("worlds");
 	if (!eng->stats.sectors_count)
@@ -112,12 +73,27 @@ void		engine_count_all_from_file(t_engine *eng, char **json_splited)
 		util_parsing_error_not_enough("vertexes");
 }
 
-void		util_release_read_buffers(t_buff *buff)
+void		engine_count_all_from_file(t_stats *stats, char **buff)
 {
-	free(buff->vertexes);
-	free(buff->polies);
-	free(buff->objects);
-	free(buff->sprobjects);
-	free(buff->sprites);
-	util_release_char_matrix(buff->str);
+	int		i;
+
+	i = 0;
+	while (buff[i])
+	{
+		if (ft_strwcmp(buff[i], "vertex:") == 0)
+			stats->vertexes_count++;
+		else if (ft_strwcmp(buff[i], "polygone:") == 0)
+			stats->polies_count++;
+		else if (ft_strwcmp(buff[i], "object:") == 0)
+			stats->objects_count++;
+		else if (ft_strwcmp(buff[i], "sector:") == 0)
+			stats->sectors_count++;
+		else if (ft_strwcmp(buff[i], "sprite:") == 0)
+			stats->skins_count++;
+		else if (ft_strwcmp(buff[i], "sobjct:") == 0)
+			stats->sprobjects_count++;
+		else if (ft_strwcmp(buff[i], "world:") == 0)
+			stats->worlds_count++;
+		i++;
+	}
 }

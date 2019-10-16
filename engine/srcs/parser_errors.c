@@ -169,3 +169,10 @@ void	util_parsing_error_wrong_crc(void)
 	ft_putendl("Wrong checksum!");
 	exit(PARSING_ERROR);
 }
+
+void	util_parsing_error_player_outside(void)
+{
+	ft_putendl("Parsing error:");
+	ft_putendl("Player outside of map!");
+	exit(PARSING_ERROR);
+}
