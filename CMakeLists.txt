@@ -68,7 +68,7 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/render_stack.c
 			engine/srcs/checksum.c
 			engine/srcs/pickup.c
-			engine/srcs/font.c engine/srcs/parser_player.c engine/srcs/parser_items_2.c engine/srcs/sound_2.c engine/srcs/parser_point_3d.c engine/srcs/parser_sprite.c engine/srcs/parser_object.c engine/srcs/parser_polygone.c engine/srcs/parser_sector.c engine/srcs/parser_sprobject.c engine/srcs/parser_worldbox.c engine/srcs/parser_world.c engine/srcs/parser_sector_2.c engine/srcs/parser_errors_2.c engine/srcs/parser_errors_3.c)
+			engine/srcs/font.c engine/srcs/parser_player.c engine/srcs/parser_items_2.c engine/srcs/sound_2.c engine/srcs/parser_point_3d.c engine/srcs/parser_sprite.c engine/srcs/parser_object.c engine/srcs/parser_polygone.c engine/srcs/parser_sector.c engine/srcs/parser_sprobject.c engine/srcs/parser_worldbox.c engine/srcs/parser_world.c engine/srcs/parser_sector_2.c engine/srcs/parser_errors_2.c engine/srcs/parser_errors_3.c engine/srcs/parser_sprite_2.c)
 
 #set(EDITOR_SRC editor/srcs/checksum.c)
 

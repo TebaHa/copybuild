@@ -35,6 +35,19 @@ void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 	exit(PARSING_ERROR);
 }
 
+void	util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
+		char *name)
+{
+	util_parsing_error_no_cap("sprite", eng);
+	ft_putendl("Parsing error:");
+	ft_putstr("Cant find sprite: ");
+	ft_putstr(name);
+	ft_putstr("!\n");
+	util_find_sprite_by_name(dst, eng, PARSING_ERROR_SPRITE);
+	if (!ft_strcmp(name, PARSING_ERROR_SPRITE))
+		exit(PARSING_ERROR);
+}
+
 void	util_parsing_error_no_cap(char *problem, t_engine *eng)
 {
 	if (eng->stats.cycle_detector > 1)
