@@ -60,3 +60,34 @@ void		util_create_object(t_engine *eng, t_object *object,
 			eng->stats.polies_count, polygone_array, object->id);
 	eng->stats.objects_count++;
 }
+
+t_object	util_get_object_from_buff_by_id(int id, int size,
+			t_object *objects, int sector_id)
+{
+	int			i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (objects[i].id == id)
+			break ;
+		i++;
+	}
+	if (i == size)
+		util_parsing_error_lost_handler("object", id, "sector", sector_id);
+	return (objects[i]);
+}
+
+void		util_release_objects_buffer(t_object *object_buff, int size)
+{
+	int		i;
+
+	i = 0;
+	while (i < size)
+	{
+		util_release_polies_buffer(object_buff[i].polies_array,
+			object_buff[i].polies_count);
+		i++;
+	}
+	free(object_buff);
+}

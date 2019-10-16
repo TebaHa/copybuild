@@ -50,3 +50,20 @@ void			util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 	sprobject->frame = 0;
 	eng->stats.sprobjects_count++;
 }
+
+t_sprobject		util_get_sprobject_from_buff_by_id(int id, int size,
+				t_sprobject *sprobjects, int sector_id)
+{
+	int			i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (sprobjects[i].id == id)
+			break ;
+		i++;
+	}
+	if (i == size)
+		util_parsing_error_lost_handler("sprobjects", id, "sector", sector_id);
+	return (sprobjects[i]);
+}

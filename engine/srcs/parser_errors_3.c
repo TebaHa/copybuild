@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_errors.c                                    :+:      :+:    :+:   */
+/*   parser_errors_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,41 +12,37 @@
 
 #include <engine.h>
 
-void	util_parsing_error_lost_handler(char *problem, int id_problem,
-		char *problem_from, int id_problem_from)
+void	util_parsing_error_cant_find(char *problem, int id_problem)
 {
 	ft_putendl("Parsing error:");
 	ft_putstr("Can't find ");
 	ft_putstr(problem);
 	ft_putstr(" ");
 	ft_putnbr(id_problem);
-	ft_putstr(" from ");
-	ft_putstr(problem_from);
-	ft_putstr(" ");
-	ft_putnbr(id_problem_from);
 	ft_putstr("!\n");
 	exit(PARSING_ERROR);
 }
 
-void	util_parsing_error_not_enough(char *problem)
+void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
+		char *name)
 {
+	util_parsing_error_no_cap("texture", eng);
 	ft_putendl("Parsing error:");
-	ft_putstr("Not enough ");
-	ft_putstr(problem);
-	ft_putstr(" in lvl file!\n");
+	ft_putstr("Cant find texture: ");
+	ft_putstr(name);
+	ft_putstr("!\n");
+	util_find_texture_by_name(dst, eng, PARSING_ERROR_TEXTURE);
 	exit(PARSING_ERROR);
 }
 
-void	util_parsing_error_repeats(char *problem, char *problem_from,
-		int id_problem)
+void	util_parsing_error_no_cap(char *problem, t_engine *eng)
 {
-	ft_putendl("Parsing error:");
-	ft_putstr("Repeating ");
-	ft_putstr(problem);
-	ft_putstr(" in ");
-	ft_putstr(problem_from);
-	ft_putstr(" ");
-	ft_putnbr(id_problem);
-	ft_putstr("!\n");
-	exit(PARSING_ERROR);
+	if (eng->stats.cycle_detector > 1)
+	{
+		ft_putstr("Really cant find ");
+		ft_putstr(problem);
+		ft_putendl("s! Exit.");
+		exit(CYCLE_READING_ERROR);
+	}
+	eng->stats.cycle_detector++;
 }

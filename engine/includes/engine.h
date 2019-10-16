@@ -191,6 +191,15 @@ typedef enum		e_crc_state
 	CRC_OK
 }					t_crc_state;
 
+typedef struct		s_int_4
+{
+	int				x;
+	int				y;
+	int				offsets;
+	int				offseti;
+	unsigned		*pix;
+}					t_int_4;
+
 typedef struct		s_image
 {
 	int				width;
@@ -862,8 +871,8 @@ void			util_parsing_error_repeats(char *problem, char *problem_from,
 										   int id_problem);
 void			util_parsing_error_no_cap(char *problem, t_engine *eng);
 SDL_Surface		*util_transform_texture_to_sprite(t_image *texture);
-SDL_Surface		*util_CreateRGBSurface(Uint32 flags, int width, int height,
-				int depth);
+SDL_Surface		*util_create_rgb_surface(Uint32 flags, int width, int height,
+											int depth);
 
 void			engine_check_plr_pos(t_world *world, t_player *plr);
 void			util_parsing_error_player_outside(void);

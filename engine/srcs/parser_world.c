@@ -45,3 +45,10 @@ void		util_create_world(t_world **world, char **str)
 	engine_clear_renderstack((*world)->renderstack);
 	engine_clear_spriterenderstack((*world)->sprite_renderstack);
 }
+
+void		util_release_world(t_world *world)
+{
+	util_release_sectors_buffer(world->sectors_array, world->sectors_count);
+	free(world->renderstack);
+	free(world);
+}

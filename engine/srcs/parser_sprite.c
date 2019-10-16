@@ -179,3 +179,57 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	}
 	eng->stats.skins_count++;
 }
+
+void		util_find_sprite_by_name(SDL_Surface **dst, t_engine *eng,
+									 char *name)
+{
+	int		i;
+	char	*name_png;
+
+	i = 0;
+	if (!name)
+	{
+		*dst = NULL;
+		return ;
+	}
+	name_png = util_add_png_to_name(name);
+	while (i < eng->stats.sprites_count)
+	{
+		if (!ft_strcmp(name_png, eng->sprites_buffer[i]->filename))
+		{
+			*dst = util_transform_texture_to_sprite(
+					&eng->sprites_buffer[i]->texture);
+			break;
+		}
+		i++;
+	}
+	free(name_png);
+	if (i == eng->stats.sprites_count)
+		util_parsing_error_no_sprite(dst, eng, name);
+	else
+		eng->stats.cycle_detector = 0;
+}
+
+t_sprite		util_get_sprite_from_buff_by_id(int id, int size,
+												t_sprite *sprites, int sprobj_id)
+{
+	t_sprite	res;
+	int			i;
+
+	if (id < 0)
+	{
+		/* Дописать кусок обработки, когда просто нет отображения никакого */
+		ft_putendl("Вернуть пустой спрайт");
+		exit(PARSING_ERROR);
+	}
+	i = 0;
+	while (i < size)
+	{
+		if (sprites[i].id == id)
+			break;
+		i++;
+	}
+	if (i == size)
+		util_parsing_error_lost_handler("sprite", id, "sprobject", sprobj_id);
+	return (sprites[i]);
+}

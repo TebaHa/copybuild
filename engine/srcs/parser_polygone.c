@@ -59,3 +59,33 @@ void			util_create_polygone(t_engine *eng, t_polygone *polygone,
 			eng->stats.vertexes_count, vertex_array, polygone->id);
 	eng->stats.polies_count++;
 }
+
+t_polygone		util_get_polygone_from_buff_by_id(int id, int size,
+				t_polygone *polies, int object_id)
+{
+	int			i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (polies[i].id == id)
+			break ;
+		i++;
+	}
+	if (i == size)
+		util_parsing_error_lost_handler("polygone", id, "object", object_id);
+	return (polies[i]);
+}
+
+void			util_release_polies_buffer(t_polygone *polies_buff, int size)
+{
+	int		i;
+
+	i = 0;
+	while (i < size)
+	{
+		util_release_vertex_buffer(polies_buff[i].vertices_array);
+		i++;
+	}
+	free(polies_buff);
+}

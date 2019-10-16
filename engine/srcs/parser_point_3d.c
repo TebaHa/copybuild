@@ -43,3 +43,25 @@ void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str)
 	util_float10_data_filler(&point->z, str[4]);
 	eng->stats.vertexes_count++;
 }
+
+t_point_3d	util_get_vertex_from_buff_by_id(int id, int size,
+			t_point_3d *vertexes, int polygone_id)
+{
+	int			i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (vertexes[i].id == id)
+			break ;
+		i++;
+	}
+	if (i == size)
+		util_parsing_error_lost_handler("vertex", id, "polygone", polygone_id);
+	return (vertexes[i]);
+}
+
+void		util_release_vertex_buffer(t_point_3d *vertex_buff)
+{
+	free(vertex_buff);
+}
