@@ -27,9 +27,9 @@ void	fire_anim_change(t_engine *eng, t_player *plr)
 {
 	if (plr->shoot)
 	{
-		if ((plr->firetime % plr->wpn->frame) == 0)
+		if ((plr->firetime % plr->wpn->cooldown) == 0)
 			sound_shoot(plr);
-		if ((plr->firetime % (plr->wpn->frame)) == 0)
+		if ((plr->firetime % (plr->wpn->cooldown)) == 0)
 			shoot(eng, plr, 1000);
 	}
 	else

@@ -19,7 +19,7 @@ void		eng_create_enemies(t_engine *eng)
 	eng_create_imp(eng);
 }
 
-void 		eng_create_afrit(t_engine *eng)
+void		eng_create_afrit(t_engine *eng)
 {
 	t_enemy	*afrit;
 
@@ -36,7 +36,7 @@ void 		eng_create_afrit(t_engine *eng)
 	eng->enemy[AFRIT] = afrit;
 }
 
-void 		eng_create_cacodemon(t_engine *eng)
+void		eng_create_cacodemon(t_engine *eng)
 {
 	t_enemy	*demon;
 
@@ -51,7 +51,7 @@ void 		eng_create_cacodemon(t_engine *eng)
 	eng->enemy[CACODEMON] = demon;
 }
 
-void 		eng_create_imp(t_engine *eng)
+void		eng_create_imp(t_engine *eng)
 {
 	t_enemy	*imp;
 

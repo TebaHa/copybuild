@@ -56,12 +56,10 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/shoot.c
 			engine/srcs/texture.c
 			engine/srcs/utility.c
-			engine/srcs/parser_resources.c
-			engine/srcs/parser_weapon.c
+		engine/srcs/parser_weapon.c
 			engine/srcs/parser_enemy.c
 			engine/srcs/relative_coord.c
-			engine/srcs/parser_hud_face.c
-			engine/srcs/parser_items.c
+		engine/srcs/parser_items.c
 			engine/srcs/parser_hud.c
 			engine/srcs/sound.c
 			engine/srcs/sprite_render.c
@@ -70,7 +68,7 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/render_stack.c
 			engine/srcs/checksum.c
 			engine/srcs/pickup.c
-			engine/srcs/font.c engine/srcs/parser_player.c)
+			engine/srcs/font.c engine/srcs/parser_player.c engine/srcs/parser_items_2.c engine/srcs/sound_2.c)
 
 #set(EDITOR_SRC editor/srcs/checksum.c)
 

@@ -22,9 +22,9 @@ void		engine_parser(t_engine *eng, t_player *plr, char *filename)
 void		engine_create_resources_from_file(t_engine *eng)
 {
 	eng_read_sprite(eng, &eng->texture_buffer,
-					&eng->stats.textures_count, TEXTURE_PACK_PATH);
+		&eng->stats.textures_count, TEXTURE_PACK_PATH);
 	eng_read_sprite(eng, &eng->sprites_buffer,
-					&eng->stats.sprites_count, TEXTURE_SPRITE_PATH);
+		&eng->stats.sprites_count, TEXTURE_SPRITE_PATH);
 	eng_create_hud(eng);
 	eng_create_weapons(eng);
 	eng_create_items(eng);

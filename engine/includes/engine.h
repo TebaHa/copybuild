@@ -286,7 +286,7 @@ typedef struct		s_weapon
 	int 			ammo;
 	int 			max_ammo;
 	int 			containers;
-	int 			frame;
+	int 			cooldown;
 	t_wpn_state 	state;
 	t_sprite		*anmtn[W_STATES_NUM];
 	t_sprite		*bullet_hole;
@@ -786,8 +786,8 @@ void			util_parsing_error_wrong_crc(void);
 void 			engine_create_resources_from_file(t_engine *eng);
 
 void			eng_create_hud(t_engine *eng);
-void			eng_create_face(t_engine *eng);
-void			eng_create_face_100_0(t_engine *eng);
+void			eng_create_face_100_60(t_engine *eng, t_hud *hud);
+void			eng_create_face_40_0(t_engine *eng, t_hud *hud);
 
 void			eng_create_weapons(t_engine *eng);
 void 			eng_create_rifle(t_engine *eng);
