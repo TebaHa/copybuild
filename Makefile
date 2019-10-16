@@ -14,7 +14,7 @@ NAME = freefps
 CRC = checksum
 
 CC = gcc
-FLAGS =
+FLAGS = -march=native -m64 -Ofast -O2 -flto -funroll-loops
 ID_UN := $(shell id -un)
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./lib/libft/
@@ -53,17 +53,30 @@ GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 ENGINE_SRCS_LIST =	error_handler.c \
 					utility.c \
 					parser.c \
-					parser_resources.c \
 					parser_errors.c \
 					parser_filler.c \
 					parser_reader.c \
+					parser_texture.c \
 					parser_utility.c \
-					parser_utility_find.c \
 					parser_enemy.c \
 					parser_weapon.c \
-					parser_hud_face.c \
 					parser_items.c \
 					parser_hud.c \
+					parser_polygone.c \
+					parser_point_3d.c \
+					parser_errors_2.c \
+					parser_errors_3.c \
+					parser_items_2.c \
+					parser_sector_2.c \
+					parser_sprite.c \
+					parser_sprite_2.c \
+					parser_object.c \
+					sound_2.c \
+					parser_sector.c \
+					parser_player.c \
+					parser_worldbox.c \
+					parser_world.c \
+					parser_sprobject.c \
 					engine.c \
 					render_world.c \
 					render_wall.c \
@@ -120,21 +133,21 @@ EDITOR_OBJS_LIST = $(patsubst %.c, %.o, $(EDITOR_SRCS_LIST))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS)
-	$(CC) -Ofast -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
+	$(CC) $(FLAGS) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
 
 $(ENGINE_OBJS_DIRECTORY):
 	mkdir -p $(ENGINE_OBJS_DIRECTORY)
 	echo "$(NAME): $(ENGINE_OBJS_DIRECTORY) was created"
 
 $(ENGINE_OBJS_DIRECTORY)%.o: $(ENGINE_SRCS_DIRECTORY)%.c $(ENGINE_HEADERS)
-	$(CC) -Ofast $(FLAGS) -c $(ENGINE_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
+	$(CC) $(FLAGS) -c $(ENGINE_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
 
 $(GAME_OBJS_DIRECTORY):
 	mkdir -p $(GAME_OBJS_DIRECTORY)
 	echo "$(NAME): $(GAME_OBJS_DIRECTORY) was created"
 
 $(GAME_OBJS_DIRECTORY)%.o: $(GAME_SRCS_DIRECTORY)%.c $(GAME_HEADERS)
-	$(CC) -Ofast $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
+	$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
 $(LIBFT):
 	$(MAKE) -sC $(LIBFT_DIRECTORY)
 
