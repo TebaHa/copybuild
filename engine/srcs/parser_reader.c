@@ -33,18 +33,11 @@ char		**engine_read_level_file(char *filename)
 	return (splitedbuff);
 }
 
-void		engine_read_world_from_file(t_engine *eng, char **json_splited)
+void	util_parsing_error_no_lvl_file(char *problem)
 {
-	char	**splitted_line;
-	int		i;
-
-	i = 0;
-	while (json_splited[i])
-	{
-		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
-		if (ft_strcmp(splitted_line[0], "world:") == 0)
-			util_create_world(&eng->world, splitted_line);
-		util_release_char_matrix(splitted_line);
-		i++;
-	}
+	ft_putendl("Parsing error:");
+	ft_putstr("Can't find ");
+	ft_putstr(problem);
+	ft_putstr("!\n");
+	exit(PARSING_ERROR);
 }

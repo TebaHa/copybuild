@@ -82,3 +82,10 @@ int					checksum_check_line(char *buff, char *buff_splited,
 	}
 	return (CRC_OK);
 }
+
+void				util_parsing_error_wrong_crc(void)
+{
+	ft_putendl("Parsing error:");
+	ft_putendl("Wrong checksum!");
+	exit(PARSING_ERROR);
+}

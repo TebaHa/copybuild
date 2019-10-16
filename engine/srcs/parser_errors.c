@@ -12,15 +12,6 @@
 
 #include <engine.h>
 
-void	util_parsing_error_no_lvl_file(char *problem)
-{
-	ft_putendl("Parsing error:");
-	ft_putstr("Can't find ");
-	ft_putstr(problem);
-	ft_putstr("!\n");
-	exit(PARSING_ERROR);
-}
-
 void	util_parsing_error_lost_handler(char *problem, int id_problem,
 		char *problem_from, int id_problem_from)
 {
@@ -92,7 +83,7 @@ void	util_parsing_error_not_enough(char *problem)
 	exit(PARSING_ERROR);
 }
 
-void	util_parsing_error_repetions(char *problem, char *problem_from,
+void	util_parsing_error_repeats(char *problem, char *problem_from,
 		int id_problem)
 {
 	ft_putendl("Parsing error:");
@@ -129,19 +120,6 @@ void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 	exit(PARSING_ERROR);
 }
 
-void	util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
-		char *name)
-{
-	util_parsing_error_no_cap("sprite", eng);
-	ft_putendl("Parsing error:");
-	ft_putstr("Cant find sprite: ");
-	ft_putstr(name);
-	ft_putstr("!\n");
-	util_find_sprite_by_name(dst, eng, PARSING_ERROR_SPRITE);
-	if (!ft_strcmp(name, PARSING_ERROR_SPRITE))
-		exit(PARSING_ERROR);
-}
-
 void	util_parsing_error_count_handler(char *problem_from, char **str,
 		int problems_number)
 {
@@ -161,18 +139,4 @@ void util_parsing_error_no_cap(char *problem, t_engine *eng)
 		exit(CYCLE_READING_ERROR);
 	}
 	eng->stats.cycle_detector++;
-}
-
-void	util_parsing_error_wrong_crc(void)
-{
-	ft_putendl("Parsing error:");
-	ft_putendl("Wrong checksum!");
-	exit(PARSING_ERROR);
-}
-
-void	util_parsing_error_player_outside(void)
-{
-	ft_putendl("Parsing error:");
-	ft_putendl("Player outside of map!");
-	exit(PARSING_ERROR);
 }

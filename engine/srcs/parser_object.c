@@ -19,7 +19,7 @@ t_object	*engine_read_objects_from_file(t_engine *eng, t_buff buff)
 	int			i;
 
 	o_array_buffer = (t_object *)ft_memalloc(sizeof(t_object) *
-											 eng->stats.objects_count);
+		eng->stats.objects_count);
 	i = 0;
 	eng->stats.objects_count = 0;
 	while (buff.str[i] != NULL)
@@ -27,9 +27,36 @@ t_object	*engine_read_objects_from_file(t_engine *eng, t_buff buff)
 		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "object:") == 0)
 			util_create_object(eng, &o_array_buffer[eng->stats.objects_count],
-							   buff.polies, splitted_line);
+				buff.polies, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
 	return (o_array_buffer);
+}
+
+void		util_create_object(t_engine *eng, t_object *object,
+			t_polygone *polygone_array, char **str)
+{
+	int			pol_count;
+	int			str_count;
+
+	util_int10_data_filler(&object->id, str[1]);
+	util_int10_data_filler(&object->portal, str[2]);
+	util_int10_data_filler(&object->passble, str[3]);
+	util_int10_data_filler(&object->visible, str[4]);
+	util_find_texture_by_name(&object->floor_wall_texture, eng, str[5]);
+	util_find_texture_by_name(&object->ceil_wall_texture, eng, str[6]);
+	util_int10_data_filler(&object->polies_count, str[7]);
+	if (!object->polies_count)
+		util_parsing_error_little_data("polies", "object", str);
+	util_parsing_error_count_handler("object", str, 7 + object->polies_count);
+	object->polies_array = (t_polygone *)ft_memalloc(sizeof(t_polygone)
+		* object->polies_count);
+	str_count = 8;
+	pol_count = 0;
+	while (str_count < 8 + object->polies_count)
+		object->polies_array[pol_count++] =
+			util_get_polygone_from_buff_by_id(ft_atoi(str[str_count++]),
+			eng->stats.polies_count, polygone_array, object->id);
+	eng->stats.objects_count++;
 }

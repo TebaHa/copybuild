@@ -858,8 +858,8 @@ void			util_parsing_error_little_data(char *problem, char *problem_from,
 void			util_parsing_error_not_digit(char *problem);
 void			util_parsing_error_not_hex(char *problem);
 void			util_parsing_error_not_enough(char *problem);
-void			util_parsing_error_repetions(char *problem, char *problem_from,
-				int id_problem);
+void			util_parsing_error_repeats(char *problem, char *problem_from,
+										   int id_problem);
 void			util_parsing_error_no_cap(char *problem, t_engine *eng);
 SDL_Surface		*util_transform_texture_to_sprite(t_image *texture);
 SDL_Surface		*util_CreateRGBSurface(Uint32 flags, int width, int height,
@@ -891,7 +891,7 @@ t_object		util_get_object_from_buff_by_id(int id, int size,
 
 t_sprobject		*engine_read_sprobjects_from_file(t_engine *eng, t_buff buff);
 void			util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
-				t_sprite *sprite_array, t_point_3d *vertex_array, char **str);
+				t_buff *buff, char **str);
 t_sprobject		util_get_sprobject_from_buff_by_id(int id, int size,
 				t_sprobject *sprobjects, int sector_id);
 
@@ -902,6 +902,7 @@ void			util_create_sector(t_engine *eng, t_buff buff,
 void			util_create_sector_sprobjs(t_engine *eng, t_buff buff,
 				t_sector *sector, char **str);
 void			util_find_repeats_in_sector(t_sector *sector);
+void			util_find_sprobjects_repeats_in_sector(t_sector *sector);
 
 void			util_find_texture_by_name(t_image **dst, t_engine *eng,
 				char *name);
@@ -916,6 +917,8 @@ void			util_find_sprite_by_name(SDL_Surface **dst, t_engine *eng,
 				char *name);
 void			util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
 				char *name);
+int 			util_create_animated_sprite(t_engine *eng, char *str, t_sprite *res);
+int 			util_create_static_sprite(t_engine *eng, char *str, t_sprite *res);
 
 /*
 **	Parsing map functions end

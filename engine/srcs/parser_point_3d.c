@@ -19,7 +19,7 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 	int			i;
 
 	v_arr_buffer = (t_point_3d *)ft_memalloc(sizeof(t_point_3d) *
-											 eng->stats.vertexes_count);
+		eng->stats.vertexes_count);
 	i = 0;
 	eng->stats.vertexes_count = 0;
 	while (json_splited[i] != NULL)
@@ -27,9 +27,19 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
 		if (ft_strcmp(splitted_line[0], "vertex:") == 0)
 			util_create_point_3d(eng, &v_arr_buffer[eng->stats.vertexes_count],
-								 splitted_line);
+				splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
 	return (v_arr_buffer);
+}
+
+void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str)
+{
+	util_parsing_error_count_handler("vertex", str, 4);
+	util_int10_data_filler(&point->id, str[1]);
+	util_float10_data_filler(&point->x, str[2]);
+	util_float10_data_filler(&point->y, str[3]);
+	util_float10_data_filler(&point->z, str[4]);
+	eng->stats.vertexes_count++;
 }
