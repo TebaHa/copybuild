@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_reader.c                                    :+:      :+:    :+:   */
+/*   parser_polygone.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,39 +12,24 @@
 
 #include <engine.h>
 
-char		**engine_read_level_file(char *filename)
+t_polygone	*engine_read_polygones_from_file(t_engine *eng, t_buff buff)
 {
-	int			fd;
-	int			number;
-	char		*buff;
-	char		**splitedbuff;
+	t_polygone	*p_array_buffer;
+	char		**splitted_line;
+	int			i;
 
-	fd = open(GAME_PATH, O_RDONLY);
-	buff = (char*)malloc(sizeof(char) * 10000);
-	if (fd < 2)
-		util_parsing_error_no_lvl_file(filename);
-	number = read(fd, buff, 10000);
-	buff[number] = '\0';
-	close(fd);
-	splitedbuff = ft_strsplit(buff, '\n');
-	if (checksum_check(buff, splitedbuff, number) != CRC_OK)
-		util_parsing_error_wrong_crc();
-	free(buff);
-	return (splitedbuff);
-}
-
-void		engine_read_world_from_file(t_engine *eng, char **json_splited)
-{
-	char	**splitted_line;
-	int		i;
-
+	p_array_buffer = (t_polygone *)ft_memalloc(sizeof(t_polygone)
+											   * eng->stats.polies_count);
 	i = 0;
-	while (json_splited[i])
+	eng->stats.polies_count = 0;
+	while (buff.str[i] != NULL)
 	{
-		splitted_line = ft_strsplitwhitespaces(json_splited[i]);
-		if (ft_strcmp(splitted_line[0], "world:") == 0)
-			util_create_world(&eng->world, splitted_line);
+		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
+		if (ft_strcmp(splitted_line[0], "polygone:") == 0)
+			util_create_polygone(eng, &p_array_buffer[eng->stats.polies_count],
+								 buff.vertexes, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
+	return (p_array_buffer);
 }

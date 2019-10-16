@@ -775,6 +775,8 @@ void			draw_from_surface_to_surface(SDL_Surface *dest, SDL_Surface *src, int dx,
 
 uint_least32_t	crc_calculate(char *buf, size_t len);
 int				checksum_check(char *buf, char **buff_splited, size_t len);
+int				checksum_check_line(char *buff, char *buff_splited,
+				int *crc_count, int crc_pos);
 void			util_parsing_error_wrong_crc(void);
 
 /*
