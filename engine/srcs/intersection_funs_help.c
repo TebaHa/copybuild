@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 20:56:03 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/14 20:56:15 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 17:40:15 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ float		max(float a, float b)
 
 float		clamp(float a, float mi, float ma)
 {
-	return (min(max(a, mi),ma));
+	return (min(max(a, mi), ma));
 }
 
 float		vxs(float x0, float y0, float x1, float y1)

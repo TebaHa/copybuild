@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/15 21:16:19 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/18 19:52:15 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					render_world.c \
 					render_wall.c \
 					objects.c \
+					objects_help.c \
 					bresenham.c \
 					bresenham2.c \
 					color.c \
@@ -89,8 +90,10 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					render_cycle.c \
 					render_cycle2.c \
 					render_wall_help.c \
+					render_wall2.c \
 					normal.c \
 					shoot_main.c \
+					shoot_help.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
@@ -120,21 +123,21 @@ EDITOR_OBJS_LIST = $(patsubst %.c, %.o, $(EDITOR_SRCS_LIST))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS)
-	$(CC) -Ofast -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
+	$(CC) -Ofast -O3 -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
 
 $(ENGINE_OBJS_DIRECTORY):
 	mkdir -p $(ENGINE_OBJS_DIRECTORY)
 	echo "$(NAME): $(ENGINE_OBJS_DIRECTORY) was created"
 
 $(ENGINE_OBJS_DIRECTORY)%.o: $(ENGINE_SRCS_DIRECTORY)%.c $(ENGINE_HEADERS)
-	$(CC) -Ofast $(FLAGS) -c $(ENGINE_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
+	$(CC) -Ofast -O3 $(FLAGS) -c $(ENGINE_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
 
 $(GAME_OBJS_DIRECTORY):
 	mkdir -p $(GAME_OBJS_DIRECTORY)
 	echo "$(NAME): $(GAME_OBJS_DIRECTORY) was created"
 
 $(GAME_OBJS_DIRECTORY)%.o: $(GAME_SRCS_DIRECTORY)%.c $(GAME_HEADERS)
-	$(CC) -Ofast $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
+	$(CC) -Ofast -O3 $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
 $(LIBFT):
 	$(MAKE) -sC $(LIBFT_DIRECTORY)
 

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/15 21:18:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 19:52:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,16 @@ float	dot_product(t_point_3d a, t_point_3d b)
 	return (res);
 }
 
-int		check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor)
+int		check_point_inside_box(t_point_3d a,
+		t_object *obj, float ceil, float floor)
 {
 	t_point_3d	t0;
 	t_point_3d	t1;
 
-	if (obj->polies_array[0].vertices_array[0].x
-	> obj->polies_array[0].vertices_array[1].x)
-	{
-		t0.x = obj->polies_array[0].vertices_array[0].x;
-		t1.x = obj->polies_array[0].vertices_array[1].x;
-	}
-	else
-	{
-		t1.x = obj->polies_array[0].vertices_array[0].x;
-		t0.x = obj->polies_array[0].vertices_array[1].x;
-	}
-	if (obj->polies_array[0].vertices_array[0].y
-	> obj->polies_array[0].vertices_array[1].y)
-	{
-		t0.y = obj->polies_array[0].vertices_array[0].y;
-		t1.y = obj->polies_array[0].vertices_array[1].y;
-	}
-	else
-	{
-		t1.y = obj->polies_array[0].vertices_array[0].y;
-		t0.y = obj->polies_array[0].vertices_array[1].y;
-	}
+	point_swapper_shoot(&t0.x, &t1.x, obj->polies_array[0].vertices_array[0].x,
+	obj->polies_array[0].vertices_array[1].x);
+	point_swapper_shoot(&t0.y, &t1.y, obj->polies_array[0].vertices_array[0].y,
+	obj->polies_array[0].vertices_array[1].y);
 	t0.z = ceil;
 	t1.z = floor;
 	if (a.x <= t0.x + 0.1 && a.x >= t1.x - 0.1
@@ -74,49 +57,53 @@ int		intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res)
 	if (fabs(d) < 1e-10)
 	{
 		if (n == 0)
-			return 2;
+			return (2);
 		else
-			return 0;
+			return (0);
 	}
 	si = n / d;
 	if (si < 0 || si > 1)
-		return 0;
-	*res = (t_point_3d){0, s.a.x + si * u.x, s.a.y + si * u.y, s.a.z + si * u.z};
+		return (0);
+	*res = (t_point_3d){0, s.a.x + si * u.x,
+	s.a.y + si * u.y, s.a.z + si * u.z};
 	return (1);
 }
 
-void	engine_push_particlestack(t_object *obj, t_weapon *wpn,
-		t_wallobj *particlestack, int *status, t_point_3d particle)
+void	engine_push_partclstack_help(t_sh_part *data,
+		t_object *obj, t_weapon *wpn, t_point_3d *particle)
 {
-	t_wallobj	w_partcle;
-	double		dx1;
-	double		dy1;
-	double		dx2;
-	double		dy2;
-	double		dist1;
-	double		dist2;
-	double		half_w;
+	data->dx1 = obj->polies_array[0].vertices_array[0].x - particle->x;
+	data->dy1 = obj->polies_array[0].vertices_array[0].y - particle->y;
+	data->dx2 = particle->x - obj->polies_array[0].vertices_array[1].x;
+	data->dy2 = particle->y - obj->polies_array[0].vertices_array[1].y;
+	data->dist1 = sqrtf(data->dx1 * data->dx1 + data->dy1 * data->dy1);
+	data->dist2 = sqrtf(data->dx2 * data->dx2 + data->dy2 * data->dy2);
+	data->half_w = wpn->bullet_hole->surface[0]->w / 16;
+	data->w_partcle.texture = wpn->bullet_hole;
+}
 
-	dx1 = obj->polies_array[0].vertices_array[0].x - particle.x;
-	dy1 = obj->polies_array[0].vertices_array[0].y - particle.y;
-	dx2 = particle.x - obj->polies_array[0].vertices_array[1].x;
-	dy2 = particle.y - obj->polies_array[0].vertices_array[1].y;
-	dist1 = sqrtf(dx1 * dx1 + dy1 * dy1);
-	dist2 = sqrtf(dx2 * dx2 + dy2 * dy2);
-	half_w = wpn->bullet_hole->surface[0]->w / 16;
-	w_partcle.texture = wpn->bullet_hole;
-	w_partcle.a.x = particle.x - ((half_w * (particle.x
-	- obj->polies_array[0].vertices_array[0].x)) / dist1);
-	w_partcle.a.y = particle.y - ((half_w * (particle.y
-	- obj->polies_array[0].vertices_array[0].y)) / dist1);
-	w_partcle.b.x = particle.x - ((half_w * (particle.x
-	- obj->polies_array[0].vertices_array[1].x)) / dist2);
-	w_partcle.b.y = particle.y - ((half_w * (particle.y
-	- obj->polies_array[0].vertices_array[1].y)) / dist2);
-	w_partcle.id = 1;
-	w_partcle.z = particle.z;
-	w_partcle.timer = 0;
-	w_partcle.frame_num = 0;
-	particlestack[*status] = w_partcle;
+void	engine_push_particlestack(t_object *obj, t_weapon *wpn,
+		void *d[2], t_point_3d particle)
+{
+	t_sh_part	data;
+	t_wallobj	*particlestack;
+	int			*status;
+
+	particlestack = (t_wallobj *)d[0];
+	status = (int *)d[1];
+	engine_push_partclstack_help(&data, obj, wpn, &particle);
+	data.w_partcle.a.x = particle.x - ((data.half_w * (particle.x
+	- obj->polies_array[0].vertices_array[0].x)) / data.dist1);
+	data.w_partcle.a.y = particle.y - ((data.half_w * (particle.y
+	- obj->polies_array[0].vertices_array[0].y)) / data.dist1);
+	data.w_partcle.b.x = particle.x - ((data.half_w * (particle.x
+	- obj->polies_array[0].vertices_array[1].x)) / data.dist2);
+	data.w_partcle.b.y = particle.y - ((data.half_w * (particle.y
+	- obj->polies_array[0].vertices_array[1].y)) / data.dist2);
+	data.w_partcle.id = 1;
+	data.w_partcle.z = particle.z;
+	data.w_partcle.timer = 0;
+	data.w_partcle.frame_num = 0;
+	particlestack[*status] = data.w_partcle;
 	*status = (*status > 126) ? 0 : *status + 1;
 }

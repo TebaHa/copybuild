@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 12:06:03 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/15 20:54:35 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 19:54:01 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	sprite_int_swap(int *a, int *b)
 	*b = tmp;
 }
 
-void	sprite_double_swap(double *a, double *b)
+void	sprite_float_swap(float *a, float *b)
 {
-	double	tmp;
+	float	tmp;
 
 	tmp = *a;
 	*a = *b;
@@ -44,7 +44,7 @@ void	sprite_comb_sort(t_sector *sect)
 			data.j = data.i + data.gap;
 			if (sect->dist[data.i] < sect->dist[data.j])
 			{
-				sprite_double_swap((sect->dist + data.i),
+				sprite_float_swap((sect->dist + data.i),
 				(sect->dist + data.j));
 				sprite_int_swap((sect->order + data.i),
 				(sect->order + data.j));
@@ -64,5 +64,4 @@ void	sprite_comb_sort_help(t_sorter *data)
 		data->gap = 1;
 	data->swapped = false;
 	data->i = 0;
-
 }

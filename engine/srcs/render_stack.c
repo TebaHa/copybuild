@@ -6,11 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 13:12:54 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 13:14:30 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 18:36:26 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <engine.h>
+#include <engine.h>
 
 void		engine_push_renderstack(t_item *renderqueue, t_item item)
 {
@@ -30,7 +30,7 @@ void		engine_push_renderstack(t_item *renderqueue, t_item item)
 t_item		engine_pop_renderstack(t_item *renderqueue)
 {
 	t_item	res;
-	int	i;
+	int		i;
 
 	i = 0;
 	res = renderqueue[0];

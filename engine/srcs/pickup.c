@@ -6,11 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 13:49:25 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/12 17:11:23 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 18:34:51 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <engine.h>
+#include <engine.h>
 
 void		check_sprites_in_sector(t_player *plr, t_sector *sect)
 {
@@ -33,7 +33,8 @@ void		check_sprite_pick(t_player *plr, t_sprobject *sobj)
 	if (sobj->enum_type == MEDKIT || sobj->enum_type == ARMOR
 	|| sobj->enum_type == PLASMA_AMMO || sobj->enum_type == RIFLE_AMMO)
 	{
-		tmp = pow((plr->position.x - sobj->position.x), 2) + pow((plr->position.y - sobj->position.y), 2);
+		tmp = pow((plr->position.x - sobj->position.x), 2)
+		+ pow((plr->position.y - sobj->position.y), 2);
 		if (tmp <= 0.1 && tmp <= 0.1)
 			return ;
 		dist = sqrt(tmp);

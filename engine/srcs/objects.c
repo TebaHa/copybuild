@@ -6,54 +6,52 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 00:38:38 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/14 20:31:46 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 18:16:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-int		intersect_sect(t_point_2d a, t_point_2d b, t_point_2d pos)
-{
-	if (((a.y > pos.y) != (b.y > pos.y)) &&
-	(pos.x < (a.x + (b.x - a.x) * (pos.y - a.y) / (b.y - a.y))))
-		return (1);
-	else
-		return (0);
-}
-
 int		engine_object_get_sector(t_world *world, t_point_3d pos, int start_sect)
 {
-	int			check_stack[MAXSECTORS];
-	int			checked_array[MAXSECTORS];
-	int			res;
-	int			cursect;
-	int			i;
-	int			j;
-	int			k;
+	t_find_obj	data;
 
-	res = -1;
-	ft_memset(checked_array, 0, MAXSECTORS * sizeof(int));
-	engine_clear_checkstack(check_stack);
-	engine_push_checkstack(check_stack, start_sect);
-	while ((cursect = engine_pop_checkstack(check_stack)) >= 0)
+	data.res = -1;
+	ft_memset(data.checked_array, 0, MAXSECTORS * sizeof(int));
+	engine_clear_checkstack(data.check_stack);
+	engine_push_checkstack(data.check_stack, start_sect);
+	while ((data.cursect = engine_pop_checkstack(data.check_stack)) >= 0)
 	{
-		i = 0;
-		while (i < world->sectors_array[cursect].objects_count)
+		data.i = 0;
+		while (data.i < world->sectors_array[data.cursect].objects_count)
 		{
-			if (intersect_sect((t_point_2d){world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[0].x,
-			world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[0].y},
-			(t_point_2d){world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[1].x,
-			world->sectors_array[cursect].objects_array[i].polies_array[0].vertices_array[1].y}, (t_point_2d){pos.x, pos.y}))
-				res = -res;
-			if (world->sectors_array[cursect].objects_array[i].portal >= 0 && world->sectors_array[cursect].objects_array[i].portal != 4 && checked_array[world->sectors_array[cursect].objects_array[i].portal] == 0)
-				engine_push_checkstack(check_stack, world->sectors_array[cursect].objects_array[i].portal);
-			i++;
+			engine_check_object(&data, world, pos);
 		}
-		if (res >= 0)
-			return (cursect);
-		checked_array[cursect] = 1;
+		if (data.res >= 0)
+			return (data.cursect);
+		data.checked_array[data.cursect] = 1;
 	}
 	return (-1);
+}
+
+void	engine_check_object(t_find_obj *d, t_world *world, t_point_3d pos)
+{
+	if (intersect_sect((t_point_2d){world->sectors_array[d->cursect].
+	objects_array[d->i].polies_array[0].vertices_array[0].x,
+	world->sectors_array[d->cursect].objects_array[d->i].
+	polies_array[0].vertices_array[0].y},
+	(t_point_2d){world->sectors_array[d->cursect].objects_array[d->i].
+	polies_array[0].vertices_array[1].x,
+	world->sectors_array[d->cursect].objects_array[d->i].polies_array[0].
+	vertices_array[1].y}, (t_point_2d){pos.x, pos.y}))
+		d->res = -d->res;
+	if (world->sectors_array[d->cursect].objects_array[d->i].portal >= 0
+	&& world->sectors_array[d->cursect].objects_array[d->i].portal != 4
+	&& d->checked_array[world->sectors_array[d->cursect].
+	objects_array[d->i].portal] == 0)
+		engine_push_checkstack(d->check_stack,
+		world->sectors_array[d->cursect].objects_array[d->i].portal);
+	d->i++;
 }
 
 void	engine_push_checkstack(int *stack, int sect)

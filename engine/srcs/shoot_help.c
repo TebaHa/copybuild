@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   font.c                                             :+:      :+:    :+:   */
+/*   shoot_help.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 10:36:15 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 17:25:52 by zytrams          ###   ########.fr       */
+/*   Created: 2019/10/18 19:50:53 by zytrams           #+#    #+#             */
+/*   Updated: 2019/10/18 19:51:45 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-SDL_Surface		*create_text(t_engine *eng, char *str, int color)
+void	point_swapper_shoot(float *t0, float *t1, float a, float b)
 {
-	SDL_Color	sdl_color;
-
-	sdl_color = (SDL_Color) {(Uint8)color,
-	(Uint8)(color >> 8), (Uint8)(color >> 16)};
-	return (TTF_RenderText_Solid(eng->font, str, sdl_color));
+	if (a > b)
+	{
+		*t0 = a;
+		*t1 = b;
+	}
+	else
+	{
+		*t1 = a;
+		*t0 = b;
+	}
 }

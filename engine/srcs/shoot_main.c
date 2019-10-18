@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 21:14:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/15 21:17:36 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 19:36:18 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int		shoot_help3(t_shoot_data *d, t_engine *eng,
 	.ceil && d->int_p.z < d->sect->ceil))
 	{
 		engine_push_particlestack(&d->sect->objects_array[d->i], plr->wpn,
-		d->sect->objects_array[d->i].particles,
-		&d->sect->objects_array[d->i].status, d->int_p);
+		(void *[2]){d->sect->objects_array[d->i].particles,
+		&d->sect->objects_array[d->i].status}, d->int_p);
 		return (1);
 	}
 	else if (d->prev != d->sect->objects_array[d->i].portal)
@@ -89,8 +89,8 @@ int		shoot_help4(t_shoot_data *d, t_engine *eng,
 	{
 		d->hit = 1;
 		engine_push_particlestack(&d->sect->objects_array[d->i],
-		plr->wpn, d->sect->objects_array[d->i].particles,
-		&d->sect->objects_array[d->i].status, d->int_p);
+		plr->wpn, (void *[2]){d->sect->objects_array[d->i].particles,
+		&d->sect->objects_array[d->i].status}, d->int_p);
 		return (1);
 	}
 	return (0);

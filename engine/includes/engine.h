@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/15 21:13:31 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 19:47:38 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ typedef struct		s_costil
 
 typedef struct		s_scaler
 {
-	int result;
-	int bop;
-	int fd;
-	int ca;
-	int cache;
+	int			result;
+	int			bop;
+	int			fd;
+	int			ca;
+	int			cache;
 }					t_scaler;
 
 typedef enum		e_bool
@@ -348,7 +348,7 @@ typedef	struct		s_sector
 	int				objects_count;
 	int				sprobjects_count;
 	int				*order;
-	double			*dist;
+	float			*dist;
 	int				id;
 	int				floor;
 	int				ceil;
@@ -457,10 +457,10 @@ typedef struct		s_tric
 	t_fix_point_3d	t0;
 	t_fix_point_3d	t1;
 	t_fix_point_3d	t2;
-	double			alpha;
-	double			beta;
-	double			intensity;
-	double			phi;
+	float			alpha;
+	float			beta;
+	float			intensity;
+	float			phi;
 	t_fix_point_3d	p;
 	int				offsetx;
 	int				offsety;
@@ -469,8 +469,8 @@ typedef struct		s_tric
 typedef struct		s_bcontex
 {
 	int				steep;
-	double			dx;
-	double			dy;
+	float			dx;
+	float			dy;
 	int				error2;
 	int				derror2;
 	int				x;
@@ -483,7 +483,6 @@ typedef struct		s_thread_pool
 {
 	SDL_Thread		*thread;
 	SDL_Surface 	*surface;
-	int				*z_buff;
 	int				value;
 }					t_thread_pool;
 
@@ -508,7 +507,7 @@ typedef struct		s_mixer_thread
 typedef struct		s_spr_info
 {
 	int				*order;
-	double			*dist;
+	float			*dist;
 	int				amount;
 }					t_spr_info;
 
@@ -644,6 +643,43 @@ typedef struct		s_shoot_data
 	float			dz;
 }					t_shoot_data;
 
+typedef struct		s_surf_data
+{
+	int				*pix;
+	unsigned char	red;
+	unsigned char	green;
+	unsigned char	blue;
+	unsigned char	alpha;
+	int				tx;
+	int				ty;
+	int				x;
+	int				y;
+}					t_surf_data;
+
+typedef struct		s_find_obj
+{
+	int				check_stack[MAXSECTORS];
+	int				checked_array[MAXSECTORS];
+	int				res;
+	int				cursect;
+	int				i;
+	int				j;
+	int				k;
+}					t_find_obj;
+
+typedef struct		s_sh_part
+{
+	t_wallobj		w_partcle;
+	float			dx1;
+	float			dy1;
+	float			dx2;
+	float			dy2;
+	float			dist1;
+	float			dist2;
+	float			half_w;
+}					t_sh_part;
+
+
 void				engine_sdl_init(t_engine **eng);
 void				engine_sdl_uninit(t_engine *eng);
 void				engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color);
@@ -667,8 +703,9 @@ void				util_release_polies_buffer(t_polygone *polies_buff, int size);
 void				util_release_vertex_buffer(t_point_3d *vertex_buff);
 void				util_release_world(t_world *world);
 void				engine_present_and_clear_frame(t_engine *eng);
+int					intersect_sect(t_point_2d a, t_point_2d b, t_point_2d pos);
 
-void			eng_read_sprite(t_engine *eng, t_txtr_pkg ***text_buff, int *stats, char *path);
+void				eng_read_sprite(t_engine *eng, t_txtr_pkg ***text_buff, int *stats, char *path);
 void				engine_triangle(t_engine *eng, t_player *plr, t_polygone *t);
 int					engine_init_triangle(t_polygone *t, t_tric *trg);
 void				engine_do_draw(t_engine *eng, t_player *plr, t_tric *trg, int color);
@@ -704,79 +741,80 @@ void				ft_swap(float *a, float *b);
 t_point_3d			engine_barycentric(t_fix_point_2d pts[3], t_fix_point_2d *p);
 t_point_3d			engine_cross(t_point_3d a, t_point_3d b);
 
-t_point_3d		cross_vec3(t_point_3d v1, t_point_3d v2);
-t_point_3d		create_vector(t_point_3d *a, t_point_3d *b);
-double			magnitude(t_point_3d *normal);
-void			normalize_vec3(t_point_3d *normal);
-t_point_3d		calc_normal(t_polygone *poly);
-void			fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int color);
-void			fill_triangle(t_engine *eng, t_fix_point_2d a, t_fix_point_2d b, t_fix_point_2d c, int color);
-void			full_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
-void			check_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
-int				check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey, t_fix_point_2d pts2[3], int color);
-void			square_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
-void			engine_bw_procedural_texture(t_engine *eng, t_fix_point_3d a);
-double			engine_gain(double gain, int t);
-double			engine_bias(double b, int t);
-void			engine_render_polygone(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
-void			engine_vline(t_engine *eng, SDL_Surface *surf, t_fix_point_3d a, t_fix_point_3d b, int color);
-void			engine_render_world_walls(t_engine *eng, t_polygone *polygone, t_player *plr, t_item sect);
-void			engine_render_world_box(t_engine *eng, t_player *plr);
-t_point_3d		calc_normal_dots(t_point_3d a, t_point_3d b, t_point_3d c);
-void			engine_push_particlestack(t_object *obj, t_weapon *wpn, t_wallobj *particlestack, int *status, t_point_3d particle);
-void			engine_push_checkstack(int *checkqueue, int item);
-int				engine_pop_checkstack(int *checkqueue);
-void			engine_clear_checkstack(int *checkqueue);
-int				check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
-void			engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *particle,  t_object *obj, t_player *plr, t_item sect);
-void			get_relative_xy(t_engine *eng, t_fix_point_2d *p);
-void			animator_render_sprite_object(t_engine *eng, SDL_Surface *surf, t_player plr, t_sprobject *spr_obj, t_item sect, int *zbuff);
-t_sprobject		*create_test_sprobj(t_engine *eng);
-void			engine_vline_textured_sprite(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_sprite *texture);
-void			engine_vline_textured_surface(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, SDL_Surface *texture);
-void			switch_weapon(t_engine *eng, t_player *plr, int weapon_num);
-int				sound_play_thread_wrapper(void *ptr);
-void			engine_render_wall_count_initial_point(t_polygone *polygone, t_player *plr,
-				t_point_2d	*t1, t_point_2d	*t2);
-void			engine_push_spriterenderstack(t_item_sprts **renderqueue, t_item_sprts *item);
-void			engine_clear_spriterenderstack(t_item_sprts **renderqueue);
-t_item_sprts	*engine_pop_spriterenderstack(t_item_sprts **renderqueue);
-void			one_dim_zbuffers_copy(t_item_sprts *sprt, int *ytop, int *ybottom);
+t_point_3d			cross_vec3(t_point_3d v1, t_point_3d v2);
+t_point_3d			create_vector(t_point_3d *a, t_point_3d *b);
+double				magnitude(t_point_3d *normal);
+void				normalize_vec3(t_point_3d *normal);
+t_point_3d			calc_normal(t_polygone *poly);
+void				fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int color);
+void				fill_triangle(t_engine *eng, t_fix_point_2d a, t_fix_point_2d b, t_fix_point_2d c, int color);
+void				full_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
+void				check_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
+int					check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey, t_fix_point_2d pts2[3], int color);
+void				square_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
+void				engine_bw_procedural_texture(t_engine *eng, t_fix_point_3d a);
+double				engine_gain(double gain, int t);
+double				engine_bias(double b, int t);
+void				engine_render_polygone(t_engine *eng, t_player *plr, t_polygone *wall, int *ytop, int *ybottom);
+void				engine_vline(t_engine *eng, SDL_Surface *surf, t_fix_point_3d a, t_fix_point_3d b, int color);
+void				engine_render_world_walls(t_engine *eng, t_polygone *polygone, t_player *plr, t_item sect);
+void				engine_render_world_box(t_engine *eng, t_player *plr);
+t_point_3d			calc_normal_dots(t_point_3d a, t_point_3d b, t_point_3d c);
+void				engine_push_particlestack(t_object *obj, t_weapon *wpn,
+					void *d[2], t_point_3d particle);
+void				engine_push_checkstack(int *checkqueue, int item);
+int					engine_pop_checkstack(int *checkqueue);
+void				engine_clear_checkstack(int *checkqueue);
+int					check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
+void				engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *particle,  t_object *obj, t_player *plr, t_item sect);
+void				get_relative_xy(t_engine *eng, t_fix_point_2d *p);
+void				animator_render_sprite_object(t_engine *eng, SDL_Surface *surf, t_player plr, t_sprobject *spr_obj, t_item sect, int *zbuff);
+t_sprobject			*create_test_sprobj(t_engine *eng);
+void				engine_vline_textured_sprite(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_sprite *texture);
+void				engine_vline_textured_surface(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, SDL_Surface *texture);
+void				switch_weapon(t_engine *eng, t_player *plr, int weapon_num);
+int					sound_play_thread_wrapper(void *ptr);
+void				engine_render_wall_count_initial_point(t_polygone *polygone, t_player *plr,
+					t_point_2d	*t1, t_point_2d	*t2);
+void				engine_push_spriterenderstack(t_item_sprts **renderqueue, t_item_sprts *item);
+void				engine_clear_spriterenderstack(t_item_sprts **renderqueue);
+t_item_sprts		*engine_pop_spriterenderstack(t_item_sprts **renderqueue);
+void				one_dim_zbuffers_copy(t_item_sprts *sprt, int *ytop, int *ybottom);
 
 /*
 ** Image-processing functions
 **
 */
 
-void			image_load(t_image *img, const char *fname);
-void			image_create(t_image *img, int width, int height, int channels);
-void			image_free(t_image *img);
-t_image			load_textures(const char *fname);
-int				scaler_next(t_scaler *i);
-void			engine_vline_textured(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture);
-void			move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect);
-t_costil		relative_map_coordinate_to_absolute(t_player *plr, float map_y, float screen_x, float screen_y);
-t_costil		ceiling_floor_screen_coordinates_to_map_coordinates(t_player *plr, float tz, float tx);
-void			change_floor(t_engine *eng, int sect, int change);
-void			change_ceil(t_engine *eng, int sect, int change);
-void			engine_push_checkstack(int *stack, int sect);
-int				engine_pop_checkstack(int *stack);
-void			engine_clear_checkstack(int *stack);
-t_image			*engine_cut_texture(t_image *world_texture, int xstart, int xsize, int ystart, int ysize);
-void			game_stop_threads(t_thread_pool	*render_thread, int thread_count);
-void			engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf);
-void			shoot(t_engine *eng, t_player *plr, int weapon_range);
-int				intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
-void			draw_from_surface_to_surface(SDL_Surface *dest, SDL_Surface *src, int dx, int dy);
+void				image_load(t_image *img, const char *fname);
+void				image_create(t_image *img, int width, int height, int channels);
+void				image_free(t_image *img);
+t_image				load_textures(const char *fname);
+int					scaler_next(t_scaler *i);
+void				engine_vline_textured(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture);
+void				move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect);
+t_costil			relative_map_coordinate_to_absolute(t_player *plr, float map_y, float screen_x, float screen_y);
+t_costil			ceiling_floor_screen_coordinates_to_map_coordinates(t_player *plr, float tz, float tx);
+void				change_floor(t_engine *eng, int sect, int change);
+void				change_ceil(t_engine *eng, int sect, int change);
+void				engine_push_checkstack(int *stack, int sect);
+int					engine_pop_checkstack(int *stack);
+void				engine_clear_checkstack(int *stack);
+t_image				*engine_cut_texture(t_image *world_texture, int xstart, int xsize, int ystart, int ysize);
+void				game_stop_threads(t_thread_pool	*render_thread, int thread_count);
+void				engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf);
+void				shoot(t_engine *eng, t_player *plr, int weapon_range);
+int					intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res);
+void				draw_from_surface_to_surface(SDL_Surface *dest, SDL_Surface *src, int dx, int dy);
 
 /*
 **	---------------------------------------------------------------------------
 **	Checksum functions start
 */
 
-uint_least32_t	crc_calculate(char *buf, size_t len);
-int				checksum_check(char *buf, char **buff_splited, size_t len);
-void			util_parsing_error_wrong_crc(void);
+uint_least32_t		crc_calculate(char *buf, size_t len);
+int					checksum_check(char *buf, char **buff_splited, size_t len);
+void				util_parsing_error_wrong_crc(void);
 
 /*
 ** 	Checksum functions end
@@ -784,46 +822,46 @@ void			util_parsing_error_wrong_crc(void);
 **	Resources parsing functions start
 */
 
-void 			engine_create_resources_from_file(t_engine *eng);
+void 				engine_create_resources_from_file(t_engine *eng);
 
-void			eng_create_hud(t_engine *eng);
-void			eng_create_face(t_engine *eng);
-void			eng_create_face_100_0(t_engine *eng);
+void				eng_create_hud(t_engine *eng);
+void				eng_create_face(t_engine *eng);
+void				eng_create_face_100_0(t_engine *eng);
 
-void			eng_create_weapons(t_engine *eng);
-void 			eng_create_rifle(t_engine *eng);
-void			eng_create_plasma(t_engine *eng);
+void				eng_create_weapons(t_engine *eng);
+void 				eng_create_rifle(t_engine *eng);
+void				eng_create_plasma(t_engine *eng);
 
-void			eng_create_items(t_engine *eng);
-void			eng_create_medkit(t_engine *eng);
-void			eng_create_armor(t_engine *eng);
-void			eng_create_powerup(t_engine *eng);
-void			eng_create_rifle_ammo(t_engine *eng);
-void			eng_create_plasma_ammo(t_engine *eng);
-void			eng_create_plasma_gun(t_engine *eng);
+void				eng_create_items(t_engine *eng);
+void				eng_create_medkit(t_engine *eng);
+void				eng_create_armor(t_engine *eng);
+void				eng_create_powerup(t_engine *eng);
+void				eng_create_rifle_ammo(t_engine *eng);
+void				eng_create_plasma_ammo(t_engine *eng);
+void				eng_create_plasma_gun(t_engine *eng);
 
-void			eng_create_enemies(t_engine *eng);
-void 			eng_create_barrel(t_engine *eng);
-void 			eng_create_afrit(t_engine *eng);
-void 			eng_create_cacodemon(t_engine *eng);
-void 			eng_create_imp(t_engine *eng);
+void				eng_create_enemies(t_engine *eng);
+void 				eng_create_barrel(t_engine *eng);
+void 				eng_create_afrit(t_engine *eng);
+void 				eng_create_cacodemon(t_engine *eng);
+void 				eng_create_imp(t_engine *eng);
 
-t_sprite		*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
-				int size);
-char			*util_add_png_to_name(char *old_name);
-char			*util_add_png_num_to_name(char *old_name, int num);
-t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
+t_sprite			*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
+					int size);
+char				*util_add_png_to_name(char *old_name);
+char				*util_add_png_num_to_name(char *old_name, int num);
+t_sprite			*util_create_sprite_by_name(t_engine *eng, char *str);
 
-void			sound_mixer_init(void);
-Mix_Chunk		*sound_init(char *name);
-char			*util_add_wav_to_name(char *old_name);
-void			sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
-void			sound_shoot(t_player *plr);
-void			sound_free(t_engine *eng);
-void			sound_player_control(t_player *plr);
-void			eng_create_background_music(t_engine *eng);
+void				sound_mixer_init(void);
+Mix_Chunk			*sound_init(char *name);
+char				*util_add_wav_to_name(char *old_name);
+void				sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
+void				sound_shoot(t_player *plr);
+void				sound_free(t_engine *eng);
+void				sound_player_control(t_player *plr);
+void				eng_create_background_music(t_engine *eng);
 
-void			infinite_loop(void);
+void				infinite_loop(void);
 
 /*
 **	Resources parsing functions end
@@ -831,82 +869,82 @@ void			infinite_loop(void);
 **	Parsing map functions
 */
 
-void			util_release_char_matrix(char **mtrx);
-void			util_release_read_buffers(t_buff *buff);
-void			util_float10_data_filler(float *data, char *str);
-void			util_int10_data_filler(int *data, char *str);
-void			util_int16_data_filler(int *data, char *str);
-void			util_parsing_error_count_handler(char *problem_from,
-				char **str, int problems_number);
-void			util_parsing_error_cant_find(char *problem, int id_problem);
-void			util_parsing_error_lost_handler(char *problem, int id_problem,
-				char *problem_from, int id_problem_from);
-void			util_parsing_error_no_lvl_file(char *problem);
-void			util_parsing_error_extra_data(char *problem, char *problem_from,
-				char **str);
-void			util_parsing_error_little_data(char *problem, char *problem_from,
-				char **str);
-void			util_parsing_error_not_digit(char *problem);
-void			util_parsing_error_not_hex(char *problem);
-void			util_parsing_error_not_enough(char *problem);
-void			util_parsing_error_repetions(char *problem, char *problem_from,
-				int id_problem);
-void			util_parsing_error_no_cap(char *problem, t_engine *eng);
-SDL_Surface		*util_transform_texture_to_sprite(t_image *texture);
-SDL_Surface		*util_CreateRGBSurface(Uint32 flags, int width, int height,
-				int depth);
+void				util_release_char_matrix(char **mtrx);
+void				util_release_read_buffers(t_buff *buff);
+void				util_float10_data_filler(float *data, char *str);
+void				util_int10_data_filler(int *data, char *str);
+void				util_int16_data_filler(int *data, char *str);
+void				util_parsing_error_count_handler(char *problem_from,
+					char **str, int problems_number);
+void				util_parsing_error_cant_find(char *problem, int id_problem);
+void				util_parsing_error_lost_handler(char *problem, int id_problem,
+					char *problem_from, int id_problem_from);
+void				util_parsing_error_no_lvl_file(char *problem);
+void				util_parsing_error_extra_data(char *problem, char *problem_from,
+					char **str);
+void				util_parsing_error_little_data(char *problem, char *problem_from,
+					char **str);
+void				util_parsing_error_not_digit(char *problem);
+void				util_parsing_error_not_hex(char *problem);
+void				util_parsing_error_not_enough(char *problem);
+void				util_parsing_error_repetions(char *problem, char *problem_from,
+					int id_problem);
+void				util_parsing_error_no_cap(char *problem, t_engine *eng);
+SDL_Surface			*util_transform_texture_to_sprite(t_image *texture);
+SDL_Surface			*util_CreateRGBSurface(Uint32 flags, int width, int height,
+					int depth);
 
-char			**engine_read_level_file(char *filename);
-void			engine_count_all_from_file(t_engine *eng, char **json_splited);
+char				**engine_read_level_file(char *filename);
+void				engine_count_all_from_file(t_engine *eng, char **json_splited);
 
-void			engine_read_world_from_file(t_engine *eng, char **json_splited);
-void			engine_create_world_from_file(t_engine *eng, char *filename);
-void			util_create_world(t_world **world, char **str);
+void				engine_read_world_from_file(t_engine *eng, char **json_splited);
+void				engine_create_world_from_file(t_engine *eng, char *filename);
+void				util_create_world(t_world **world, char **str);
 
-t_point_3d		*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
-void			util_create_point_3d(t_engine *eng, t_point_3d *point, char **str);
-t_point_3d		util_get_vertex_from_buff_by_id(int id, int size,
-				t_point_3d *vertexes, int polygone_id);
+t_point_3d			*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
+void				util_create_point_3d(t_engine *eng, t_point_3d *point, char **str);
+t_point_3d			util_get_vertex_from_buff_by_id(int id, int size,
+					t_point_3d *vertexes, int polygone_id);
 
-t_polygone		*engine_read_polygones_from_file(t_engine *eng, t_buff buff);
-void			util_create_polygone(t_engine *eng, t_polygone *polygone,
-				t_point_3d *vertex_array, char **str);
-t_polygone		util_get_polygone_from_buff_by_id(int id, int size,
-				t_polygone *polies, int object_id);
+t_polygone			*engine_read_polygones_from_file(t_engine *eng, t_buff buff);
+void				util_create_polygone(t_engine *eng, t_polygone *polygone,
+					t_point_3d *vertex_array, char **str);
+t_polygone			util_get_polygone_from_buff_by_id(int id, int size,
+					t_polygone *polies, int object_id);
 
-t_object		*engine_read_objects_from_file(t_engine *eng, t_buff buff);
-void			util_create_object(t_engine *eng, t_object *object,
-				t_polygone *polygone_array, char **str);
-t_object		util_get_object_from_buff_by_id(int id, int size,
-				t_object *objects, int sector_id);
+t_object			*engine_read_objects_from_file(t_engine *eng, t_buff buff);
+void				util_create_object(t_engine *eng, t_object *object,
+					t_polygone *polygone_array, char **str);
+t_object			util_get_object_from_buff_by_id(int id, int size,
+					t_object *objects, int sector_id);
 
-t_sprobject		*engine_read_sprobjects_from_file(t_engine *eng, t_buff buff);
-void			util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
-				t_sprite *sprite_array, t_point_3d *vertex_array, char **str);
-t_sprobject		util_get_sprobject_from_buff_by_id(int id, int size,
-				t_sprobject *sprobjects, int sector_id);
+t_sprobject			*engine_read_sprobjects_from_file(t_engine *eng, t_buff buff);
+void				util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
+					t_sprite *sprite_array, t_point_3d *vertex_array, char **str);
+t_sprobject			util_get_sprobject_from_buff_by_id(int id, int size,
+					t_sprobject *sprobjects, int sector_id);
 
-void			engine_read_sectors_from_file(t_engine *eng, t_buff buff);
-void			engine_read_worldbox_from_file(t_engine *eng, t_buff buff);
-void			util_create_sector(t_engine *eng, t_buff buff,
-				t_sector *sector, char **str);
-void			util_create_sector_sprobjs(t_engine *eng, t_buff buff,
-				t_sector *sector, char **str);
-void			util_find_repeats_in_sector(t_sector *sector);
+void				engine_read_sectors_from_file(t_engine *eng, t_buff buff);
+void				engine_read_worldbox_from_file(t_engine *eng, t_buff buff);
+void				util_create_sector(t_engine *eng, t_buff buff,
+					t_sector *sector, char **str);
+void				util_create_sector_sprobjs(t_engine *eng, t_buff buff,
+					t_sector *sector, char **str);
+void				util_find_repeats_in_sector(t_sector *sector);
 
-void			util_find_texture_by_name(t_image **dst, t_engine *eng,
-				char *name);
-void			util_parsing_error_no_texture(t_image **dst, t_engine *eng,
-				char *name);
+void				util_find_texture_by_name(t_image **dst, t_engine *eng,
+					char *name);
+void				util_parsing_error_no_texture(t_image **dst, t_engine *eng,
+					char *name);
 
-t_sprite		*engine_read_sprites_from_file(t_engine *eng, t_buff);
-void			util_create_sprite(t_engine *eng, t_sprite *sprite,	char **str);
-t_sprite		util_get_sprite_from_buff_by_id(int id, int size, t_sprite *sprites,
-				int sprobj_id);
-void			util_find_sprite_by_name(SDL_Surface **dst, t_engine *eng,
-				char *name);
-void			util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
-				char *name);
+t_sprite			*engine_read_sprites_from_file(t_engine *eng, t_buff);
+void				util_create_sprite(t_engine *eng, t_sprite *sprite,	char **str);
+t_sprite			util_get_sprite_from_buff_by_id(int id, int size, t_sprite *sprites,
+					int sprobj_id);
+void				util_find_sprite_by_name(SDL_Surface **dst, t_engine *eng,
+					char *name);
+void				util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
+					char *name);
 
 /*
 **	Parsing map functions end
@@ -918,15 +956,15 @@ void			util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
 **	---------------------------------------------------------------------------
 */
 
-void			sprite_comb_sort(t_sector *sect);
-void			sprite_double_swap(double *a, double *b);
-void			sprite_int_swap(int *a, int *b);
-void			engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_player *plr, t_item_sprts *restr);
-void			engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf);
-void			check_sprite_pick(t_player *plr, t_sprobject *sobj);
-void			apply_sprite_obj(t_player *plr, t_sprobject *sobj);
-void			check_sprites_in_sector(t_player *plr, t_sector *sect);
-t_bool			modify_players_stat(int *stat, int addtion, int limit);
+void				sprite_comb_sort(t_sector *sect);
+void				sprite_int_swap(int *a, int *b);
+void				sprite_float_swap(float *a, float *b);
+void				engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_player *plr, t_item_sprts *restr);
+void				engine_render_sprites(t_engine *eng, t_player *plr, SDL_Surface *surf);
+void				check_sprite_pick(t_player *plr, t_sprobject *sobj);
+void				apply_sprite_obj(t_player *plr, t_sprobject *sobj);
+void				check_sprites_in_sector(t_player *plr, t_sector *sect);
+t_bool				modify_players_stat(int *stat, int addtion, int limit);
 
 /*
 **	Sprite funs end
@@ -939,9 +977,9 @@ t_bool			modify_players_stat(int *stat, int addtion, int limit);
 **	---------------------------------------------------------------------------
 */
 
-SDL_Surface		*create_text(t_engine *eng, char *str, int color);
-void			draw_player_stats(t_engine *eng, SDL_Surface *surf, SDL_Surface *hp, SDL_Surface *armor);
-void			engine_render_hud_stats(t_engine *eng, t_player *plr, SDL_Surface *surf);
+SDL_Surface			*create_text(t_engine *eng, char *str, int color);
+void				draw_player_stats(t_engine *eng, SDL_Surface *surf, SDL_Surface *hp, SDL_Surface *armor);
+void				engine_render_hud_stats(t_engine *eng, t_player *plr, SDL_Surface *surf);
 
 /*
 **	Text funs end
@@ -953,47 +991,61 @@ void			engine_render_hud_stats(t_engine *eng, t_player *plr, SDL_Surface *surf);
 **
 */
 
-float			min(float a, float b);
-float			max(float a, float b);
-float			clamp(float a, float mi, float ma);
-float			vxs(float x0, float y0, float x1, float y1);
-short			overlap(float a0, float a1, float b0, float b1);
-short			intersect_box(t_point_2d x0, t_point_2d x1, t_point_2d x2, t_point_2d x3);
-float			point_side(t_point_2d p, t_point_2d x0, t_point_2d x1);
-t_point_2d		intersect(t_point_2d x1, t_point_2d x2, t_point_2d x3, t_point_2d x4);
-t_scaler		scaler_init(float data[5]);
+float				min(float a, float b);
+float				max(float a, float b);
+float				clamp(float a, float mi, float ma);
+float				vxs(float x0, float y0, float x1, float y1);
+short				overlap(float a0, float a1, float b0, float b1);
+short				intersect_box(t_point_2d x0, t_point_2d x1, t_point_2d x2, t_point_2d x3);
+float				point_side(t_point_2d p, t_point_2d x0, t_point_2d x1);
+t_point_2d			intersect(t_point_2d x1, t_point_2d x2, t_point_2d x3, t_point_2d x4);
+t_scaler			scaler_init(float data[5]);
 /*
 **
 **
 */
-void			engine_render_world_data(t_engine *eng, t_player *plr, t_wall_help2 *data);
+void				engine_render_world_data(t_engine *eng, t_player *plr, t_wall_help2 *data);
 
-void			engine_render_wall_cycle_6(t_wall_clinks *l);
-void			engine_render_cycle_5(t_wall_clinks *l);
-void			engine_render_wall_cycle_3(t_wall_clinks *l);
-void			engine_render_wall_cycle_4(t_wall_clinks *l);
-void			engine_render_cycle_2(t_wall_clinks *l);
-void			engine_render_cycle_1(t_wall_clinks *l);
+void				engine_render_wall_cycle_6(t_wall_clinks *l);
+void				engine_render_cycle_5(t_wall_clinks *l);
+void				engine_render_wall_cycle_3(t_wall_clinks *l);
+void				engine_render_wall_cycle_4(t_wall_clinks *l);
+void				engine_render_cycle_2(t_wall_clinks *l);
+void				engine_render_cycle_1(t_wall_clinks *l);
+void				engine_render_wall_main_cycler(t_wall_clinks *links,
+					t_wall_cycle *cycler, t_wall_mai_data *mdata);
 
-void			engine_render_wall_pusher(t_engine *eng,
-				t_wall_help2 *data, t_wall_mai_data *mdata);
-void			engine_render_particles_wall(t_engine *eng, SDL_Surface *surf,
-				t_wall_help2 *data, t_wall_mai_data *mdata);
-void			engine_render_world_help(t_engine *eng, t_player *plr,
-				SDL_Surface *surf, t_wall_help2 *data);
+void				engine_render_wall_pusher(t_engine *eng,
+					t_wall_help2 *data, t_wall_mai_data *mdata);
+void				engine_render_particles_wall(t_engine *eng, SDL_Surface *surf,
+					t_wall_help2 *data, t_wall_mai_data *mdata);
+void				engine_render_world_help(t_engine *eng, t_player *plr,
+					SDL_Surface *surf, t_wall_help2 *data);
+void				engine_set_links(t_wall_clinks *links, void *ls[6]);
 
-void			eng_reader_prep_data(t_read_data *data, int *stats, char *path);
-void			eng_read_sprite_help(t_engine *eng, t_txtr_pkg ***text_buff,
-				t_read_data *data, int *stats);
-void			sprite_comb_sort_help(t_sorter *data);
+void				eng_reader_prep_data(t_read_data *data, int *stats, char *path);
+void				eng_read_sprite_help(t_engine *eng, t_txtr_pkg ***text_buff,
+					t_read_data *data, int *stats);
+void				sprite_comb_sort_help(t_sorter *data);
 
-void			shoot_help1(t_shoot_data *d, t_engine *eng,
-				t_player *plr, int weapon_range);
-void			shoot_help2(t_shoot_data *d, t_engine *eng,
-				t_player *plr, int weapon_range);
-int				shoot_help3(t_shoot_data *d, t_engine *eng,
-				t_player *plr, int weapon_range);
-int				shoot_help4(t_shoot_data *d, t_engine *eng,
-				t_player *plr, int weapon_range);
+void				shoot_help1(t_shoot_data *d, t_engine *eng,
+					t_player *plr, int weapon_range);
+void				shoot_help2(t_shoot_data *d, t_engine *eng,
+					t_player *plr, int weapon_range);
+int					shoot_help3(t_shoot_data *d, t_engine *eng,
+					t_player *plr, int weapon_range);
+int					shoot_help4(t_shoot_data *d, t_engine *eng,
+					t_player *plr, int weapon_range);
+
+void				eng_reader_put_data(t_engine *eng, t_read_data *data,
+					t_txtr_pkg ***text_buff, void *mass[2]);
+void				draw_from_s_to_s_help(t_surf_data *data, SDL_Surface *src);
+void				engine_check_object(t_find_obj *d, t_world *world, t_point_3d pos);
+void				engine_render_wall_c_val2(t_engine *eng, t_wall_help3 *data_help,
+					t_wall_help2 *data, t_wall_mai_data *mdata);
+void				engine_render_wall_c_val3(t_engine *eng, t_wall_help3 *data_help,
+					t_wall_help2 *data, t_wall_mai_data *mdata);
+
+void				point_swapper_shoot(float *t0, float *t1, float a, float b);
 
 # endif

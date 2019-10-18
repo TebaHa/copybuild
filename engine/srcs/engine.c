@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/15 20:41:14 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 17:24:45 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,16 @@ void		engine_sdl_uninit(t_engine *eng)
 	SDL_Quit();
 }
 
-void		eng_read_sprite(t_engine *eng, t_txtr_pkg ***text_buff, int *stats, char *path)
+void		eng_read_sprite(t_engine *eng,
+			t_txtr_pkg ***text_buff, int *stats, char *path)
 {
 	t_read_data	data;
 
 	eng_reader_prep_data(&data, stats, path);
 	if (data.d)
 	{
-		text_buff[0] = (t_txtr_pkg **)ft_memalloc(sizeof(t_txtr_pkg *) * (data.count));
+		text_buff[0] = (t_txtr_pkg **)
+		ft_memalloc(sizeof(t_txtr_pkg *) * (data.count));
 		if (text_buff[0] == NULL)
 			error_handler("malloc error: ", "allocation", eng);
 		while (data.i < data.count)
@@ -57,20 +59,33 @@ void		eng_read_sprite(t_engine *eng, t_txtr_pkg ***text_buff, int *stats, char *
 			{
 				if (data.dir->d_name[0] == '.')
 					continue;
-				data.buffer_name = ft_strjoin(path, data.dir->d_name);
-				(text_buff)[0][data.real_i] = (t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
-				(text_buff)[0][data.real_i]->filename = ft_strdup(data.dir->d_name);
-				(*stats)++;
-				if ((text_buff)[0][data.real_i] == NULL)
-					error_handler("malloc error: ", "allocation", eng);
-				image_load(&(text_buff)[0][data.real_i]->texture, data.buffer_name);
-				free(data.buffer_name);
-				data.real_i++;
-				data.i++;
+				eng_reader_put_data(eng,
+				&data, text_buff, (void *[2]){path, stats});
 			}
 		}
 		closedir(data.d);
 	}
+}
+
+void		eng_reader_put_data(t_engine *eng, t_read_data *data,
+			t_txtr_pkg ***text_buff, void *mass[2])
+{
+	char	*path;
+	int		*stats;
+
+	path = (char *)mass[0];
+	stats = (int *)mass[1];
+	data->buffer_name = ft_strjoin(path, data->dir->d_name);
+	(text_buff)[0][data->real_i] =
+	(t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
+	(text_buff)[0][data->real_i]->filename = ft_strdup(data->dir->d_name);
+	(*stats)++;
+	if ((text_buff)[0][data->real_i] == NULL)
+		error_handler("malloc error: ", "allocation", eng);
+	image_load(&(text_buff)[0][data->real_i]->texture, data->buffer_name);
+	free(data->buffer_name);
+	data->real_i++;
+	data->i++;
 }
 
 void		eng_reader_prep_data(t_read_data *data, int *stats, char *path)

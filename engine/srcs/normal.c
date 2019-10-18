@@ -6,12 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 15:38:11 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/15 00:07:29 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 18:04:49 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
-
 
 t_point_3d		cross_vec3(t_point_3d v1, t_point_3d v2)
 {

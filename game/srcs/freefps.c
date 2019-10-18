@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/15 20:51:27 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 20:00:00 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void			game_init_threads(t_thread_pool *render_thread_pool)
 	{
 		render_thread_pool[i].surface = SDL_CreateRGBSurface(0, WIDTH, HEIGHT, 32, (Uint32)0xff000000,
 							(Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff);
-		render_thread_pool[i].z_buff = (int *)ft_memalloc(sizeof(int) * WIDTH * HEIGHT);
 		i++;
 	}
 }

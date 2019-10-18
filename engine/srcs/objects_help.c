@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   font.c                                             :+:      :+:    :+:   */
+/*   objects_help.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 10:36:15 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 17:25:52 by zytrams          ###   ########.fr       */
+/*   Created: 2019/10/18 18:16:46 by zytrams           #+#    #+#             */
+/*   Updated: 2019/10/18 18:34:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-SDL_Surface		*create_text(t_engine *eng, char *str, int color)
+int		intersect_sect(t_point_2d a, t_point_2d b, t_point_2d pos)
 {
-	SDL_Color	sdl_color;
-
-	sdl_color = (SDL_Color) {(Uint8)color,
-	(Uint8)(color >> 8), (Uint8)(color >> 16)};
-	return (TTF_RenderText_Solid(eng->font, str, sdl_color));
+	if (((a.y > pos.y) != (b.y > pos.y)) &&
+	(pos.x < (a.x + (b.x - a.x)
+	* (pos.y - a.y) / (b.y - a.y))))
+		return (1);
+	else
+		return (0);
 }

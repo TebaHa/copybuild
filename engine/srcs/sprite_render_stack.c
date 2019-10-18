@@ -6,13 +6,14 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 13:12:17 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/11 15:16:49 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 19:54:38 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <engine.h>
+#include <engine.h>
 
-void			engine_push_spriterenderstack(t_item_sprts **renderqueue, t_item_sprts *item)
+void			engine_push_spriterenderstack(t_item_sprts **renderqueue,
+				t_item_sprts *item)
 {
 	int	i;
 
