@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/18 19:52:15 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/18 20:00:51 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = freefps
 CRC = checksum
 
 CC = gcc
-FLAGS =
+FLAGS = -march=native -m64 -Ofast -O2 -flto -funroll-loops
 ID_UN := $(shell id -un)
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./lib/libft/
@@ -53,17 +53,30 @@ GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 ENGINE_SRCS_LIST =	error_handler.c \
 					utility.c \
 					parser.c \
-					parser_resources.c \
 					parser_errors.c \
 					parser_filler.c \
 					parser_reader.c \
+					parser_texture.c \
 					parser_utility.c \
-					parser_utility_find.c \
 					parser_enemy.c \
 					parser_weapon.c \
-					parser_hud_face.c \
 					parser_items.c \
 					parser_hud.c \
+					parser_polygone.c \
+					parser_point_3d.c \
+					parser_errors_2.c \
+					parser_errors_3.c \
+					parser_items_2.c \
+					parser_sector_2.c \
+					parser_sprite.c \
+					parser_sprite_2.c \
+					parser_object.c \
+					sound_2.c \
+					parser_sector.c \
+					parser_player.c \
+					parser_worldbox.c \
+					parser_world.c \
+					parser_sprobject.c \
 					engine.c \
 					render_world.c \
 					render_wall.c \
@@ -113,7 +126,8 @@ EDITOR_OBJS_DIRECTORY = ./editor/objs/
 EDITOR_SRCS_DIRECTORY = ./editor/srcs/
 EDITOR_HEADERS_DIRECTORY = ./editor/includes/
 EDITOR_HEADERS_LIST = editor.h
-EDITOR_SRCS_LIST = checksum.c
+EDITOR_SRCS_LIST = 		checksum.c \
+						checksum_errors.c
 EDITOR_HEADERS = $(addprefix $(EDITOR_HEADERS_DIRECTORY), $(EDITOR_HEADERS_LIST))
 EDITOR_INCLUDES = -I$(EDITOR_HEADERS_DIRECTORY)
 EDITOR_SRCS = $(addprefix $(EDITOR_SRCS_DIRECTORY), $(EDITOR_SRCS_LIST))

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_errors.c                                    :+:      :+:    :+:   */
+/*   parser_errors_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,41 +12,57 @@
 
 #include <engine.h>
 
-void	util_parsing_error_lost_handler(char *problem, int id_problem,
-		char *problem_from, int id_problem_from)
+void	util_parsing_error_count_handler(char *problem_from, char **str,
+		int problems_number)
 {
-	ft_putendl("Parsing error:");
-	ft_putstr("Can't find ");
-	ft_putstr(problem);
-	ft_putstr(" ");
-	ft_putnbr(id_problem);
-	ft_putstr(" from ");
-	ft_putstr(problem_from);
-	ft_putstr(" ");
-	ft_putnbr(id_problem_from);
-	ft_putstr("!\n");
-	exit(PARSING_ERROR);
+	if (!str[problems_number])
+		util_parsing_error_little_data("data", problem_from, str);
+	if (str[problems_number + 1])
+		util_parsing_error_extra_data("data", problem_from, str);
 }
 
-void	util_parsing_error_not_enough(char *problem)
+void	util_parsing_error_extra_data(char *problem, char *problem_from,
+		char **str)
 {
 	ft_putendl("Parsing error:");
-	ft_putstr("Not enough ");
-	ft_putstr(problem);
-	ft_putstr(" in lvl file!\n");
-	exit(PARSING_ERROR);
-}
-
-void	util_parsing_error_repeats(char *problem, char *problem_from,
-		int id_problem)
-{
-	ft_putendl("Parsing error:");
-	ft_putstr("Repeating ");
+	ft_putstr("Extra ");
 	ft_putstr(problem);
 	ft_putstr(" in ");
 	ft_putstr(problem_from);
 	ft_putstr(" ");
-	ft_putnbr(id_problem);
+	ft_putstr(str[1]);
+	ft_putstr("!\n");
+	exit(PARSING_ERROR);
+}
+
+void	util_parsing_error_little_data(char *problem, char *problem_from,
+		char **str)
+{
+	ft_putendl("Parsing error:");
+	ft_putstr("Not enough ");
+	ft_putstr(problem);
+	ft_putstr(" in ");
+	ft_putstr(problem_from);
+	ft_putstr(" ");
+	ft_putstr(str[1]);
+	ft_putstr("!\n");
+	exit(PARSING_ERROR);
+}
+
+void	util_parsing_error_not_digit(char *problem)
+{
+	ft_putendl("Parsing error:");
+	ft_putstr("Not only digits in this data: ");
+	ft_putstr(problem);
+	ft_putstr("!\n");
+	exit(PARSING_ERROR);
+}
+
+void	util_parsing_error_not_hex(char *problem)
+{
+	ft_putendl("Parsing error:");
+	ft_putstr("Not hex data: ");
+	ft_putstr(problem);
 	ft_putstr("!\n");
 	exit(PARSING_ERROR);
 }

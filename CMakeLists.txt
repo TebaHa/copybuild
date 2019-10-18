@@ -32,7 +32,15 @@ set(GAME_SRC 	game/srcs/freefps.c
 
 set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/color.c
-			engine/srcs/draw.c
+			engine/srcs/intersection_funs.c
+			engine/srcs/intersection_funs_help.c
+			engine/srcs/render_cycle.c
+			engine/srcs/render_cycle2.c
+			engine/srcs/render_wall.c
+			engine/srcs/render_wall_help.c
+			engine/srcs/render_world.c
+			engine/srcs/shoot_main.c
+			engine/srcs/bresenham2.c
 			engine/srcs/engine.c
 			engine/srcs/error_handler.c
 			engine/srcs/hud_draw.c
@@ -44,27 +52,23 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/parser_filler.c
 			engine/srcs/parser_reader.c
 			engine/srcs/parser_utility.c
-			engine/srcs/parser_utility_find.c
-			engine/srcs/rasterizer.c
+		engine/srcs/parser_texture.c
 			engine/srcs/shoot.c
 			engine/srcs/texture.c
 			engine/srcs/utility.c
-			engine/srcs/parser_resources.c
-			engine/srcs/parser_weapon.c
+		engine/srcs/parser_weapon.c
 			engine/srcs/parser_enemy.c
 			engine/srcs/relative_coord.c
-			engine/srcs/parser_hud_face.c
-			engine/srcs/parser_items.c
+		engine/srcs/parser_items.c
 			engine/srcs/parser_hud.c
 			engine/srcs/sound.c
-			engine/srcs/animator.c
 			engine/srcs/sprite_render.c
 			engine/srcs/sprite_render_stack.c
 			engine/srcs/sort.c
 			engine/srcs/render_stack.c
 			engine/srcs/checksum.c
 			engine/srcs/pickup.c
-			engine/srcs/font.c)
+			engine/srcs/font.c engine/srcs/parser_player.c engine/srcs/parser_items_2.c engine/srcs/sound_2.c engine/srcs/parser_point_3d.c engine/srcs/parser_sprite.c engine/srcs/parser_object.c engine/srcs/parser_polygone.c engine/srcs/parser_sector.c engine/srcs/parser_sprobject.c engine/srcs/parser_worldbox.c engine/srcs/parser_world.c engine/srcs/parser_sector_2.c engine/srcs/parser_errors_2.c engine/srcs/parser_errors_3.c engine/srcs/parser_sprite_2.c)
 
 #set(EDITOR_SRC editor/srcs/checksum.c)
 

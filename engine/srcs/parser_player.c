@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_reader.c                                    :+:      :+:    :+:   */
+/*   parser_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,32 +12,27 @@
 
 #include <engine.h>
 
-char		**engine_read_level_file(char *filename)
+void		engine_check_plr_pos(t_world *world, t_player *plr)
 {
-	int			fd;
-	int			number;
-	char		*buff;
-	char		**splitedbuff;
+	t_point_3d	temp;
 
-	fd = open(GAME_PATH, O_RDONLY);
-	buff = (char*)malloc(sizeof(char) * 10000);
-	if (fd < 2)
-		util_parsing_error_no_lvl_file(filename);
-	number = read(fd, buff, 10000);
-	buff[number] = '\0';
-	close(fd);
-	splitedbuff = ft_strsplit(buff, '\n');
-	if (checksum_check(buff, splitedbuff, number) != CRC_OK)
-		util_parsing_error_wrong_crc();
-	free(buff);
-	return (splitedbuff);
+	temp.x = plr->position.x - 1;
+	temp.y = plr->position.y - 1;
+	while (temp.x <= plr->position.x + 1)
+	{
+		while (temp.y <= plr->position.y + 1)
+		{
+			if (engine_object_get_sector(world, temp, 0) == -1)
+				util_parsing_error_player_outside();
+			temp.y++;
+		}
+		temp.x++;
+	}
 }
 
-void		util_parsing_error_no_lvl_file(char *problem)
+void		util_parsing_error_player_outside(void)
 {
 	ft_putendl("Parsing error:");
-	ft_putstr("Can't find ");
-	ft_putstr(problem);
-	ft_putstr("!\n");
+	ft_putendl("Player outside of map!");
 	exit(PARSING_ERROR);
 }

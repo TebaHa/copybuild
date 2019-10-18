@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 19:47:38 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 20:02:11 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,15 @@ typedef enum		e_crc_state
 	CRC_OK
 }					t_crc_state;
 
+typedef struct		s_int_4
+{
+	int				x;
+	int				y;
+	int				offsets;
+	int				offseti;
+	unsigned		*pix;
+}					t_int_4;
+
 typedef struct		s_image
 {
 	int				width;
@@ -286,7 +295,7 @@ typedef struct		s_weapon
 	int 			ammo;
 	int 			max_ammo;
 	int 			containers;
-	int 			frame;
+	int 			cooldown;
 	t_wpn_state 	state;
 	t_sprite		*anmtn[W_STATES_NUM];
 	t_sprite		*bullet_hole;
@@ -415,7 +424,6 @@ typedef struct		s_stats
 	int 			skins_count;
 	int 			sprites_count;
 	int 			cycle_detector;
-	int 			parsing_debug;
 }					t_stats;
 
 typedef struct		s_txtr_pkg
@@ -812,9 +820,11 @@ void				draw_from_surface_to_surface(SDL_Surface *dest, SDL_Surface *src, int dx
 **	Checksum functions start
 */
 
-uint_least32_t		crc_calculate(char *buf, size_t len);
-int					checksum_check(char *buf, char **buff_splited, size_t len);
-void				util_parsing_error_wrong_crc(void);
+uint_least32_t	crc_calculate(char *buf, size_t len);
+int				checksum_check(char *buf, char **buff_splited, size_t len);
+int				checksum_check_line(char *buff, char *buff_splited,
+				int *crc_count, int crc_pos);
+void			util_parsing_error_wrong_crc(void);
 
 /*
 ** 	Checksum functions end
@@ -822,46 +832,46 @@ void				util_parsing_error_wrong_crc(void);
 **	Resources parsing functions start
 */
 
-void 				engine_create_resources_from_file(t_engine *eng);
+void 			engine_create_resources_from_file(t_engine *eng);
 
-void				eng_create_hud(t_engine *eng);
-void				eng_create_face(t_engine *eng);
-void				eng_create_face_100_0(t_engine *eng);
+void			eng_create_hud(t_engine *eng);
+void			eng_create_face_100_60(t_engine *eng, t_hud *hud);
+void			eng_create_face_40_0(t_engine *eng, t_hud *hud);
 
-void				eng_create_weapons(t_engine *eng);
-void 				eng_create_rifle(t_engine *eng);
-void				eng_create_plasma(t_engine *eng);
+void			eng_create_weapons(t_engine *eng);
+void 			eng_create_rifle(t_engine *eng);
+void			eng_create_plasma(t_engine *eng);
 
-void				eng_create_items(t_engine *eng);
-void				eng_create_medkit(t_engine *eng);
-void				eng_create_armor(t_engine *eng);
-void				eng_create_powerup(t_engine *eng);
-void				eng_create_rifle_ammo(t_engine *eng);
-void				eng_create_plasma_ammo(t_engine *eng);
-void				eng_create_plasma_gun(t_engine *eng);
+void			eng_create_items(t_engine *eng);
+void			eng_create_medkit(t_engine *eng);
+void			eng_create_armor(t_engine *eng);
+void			eng_create_powerup(t_engine *eng);
+void			eng_create_rifle_ammo(t_engine *eng);
+void			eng_create_plasma_ammo(t_engine *eng);
+void			eng_create_plasma_gun(t_engine *eng);
 
-void				eng_create_enemies(t_engine *eng);
-void 				eng_create_barrel(t_engine *eng);
-void 				eng_create_afrit(t_engine *eng);
-void 				eng_create_cacodemon(t_engine *eng);
-void 				eng_create_imp(t_engine *eng);
+void			eng_create_enemies(t_engine *eng);
+void 			eng_create_barrel(t_engine *eng);
+void 			eng_create_afrit(t_engine *eng);
+void 			eng_create_cacodemon(t_engine *eng);
+void 			eng_create_imp(t_engine *eng);
 
-t_sprite			*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
-					int size);
-char				*util_add_png_to_name(char *old_name);
-char				*util_add_png_num_to_name(char *old_name, int num);
-t_sprite			*util_create_sprite_by_name(t_engine *eng, char *str);
+t_sprite		*util_get_sprite_from_buff_by_name(char *name, t_txtr_pkg *buff,
+				int size);
+char			*util_add_png_to_name(char *old_name);
+char			*util_add_png_num_to_name(char *old_name, int num);
+t_sprite		*util_create_sprite_by_name(t_engine *eng, char *str);
 
-void				sound_mixer_init(void);
-Mix_Chunk			*sound_init(char *name);
-char				*util_add_wav_to_name(char *old_name);
-void				sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
-void				sound_shoot(t_player *plr);
-void				sound_free(t_engine *eng);
-void				sound_player_control(t_player *plr);
-void				eng_create_background_music(t_engine *eng);
+void			sound_mixer_init(void);
+Mix_Chunk		*sound_init(char *name);
+char			*util_add_wav_to_name(char *old_name);
+void			sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
+void			sound_shoot(t_player *plr);
+void			sound_free(t_engine *eng);
+void			sound_player_control(t_player *plr);
+void			eng_create_background_music(t_engine *eng);
 
-void				infinite_loop(void);
+void			infinite_loop(void);
 
 /*
 **	Resources parsing functions end
@@ -869,82 +879,96 @@ void				infinite_loop(void);
 **	Parsing map functions
 */
 
-void				util_release_char_matrix(char **mtrx);
-void				util_release_read_buffers(t_buff *buff);
-void				util_float10_data_filler(float *data, char *str);
-void				util_int10_data_filler(int *data, char *str);
-void				util_int16_data_filler(int *data, char *str);
-void				util_parsing_error_count_handler(char *problem_from,
-					char **str, int problems_number);
-void				util_parsing_error_cant_find(char *problem, int id_problem);
-void				util_parsing_error_lost_handler(char *problem, int id_problem,
-					char *problem_from, int id_problem_from);
-void				util_parsing_error_no_lvl_file(char *problem);
-void				util_parsing_error_extra_data(char *problem, char *problem_from,
-					char **str);
-void				util_parsing_error_little_data(char *problem, char *problem_from,
-					char **str);
-void				util_parsing_error_not_digit(char *problem);
-void				util_parsing_error_not_hex(char *problem);
-void				util_parsing_error_not_enough(char *problem);
-void				util_parsing_error_repetions(char *problem, char *problem_from,
-					int id_problem);
-void				util_parsing_error_no_cap(char *problem, t_engine *eng);
-SDL_Surface			*util_transform_texture_to_sprite(t_image *texture);
-SDL_Surface			*util_CreateRGBSurface(Uint32 flags, int width, int height,
-					int depth);
+void			engine_parser(t_engine *eng, t_player *plr, char *filename);
+void			engine_preparser(t_engine *eng, char **json_splited);
+void			engine_count_all_from_file(t_stats *stats, char **buff);
+char			**engine_read_level_file(char *filename);
 
-char				**engine_read_level_file(char *filename);
-void				engine_count_all_from_file(t_engine *eng, char **json_splited);
 
-void				engine_read_world_from_file(t_engine *eng, char **json_splited);
-void				engine_create_world_from_file(t_engine *eng, char *filename);
-void				util_create_world(t_world **world, char **str);
 
-t_point_3d			*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
-void				util_create_point_3d(t_engine *eng, t_point_3d *point, char **str);
-t_point_3d			util_get_vertex_from_buff_by_id(int id, int size,
-					t_point_3d *vertexes, int polygone_id);
 
-t_polygone			*engine_read_polygones_from_file(t_engine *eng, t_buff buff);
-void				util_create_polygone(t_engine *eng, t_polygone *polygone,
-					t_point_3d *vertex_array, char **str);
-t_polygone			util_get_polygone_from_buff_by_id(int id, int size,
-					t_polygone *polies, int object_id);
+void			util_release_char_matrix(char **mtrx);
+void			util_release_read_buffers(t_buff *buff);
+void			util_float10_data_filler(float *data, char *str);
+void			util_int10_data_filler(int *data, char *str);
+void			util_int16_data_filler(int *data, char *str);
+void			util_parsing_error_count_handler(char *problem_from,
+				char **str, int problems_number);
+void			util_parsing_error_cant_find(char *problem, int id_problem);
+void			util_parsing_error_lost_handler(char *problem, int id_problem,
+				char *problem_from, int id_problem_from);
+void			util_parsing_error_no_lvl_file(char *problem);
+void			util_parsing_error_extra_data(char *problem, char *problem_from,
+				char **str);
+void			util_parsing_error_little_data(char *problem, char *problem_from,
+				char **str);
+void			util_parsing_error_not_digit(char *problem);
+void			util_parsing_error_not_hex(char *problem);
+void			util_parsing_error_not_enough(char *problem);
+void			util_parsing_error_repeats(char *problem, char *problem_from,
+										   int id_problem);
+void			util_parsing_error_no_cap(char *problem, t_engine *eng);
+SDL_Surface		*util_transform_texture_to_sprite(t_image *texture);
+SDL_Surface		*util_create_rgb_surface(Uint32 flags, int width, int height,
+											int depth);
 
-t_object			*engine_read_objects_from_file(t_engine *eng, t_buff buff);
-void				util_create_object(t_engine *eng, t_object *object,
-					t_polygone *polygone_array, char **str);
-t_object			util_get_object_from_buff_by_id(int id, int size,
-					t_object *objects, int sector_id);
+void			engine_check_plr_pos(t_world *world, t_player *plr);
+void			util_parsing_error_player_outside(void);
 
-t_sprobject			*engine_read_sprobjects_from_file(t_engine *eng, t_buff buff);
-void				util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
-					t_sprite *sprite_array, t_point_3d *vertex_array, char **str);
-t_sprobject			util_get_sprobject_from_buff_by_id(int id, int size,
-					t_sprobject *sprobjects, int sector_id);
+void			engine_read_world_from_file(t_engine *eng, char **json_splited);
+void			engine_create_world_from_file(t_engine *eng, t_player *plr, char *filename);
+void			util_create_world(t_world **world, char **str);
 
-void				engine_read_sectors_from_file(t_engine *eng, t_buff buff);
-void				engine_read_worldbox_from_file(t_engine *eng, t_buff buff);
-void				util_create_sector(t_engine *eng, t_buff buff,
-					t_sector *sector, char **str);
-void				util_create_sector_sprobjs(t_engine *eng, t_buff buff,
-					t_sector *sector, char **str);
-void				util_find_repeats_in_sector(t_sector *sector);
+t_point_3d		*engine_read_vertexes_from_file(t_engine *eng, char **json_splited);
+void			util_create_point_3d(t_engine *eng, t_point_3d *point, char **str);
+t_point_3d		util_get_vertex_from_buff_by_id(int id, int size,
+				t_point_3d *vertexes, int polygone_id);
 
-void				util_find_texture_by_name(t_image **dst, t_engine *eng,
-					char *name);
-void				util_parsing_error_no_texture(t_image **dst, t_engine *eng,
-					char *name);
+t_polygone		*engine_read_polygones_from_file(t_engine *eng, t_buff buff);
+void			util_create_polygone(t_engine *eng, t_polygone *polygone,
+				t_point_3d *vertex_array, char **str);
+t_polygone		util_get_polygone_from_buff_by_id(int id, int size,
+				t_polygone *polies, int object_id);
 
-t_sprite			*engine_read_sprites_from_file(t_engine *eng, t_buff);
-void				util_create_sprite(t_engine *eng, t_sprite *sprite,	char **str);
-t_sprite			util_get_sprite_from_buff_by_id(int id, int size, t_sprite *sprites,
-					int sprobj_id);
-void				util_find_sprite_by_name(SDL_Surface **dst, t_engine *eng,
-					char *name);
-void				util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
-					char *name);
+t_object		*engine_read_objects_from_file(t_engine *eng, t_buff buff);
+void			util_create_object(t_engine *eng, t_object *object,
+				t_polygone *polygone_array, char **str);
+t_object		util_get_object_from_buff_by_id(int id, int size,
+				t_object *objects, int sector_id);
+
+t_sprobject		*engine_read_sprobjects_from_file(t_engine *eng, t_buff buff);
+void			util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
+				t_buff *buff, char **str);
+t_sprobject		util_get_sprobject_from_buff_by_id(int id, int size,
+				t_sprobject *sprobjects, int sector_id);
+
+void			engine_read_sectors_from_file(t_engine *eng, t_buff buff);
+void			engine_read_worldbox_from_file(t_engine *eng, t_buff buff);
+void			util_create_sector(t_engine *eng, t_buff buff,
+				t_sector *sector, char **str);
+void			util_create_sector_sprobjs(t_engine *eng, t_buff buff,
+				t_sector *sector, char **str);
+void			util_find_repeats_in_sector(t_sector *sector);
+void			util_find_sprobjects_repeats_in_sector(t_sector *sector);
+
+void			util_find_texture_by_name(t_image **dst, t_engine *eng,
+				char *name);
+void			util_parsing_error_no_texture(t_image **dst, t_engine *eng,
+				char *name);
+
+t_sprite		*engine_read_sprites_from_file(t_engine *eng, t_buff);
+void			util_create_sprite(t_engine *eng, t_sprite *sprite,	char **str);
+void			util_create_sprite_with_num(t_engine *eng, t_sprite *sprite,
+				char **str, int srfc_count);
+t_sprite		util_get_sprite_from_buff_by_id(int id, int size, t_sprite *sprites,
+				int sprobj_id);
+void			util_find_sprite_by_name(SDL_Surface **dst, t_engine *eng,
+				char *name);
+void			util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
+				char *name);
+int 			util_create_animated_sprite(t_engine *eng, char *str, t_sprite *res);
+int 			util_count_frames(t_engine *eng, char *str);
+int 			util_create_static_sprite(t_engine *eng, char *str, t_sprite *res);
 
 /*
 **	Parsing map functions end
