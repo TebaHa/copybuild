@@ -80,7 +80,6 @@ t_sprite	*util_create_sprite_by_name(t_engine *eng, char *str)
 	t_sprite *res;
 
 	res = (t_sprite *)ft_memalloc(sizeof(t_sprite));
-	res->surface = (SDL_Surface **)ft_memalloc(sizeof(SDL_Surface));
 	res->frames_delay = DEFAULT_SPRITE_DELAY;
 	if (util_create_static_sprite(eng, str, res))
 		return (res);
