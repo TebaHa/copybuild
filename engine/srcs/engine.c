@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 17:24:45 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 20:15:43 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void		eng_read_sprite(t_engine *eng,
 	eng_reader_prep_data(&data, stats, path);
 	if (data.d)
 	{
-		text_buff[0] = (t_txtr_pkg **)
+		*text_buff = (t_txtr_pkg **)
 		ft_memalloc(sizeof(t_txtr_pkg *) * (data.count));
-		if (text_buff[0] == NULL)
+		if (*text_buff == NULL)
 			error_handler("malloc error: ", "allocation", eng);
 		while (data.i < data.count)
 		{
@@ -76,13 +76,13 @@ void		eng_reader_put_data(t_engine *eng, t_read_data *data,
 	path = (char *)mass[0];
 	stats = (int *)mass[1];
 	data->buffer_name = ft_strjoin(path, data->dir->d_name);
-	(text_buff)[0][data->real_i] =
+	(*text_buff)[data->real_i] =
 	(t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
-	(text_buff)[0][data->real_i]->filename = ft_strdup(data->dir->d_name);
+	(*text_buff)[data->real_i]->filename = ft_strdup(data->dir->d_name);
 	(*stats)++;
-	if ((text_buff)[0][data->real_i] == NULL)
+	if ((*text_buff)[data->real_i] == NULL)
 		error_handler("malloc error: ", "allocation", eng);
-	image_load(&(text_buff)[0][data->real_i]->texture, data->buffer_name);
+	image_load(&(*text_buff)[data->real_i]->texture, data->buffer_name);
 	free(data->buffer_name);
 	data->real_i++;
 	data->i++;

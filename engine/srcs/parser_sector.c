@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_sector.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/11 18:57:28 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/18 20:26:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void		util_create_sector_sprobjs(t_engine *eng, t_buff buff,
 	int			sprobj_count;
 	int			str_count;
 
-	sector->dist = (double *)ft_memalloc(sizeof(double)
+	sector->dist = (float *)ft_memalloc(sizeof(float)
 		* sector->objects_count);
 	sector->order = (int *)ft_memalloc(sizeof(int) * sector->objects_count);
 	sector->sprobjects_array = (t_sprobject *)ft_memalloc(sizeof(t_sprobject)

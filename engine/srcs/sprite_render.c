@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 19:54:54 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 20:36:02 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_playe
 {
 	int				i;
 	int				j;
-	double			planeX;
-	double			planey;
+	float			planeX;
+	float			planey;
 
 	i = 0;
 	while (i < sect->sprobjects_count)
@@ -48,16 +48,16 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_playe
 			i++;
 			continue;
 		}
-		double dirx, diry;
-		double stry, endy;
-		double scaledx, scaledy;
-		double spritex, spritey;
+		float dirx, diry;
+		float stry, endy;
+		float scaledx, scaledy;
+		float spritex, spritey;
 		spritex = sect->sprobjects_array[sect->order[i]].position.x - plr->position.x;
 		spritey = sect->sprobjects_array[sect->order[i]].position.y - plr->position.y;
 		dirx = spritex * plr->sinangle - spritey * plr->cosangle;
 		diry = spritex * plr->cosangle + spritey * plr->sinangle;
-		stry = dirx + (double)sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w * 0.25;
-		endy = dirx - (double)sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w * 0.25;
+		stry = dirx + (float)sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w * 0.25;
+		endy = dirx - (float)sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w * 0.25;
 		if (diry <= 0)
 		{
 			i++;
@@ -65,15 +65,15 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_playe
 		}
 		scaledx = WIDTH * hfov / diry;
 		scaledy = HEIGHT * vfov / diry;
-		double x1 = WIDTH / 2 - (int)((stry) * scaledx);
-		double x2 = WIDTH / 2 - (int)((endy) * scaledx);
+		float x1 = WIDTH / 2 - (int)((stry) * scaledx);
+		float x2 = WIDTH / 2 - (int)((endy) * scaledx);
 		if (x1 > restr->sect_id.sx2 || x2 < restr->sect_id.sx1)
 		{
 			i++;
 			continue ;
 		}
-		double ceil = sect->floor + sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->h * 1.5 - plr->position.z;
-		double floor = sect->floor - plr->position.z;
+		float ceil = sect->floor + sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->h * 1.5 - plr->position.z;
+		float floor = sect->floor - plr->position.z;
 		int ya = HEIGHT / 2 - (int)((ceil + diry * plr->yaw) * scaledy);
 		int yb = HEIGHT / 2 - (int)((floor + diry * plr->yaw) * scaledy);
 		int begx = max(x1, restr->sect_id.sx1);
@@ -83,10 +83,12 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf, t_playe
 		{
 			int cya = clamp(ya, restr->ytop[x], restr->ybottom[x]);
 			int cyb = clamp(yb, restr->ytop[x], restr->ybottom[x]);
-			int txtx = (int)((double)(x - x1) /
-						(double)(x2 - x1) * sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w);
-			engine_vline_textured_surface(surf, (t_scaler)scaler_init((float [5]){ya, cya, yb, 0, sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->h - 1})
-			,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]);
+			int txtx = (int)((float)(x - x1) /
+						(float)(x2 - x1) * sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->w);
+			engine_vline_textured_surface(surf, (t_scaler)scaler_init((float [5]){ya, cya, yb, 0,
+			sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]->h - 1})
+			,(t_vline1_in){(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx},
+			sect->sprobjects_array[sect->order[i]].type->anmtn[0]->surface[0]);
 			x++;
 		}
 		i++;

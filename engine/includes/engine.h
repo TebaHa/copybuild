@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 20:02:11 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 20:33:32 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -687,6 +687,27 @@ typedef struct		s_sh_part
 	float			half_w;
 }					t_sh_part;
 
+typedef struct		s_vline1
+{
+	int				y1;
+	int				y2;
+	int				y;
+	unsigned		txty;
+	unsigned		offset;
+	int8_t			red;
+	int8_t			green;
+	int8_t			blue;
+	int				color;
+	int				*pixd;
+	uint8_t			*pixs;
+}					t_vline1;
+
+typedef struct		s_vline1_in
+{
+	t_fix_point_3d	a;
+	t_fix_point_3d	b;
+	int				txtx;
+}					t_vline1_in;
 
 void				engine_sdl_init(t_engine **eng);
 void				engine_sdl_uninit(t_engine *eng);
@@ -778,8 +799,10 @@ void				engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *part
 void				get_relative_xy(t_engine *eng, t_fix_point_2d *p);
 void				animator_render_sprite_object(t_engine *eng, SDL_Surface *surf, t_player plr, t_sprobject *spr_obj, t_item sect, int *zbuff);
 t_sprobject			*create_test_sprobj(t_engine *eng);
-void				engine_vline_textured_sprite(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_sprite *texture);
-void				engine_vline_textured_surface(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, SDL_Surface *texture);
+void				engine_vline_textured_sprite(SDL_Surface *surf, t_scaler ty,
+					t_vline1_in din, t_sprite *texture);
+void				engine_vline_textured_surface(SDL_Surface *surf, t_scaler ty,
+					t_vline1_in din, SDL_Surface *texture);
 void				switch_weapon(t_engine *eng, t_player *plr, int weapon_num);
 int					sound_play_thread_wrapper(void *ptr);
 void				engine_render_wall_count_initial_point(t_polygone *polygone, t_player *plr,
@@ -799,7 +822,8 @@ void				image_create(t_image *img, int width, int height, int channels);
 void				image_free(t_image *img);
 t_image				load_textures(const char *fname);
 int					scaler_next(t_scaler *i);
-void				engine_vline_textured(SDL_Surface *surf, t_scaler ty, t_fix_point_3d a, t_fix_point_3d b, int txtx, t_image *texture);
+void				engine_vline_textured(SDL_Surface *surf, t_scaler ty,
+					t_vline1_in din, t_image *texture);
 void				move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect);
 t_costil			relative_map_coordinate_to_absolute(t_player *plr, float map_y, float screen_x, float screen_y);
 t_costil			ceiling_floor_screen_coordinates_to_map_coordinates(t_player *plr, float tz, float tx);

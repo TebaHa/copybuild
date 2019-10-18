@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 20:56:03 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 17:40:15 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 20:17:20 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ float		vxs(float x0, float y0, float x1, float y1)
 /*
 ** Overlap:  Determine whether the two number ranges overlap.
 */
+
 short		overlap(float a0, float a1, float b0, float b1)
 {
 	return (min(a0, a1) <= max(b0, b1)

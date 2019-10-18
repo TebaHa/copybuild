@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/15 20:09:13 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/18 20:35:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,8 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *partic
 		int cya = clamp(ya, eng->world->sectors_array[sect.sectorno].item_sprts.ytop[x], eng->world->sectors_array[sect.sectorno].item_sprts.ybottom[x]);
 		int cyb = clamp(yb, eng->world->sectors_array[sect.sectorno].item_sprts.ytop[x], eng->world->sectors_array[sect.sectorno].item_sprts.ybottom[x]);
 		int txtx = (u0 * ((x2 - x) * t2.y) + u1 * ((x - x1) * t1.y)) / ((x2 - x) * t2.y + (x - x1) * t1.y);
-		engine_vline_textured_surface(surf, (t_scaler)scaler_init((float [5]){ya, cya, yb, 0, particle->texture->surface[particle->frame_num]->w - 1}) ,(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx, particle->texture->surface[particle->frame_num]);
+		engine_vline_textured_surface(surf, (t_scaler)scaler_init((float [5]){ya, cya, yb, 0, particle->texture->surface[particle->frame_num]->w - 1}),
+		(t_vline1_in){(t_fix_point_3d){x, cya + 1, 0}, (t_fix_point_3d){x, cyb, 0}, txtx}, particle->texture->surface[particle->frame_num]);
 	}
 	if (particle->texture->a_state == ANIMATE)
 	{
