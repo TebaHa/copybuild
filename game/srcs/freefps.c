@@ -6,19 +6,17 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 19:24:50 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 20:09:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-void		game_create_test_player(t_player *plr)
+void		game_init_player(t_player *plr)
 {
-	plr->position = (t_point_3d){0, -200.0f, 0.f, 200.0f};
 	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
 	plr->cursector = 1;
 	plr->angle = 0;
-	plr->real_position = (t_point_3d){0, -200.0f, 0.f, 200.0f};
 	plr->sinangle = sinf(plr->angle);
 	plr->cosangle = cosf(plr->angle);
 	plr->controller.ducking = 1;
@@ -41,8 +39,11 @@ void		game_create_test_player(t_player *plr)
 void		game_init(t_game *fps)
 {
 	engine_sdl_init(&fps->eng);
-	game_create_test_player(&fps->player);
+	game_init_player(&fps->player);
 	engine_parser(fps->eng, &fps->player, GAME_PATH);
+	fps->player.cursector = engine_object_get_sector(fps->eng->world,
+	(t_point_3d){0.f, fps->player.position.x,
+	fps->player.position.y, 0.f}, fps->player.cursector);
 	game_init_threads(fps->render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
 	fps->logic.duck_shift = 0;

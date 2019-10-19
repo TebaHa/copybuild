@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 19:27:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 20:12:24 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef	struct		s_game
 	t_game_logic	logic;
 }					t_game;
 
-void			game_create_test_player(t_player *plr);
+void			game_init_player(t_player *plr);
 int				game_thread_wrapper(void *ptr);
 void			game_init_threads(t_thread_pool *render_thread_pool);
 void			game_stop_threads(t_thread_pool	*render_thread,
