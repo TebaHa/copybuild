@@ -11,17 +11,17 @@
 /* ************************************************************************** */
 
 #ifndef EDITOR_H
+# define EDITOR_H
 # include <libft.h>
 # include <unistd.h>
 # include <math.h>
 # include <engine.h>
-# define EDITOR_H
 # define EDITOR_ERROR 80
 
-int			check_and_add_crc(char *filename);
-int			add_checksum(int fd, char *buf, size_t len);
-void		message_nice_crc(char *filename, char *result);
-void		message_error_crc(char *filename, char *problem);
-void		analyse_crc(int fd, int number, char *buff, char *filename);
+int			crc_check_and_add(char *filename);
+int			crc_add(int fd, char *buf, size_t len);
+void		crc_message_ok(char *filename, char *result);
+void		crc_message_error(char *filename, char *problem);
+void		crc_analyse(int fd, int number, char *buff, char *filename);
 
 #endif

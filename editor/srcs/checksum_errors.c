@@ -12,14 +12,14 @@
 
 #include <editor.h>
 
-void		message_nice_crc(char *filename, char *result)
+void		crc_message_ok(char *filename, char *result)
 {
 	ft_putstr(filename);
 	ft_putstr(" OK: ");
 	ft_putendl(result);
 }
 
-void		message_error_crc(char *filename, char *problem)
+void		crc_message_error(char *filename, char *problem)
 {
 	ft_putstr(filename);
 	ft_putstr(" KO: ");

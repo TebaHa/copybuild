@@ -21,12 +21,12 @@ int			main(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		check_and_add_crc(argv[i]);
+		crc_check_and_add(argv[i]);
 		i++;
 	}
 }
 
-int			check_and_add_crc(char *filename)
+int			crc_check_and_add(char *filename)
 {
 	int		fd;
 	int		number;
@@ -35,7 +35,7 @@ int			check_and_add_crc(char *filename)
 
 	if ((fd = open(filename, O_RDWR)) < 0)
 	{
-		message_error_crc(filename, "can't read file!");
+		crc_message_error(filename, "can't read file!");
 		return (0);
 	}
 	buff = (char*)malloc(sizeof(char) * 10000);
@@ -43,13 +43,13 @@ int			check_and_add_crc(char *filename)
 		exit(EDITOR_ERROR);
 	number = read(fd, buff, 10000);
 	buff[number] = '\0';
-	analyse_crc(fd, number, buff, filename);
+	crc_analyse(fd, number, buff, filename);
 	close(fd);
 	free(buff);
 	return (0);
 }
 
-void		analyse_crc(int fd, int number, char *buff, char *filename)
+void		crc_analyse(int fd, int number, char *buff, char *filename)
 {
 	int		crc;
 	char	**splitedbuff;
@@ -57,26 +57,26 @@ void		analyse_crc(int fd, int number, char *buff, char *filename)
 	splitedbuff = ft_strsplit(buff, '\n');
 	crc = checksum_check(buff, splitedbuff, number);
 	if (crc == CRC_OK)
-		message_nice_crc(filename, "have proper checksum!");
+		crc_message_ok(filename, "have proper checksum!");
 	else if (crc == CRC_INCORRECT)
-		message_error_crc(filename, "have incorrect checksum!");
+		crc_message_error(filename, "have incorrect checksum!");
 	else if (crc == CRC_MULTIPLE)
-		message_error_crc(filename, "have multiple checksum!");
+		crc_message_error(filename, "have multiple checksum!");
 	else if (crc == CRC_NOT_IN_END)
-		message_error_crc(filename, "checksum not in the end of file!");
+		crc_message_error(filename, "checksum not in the end of file!");
 	else if (crc == CRC_ZERO)
-		message_error_crc(filename, "checksum with empty line!");
+		crc_message_error(filename, "checksum with empty line!");
 	else if (crc == CRC_MISSING)
 	{
-		if (!add_checksum(fd, buff, number))
-			message_error_crc(filename, "can't write to file!");
+		if (!crc_add(fd, buff, number))
+			crc_message_error(filename, "can't write to file!");
 		else
-			message_nice_crc(filename, "crc added!");
+			crc_message_ok(filename, "crc added!");
 	}
 	util_release_char_matrix(splitedbuff);
 }
 
-int			add_checksum(int fd, char *buf, size_t len)
+int			crc_add(int fd, char *buf, size_t len)
 {
 	char	*crc;
 
