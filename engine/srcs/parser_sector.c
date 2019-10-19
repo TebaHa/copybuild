@@ -41,17 +41,18 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 	util_int10_data_filler(&sector->ceil, str[3]);
 	util_find_texture_by_name(&sector->floor_texture, eng, str[4]);
 	util_find_texture_by_name(&sector->ceil_texture, eng, str[5]);
-	util_int10_data_filler(&sector->objects_count, str[6]);
+	util_read_color(&sector->color, str[6]);
+	util_int10_data_filler(&sector->objects_count, str[7]);
 	if (sector->objects_count < 3)
 		util_parsing_error_little_data("objects", "sector", str);
-	util_int10_data_filler(&sector->sprobjects_count, str[7]);
-	util_parsing_error_count_handler("sector", str, 7 + sector->objects_count
+	util_int10_data_filler(&sector->sprobjects_count, str[8]);
+	util_parsing_error_count_handler("sector", str, 8 + sector->objects_count
 		+ sector->sprobjects_count);
 	sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object)
 		* sector->objects_count);
-	str_count = 8;
+	str_count = 9;
 	obj_count = 0;
-	while (str_count < 8 + sector->objects_count)
+	while (str_count < 9 + sector->objects_count)
 		sector->objects_array[obj_count++] =
 		util_get_object_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.objects_count, buff.objects, sector->id);
@@ -71,9 +72,9 @@ void		util_create_sector_sprobjs(t_engine *eng, t_buff buff,
 	sector->order = (int *)ft_memalloc(sizeof(int) * sector->objects_count);
 	sector->sprobjects_array = (t_sprobject *)ft_memalloc(sizeof(t_sprobject)
 		* sector->sprobjects_count);
-	str_count = 8 + sector->objects_count;
+	str_count = 9 + sector->objects_count;
 	sprobj_count = 0;
-	while (str_count < 8 + sector->objects_count + sector->sprobjects_count)
+	while (str_count < 9 + sector->objects_count + sector->sprobjects_count)
 		sector->sprobjects_array[sprobj_count++] =
 		util_get_sprobject_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.sprobjects_count, buff.sprobjects, sector->id);

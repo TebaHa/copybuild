@@ -224,6 +224,15 @@ typedef struct		s_item_sprts
 	int				ybottom[WIDTH];
 }					t_item_sprts;
 
+typedef	struct		s_color
+{
+	int 			argb;
+	int 			alpha;
+	int				red;
+	int				green;
+	int				blue;
+}					t_color;
+
 typedef	struct		s_fix_point_3d
 {
 	int				x;
@@ -361,6 +370,7 @@ typedef	struct		s_sector
 	int				id;
 	int				floor;
 	int				ceil;
+	t_color			color;
 	t_image			*ceil_texture;
 	t_image			*floor_texture;
 	t_item_sprts	item_sprts;
@@ -1001,6 +1011,7 @@ int 			util_create_animated_sprite(t_engine *eng, char *str, t_sprite *res);
 int 			util_count_frames(t_engine *eng, char *str);
 int 			util_create_static_sprite(t_engine *eng, char *str, t_sprite *res);
 
+void			util_read_color(t_color *color, char *str);
 /*
 **	Parsing map functions end
 **	---------------------------------------------------------------------------

@@ -89,6 +89,7 @@ int		main(void)
 	engine_parser(fps.eng, &fps.player, GAME_PATH);
 	game_init_threads(fps.render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 	fps.eng->x = 0;
 	fps.eng->y = 0;
 	float yaw = 0;
