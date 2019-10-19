@@ -74,6 +74,7 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					sound_2.c \
 					parser_sector.c \
 					parser_player.c \
+					parser_player_2.c \
 					parser_worldbox.c \
 					parser_world.c \
 					parser_sprobject.c \

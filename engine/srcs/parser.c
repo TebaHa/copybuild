@@ -47,7 +47,7 @@ void		engine_create_world_from_file(t_engine *eng, t_player *plr,
 	buff.sprobjects = engine_read_sprobjects_from_file(eng, buff);
 	engine_read_sectors_from_file(eng, buff);
 	engine_read_worldbox_from_file(eng, buff);
-	engine_check_plr_pos(eng->world, plr);
+	engine_read_plr_pos(eng, plr, buff);
 	util_release_read_buffers(&buff);
 }
 
@@ -60,6 +60,7 @@ void		engine_preparser(t_engine *eng, char **buff)
 	eng->stats.sectors_count = 0;
 	eng->stats.skins_count = 0;
 	eng->stats.worlds_count = 0;
+	eng->stats.players_count = 0;
 	engine_count_all_from_file(&eng->stats, buff);
 	if (!eng->stats.worlds_count)
 		util_parsing_error_not_enough("worlds");
@@ -94,6 +95,8 @@ void		engine_count_all_from_file(t_stats *stats, char **buff)
 			stats->sprobjects_count++;
 		else if (ft_strwcmp(buff[i], "world:") == 0)
 			stats->worlds_count++;
+		else if (ft_strwcmp(buff[i], "player:") == 0)
+			stats->players_count++;
 		i++;
 	}
 }

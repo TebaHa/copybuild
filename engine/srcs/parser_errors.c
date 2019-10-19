@@ -37,6 +37,15 @@ void	util_parsing_error_not_enough(char *problem)
 	exit(PARSING_ERROR);
 }
 
+void	util_parsing_error_lot_of(char *problem)
+{
+	ft_putendl("Parsing error:");
+	ft_putstr("Lot of ");
+	ft_putstr(problem);
+	ft_putstr(" in lvl file!\n");
+	exit(PARSING_ERROR);
+}
+
 void	util_parsing_error_repeats(char *problem, char *problem_from,
 		int id_problem)
 {

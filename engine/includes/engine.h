@@ -424,6 +424,7 @@ typedef struct		s_stats
 	int 			textures_count;
 	int 			skins_count;
 	int 			sprites_count;
+	int 			players_count;
 	int 			cycle_detector;
 }					t_stats;
 
@@ -930,6 +931,7 @@ void			util_parsing_error_little_data(char *problem, char *problem_from,
 void			util_parsing_error_not_digit(char *problem);
 void			util_parsing_error_not_hex(char *problem);
 void			util_parsing_error_not_enough(char *problem);
+void			util_parsing_error_lot_of(char *problem);
 void			util_parsing_error_repeats(char *problem, char *problem_from,
 										   int id_problem);
 void			util_parsing_error_no_cap(char *problem, t_engine *eng);
@@ -937,6 +939,9 @@ SDL_Surface		*util_transform_texture_to_sprite(t_image *texture);
 SDL_Surface		*util_create_rgb_surface(Uint32 flags, int width, int height,
 											int depth);
 
+void			engine_read_plr_pos(t_engine *engine, t_player *plr, t_buff buff);
+void			engine_read_plr_pos_from_file(t_engine *eng, t_player *plr, t_buff buff);
+void 			util_create_player(t_engine *eng, t_player *plr, t_buff buff, char **str);
 void			engine_check_plr_pos(t_world *world, t_player *plr);
 void			engine_check_plr_vertical_pos(t_world *world, t_player *plr);
 void			util_parsing_error_player_outside(char *position);

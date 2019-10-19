@@ -3,7 +3,13 @@
 world:	1	5				0 1 2 3 4
 
 #Vertexes
+#		vertex
+player: 99
+
+#Vertexes
 #		id	X,		Y,		Z
+vertex: 99	-300	50		200
+
 vertex: 41	-500	-200	100
 vertex: 40	300		50		300
 vertex: 39	-130	-50		300
