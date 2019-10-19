@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 20:33:32 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 19:21:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -838,7 +838,7 @@ t_image				load_textures(const char *fname);
 int					scaler_next(t_scaler *i);
 void				engine_vline_textured(SDL_Surface *surf, t_scaler ty,
 					t_vline1_in din, t_image *texture);
-void				move_player(t_engine *eng, t_player *plr, float dx, float dy, unsigned sect);
+void				move_player(t_engine *eng, t_player *plr, t_point_2d dd, unsigned sect);
 t_costil			relative_map_coordinate_to_absolute(t_player *plr, float map_y, float screen_x, float screen_y);
 t_costil			ceiling_floor_screen_coordinates_to_map_coordinates(t_player *plr, float tz, float tx);
 void				change_floor(t_engine *eng, int sect, int change);

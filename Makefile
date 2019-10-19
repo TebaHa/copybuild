@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/18 20:00:51 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/19 19:17:54 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,12 @@ LIBFT_DIRECTORY_HEADERS = $(LIBFT_DIRECTORY)includes
 
 GAME_SRCS_LIST =	freefps.c \
 					weapon_fire.c \
+					gravitation.c \
+					game_controller_down.c \
+					game_controller_up.c \
+					game_movement.c \
+					multi_threading.c \
+					game_movement_funs.c \
 
 SDL = $(SDL_DIRECTORY)libmlx.a
 SDL_DIRECTORY = ./lib/sdl2/
