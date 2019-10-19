@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:30:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 19:20:34 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 22:51:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	game_buttons_control_down3(t_game *fps)
 			{
 				fps->player.position.z += fps->eng->world->sectors_array
 				[fps->player.cursector].ceil - fps->player.position.z
-				- HeadMargin;
+				- HEAD_MARGIN;
 			}
 			else
 				fps->player.position.z += 150;

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 21:37:00 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 21:48:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 22:57:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void		engine_render_sprites_in_sector_1(t_sector *sect, SDL_Surface *surf,
 void		engine_render_sprites_in_sector_2(t_sector *sect, SDL_Surface *surf,
 			t_player *plr, t_sprt_r *d)
 {
-	d->scaledx = WIDTH * hfov / d->diry;
-	d->scaledy = HEIGHT * vfov / d->diry;
+	d->scaledx = WIDTH * HFOV / d->diry;
+	d->scaledy = HEIGHT * VFOV / d->diry;
 	d->x1 = WIDTH / 2 - (int)((d->stry) * d->scaledx);
 	d->x2 = WIDTH / 2 - (int)((d->endy) * d->scaledx);
 }

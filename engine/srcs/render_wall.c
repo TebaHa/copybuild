@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:19:23 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 19:26:14 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 22:57:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void			*engine_render_wall_count_values(t_engine *eng,
 		t_wall_help3 *data_help, t_wall_help2 *data, t_wall_mai_data *mdata)
 {
-	mdata->xscale1 = (WIDTH * hfov) / data_help->t1.y;
-	mdata->yscale1 = (HEIGHT * vfov) / data_help->t1.y;
+	mdata->xscale1 = (WIDTH * HFOV) / data_help->t1.y;
+	mdata->yscale1 = (HEIGHT * VFOV) / data_help->t1.y;
 	mdata->x1 = WIDTH / 2 + (-data_help->t1.x * mdata->xscale1);
-	mdata->xscale2 = (WIDTH * hfov) / data_help->t2.y;
-	mdata->yscale2 = (HEIGHT * vfov) / data_help->t2.y;
+	mdata->xscale2 = (WIDTH * HFOV) / data_help->t2.y;
+	mdata->yscale2 = (HEIGHT * VFOV) / data_help->t2.y;
 	mdata->x2 = WIDTH / 2 + (-data_help->t2.x * mdata->xscale2);
 	if (mdata->x1 >= mdata->x2 || mdata->x2 <
 	data->sect.sx1 || mdata->x1 > data->sect.sx2)

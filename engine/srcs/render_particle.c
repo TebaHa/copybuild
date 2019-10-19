@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 20:52:01 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 21:14:13 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 22:57:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void		engine_render_particle_1(t_engine *eng, SDL_Surface *surf,
 void		engine_render_particle_5(t_engine *eng, SDL_Surface *surf,
 			t_wallobj *particle, t_ptcl_r *data)
 {
-	data->xscale1 = (WIDTH * hfov) / data->t1.y;
-	data->yscale1 = (HEIGHT * vfov) / data->t1.y;
+	data->xscale1 = (WIDTH * HFOV) / data->t1.y;
+	data->yscale1 = (HEIGHT * VFOV) / data->t1.y;
 	data->x1 = WIDTH / 2 + (-data->t1.x * data->xscale1);
-	data->xscale2 = (WIDTH * hfov) / data->t2.y;
-	data->yscale2 = (HEIGHT * vfov) / data->t2.y;
+	data->xscale2 = (WIDTH * HFOV) / data->t2.y;
+	data->yscale2 = (HEIGHT * VFOV) / data->t2.y;
 	data->x2 = WIDTH / 2 + (-data->t2.x * data->xscale2);
 }

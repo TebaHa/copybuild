@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 20:12:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 22:53:07 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 # define TOP_ARROW 126
 # define TWO_DIM_KEY 19
 # define THREE_DIM_KEY 20
-# define HeadMargin 25
-# define EyeHeight  6 // Camera height from floor when standing
-# define DuckHeight 2.5 // And when crouching
-# define KneeHeight 10
+# define HEAD_MARGIN 25
+# define EYE_HEIGHT 6
+# define DUCK_HEIGHT 2.5
+# define KNEE_HEIGHT 10
 # include <engine.h>
+
 typedef struct		s_game_logic
 {
 	int				dz;
@@ -52,29 +53,29 @@ typedef	struct		s_game
 	t_game_logic	logic;
 }					t_game;
 
-void			game_init_player(t_player *plr);
-int				game_thread_wrapper(void *ptr);
-void			game_init_threads(t_thread_pool *render_thread_pool);
-void			game_stop_threads(t_thread_pool	*render_thread,
-				int thread_count);
-void			game_threads_recount(t_game *fps);
+void				game_init_player(t_player *plr);
 
-void			fire(t_engine *eng, t_player *plr, int state);
-void			fire_anim_change(t_engine *eng, t_player *plr);
-void			game_init(t_game *fps);
+int					game_thread_wrapper(void *ptr);
+void				game_init_threads(t_thread_pool *render_thread_pool);
+void				game_stop_threads(t_thread_pool	*render_thread,
+					int thread_count);
+void				game_threads_recount(t_game *fps);
 
+void				fire(t_engine *eng, t_player *plr, int state);
+void				fire_anim_change(t_engine *eng, t_player *plr);
+void				game_init(t_game *fps);
 
-void			game_movement_check(t_game *fps);
-void			game_apply_movement_main(t_game *fps);
-void			game_apply_movement_main_count1(t_game *fps);
-void			game_apply_movement_main_count2(t_game *fps);
+void				game_movement_check(t_game *fps);
+void				game_apply_movement_main(t_game *fps);
+void				game_apply_movement_main_count1(t_game *fps);
+void				game_apply_movement_main_count2(t_game *fps);
 
-void			game_buttons_control_up_main(t_game *fps);
-int				game_buttons_control_down_main(t_game *fps);
-void			game_buttons_control_down1(t_game *fps);
-void			game_buttons_control_down2(t_game *fps);
-void			game_buttons_control_down3(t_game *fps);
+void				game_buttons_control_up_main(t_game *fps);
+int					game_buttons_control_down_main(t_game *fps);
+void				game_buttons_control_down1(t_game *fps);
+void				game_buttons_control_down2(t_game *fps);
+void				game_buttons_control_down3(t_game *fps);
 
-void			apply_gravitation(t_game *fps);
+void				apply_gravitation(t_game *fps);
 
 #endif

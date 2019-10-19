@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 19:29:13 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 22:52:04 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	game_movement_check(t_game *fps)
 		fps->logic.dy, 0.f}, fps->player.cursector)) >= 0)
 		{
 			if (fps->eng->world->sectors_array[fps->logic.sect].floor
-			- fps->logic.duck_shift <= fps->player.position.z + KneeHeight - 50)
+			- fps->logic.duck_shift <= fps->player.position.z + KNEE_HEIGHT - 50)
 				move_player(fps->eng, &fps->player, (t_point_2d){fps->logic.dx,
 				fps->logic.dy}, fps->logic.sect);
 		}

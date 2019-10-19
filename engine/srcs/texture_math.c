@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 20:22:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 20:24:03 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 22:57:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ t_costil	relative_map_coordinate_to_absolute(t_player *plr,
 	float z;
 	float x;
 
-	z = (map_y * HEIGHT * vfov) / ((HEIGHT / 2 - screen_y)
-	- (plr->yaw * HEIGHT * vfov));
-	x = z * (WIDTH / 2 - screen_x) / (WIDTH * hfov);
+	z = (map_y * HEIGHT * VFOV) / ((HEIGHT / 2 - screen_y)
+	- (plr->yaw * HEIGHT * VFOV));
+	x = z * (WIDTH / 2 - screen_x) / (WIDTH * HFOV);
 	return (ceiling_floor_screen_coordinates_to_map_coordinates(plr,
 	z, x));
 }
