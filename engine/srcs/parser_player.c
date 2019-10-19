@@ -22,17 +22,29 @@ void		engine_check_plr_pos(t_world *world, t_player *plr)
 	{
 		while (temp.y <= plr->position.y + 1)
 		{
-			if (engine_object_get_sector(world, temp, 0) == -1)
-				util_parsing_error_player_outside();
+			if ((plr->start_sector = engine_object_get_sector(world, temp, 0))
+			== -1)
+				util_parsing_error_player_outside("outside of");
 			temp.y++;
 		}
 		temp.x++;
 	}
+	engine_check_plr_vertical_pos(world, plr);
 }
 
-void		util_parsing_error_player_outside(void)
+void		engine_check_plr_vertical_pos(t_world *world, t_player *plr)
+{
+	if (world->sectors_array[plr->start_sector].floor > plr->position.z)
+		util_parsing_error_player_outside("under");
+	if (world->sectors_array[plr->start_sector].ceil < plr->position.z)
+		util_parsing_error_player_outside("above");
+}
+
+void		util_parsing_error_player_outside(char *position)
 {
 	ft_putendl("Parsing error:");
-	ft_putendl("Player outside of map!");
+	ft_putstr("Player ");
+	ft_putstr(position);
+	ft_putendl(" map!");
 	exit(PARSING_ERROR);
 }

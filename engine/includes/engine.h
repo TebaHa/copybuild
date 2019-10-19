@@ -410,6 +410,7 @@ typedef	struct		s_player
 	t_player_state	plr_state;
 	int				health;
 	int				armor;
+	int 			start_sector;
 }					t_player;
 
 typedef struct		s_stats
@@ -937,7 +938,8 @@ SDL_Surface		*util_create_rgb_surface(Uint32 flags, int width, int height,
 											int depth);
 
 void			engine_check_plr_pos(t_world *world, t_player *plr);
-void			util_parsing_error_player_outside(void);
+void			engine_check_plr_vertical_pos(t_world *world, t_player *plr);
+void			util_parsing_error_player_outside(char *position);
 
 void			engine_read_world_from_file(t_engine *eng, char **json_splited);
 void			engine_create_world_from_file(t_engine *eng, t_player *plr, char *filename);
