@@ -22,7 +22,11 @@ void		engine_read_world_from_file(t_engine *eng, char **line)
 	{
 		splitted_line = ft_strsplitwhitespaces(line[i]);
 		if (ft_strcmp(splitted_line[0], "world:") == 0)
+		{
 			util_create_world(&eng->world, splitted_line);
+			if (eng->world->sectors_count != eng->stats.sectors_count)
+				util_parsing_error_not_enough("sectors");
+		}
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
