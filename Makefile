@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/19 19:17:54 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/19 21:41:33 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,6 +103,7 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					sound.c \
 					sort.c \
 					sprite_render.c \
+					sprite_render_2.c \
 					render_stack.c \
 					sprite_render_stack.c \
 					pickup.c \
@@ -117,6 +118,10 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					normal.c \
 					shoot_main.c \
 					shoot_help.c \
+					render_main.c \
+					texture_math.c \
+					render_particle.c \
+					render_particle_2.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/

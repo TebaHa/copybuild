@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 19:21:57 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 21:41:06 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -723,6 +723,85 @@ typedef struct		s_vline1_in
 	int				txtx;
 }					t_vline1_in;
 
+typedef struct		s_ptcl_h
+{
+	t_object		*obj;
+	t_player		*plr;
+	t_item			sect;
+}					t_ptcl_h;
+
+typedef struct		s_ptcl_r
+{
+	t_point_2d		t1;
+	t_point_2d		t2;
+	t_point_2d		c1;
+	t_point_2d		c2;
+	int				u0;
+	int				u1;
+	int				x1;
+	int				x2;
+	int				y1a;
+	int				y2a;
+	int				y1b;
+	int				y2b;
+	int				beginx;
+	int				endx;
+	float			nearz;
+	float			farz;
+	float			nearside;
+	float			farside;
+	float			xscale1;
+	float			yscale1;
+	float			xscale2;
+	float			yscale2;
+	float			yceil;
+	float			yfloor;
+	t_scaler		ya_int;
+	t_scaler		yb_int;
+	t_object		*obj;
+	t_player		*plr;
+	t_item			sect;
+	t_point_2d		i1;
+	t_point_2d		i2;
+	t_point_2d		org1;
+	t_point_2d		org2;
+	int				x;
+	int				ya;
+	int				yb;
+	int				cya;
+	int				cyb;
+	int				txtx;
+}					t_ptcl_r;
+
+typedef struct		s_sprt_r
+{
+	int				i;
+	int				j;
+	float			planeX;
+	float			planey;
+	float			dirx;
+	float			diry;
+	float			scaledx;
+	float			scaledy;
+	float			spritex;
+	float			spritey;
+	float			stry;
+	float			endy;
+	float			x1;
+	float			x2;
+	float			ceil;
+	float			floor;
+	int				ya;
+	int				yb;
+	int				begx;
+	int				endx;
+	int				x;
+	int				cya;
+	int				cyb;
+	int				txtx;
+}					t_sprt_r;
+
+
 void				engine_sdl_init(t_engine **eng);
 void				engine_sdl_uninit(t_engine *eng);
 void				engine_draw_line(t_engine *eng, t_point_2d a, t_point_2d b, int color);
@@ -789,12 +868,6 @@ t_point_3d			create_vector(t_point_3d *a, t_point_3d *b);
 double				magnitude(t_point_3d *normal);
 void				normalize_vec3(t_point_3d *normal);
 t_point_3d			calc_normal(t_polygone *poly);
-void				fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, int color);
-void				fill_triangle(t_engine *eng, t_fix_point_2d a, t_fix_point_2d b, t_fix_point_2d c, int color);
-void				full_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
-void				check_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
-int					check_ractangle(t_engine *eng, t_fix_point_2d start, int sizex, int sizey, t_fix_point_2d pts2[3], int color);
-void				square_check_fill_box(t_engine *eng, t_fix_point_2d p, int offsetx, int offsety, t_fix_point_2d pts2[3], int color);
 void				engine_bw_procedural_texture(t_engine *eng, t_fix_point_3d a);
 double				engine_gain(double gain, int t);
 double				engine_bias(double b, int t);
@@ -809,7 +882,8 @@ void				engine_push_checkstack(int *checkqueue, int item);
 int					engine_pop_checkstack(int *checkqueue);
 void				engine_clear_checkstack(int *checkqueue);
 int					check_point_inside_box(t_point_3d a, t_object *obj, float ceil, float floor);
-void				engine_render_particle(t_engine *eng, SDL_Surface *surf, t_wallobj *particle,  t_object *obj, t_player *plr, t_item sect);
+void				engine_render_particle(t_engine *eng, SDL_Surface *surf,
+					t_wallobj *particle, t_ptcl_h links);
 void				get_relative_xy(t_engine *eng, t_fix_point_2d *p);
 void				animator_render_sprite_object(t_engine *eng, SDL_Surface *surf, t_player plr, t_sprobject *spr_obj, t_item sect, int *zbuff);
 t_sprobject			*create_test_sprobj(t_engine *eng);
@@ -1120,5 +1194,36 @@ void				engine_render_wall_c_val3(t_engine *eng, t_wall_help3 *data_help,
 					t_wall_help2 *data, t_wall_mai_data *mdata);
 
 void				point_swapper_shoot(float *t0, float *t1, float a, float b);
+
+void				engine_render_particle(t_engine *eng, SDL_Surface *surf,
+					t_wallobj *particle, t_ptcl_h links);
+void				engine_render_particle_1(t_engine *eng, SDL_Surface *surf,
+					t_wallobj *particle, t_ptcl_r *data);
+void				engine_render_particle_2(t_engine *eng, SDL_Surface *surf,
+					t_wallobj *particle, t_ptcl_r *data);
+void				engine_render_particle_3(t_engine *eng, SDL_Surface *surf,
+					t_wallobj *particle, t_ptcl_r *data);
+void				engine_render_particle_4(t_engine *eng, SDL_Surface *surf,
+					t_wallobj *particle, t_ptcl_r *data);
+void				engine_render_particle_5(t_engine *eng, SDL_Surface *surf,
+					t_wallobj *particle, t_ptcl_r *data);
+void				engine_render_particle_6(t_engine *eng, SDL_Surface *surf,
+					t_wallobj *particle, t_ptcl_r *data);
+void				engine_render_particle_7(t_engine *eng, SDL_Surface *surf,
+					t_wallobj *particle, t_ptcl_r *data);
+void				engine_render_particle_links(t_ptcl_r *data, t_ptcl_h *links);
+
+void				engine_render_sprites_in_sector_1(t_sector *sect, SDL_Surface *surf,
+					t_player *plr, t_sprt_r *d);
+void				engine_render_sprites_in_sector_2(t_sector *sect, SDL_Surface *surf,
+					t_player *plr, t_sprt_r *d);
+void				engine_render_sprites_in_sector_3(t_sector *sect, SDL_Surface *surf,
+					t_player *plr, t_sprt_r *d);
+void				engine_render_sprites_in_sector_4(t_sector *sect, SDL_Surface *surf,
+					t_player *plr, t_sprt_r *d);
+int					engine_render_sprites_in_sector_wrap(t_sector *sect, SDL_Surface *surf,
+					t_player *plr, t_sprt_r *d);
+void				sort_sprites(t_sector *sect, SDL_Surface *surf,
+					t_player *plr, t_item_sprts *restr);
 
 # endif

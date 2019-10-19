@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:21:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 19:27:06 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/19 21:02:33 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void			engine_render_particles_wall(t_engine *eng,
 			engine_render_particle(eng, surf,
 			&eng->world->sectors_array[data->sect.sectorno].
 			objects_array[data->obj_id].particles[i],
-			&eng->world->sectors_array[data->sect.sectorno].
-			objects_array[data->obj_id], data->plr, data->sect);
+			(t_ptcl_h){&eng->world->sectors_array[data->sect.sectorno].
+			objects_array[data->obj_id], data->plr, data->sect});
 		i++;
 	}
 }
