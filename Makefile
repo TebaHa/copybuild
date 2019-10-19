@@ -72,6 +72,8 @@ ENGINE_SRCS_LIST =	error_handler.c \
 					parser_sprite_2.c \
 					parser_object.c \
 					parser_color.c \
+					parser_package.c \
+					close.c \
 					sound_2.c \
 					parser_sector.c \
 					parser_player.c \

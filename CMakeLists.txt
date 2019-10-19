@@ -86,7 +86,7 @@ set(ENG_SRC engine/srcs/bresenham.c
 			engine/srcs/parser_sprite_2.c
 		engine/srcs/objects_help.c
 		engine/srcs/render_wall2.c
-		engine/srcs/shoot_help.c engine/srcs/parser_player_2.c engine/srcs/parser_color.c)
+		engine/srcs/shoot_help.c engine/srcs/parser_player_2.c engine/srcs/parser_color.c engine/srcs/parser_package.c engine/srcs/close.c)
 
 #set(EDITOR_SRC editor/srcs/checksum.c)
 

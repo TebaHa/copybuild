@@ -12,6 +12,7 @@
 
 #ifndef ENGINE_H
 # include <unistd.h>
+# include <stdlib.h>
 # include <math.h>
 # include <libft.h>
 # include <SDL.h>
@@ -103,12 +104,13 @@ typedef enum		e_enm_type
 	ARMOR,
 	POWER_UP,
 	RIFLE_AMMO,
-	PLASMA_AMMO,
 	PLASMA_GUN,
+	PLASMA_AMMO,
 	BARREL,
 	AFRIT,
 	CACODEMON,
 	IMP,
+	JETPACK,
 	ENEMY_NUM
 }					t_enm_type;
 
@@ -909,6 +911,9 @@ void			eng_create_background_music(t_engine *eng);
 
 void			infinite_loop(void);
 
+void			engine_unpack_resources();
+void			engine_remove_resources();
+
 /*
 **	Resources parsing functions end
 **	===========================================================================
@@ -1012,6 +1017,8 @@ int 			util_count_frames(t_engine *eng, char *str);
 int 			util_create_static_sprite(t_engine *eng, char *str, t_sprite *res);
 
 void			util_read_color(t_color *color, char *str);
+
+void			close_game(void);
 /*
 **	Parsing map functions end
 **	---------------------------------------------------------------------------

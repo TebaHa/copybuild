@@ -84,6 +84,7 @@ int		main(void)
 	thread_end_index = 0;
 	thread_start_index = 0;
 	init = 0;
+//	engine_unpack_resources();
 	engine_sdl_init(&fps.eng);
 	game_create_test_player(&fps.player);
 	engine_parser(fps.eng, &fps.player, GAME_PATH);
@@ -273,6 +274,7 @@ int		main(void)
 		else
 			thread_start_index++;
 	}
+//	close_game();
 	engine_sdl_uninit(fps.eng);
 	return (0);
 }
