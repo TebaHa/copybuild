@@ -1174,7 +1174,7 @@ int					util_count_frames(t_engine *eng, char *str);
 int					util_create_static_sprite(t_engine *eng,
 					char *str, t_sprite *res);
 void				util_read_color(t_color *color, char *str);
-void				close_game(void);
+void				close_game(int error);
 /*
 **	Parsing map functions end
 **	---------------------------------------------------------------------------

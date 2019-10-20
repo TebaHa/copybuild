@@ -19,5 +19,5 @@ void	error_handler(char *error_type, const char *str_error, t_engine *eng)
 	ft_putstr(str_error);
 	ft_putstr("\n");
 	engine_sdl_uninit(eng);
-	exit(1);
+	close_game(1);
 }

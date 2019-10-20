@@ -19,7 +19,7 @@ int		game_buttons_control_down_main(t_game *fps)
 		game_buttons_control_down1(fps);
 		if (fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
 		{
-			close_game();
+			close_game(0);
 			game_stop_threads(fps->render_thread_pool,
 			THREAD_POOL_SIZE);
 			return (0);

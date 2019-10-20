@@ -29,7 +29,7 @@ void		engine_pack_resources(int loudness, int cleaning)
 	else
 	{
 		ft_putendl("No resources");
-		exit(PACKAGE_ERROR);
+		close_game(PACKAGE_ERROR);
 	}
 }
 
@@ -50,7 +50,7 @@ void		engine_unpack_resources(int loudness, int cleaning)
 	else
 	{
 		ft_putendl("No archieve");
-		exit(PACKAGE_ERROR);
+		close_game(PACKAGE_ERROR);
 	}
 }
 

@@ -20,7 +20,7 @@ void	util_parsing_error_cant_find(char *problem, int id_problem)
 	ft_putstr(" ");
 	ft_putnbr(id_problem);
 	ft_putstr("!\n");
-	exit(PARSING_ERROR);
+	close_game(PARSING_ERROR);
 }
 
 void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
@@ -32,7 +32,7 @@ void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 	ft_putstr(name);
 	ft_putstr("!\n");
 	util_find_texture_by_name(dst, eng, PARSING_ERROR_TEXTURE);
-	exit(PARSING_ERROR);
+	close_game(PARSING_ERROR);
 }
 
 void	util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
@@ -45,7 +45,7 @@ void	util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
 	ft_putstr("!\n");
 	util_find_sprite_by_name(dst, eng, PARSING_ERROR_SPRITE);
 	if (!ft_strcmp(name, PARSING_ERROR_SPRITE))
-		exit(PARSING_ERROR);
+		close_game(PARSING_ERROR);
 }
 
 void	util_parsing_error_no_cap(char *problem, t_engine *eng)
@@ -55,7 +55,7 @@ void	util_parsing_error_no_cap(char *problem, t_engine *eng)
 		ft_putstr("Really cant find ");
 		ft_putstr(problem);
 		ft_putendl("s! Exit.");
-		exit(CYCLE_READING_ERROR);
+		close_game(CYCLE_READING_ERROR);
 	}
 	eng->stats.cycle_detector++;
 }

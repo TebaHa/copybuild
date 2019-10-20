@@ -26,5 +26,5 @@ void		util_parsing_error_player_outside(char *position)
 	ft_putstr("Player ");
 	ft_putstr(position);
 	ft_putendl(" map!");
-	exit(PARSING_ERROR);
+	close_game(PARSING_ERROR);
 }

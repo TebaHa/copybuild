@@ -39,5 +39,5 @@ void		util_parsing_error_no_lvl_file(char *problem)
 	ft_putstr("Can't find ");
 	ft_putstr(problem);
 	ft_putstr("!\n");
-	exit(PARSING_ERROR);
+	close_game(PARSING_ERROR);
 }

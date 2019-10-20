@@ -49,7 +49,7 @@ int			crc_check_and_add(char *filename)
 	}
 	buff = (char*)malloc(sizeof(char) * 10000);
 	if (fd < 2)
-		exit(EDITOR_ERROR);
+		close_game(EDITOR_ERROR);
 	number = read(fd, buff, 10000);
 	buff[number] = '\0';
 	if (ft_strncmp(buff, "Map", 3) == 0)

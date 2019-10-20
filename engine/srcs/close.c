@@ -12,7 +12,8 @@
 
 #include <engine.h>
 
-void		close_game(void)
+void		close_game(int error)
 {
 	engine_remove_resources_folder(MODE_SILENT);
+	exit(error);
 }

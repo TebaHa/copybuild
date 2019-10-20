@@ -32,7 +32,7 @@ void	util_parsing_error_extra_data(char *problem, char *problem_from,
 	ft_putstr(" ");
 	ft_putstr(str[1]);
 	ft_putstr("!\n");
-	exit(PARSING_ERROR);
+	close_game(PARSING_ERROR);
 }
 
 void	util_parsing_error_little_data(char *problem, char *problem_from,
@@ -46,7 +46,7 @@ void	util_parsing_error_little_data(char *problem, char *problem_from,
 	ft_putstr(" ");
 	ft_putstr(str[1]);
 	ft_putstr("!\n");
-	exit(PARSING_ERROR);
+	close_game(PARSING_ERROR);
 }
 
 void	util_parsing_error_not_digit(char *problem)
@@ -55,7 +55,7 @@ void	util_parsing_error_not_digit(char *problem)
 	ft_putstr("Not only digits in this data: ");
 	ft_putstr(problem);
 	ft_putstr("!\n");
-	exit(PARSING_ERROR);
+	close_game(PARSING_ERROR);
 }
 
 void	util_parsing_error_not_hex(char *problem)
@@ -64,5 +64,5 @@ void	util_parsing_error_not_hex(char *problem)
 	ft_putstr("Not hex data: ");
 	ft_putstr(problem);
 	ft_putstr("!\n");
-	exit(PARSING_ERROR);
+	close_game(PARSING_ERROR);
 }

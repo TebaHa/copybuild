@@ -87,5 +87,5 @@ void				util_parsing_error_wrong_crc(void)
 {
 	ft_putendl("Parsing error:");
 	ft_putendl("Wrong checksum!");
-	exit(PARSING_ERROR);
+	close_game(PARSING_ERROR);
 }
