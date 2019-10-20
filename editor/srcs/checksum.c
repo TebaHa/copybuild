@@ -17,7 +17,9 @@ int			main(int argc, char **argv)
 	int		i;
 
 	if (argc < 2)
-		ft_putendl("Usage: ./DoomEditor lvl_file\n       ./DoomEditor pack\n       ./DoomEditor unpack");
+		ft_putendl("Usage: ./DoomEditor lvl_file\n"
+					"       ./DoomEditor pack\n"
+					"       ./DoomEditor unpack");
 	if (argc == 2 && (ft_strcmp(argv[1], "unpack") == 0))
 		engine_unpack_resources(MODE_LOUD, MODE_CLEANING);
 	else if (argc == 2 && (ft_strcmp(argv[1], "pack") == 0))

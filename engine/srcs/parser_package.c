@@ -56,9 +56,9 @@ void		engine_unpack_resources(int loudness, int cleaning)
 
 void		engine_remove_resources_folder(int loudness)
 {
-		system("rm -rf " RESOURCES_FOLDER);
-		if (loudness == MODE_LOUD)
-			ft_putendl("Resources folder deleted");
+	system("rm -rf " RESOURCES_FOLDER);
+	if (loudness == MODE_LOUD)
+		ft_putendl("Resources folder deleted");
 }
 
 void		engine_remove_resources_pack(int loudness)

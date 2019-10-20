@@ -27,8 +27,8 @@ char		**engine_read_level_file(char *filename)
 	buff[number] = '\0';
 	close(fd);
 	splitedbuff = ft_strsplit(buff, '\n');
-//	if (checksum_check(buff, splitedbuff, number) != CRC_OK)
-//		util_parsing_error_wrong_crc();
+	if (checksum_check(buff, splitedbuff, number) != CRC_OK)
+		util_parsing_error_wrong_crc();
 	free(buff);
 	return (splitedbuff);
 }
