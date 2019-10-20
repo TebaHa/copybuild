@@ -30,8 +30,7 @@ void	shoot_help1(t_shoot_data *d, t_engine *eng,
 	engine_push_checkstack(eng->world->checkqueue, plr->cursector);
 }
 
-void	shoot_help2(t_shoot_data *d, t_engine *eng,
-		t_player *plr, int weapon_range)
+void	shoot_help2(t_shoot_data *d)
 {
 	d->plane.n = calc_normal_dots((t_point_3d){0,
 	d->sect->objects_array[d->i].polies_array[0].
@@ -53,8 +52,7 @@ void	shoot_help2(t_shoot_data *d, t_engine *eng,
 	d->res = intersect_3d_seg_plane(d->shoot, d->plane, &d->int_p);
 }
 
-int		shoot_help3(t_shoot_data *d, t_engine *eng,
-		t_player *plr, int weapon_range)
+int		shoot_help3(t_shoot_data *d, t_engine *eng, t_player *plr)
 {
 	if ((d->int_p.z < eng->world->sectors_array
 	[d->sect->objects_array[d->i].portal].floor && d->int_p.z > d->sect->floor)
@@ -77,12 +75,11 @@ int		shoot_help3(t_shoot_data *d, t_engine *eng,
 	return (0);
 }
 
-int		shoot_help4(t_shoot_data *d, t_engine *eng,
-		t_player *plr, int weapon_range)
+int		shoot_help4(t_shoot_data *d, t_engine *eng, t_player *plr)
 {
 	if (d->sect->objects_array[d->i].portal >= 0)
 	{
-		if (shoot_help3(d, eng, plr, weapon_range))
+		if (shoot_help3(d, eng, plr))
 			return (1);
 	}
 	else if (d->prev != d->sect_id)
@@ -107,11 +104,11 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 		d.sect = &eng->world->sectors_array[d.sect_id];
 		while (d.i < d.sect->objects_count)
 		{
-			shoot_help2(&d, eng, plr, weapon_range);
+			shoot_help2(&d);
 			if (d.res > 0 && check_point_inside_box(d.int_p,
 			&d.sect->objects_array[d.i], d.sect->ceil, d.sect->floor))
 			{
-				if (shoot_help4(&d, eng, plr, weapon_range))
+				if (shoot_help4(&d, eng, plr))
 					break ;
 			}
 			d.i++;

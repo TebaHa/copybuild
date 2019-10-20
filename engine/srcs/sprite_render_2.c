@@ -12,8 +12,8 @@
 
 #include <engine.h>
 
-void		engine_render_sprites_in_sector_1(t_sector *sect, SDL_Surface *surf,
-			t_player *plr, t_sprt_r *d)
+void	engine_render_sprites_in_sector_1(t_sector *sect, t_player *plr,
+		t_sprt_r *d)
 {
 	d->spritex = sect->sprobjects_array[sect->order[d->i]].position.x
 	- plr->position.x;
@@ -27,8 +27,7 @@ void		engine_render_sprites_in_sector_1(t_sector *sect, SDL_Surface *surf,
 	type->anmtn[0]->surface[0]->w * 0.25;
 }
 
-void		engine_render_sprites_in_sector_2(t_sector *sect, SDL_Surface *surf,
-			t_player *plr, t_sprt_r *d)
+void	engine_render_sprites_in_sector_2(t_sprt_r *d)
 {
 	d->scaledx = WIDTH * HFOV / d->diry;
 	d->scaledy = HEIGHT * VFOV / d->diry;
@@ -36,8 +35,8 @@ void		engine_render_sprites_in_sector_2(t_sector *sect, SDL_Surface *surf,
 	d->x2 = WIDTH / 2 - (int)((d->endy) * d->scaledx);
 }
 
-void		engine_render_sprites_in_sector_3(t_sector *sect, SDL_Surface *surf,
-			t_player *plr, t_sprt_r *d)
+void	engine_render_sprites_in_sector_3(t_sector *sect, t_player *plr,
+		t_sprt_r *d)
 {
 	d->ceil = sect->floor + sect->sprobjects_array[sect->order[d->i]].
 	type->anmtn[0]->surface[0]->h * 1.5 - plr->position.z;
@@ -46,8 +45,8 @@ void		engine_render_sprites_in_sector_3(t_sector *sect, SDL_Surface *surf,
 	d->yb = HEIGHT / 2 - (int)((d->floor + d->diry * plr->yaw) * d->scaledy);
 }
 
-void		engine_render_sprites_in_sector_4(t_sector *sect, SDL_Surface *surf,
-			t_player *plr, t_sprt_r *d)
+void	engine_render_sprites_in_sector_4(t_sector *sect, SDL_Surface *surf,
+		t_sprt_r *d)
 {
 	d->txtx = (int)((float)(d->x - d->x1) /
 	(float)(d->x2 - d->x1) * sect->sprobjects_array[sect->order[d->i]].

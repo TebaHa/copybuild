@@ -38,12 +38,12 @@ void			*engine_render_wall_count_values(t_engine *eng,
 		floor - data->plr->position.z;
 		data_help->push = 1;
 	}
-	engine_render_wall_c_val2(eng, data_help, data, mdata);
+	engine_render_wall_c_val2(data_help, data, mdata);
 	return (mdata);
 }
 
-void			engine_render_wall_c_val2(t_engine *eng,
-		t_wall_help3 *data_help, t_wall_help2 *data, t_wall_mai_data *mdata)
+void			engine_render_wall_c_val2(t_wall_help3 *data_help,
+				t_wall_help2 *data, t_wall_mai_data *mdata)
 {
 	mdata->y1a = HEIGHT / 2 + (int)(-(mdata->yceil
 	+ data_help->t1.y * data->plr->yaw) * mdata->yscale1);
@@ -61,11 +61,11 @@ void			engine_render_wall_c_val2(t_engine *eng,
 	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
 	mdata->ny2b = HEIGHT / 2 + (int)(-(mdata->nyfloor
 	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
-	engine_render_wall_c_val3(eng, data_help, data, mdata);
+	engine_render_wall_c_val3(data, mdata);
 }
 
-void			engine_render_wall_c_val3(t_engine *eng,
-		t_wall_help3 *data_help, t_wall_help2 *data, t_wall_mai_data *mdata)
+void			engine_render_wall_c_val3(t_wall_help2 *data,
+				t_wall_mai_data *mdata)
 {
 	mdata->beginx = max(mdata->x1, data->sect.sx1);
 	mdata->endx = min(mdata->x2, data->sect.sx2);
@@ -106,5 +106,5 @@ void			engine_render_wall(t_engine *eng,
 	engine_render_wall_main_cycler(&links, &cycler, &mdata);
 	if (data_help.push)
 		engine_render_wall_pusher(eng, data, &mdata);
-	engine_render_particles_wall(eng, surf, data, &mdata);
+	engine_render_particles_wall(eng, surf, data);
 }

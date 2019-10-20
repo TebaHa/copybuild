@@ -19,8 +19,7 @@ int			get_rgb(int r, int g, int b, int a)
 	(((b) << 8) & 0x0000FF00) | (((a)) & 0x000000FF));
 }
 
-void		engine_render_world_data(t_engine *eng,
-			t_player *plr, t_wall_help2 *data)
+void		engine_render_world_data(t_player *plr, t_wall_help2 *data)
 {
 	int		i;
 
@@ -36,8 +35,8 @@ void		engine_render_world_data(t_engine *eng,
 	}
 }
 
-void		engine_render_world_help(t_engine *eng, t_player *plr,
-			SDL_Surface *surf, t_wall_help2 *data)
+void		engine_render_world_help(t_engine *eng, SDL_Surface *surf,
+			t_wall_help2 *data)
 {
 	int		i;
 
@@ -64,7 +63,7 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf)
 	t_wall_help2 data;
 
 	SDL_LockSurface(surf);
-	engine_render_world_data(eng, &plr, &data);
+	engine_render_world_data(&plr, &data);
 	engine_push_renderstack(eng->world->renderstack, data.sect);
 	one_dim_zbuffers_copy(&eng->world->sectors_array[data.sect.sectorno].
 	item_sprts, data.ytop, data.ybottom);
@@ -72,7 +71,7 @@ void		engine_render_world(t_engine *eng, t_player plr, SDL_Surface *surf)
 	item_sprts.sect_id = data.sect;
 	engine_push_spriterenderstack(eng->world->sprite_renderstack,
 	&eng->world->sectors_array[data.sect.sectorno].item_sprts);
-	engine_render_world_help(eng, &plr, surf, &data);
+	engine_render_world_help(eng, surf, &data);
 	engine_render_sprites(eng, &plr, surf);
 	engine_clear_renderstack(eng->world->renderstack);
 	engine_clear_spriterenderstack(eng->world->sprite_renderstack);

@@ -26,21 +26,21 @@ void		engine_render_sprites(t_engine *eng, t_player *plr,
 	}
 }
 
-int			engine_render_sprites_in_sector_wrap(t_sector *sect,
-			SDL_Surface *surf, t_player *plr, t_sprt_r *d)
+int			engine_render_sprites_in_sector_wrap(t_sector *sect, t_player *plr,
+			t_sprt_r *d)
 {
 	if (sect->sprobjects_array[sect->order[d->i]].norender == true)
 	{
 		d->i++;
 		return (0);
 	}
-	engine_render_sprites_in_sector_1(sect, surf, plr, d);
+	engine_render_sprites_in_sector_1(sect, plr, d);
 	if (d->diry <= 0)
 	{
 		d->i++;
 		return (0);
 	}
-	engine_render_sprites_in_sector_2(sect, surf, plr, d);
+	engine_render_sprites_in_sector_2(d);
 	return (1);
 }
 
@@ -49,18 +49,18 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf,
 {
 	t_sprt_r d;
 
-	sort_sprites(sect, surf, plr, restr);
+	sort_sprites(sect, plr);
 	d.i = 0;
 	while (d.i < sect->sprobjects_count)
 	{
-		if (engine_render_sprites_in_sector_wrap(sect, surf, plr, &d) == 0)
+		if (engine_render_sprites_in_sector_wrap(sect, plr, &d) == 0)
 			continue ;
 		if (d.x1 > restr->sect_id.sx2 || d.x2 < restr->sect_id.sx1)
 		{
 			d.i++;
 			continue ;
 		}
-		engine_render_sprites_in_sector_3(sect, surf, plr, &d);
+		engine_render_sprites_in_sector_3(sect, plr, &d);
 		d.begx = max(d.x1, restr->sect_id.sx1);
 		d.endx = min(d.x2, restr->sect_id.sx2);
 		d.x = d.begx;
@@ -68,14 +68,13 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf,
 		{
 			d.cya = clamp(d.ya, restr->ytop[d.x], restr->ybottom[d.x]);
 			d.cyb = clamp(d.yb, restr->ytop[d.x], restr->ybottom[d.x]);
-			engine_render_sprites_in_sector_4(sect, surf, plr, &d);
+			engine_render_sprites_in_sector_4(sect, surf, &d);
 		}
 		d.i++;
 	}
 }
 
-void		sort_sprites(t_sector *sect, SDL_Surface *surf,
-			t_player *plr, t_item_sprts *restr)
+void		sort_sprites(t_sector *sect, t_player *plr)
 {
 	int	i;
 

@@ -59,8 +59,7 @@ t_bcontex	bresenham_init(t_point_3d *beg, t_point_3d *end)
 	return (c);
 }
 
-void		bresenham_put_pixel(t_bcontex *c,
-								SDL_Surface *surf, int color, int zmax)
+void		bresenham_put_pixel(t_bcontex *c, SDL_Surface *surf, int color)
 {
 	int		*pix;
 
@@ -83,7 +82,7 @@ void		bresenham_line(t_point_3d *beg, t_point_3d *end,
 	c = bresenham_init(beg, end);
 	while (c.x <= c.e.x)
 	{
-		bresenham_put_pixel(&c, surf, color, fmaxf(beg->z, end->z));
+		bresenham_put_pixel(&c, surf, color);
 		c.error2 += c.derror2;
 		if (c.error2 > c.dx)
 		{

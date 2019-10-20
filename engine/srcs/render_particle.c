@@ -25,18 +25,18 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf,
 	t_ptcl_r data;
 
 	engine_render_particle_links(&data, &links);
-	engine_render_particle_1(eng, surf, particle, &data);
+	engine_render_particle_1(particle, &data);
 	if (data.t1.y <= 0 && data.t2.y <= 0)
 		return ;
 	data.u0 = 0;
 	data.u1 = particle->texture->surface[particle->frame_num]->h - 1;
-	engine_render_particle_2(eng, surf, particle, &data);
-	engine_render_particle_5(eng, surf, particle, &data);
+	engine_render_particle_2(particle, &data);
+	engine_render_particle_5(&data);
 	if (data.x1 >= data.x2 ||
 	data.x2 < data.sect.sx1
 	|| data.x1 > data.sect.sx2)
 		return ;
-	engine_render_particle_6(eng, surf, particle, &data);
+	engine_render_particle_6(particle, &data);
 	while (data.x <= data.endx)
 		engine_render_particle_7(eng, surf, particle, &data);
 	if (particle->texture->a_state == ANIMATE)
@@ -49,8 +49,7 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf,
 	}
 }
 
-void		engine_render_particle_1(t_engine *eng, SDL_Surface *surf,
-			t_wallobj *particle, t_ptcl_r *data)
+void		engine_render_particle_1(t_wallobj *particle, t_ptcl_r *data)
 {
 	data->c1.x = particle->a.x - data->plr->position.x;
 	data->c1.y = particle->a.y - data->plr->position.y;
@@ -66,8 +65,7 @@ void		engine_render_particle_1(t_engine *eng, SDL_Surface *surf,
 	+ data->c2.y * data->plr->sinangle;
 }
 
-void		engine_render_particle_5(t_engine *eng, SDL_Surface *surf,
-			t_wallobj *particle, t_ptcl_r *data)
+void		engine_render_particle_5(t_ptcl_r *data)
 {
 	data->xscale1 = (WIDTH * HFOV) / data->t1.y;
 	data->yscale1 = (HEIGHT * VFOV) / data->t1.y;

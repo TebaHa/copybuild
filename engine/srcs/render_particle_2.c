@@ -12,8 +12,7 @@
 
 #include <engine.h>
 
-void		engine_render_particle_2(t_engine *eng, SDL_Surface *surf,
-			t_wallobj *particle, t_ptcl_r *data)
+void		engine_render_particle_2(t_wallobj *particle, t_ptcl_r *data)
 {
 	if (data->t1.y <= 0 || data->t2.y <= 0)
 	{
@@ -29,13 +28,12 @@ void		engine_render_particle_2(t_engine *eng, SDL_Surface *surf,
 		(t_point_2d){data->farside, data->farz});
 		data->org1 = data->t1;
 		data->org2 = data->t2;
-		engine_render_particle_3(eng, surf, particle, data);
-		engine_render_particle_4(eng, surf, particle, data);
+		engine_render_particle_3(data);
+		engine_render_particle_4(particle, data);
 	}
 }
 
-void		engine_render_particle_3(t_engine *eng, SDL_Surface *surf,
-			t_wallobj *particle, t_ptcl_r *data)
+void		engine_render_particle_3(t_ptcl_r *data)
 {
 	if (data->t1.y < data->nearz)
 	{
@@ -53,8 +51,7 @@ void		engine_render_particle_3(t_engine *eng, SDL_Surface *surf,
 	}
 }
 
-void		engine_render_particle_4(t_engine *eng, SDL_Surface *surf,
-			t_wallobj *particle, t_ptcl_r *data)
+void		engine_render_particle_4(t_wallobj *particle, t_ptcl_r *data)
 {
 	if (fabsf(data->t2.x - data->t1.x)
 	> fabsf(data->t2.y - data->t1.y))
@@ -77,8 +74,7 @@ void		engine_render_particle_4(t_engine *eng, SDL_Surface *surf,
 	}
 }
 
-void		engine_render_particle_6(t_engine *eng, SDL_Surface *surf,
-			t_wallobj *particle, t_ptcl_r *data)
+void		engine_render_particle_6(t_wallobj *particle, t_ptcl_r *data)
 {
 	data->yceil = (particle->z + particle->texture->surface
 	[particle->frame_num]->h / 4)

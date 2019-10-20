@@ -54,12 +54,11 @@ void	game_threads_recount(t_game *fps)
 	{
 		SDL_WaitThread(fps->render_thread_pool[fps->logic.thread_end_index].thread,
 		&fps->render_thread_pool[fps->logic.thread_end_index].value);
-		engine_draw_hud(fps->eng, &fps->player,
-		fps->render_thread_pool[fps->logic.thread_end_index].surface);
+		engine_draw_hud(&fps->player,
+						fps->render_thread_pool[fps->logic.thread_end_index].surface);
 		engine_render_frame(fps->eng,
 		fps->render_thread_pool[fps->logic.thread_end_index].surface);
-		engine_render_hud_stats(fps->eng, &fps->player,
-		fps->render_thread_pool[fps->logic.thread_end_index].surface);
+		engine_render_hud_stats(fps->eng, &fps->player);
 		engine_present_and_clear_frame(fps->eng);
 		fps->logic.thread_start_index = fps->logic.thread_end_index;
 		fps->logic.thread_end_index = fps->logic.thread_end_index

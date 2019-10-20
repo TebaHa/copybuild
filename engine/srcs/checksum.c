@@ -49,7 +49,7 @@ int					checksum_check(char *buf, char **buff_splited, size_t len)
 	if (!ft_strnstr(buf, "crc:", len))
 		return (CRC_MISSING);
 	crc_pos = (int)(ft_strnstr(buf, "crc:", len) - buf);
-	if (crc_pos < len - 20)
+	if (crc_pos < (int)len - 20)
 		return (CRC_NOT_IN_END);
 	crc_count = 0;
 	while (buff_splited[i])
@@ -74,7 +74,7 @@ int					checksum_check_line(char *buff, char *buff_splited,
 		splitted_line = ft_strsplitwhitespaces(buff_splited);
 		if (!splitted_line[1])
 			return (CRC_ZERO);
-		else if (crc_calculate(buff, crc_pos) == ft_atoi(splitted_line[1]))
+		else if ((int)crc_calculate(buff, crc_pos) == ft_atoi(splitted_line[1]))
 			crc_count++;
 		else
 			return (CRC_INCORRECT);

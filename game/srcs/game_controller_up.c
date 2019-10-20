@@ -16,10 +16,10 @@ void	game_buttons_control_up_main(t_game *fps)
 {
 	if (fps->eng->event.button.type == SDL_MOUSEBUTTONDOWN)
 		if (fps->eng->event.button.button == SDL_BUTTON_LEFT)
-			fire(fps->eng, &fps->player, 1);
+			fire(&fps->player, 1);
 	if (fps->eng->event.button.type == SDL_MOUSEBUTTONUP)
 		if (fps->eng->event.button.button == SDL_BUTTON_LEFT)
-			fire(fps->eng, &fps->player, 0);
+			fire(&fps->player, 0);
 	if (fps->eng->event.type == SDL_KEYUP)
 	{
 		if (fps->eng->event.key.keysym.sym == SDLK_LSHIFT)

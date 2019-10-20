@@ -27,12 +27,11 @@ void	game_movement_check(t_game *fps)
 		if ((fps->logic.sect = engine_object_get_sector(fps->eng->world,
 		(t_point_3d){0.f, fps->logic.px + fps->logic.dx, fps->logic.py +
 		fps->logic.dy, 0.f}, fps->player.cursector)) >= 0)
-		{
 			if (fps->eng->world->sectors_array[fps->logic.sect].floor
-			- fps->logic.duck_shift <= fps->player.position.z + KNEE_HEIGHT - 50)
+			- fps->logic.duck_shift <= fps->player.position.z +
+			KNEE_HEIGHT - 50)
 				move_player(fps->eng, &fps->player, (t_point_2d){fps->logic.dx,
 				fps->logic.dy}, fps->logic.sect);
-		}
 	}
 	if (fps->player.position.z > fps->eng->world->sectors_array
 	[fps->player.cursector].floor + fps->logic.duck_shift + 100

@@ -17,7 +17,7 @@ CC = gcc
 
 FLAGS_FAST = -march=native -m64 -Ofast -O2 -flto -funroll-loops
 FLAGS_42 = -Wall -Wextra -Werror
-FLAGS = $(FLAGS_FAST)
+FLAGS = $(FLAGS_FAST) $(FLAGS_42)
 
 ID_UN := $(shell id -un)
 

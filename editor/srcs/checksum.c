@@ -39,7 +39,6 @@ int			crc_check_and_add(char *filename)
 {
 	int		fd;
 	int		number;
-	int		find;
 	char	*buff;
 
 	if ((fd = open(filename, O_RDWR)) < 0)

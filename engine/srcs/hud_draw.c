@@ -12,8 +12,7 @@
 
 #include <engine.h>
 
-void		engine_render_hud_stats(t_engine *eng,
-			t_player *plr, SDL_Surface *surf)
+void		engine_render_hud_stats(t_engine *eng, t_player *plr)
 {
 	SDL_Surface		*hp;
 	SDL_Surface		*armor;
@@ -25,15 +24,13 @@ void		engine_render_hud_stats(t_engine *eng,
 	buff = ft_itoa(plr->armor);
 	armor = create_text(eng, buff, 0xE9967AFF);
 	free(buff);
-	draw_player_stats(eng, surf, hp, armor);
+	draw_player_stats(eng, hp, armor);
 }
 
-void		engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf)
+void		engine_draw_hud(t_player *plr, SDL_Surface *surf)
 {
 	int				i;
 	t_sprite		*img;
-	SDL_Surface		*hp;
-	SDL_Surface		*armor;
 
 	i = 0;
 	bresenham_line(&(t_point_3d){0, (WIDTH / 2) - 10,
@@ -57,8 +54,8 @@ void		engine_draw_hud(t_engine *eng, t_player *plr, SDL_Surface *surf)
 	plr->anim++;
 }
 
-void		draw_player_stats(t_engine *eng,
-			SDL_Surface *surf, SDL_Surface *hp, SDL_Surface *armor)
+void		draw_player_stats(t_engine *eng, SDL_Surface *hp,
+			SDL_Surface *armor)
 {
 	int			tex_w;
 	int			tex_h;

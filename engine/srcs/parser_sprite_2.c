@@ -91,7 +91,6 @@ int			util_create_animated_sprite(t_engine *eng, char *str, t_sprite *res)
 {
 	int		i;
 	int		srfc_count;
-	char	*name;
 
 	i = 0;
 	srfc_count = util_count_frames(eng, str);

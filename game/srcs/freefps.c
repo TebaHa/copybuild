@@ -40,7 +40,7 @@ void		game_init(t_game *fps)
 {
 	engine_sdl_init(&fps->eng);
 	game_init_player(&fps->player);
-	engine_parser(fps->eng, &fps->player, GAME_PATH);
+	engine_parser(fps->eng, &fps->player);
 	fps->player.cursector = engine_object_get_sector(fps->eng->world,
 	(t_point_3d){0.f, fps->player.position.x,
 	fps->player.position.y, 0.f}, fps->player.cursector);

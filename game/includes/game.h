@@ -61,7 +61,7 @@ void				game_stop_threads(t_thread_pool	*render_thread,
 					int thread_count);
 void				game_threads_recount(t_game *fps);
 
-void				fire(t_engine *eng, t_player *plr, int state);
+void				fire(t_player *plr, int state);
 void				fire_anim_change(t_engine *eng, t_player *plr);
 void				game_init(t_game *fps);
 

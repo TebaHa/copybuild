@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-void	fire(t_engine *eng, t_player *plr, int state)
+void	fire(t_player *plr, int state)
 {
 	plr->shoot = state;
 	plr->frame_num = 0;

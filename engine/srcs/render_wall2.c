@@ -46,8 +46,8 @@ void			engine_render_wall_pusher(t_engine *eng,
 	&eng->world->sectors_array[data->portal].item_sprts);
 }
 
-void			engine_render_particles_wall(t_engine *eng,
-			SDL_Surface *surf, t_wall_help2 *data, t_wall_mai_data *mdata)
+void			engine_render_particles_wall(t_engine *eng, SDL_Surface *surf,
+				t_wall_help2 *data)
 {
 	int		i;
 

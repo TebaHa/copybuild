@@ -12,7 +12,7 @@
 
 #include <engine.h>
 
-void		engine_parser(t_engine *eng, t_player *plr, char *filename)
+void		engine_parser(t_engine *eng, t_player *plr)
 {
 	engine_create_resources_from_file(eng);
 	engine_create_world_from_file(eng, plr, GAME_PATH);

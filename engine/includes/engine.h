@@ -890,8 +890,8 @@ void				*engine_render_wall_count_values(t_engine *eng,
 void				swapper(t_point_3d *a, t_point_3d *b, int *steep);
 t_bcontex			bresenham_init(t_point_3d *beg, t_point_3d *end);
 t_bcontex			bresenham_init(t_point_3d *beg, t_point_3d *end);
-void				bresenham_put_pixel(t_bcontex *c,
-								SDL_Surface *surf, int color, int zmax);
+void				bresenham_put_pixel(t_bcontex *c, SDL_Surface *surf,
+					int color);
 void				bresenham_line(t_point_3d *beg, t_point_3d *end,
 							SDL_Surface *surf, int color);
 void				triangle_lines(t_polygone *t, SDL_Surface *surf);
@@ -983,8 +983,7 @@ t_image				*engine_cut_texture(t_image *world_texture,
 					int xstart, int xsize, int ystart, int ysize);
 void				game_stop_threads(t_thread_pool
 					*render_thread, int thread_count);
-void				engine_draw_hud(t_engine *eng,
-					t_player *plr, SDL_Surface *surf);
+void				engine_draw_hud(t_player *plr, SDL_Surface *surf);
 void				shoot(t_engine *eng, t_player *plr, int weapon_range);
 int					intersect_3d_seg_plane(t_line s,
 					t_plane pn, t_point_3d *res);
@@ -1062,7 +1061,7 @@ void				engine_remove_resources_pack(int loudness);
 **	Parsing map functions
 */
 
-void				engine_parser(t_engine *eng, t_player *plr, char *filename);
+void				engine_parser(t_engine *eng, t_player *plr);
 void				engine_preparser(t_engine *eng, char **json_splited);
 void				engine_count_all_from_file(t_stats *stats, char **buff);
 char				**engine_read_level_file(char *filename);
@@ -1203,10 +1202,9 @@ t_bool				modify_players_stat(int *stat, int addtion, int limit);
 */
 
 SDL_Surface			*create_text(t_engine *eng, char *str, int color);
-void				draw_player_stats(t_engine *eng, SDL_Surface *surf,
-					SDL_Surface *hp, SDL_Surface *armor);
-void				engine_render_hud_stats(t_engine *eng,
-					t_player *plr, SDL_Surface *surf);
+void				draw_player_stats(t_engine *eng, SDL_Surface *hp,
+					SDL_Surface *armor);
+void				engine_render_hud_stats(t_engine *eng, t_player *plr);
 
 /*
 **	Text funs end
@@ -1236,8 +1234,7 @@ t_scaler			scaler_init(float data[5]);
 **	---------------------------------------------------------------------------
 */
 
-void				engine_render_world_data(t_engine *eng,
-					t_player *plr, t_wall_help2 *data);
+void				engine_render_world_data(t_player *plr, t_wall_help2 *data);
 
 void				engine_render_wall_cycle_6(t_wall_clinks *l);
 void				engine_render_cycle_5(t_wall_clinks *l);
@@ -1251,10 +1248,9 @@ void				engine_render_wall_main_cycler(t_wall_clinks *links,
 void				engine_render_wall_pusher(t_engine *eng,
 					t_wall_help2 *data, t_wall_mai_data *mdata);
 void				engine_render_particles_wall(t_engine *eng,
-					SDL_Surface *surf,
-					t_wall_help2 *data, t_wall_mai_data *mdata);
-void				engine_render_world_help(t_engine *eng, t_player *plr,
 					SDL_Surface *surf, t_wall_help2 *data);
+void				engine_render_world_help(t_engine *eng, SDL_Surface *surf,
+					t_wall_help2 *data);
 void				engine_set_links(t_wall_clinks *links, void *ls[6]);
 
 void				eng_reader_prep_data(t_read_data *data,
@@ -1265,48 +1261,35 @@ void				sprite_comb_sort_help(t_sorter *data);
 
 void				shoot_help1(t_shoot_data *d, t_engine *eng,
 					t_player *plr, int weapon_range);
-void				shoot_help2(t_shoot_data *d, t_engine *eng,
-					t_player *plr, int weapon_range);
-int					shoot_help3(t_shoot_data *d, t_engine *eng,
-					t_player *plr, int weapon_range);
-int					shoot_help4(t_shoot_data *d, t_engine *eng,
-					t_player *plr, int weapon_range);
+void				shoot_help2(t_shoot_data *d);
+int					shoot_help3(t_shoot_data *d, t_engine *eng, t_player *plr);
+int					shoot_help4(t_shoot_data *d, t_engine *eng, t_player *plr);
 
 void				eng_reader_put_data(t_engine *eng, t_read_data *data,
 					t_txtr_pkg ***text_buff, void *mass[2]);
 void				draw_from_s_to_s_help(t_surf_data *data, SDL_Surface *src);
 void				engine_check_object(t_find_obj *d,
 					t_world *world, t_point_3d pos);
-void				engine_render_wall_c_val2(t_engine *eng,
-					t_wall_help3 *data_help,
+void				engine_render_wall_c_val2(t_wall_help3 *data_help,
 					t_wall_help2 *data, t_wall_mai_data *mdata);
-void				engine_render_wall_c_val3(t_engine *eng,
-					t_wall_help3 *data_help,
-					t_wall_help2 *data, t_wall_mai_data *mdata);
+void				engine_render_wall_c_val3(t_wall_help2 *data,
+					t_wall_mai_data *mdata);
 
 void				point_swapper_shoot(float *t0, float *t1, float a, float b);
 
 void				engine_render_particle(t_engine *eng,
 					SDL_Surface *surf,
 					t_wallobj *particle, t_ptcl_h links);
-void				engine_render_particle_1(t_engine *eng,
-					SDL_Surface *surf,
-					t_wallobj *particle, t_ptcl_r *data);
-void				engine_render_particle_2(t_engine *eng,
-					SDL_Surface *surf,
-					t_wallobj *particle, t_ptcl_r *data);
-void				engine_render_particle_3(t_engine *eng,
-					SDL_Surface *surf,
-					t_wallobj *particle, t_ptcl_r *data);
-void				engine_render_particle_4(t_engine *eng,
-					SDL_Surface *surf,
-					t_wallobj *particle, t_ptcl_r *data);
-void				engine_render_particle_5(t_engine *eng,
-					SDL_Surface *surf,
-					t_wallobj *particle, t_ptcl_r *data);
-void				engine_render_particle_6(t_engine *eng,
-					SDL_Surface *surf,
-					t_wallobj *particle, t_ptcl_r *data);
+void				engine_render_particle_1(t_wallobj *particle,
+					t_ptcl_r *data);
+void				engine_render_particle_2(t_wallobj *particle,
+					t_ptcl_r *data);
+void				engine_render_particle_3(t_ptcl_r *data);
+void				engine_render_particle_4(t_wallobj *particle,
+					t_ptcl_r *data);
+void				engine_render_particle_5(t_ptcl_r *data);
+void				engine_render_particle_6(t_wallobj *particle,
+					t_ptcl_r *data);
 void				engine_render_particle_7(t_engine *eng,
 					SDL_Surface *surf,
 					t_wallobj *particle, t_ptcl_r *data);
@@ -1314,16 +1297,13 @@ void				engine_render_particle_links(t_ptcl_r *data,
 					t_ptcl_h *links);
 
 void				engine_render_sprites_in_sector_1(t_sector *sect,
-					SDL_Surface *surf,
 					t_player *plr, t_sprt_r *d);
-void				engine_render_sprites_in_sector_2(t_sector *sect,
-					SDL_Surface *surf, t_player *plr, t_sprt_r *d);
+void				engine_render_sprites_in_sector_2(t_sprt_r *d);
 void				engine_render_sprites_in_sector_3(t_sector *sect,
-					SDL_Surface *surf, t_player *plr, t_sprt_r *d);
+					t_player *plr, t_sprt_r *d);
 void				engine_render_sprites_in_sector_4(t_sector *sect,
-					SDL_Surface *surf, t_player *plr, t_sprt_r *d);
+					SDL_Surface *surf, t_sprt_r *d);
 int					engine_render_sprites_in_sector_wrap(t_sector *sect,
-					SDL_Surface *surf, t_player *plr, t_sprt_r *d);
-void				sort_sprites(t_sector *sect, SDL_Surface *surf,
-					t_player *plr, t_item_sprts *restr);
+					t_player *plr, t_sprt_r *d);
+void				sort_sprites(t_sector *sect, t_player *plr);
 #endif
