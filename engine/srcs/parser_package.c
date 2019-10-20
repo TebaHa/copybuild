@@ -17,7 +17,7 @@ void		engine_pack_resources(int loudness, int cleaning)
 	if (system("test -d "RESOURCES_FOLDER) == 0)
 	{
 		if (system("test -f "RESOURCES_PACK) == 0)
-			system("rm -rf " RESOURCES_PACK);
+			engine_remove_resources_pack(loudness);
 		if (system("tar -cf " RESOURCES_PACK " " RESOURCES_FOLDER) == 0)
 		{
 			if (loudness == MODE_LOUD)
@@ -38,7 +38,7 @@ void		engine_unpack_resources(int loudness, int cleaning)
 	if (system("test -f "RESOURCES_PACK) == 0)
 	{
 		if (system("test -d "RESOURCES_FOLDER) == 0)
-			system("rm -rf " RESOURCES_FOLDER);
+			engine_remove_resources_folder(loudness);
 		if (system("tar -xf " RESOURCES_PACK " " RESOURCES_FOLDER) == 0)
 		{
 			if (loudness == MODE_LOUD)

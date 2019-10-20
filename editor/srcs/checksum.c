@@ -21,7 +21,7 @@ int			main(int argc, char **argv)
 					"       ./DoomEditor pack\n"
 					"       ./DoomEditor unpack");
 	if (argc == 2 && (ft_strcmp(argv[1], "unpack") == 0))
-		engine_unpack_resources(MODE_LOUD, MODE_CLEANING);
+		engine_unpack_resources(MODE_LOUD, MODE_LEAVE);
 	else if (argc == 2 && (ft_strcmp(argv[1], "pack") == 0))
 		engine_pack_resources(MODE_LOUD, MODE_CLEANING);
 	else

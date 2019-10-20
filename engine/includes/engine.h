@@ -45,7 +45,7 @@
 # define DELAY 15
 # define DEFAULT_SPRITE_DELAY	10
 # define FIRERATE 30
-# define BACKGROUND_MUSIC_VOLUME	0.1
+# define BACKGROUND_MUSIC_VOLUME	0.2
 # define GAME_SOUNDS_VOLUME			1
 
 typedef enum		e_pack_loudness
