@@ -24,16 +24,16 @@ void		engine_read_world_from_file(t_engine *eng, t_buff buff)
 		if (ft_strcmp(splitted_line[0], "world:") == 0)
 		{
 			util_create_world(eng, &eng->world, buff.sectors, splitted_line);
-//			if (eng->world->sectors_count != eng->stats.sectors_count)
-//				util_parsing_error_not_enough("sectors");
+			if (eng->world->sectors_count > eng->stats.sectors_count)
+				util_parsing_error_not_enough("sectors");
 		}
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
 }
 
-t_sector		util_get_sector_from_buff_by_id(int id, int size,
-				t_sector *sector, int world_id)
+t_sector	util_get_sector_from_buff_by_id(int id, int size,
+			t_sector *sector, int world_id)
 {
 	int			i;
 
@@ -49,8 +49,8 @@ t_sector		util_get_sector_from_buff_by_id(int id, int size,
 	return (sector[i]);
 }
 
-void util_create_world(t_engine *eng, t_world **world, t_sector *sectors_array,
-					   char **str)
+void		util_create_world(t_engine *eng, t_world **world,
+			t_sector *sectors_array, char **str)
 {
 	int		sect_count;
 	int		str_count;
@@ -67,7 +67,7 @@ void util_create_world(t_engine *eng, t_world **world, t_sector *sectors_array,
 	str_count = 3;
 	sect_count = 0;
 	while (str_count < 3 + (*world)->sectors_count)
-		(*world)->sectors_array[sect_count] =
+		(*world)->sectors_array[sect_count++] =
 			util_get_sector_from_buff_by_id(ft_atoi(str[str_count++]),
 			eng->stats.sectors_count, sectors_array, (*world)->id);
 	(*world)->world_box = (t_sector *)ft_memalloc(sizeof(t_sector));

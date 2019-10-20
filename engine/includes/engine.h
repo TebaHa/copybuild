@@ -1106,11 +1106,11 @@ void				engine_check_plr_vertical_pos(t_world *world,
 void				util_parsing_error_player_outside(char *position);
 
 void				engine_read_world_from_file(t_engine *eng,
-												t_buff buff);
+					t_buff buff);
 void				engine_create_world_from_file(t_engine *eng,
 					t_player *plr, char *filename);
-void util_create_world(t_engine *eng, t_world **world, t_sector *sectors_array,
-					   char **str);
+void				util_create_world(t_engine *eng, t_world **world,
+					t_sector *sectors_array, char **str);
 
 t_point_3d			*engine_read_vertexes_from_file(t_engine *eng,
 					char **json_splited);
