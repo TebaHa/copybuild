@@ -12,7 +12,7 @@
 
 #include <engine.h>
 
-t_sector * engine_read_sectors_from_file(t_engine *eng, t_buff buff)
+t_sector	*engine_read_sectors_from_file(t_engine *eng, t_buff buff)
 {
 	t_sector	*s_array_buffer;
 	char		**splitted_line;

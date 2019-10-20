@@ -14,7 +14,7 @@
 
 int			game_thread_wrapper(void *ptr)
 {
-	t_game *fps;
+	t_game	*fps;
 
 	fps = (t_game *)ptr;
 	engine_render_world(fps->eng, fps->player,
@@ -24,7 +24,7 @@ int			game_thread_wrapper(void *ptr)
 
 void		game_init_threads(t_thread_pool *render_thread_pool)
 {
-	int			i;
+	int		i;
 
 	i = 0;
 	while (i < THREAD_POOL_SIZE)
@@ -36,9 +36,9 @@ void		game_init_threads(t_thread_pool *render_thread_pool)
 	}
 }
 
-void	game_stop_threads(t_thread_pool	*render_thread, int thread_count)
+void		game_stop_threads(t_thread_pool	*render_thread, int thread_count)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i < thread_count)
@@ -48,7 +48,7 @@ void	game_stop_threads(t_thread_pool	*render_thread, int thread_count)
 	}
 }
 
-void	game_threads_recount(t_game *fps)
+void		game_threads_recount(t_game *fps)
 {
 	if (fps->logic.thread_start_index == (THREAD_POOL_SIZE - 1) || fps->logic.init == 1)
 	{
