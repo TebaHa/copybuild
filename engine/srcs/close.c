@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 20:20:03 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 20:33:28 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/20 19:36:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void		close_game(int error)
 {
-	engine_remove_resources_folder(MODE_SILENT);
+//	engine_remove_resources_folder(MODE_SILENT);
 	exit(error);
 }

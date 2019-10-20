@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_reader.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/11 18:57:28 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/20 19:36:54 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ char		**engine_read_level_file(char *filename)
 	buff[number] = '\0';
 	close(fd);
 	splitedbuff = ft_strsplit(buff, '\n');
-	if (checksum_check(buff, splitedbuff, number) != CRC_OK)
-		util_parsing_error_wrong_crc();
+//	if (checksum_check(buff, splitedbuff, number) != CRC_OK)
+//		util_parsing_error_wrong_crc();
 	free(buff);
 	return (splitedbuff);
 }

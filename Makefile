@@ -6,11 +6,11 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/19 21:41:33 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/20 18:48:52 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = DoomNukem
+NAME = wolf3d
 EDITOR = DoomEditor
 
 CC = gcc

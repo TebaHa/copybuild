@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 20:15:43 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/20 19:36:56 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		engine_sdl_init(t_engine **eng)
 {
-	engine_unpack_resources(MODE_SILENT, MODE_LEAVE);
+//	engine_unpack_resources(MODE_SILENT, MODE_LEAVE);
 	*eng = (t_engine *)ft_memalloc(sizeof(t_engine));
 	if (TTF_Init() != 0)
 		error_handler("SDL_Init Error: ", SDL_GetError(), (*eng));
