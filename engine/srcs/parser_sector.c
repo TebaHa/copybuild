@@ -41,7 +41,6 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 	util_int10_data_filler(&sector->ceil, str[3]);
 	util_find_texture_by_name(&sector->floor_texture, eng, str[4]);
 	util_find_texture_by_name(&sector->ceil_texture, eng, str[5]);
-	util_read_color(&sector->color, str[6]);
 	util_int10_data_filler(&sector->objects_count, str[7]);
 	if (sector->objects_count < 3)
 		util_parsing_error_little_data("objects", "sector", str);
@@ -67,6 +66,7 @@ void		util_create_sector_sprobjs(t_engine *eng, t_buff buff,
 	int			sprobj_count;
 	int			str_count;
 
+	util_read_color(&sector->color, str[6]);
 	sector->dist = (float *)ft_memalloc(sizeof(float)
 		* sector->objects_count);
 	sector->order = (int *)ft_memalloc(sizeof(int) * sector->objects_count);

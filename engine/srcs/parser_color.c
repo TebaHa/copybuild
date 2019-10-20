@@ -14,7 +14,7 @@
 
 void		util_read_color(t_color *color, char *str)
 {
-	int 	argb_color;
+	int		argb_color;
 
 	util_int16_data_filler(&argb_color, str);
 	color->argb = argb_color;
