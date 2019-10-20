@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <engine.h>
+#include <stdio.h>
 
 void		engine_read_plr_pos(t_engine *eng, t_player *plr, t_buff buff)
 {

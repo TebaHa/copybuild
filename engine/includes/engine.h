@@ -366,16 +366,6 @@ typedef struct		s_object
 	t_image			*ceil_wall_texture;
 }					t_object;
 
-typedef struct		s_buff
-{
-	t_point_3d		*vertexes;
-	t_sprite		*sprites;
-	t_polygone		*polies;
-	t_object		*objects;
-	t_sprobject		*sprobjects;
-	char			**str;
-}					t_buff;
-
 typedef	struct		s_sector
 {
 	t_object		*objects_array;
@@ -392,6 +382,17 @@ typedef	struct		s_sector
 	t_image			*floor_texture;
 	t_item_sprts	item_sprts;
 }					t_sector;
+
+typedef struct		s_buff
+{
+	t_point_3d		*vertexes;
+	t_sprite		*sprites;
+	t_polygone		*polies;
+	t_object		*objects;
+	t_sprobject		*sprobjects;
+	t_sector		*sectors;
+	char			**str;
+}					t_buff;
 
 typedef	struct		s_world
 {
@@ -852,6 +853,7 @@ void				util_release_polies_buffer(
 					t_polygone *polies_buff, int size);
 void				util_release_vertex_buffer(t_point_3d *vertex_buff);
 void				util_release_world(t_world *world);
+void				util_find_repeats_in_world(t_world *world);
 void				engine_present_and_clear_frame(t_engine *eng);
 int					intersect_sect(t_point_2d a, t_point_2d b,
 					t_point_2d pos);
@@ -1105,10 +1107,13 @@ void				engine_check_plr_vertical_pos(t_world *world,
 void				util_parsing_error_player_outside(char *position);
 
 void				engine_read_world_from_file(t_engine *eng,
-					char **json_splited);
+					t_buff buff);
 void				engine_create_world_from_file(t_engine *eng,
 					t_player *plr, char *filename);
-void				util_create_world(t_world **world, char **str);
+t_sector			util_get_sector_from_buff_by_id(int id, int size,
+					t_sector *sector, int world_id);
+void				util_create_world(t_engine *eng, t_world **world,
+					t_sector *sectors_array, char **str);
 
 t_point_3d			*engine_read_vertexes_from_file(t_engine *eng,
 					char **json_splited);
@@ -1138,7 +1143,7 @@ void				util_create_sprobject(t_engine *eng, t_sprobject
 t_sprobject			util_get_sprobject_from_buff_by_id(int id, int size,
 					t_sprobject *sprobjects, int sector_id);
 
-void				engine_read_sectors_from_file(t_engine *eng,
+t_sector			*engine_read_sectors_from_file(t_engine *eng,
 					t_buff buff);
 void				engine_read_worldbox_from_file(t_engine *eng,
 					t_buff buff);
