@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:10:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 19:26:28 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/20 21:52:39 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			game_thread_wrapper(void *ptr)
 {
-	t_game *fps;
+	t_game	*fps;
 
 	fps = (t_game *)ptr;
 	engine_render_world(fps->eng, fps->player,
@@ -24,21 +24,22 @@ int			game_thread_wrapper(void *ptr)
 
 void		game_init_threads(t_thread_pool *render_thread_pool)
 {
-	int			i;
+	int		i;
 
 	i = 0;
 	while (i < THREAD_POOL_SIZE)
 	{
-		render_thread_pool[i].surface =
-		SDL_CreateRGBSurface(0, WIDTH, HEIGHT, 32, (Uint32)0xff000000,
-		(Uint32)0x00ff0000, (Uint32)0x0000ff00, (Uint32)0x000000ff);
+		render_thread_pool[i].surface = SDL_CreateRGBSurface(0,
+		WIDTH, HEIGHT, 32, (unsigned int)0xff000000,
+		(unsigned int)0x00ff0000, (unsigned int)0x0000ff00,
+		(unsigned int)0x000000ff);
 		i++;
 	}
 }
 
-void	game_stop_threads(t_thread_pool	*render_thread, int thread_count)
+void		game_stop_threads(t_thread_pool *render_thread, int thread_count)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i < thread_count)
@@ -48,14 +49,16 @@ void	game_stop_threads(t_thread_pool	*render_thread, int thread_count)
 	}
 }
 
-void	game_threads_recount(t_game *fps)
+void		game_threads_recount(t_game *fps)
 {
-	if (fps->logic.thread_start_index == (THREAD_POOL_SIZE - 1) || fps->logic.init == 1)
+	if (fps->logic.thread_start_index == (THREAD_POOL_SIZE - 1)
+	|| fps->logic.init == 1)
 	{
-		SDL_WaitThread(fps->render_thread_pool[fps->logic.thread_end_index].thread,
+		SDL_WaitThread(fps->render_thread_pool
+		[fps->logic.thread_end_index].thread,
 		&fps->render_thread_pool[fps->logic.thread_end_index].value);
 		engine_draw_hud(&fps->player,
-						fps->render_thread_pool[fps->logic.thread_end_index].surface);
+		fps->render_thread_pool[fps->logic.thread_end_index].surface);
 		engine_render_frame(fps->eng,
 		fps->render_thread_pool[fps->logic.thread_end_index].surface);
 		engine_render_hud_stats(fps->eng, &fps->player);
