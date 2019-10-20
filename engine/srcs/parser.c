@@ -39,7 +39,6 @@ void		engine_create_world_from_file(t_engine *eng, t_player *plr,
 
 	buff.str = engine_read_level_file(filename);
 	engine_preparser(eng, buff.str);
-//	engine_read_world_from_file(eng, buff.str);
 	buff.vertexes = engine_read_vertexes_from_file(eng, buff.str);
 	buff.sprites = engine_read_sprites_from_file(eng, buff);
 	buff.polies = engine_read_polygones_from_file(eng, buff);
@@ -47,7 +46,6 @@ void		engine_create_world_from_file(t_engine *eng, t_player *plr,
 	buff.sprobjects = engine_read_sprobjects_from_file(eng, buff);
 	buff.sectors = engine_read_sectors_from_file(eng, buff);
 	engine_read_world_from_file(eng, buff);
-//	engine_read_worldbox_from_file(eng, buff);
 	engine_read_plr_pos(eng, plr, buff);
 	util_release_read_buffers(&buff);
 }

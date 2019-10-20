@@ -70,11 +70,32 @@ void		util_create_world(t_engine *eng, t_world **world,
 		(*world)->sectors_array[sect_count++] =
 			util_get_sector_from_buff_by_id(ft_atoi(str[str_count++]),
 			eng->stats.sectors_count, sectors_array, (*world)->id);
+	util_find_repeats_in_world(*world);
 	(*world)->world_box = (t_sector *)ft_memalloc(sizeof(t_sector));
 	(*world)->sprite_renderstack =
 		(t_item_sprts **)ft_memalloc(sizeof(t_item_sprts *) * MAXSECTORS);
 	engine_clear_renderstack((*world)->renderstack);
 	engine_clear_spriterenderstack((*world)->sprite_renderstack);
+}
+
+void		util_find_repeats_in_world(t_world *world)
+{
+	int		j;
+	int		i;
+
+	i = 0;
+	while (i < world->sectors_count)
+	{
+		j = 0;
+		while (j < world->sectors_count)
+		{
+			if (i != j)
+				if (world->sectors_array[i].id == world->sectors_array[j].id)
+					util_parsing_error_repeats("sectors", "world", world->id);
+			j++;
+		}
+		i++;
+	}
 }
 
 void		util_release_world(t_world *world)

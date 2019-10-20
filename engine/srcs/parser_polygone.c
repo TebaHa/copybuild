@@ -57,6 +57,8 @@ void			util_create_polygone(t_engine *eng, t_polygone *polygone,
 		polygone->vertices_array[vert_count++] =
 			util_get_vertex_from_buff_by_id(ft_atoi(str[str_count++]),
 			eng->stats.vertexes_count, vertex_array, polygone->id);
+	if (polygone->vertices_array[0].id == polygone->vertices_array[1].id)
+		util_parsing_error_repeats("vertexes", "polygone", polygone->id);
 	eng->stats.polies_count++;
 }
 

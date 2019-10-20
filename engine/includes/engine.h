@@ -853,6 +853,7 @@ void				util_release_polies_buffer(
 					t_polygone *polies_buff, int size);
 void				util_release_vertex_buffer(t_point_3d *vertex_buff);
 void				util_release_world(t_world *world);
+void				util_find_repeats_in_world(t_world *world);
 void				engine_present_and_clear_frame(t_engine *eng);
 int					intersect_sect(t_point_2d a, t_point_2d b,
 					t_point_2d pos);
@@ -1109,6 +1110,8 @@ void				engine_read_world_from_file(t_engine *eng,
 					t_buff buff);
 void				engine_create_world_from_file(t_engine *eng,
 					t_player *plr, char *filename);
+t_sector			util_get_sector_from_buff_by_id(int id, int size,
+					t_sector *sector, int world_id);
 void				util_create_world(t_engine *eng, t_world **world,
 					t_sector *sectors_array, char **str);
 
@@ -1140,8 +1143,8 @@ void				util_create_sprobject(t_engine *eng, t_sprobject
 t_sprobject			util_get_sprobject_from_buff_by_id(int id, int size,
 					t_sprobject *sprobjects, int sector_id);
 
-t_sector * engine_read_sectors_from_file(t_engine *eng,
-										 t_buff buff);
+t_sector			*engine_read_sectors_from_file(t_engine *eng,
+					t_buff buff);
 void				engine_read_worldbox_from_file(t_engine *eng,
 					t_buff buff);
 void				util_create_sector(t_engine *eng, t_buff buff,
