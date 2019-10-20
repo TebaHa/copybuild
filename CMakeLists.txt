@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.13)
 project(DoomNukem)
 
 set(CMAKE_CXX_STANDARD 14)
-#set(ID_UN $(shell id -un))
 
-set(CMAKE_CXX_FLAGS "-Ofast -O3 -Wall -Wextra -Werror" )
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror
+					-march=native -m64 -Ofast -O2 -flto -funroll-loops" )
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 
@@ -21,12 +21,9 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
+set(SDL_INCLUDES engine/includes/SDL2/)
+
 set(GAME_INC game/includes/game.h)
-
-set(ENG_INC engine/includes/engine.h)
-
-#set(EDITOR_INC editor/includes/editor.h)
-
 set(GAME_SRC
 		game/srcs/freefps.c
 		game/srcs/weapon_fire.c
@@ -37,6 +34,7 @@ set(GAME_SRC
 		game/srcs/gravitation.c
 		game/srcs/multi_threading.c)
 
+set(ENG_INC engine/includes/engine.h)
 set(ENG_SRC
 		engine/srcs/bresenham.c
 		engine/srcs/color.c
@@ -93,6 +91,7 @@ set(ENG_SRC
 		engine/srcs/parser_sector.c
 		engine/srcs/parser_sprobject.c
 		engine/srcs/parser_worldbox.c
+		engine/srcs/parser_player_2.c
 		engine/srcs/parser_world.c
 		engine/srcs/parser_sector_2.c
 		engine/srcs/parser_errors_2.c
@@ -106,23 +105,22 @@ set(ENG_SRC
 		engine/srcs/parser_package.c
 		engine/srcs/close.c)
 
-#set(EDITOR_SRC editor/srcs/checksum.c)
+set(EDITOR_INC editor/includes/editor.h)
+set(EDITOR_SRC
+		editor/srcs/checksum.c
+		editor/srcs/checksum_errors.c)
 
-#set(SDL ${SDL_DIRECTORY}libmlx.a)
-#set(SDL_DIRECTORY lib/sdl2/)
-set(SDL_INCLUDES engine/includes/SDL2/ engine/srcs/parser_player_2.c)
-#set(SDL_TTF_DIRECTORY lib/sdl_ttf)
-
-add_executable(DoomNukem ${GAME_INC} ${GAME_SRC}
+add_executable(DoomNukem
+				${GAME_INC} ${GAME_SRC}
 				${ENG_INC} ${ENG_SRC}
 				${SDL_DIRECTORY} ${SDL_INCLUDES})
 
-#add_executable(editor ${GAME_INC} ${GAME_SRC}
-#		${ENG_INC} ${ENG_SRC}
-#		${EDITOR_INC} ${EDITOR_SRC}
-#		${SDL_DIRECTORY} ${SDL_INCLUDES})
+add_executable(DoomEditor
+			${ENG_INC} ${ENG_SRC}
+			${EDITOR_INC} ${EDITOR_SRC}
+			${SDL_DIRECTORY} ${SDL_INCLUDES})
 
 add_subdirectory(lib/libft)
 
 target_link_libraries(DoomNukem ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)
-#target_link_libraries(editor libft)
+target_link_libraries(DoomEditor ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)

@@ -14,5 +14,5 @@
 
 void		close_game(void)
 {
-	engine_remove_resources();
+	engine_remove_resources_folder(MODE_SILENT);
 }

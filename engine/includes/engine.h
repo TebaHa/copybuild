@@ -33,9 +33,12 @@
 # define SOUND_PATH				"./game/resources/sounds/"
 # define GAME_PATH				"./game/resources/levels/1.lvl"
 # define FONT_PATH				"./game/resources/fonts/SEASRN__.ttf"
+# define RESOURCES_FOLDER		"game/resources/"
+# define RESOURCES_PACK			"game/resources.doom"
 # define PARSING_ERROR 40
 # define READING_ERROR 41
 # define CYCLE_READING_ERROR 42
+# define PACKAGE_ERROR 43
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
 # define THREAD_POOL_SIZE	4
@@ -44,6 +47,18 @@
 # define FIRERATE 30
 # define BACKGROUND_MUSIC_VOLUME	0.1
 # define GAME_SOUNDS_VOLUME			1
+
+typedef enum		e_pack_loudness
+{
+	MODE_SILENT,
+	MODE_LOUD
+}					t_pack_loudness;
+
+typedef enum		e_pack_cleaning
+{
+	MODE_LEAVE,
+	MODE_CLEANING
+}					t_pack_cleaning;
 
 typedef enum		e_sprite_type
 {
@@ -1036,8 +1051,10 @@ void				eng_create_background_music(t_engine *eng);
 
 void				infinite_loop(void);
 
-void				engine_unpack_resources();
-void				engine_remove_resources();
+void				engine_unpack_resources(int loudness, int cleaning);
+void				engine_pack_resources(int loudness, int cleaning);
+void				engine_remove_resources_folder(int loudness);
+void				engine_remove_resources_pack(int loudness);
 
 /*
 **	Resources parsing functions end

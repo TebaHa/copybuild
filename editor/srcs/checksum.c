@@ -17,12 +17,19 @@ int			main(int argc, char **argv)
 	int		i;
 
 	if (argc < 2)
-		ft_putendl("Usage: ./checksum lvl_file");
-	i = 1;
-	while (i < argc)
+		ft_putendl("Usage: ./DoomEditor lvl_file\n       ./DoomEditor pack\n       ./DoomEditor unpack");
+	if (argc == 2 && (ft_strcmp(argv[1], "unpack") == 0))
+		engine_unpack_resources(MODE_LOUD, MODE_CLEANING);
+	else if (argc == 2 && (ft_strcmp(argv[1], "pack") == 0))
+		engine_pack_resources(MODE_LOUD, MODE_CLEANING);
+	else
 	{
-		crc_check_and_add(argv[i]);
-		i++;
+		i = 1;
+		while (i < argc)
+		{
+			crc_check_and_add(argv[i]);
+			i++;
+		}
 	}
 }
 
@@ -43,7 +50,10 @@ int			crc_check_and_add(char *filename)
 		exit(EDITOR_ERROR);
 	number = read(fd, buff, 10000);
 	buff[number] = '\0';
-	crc_analyse(fd, number, buff, filename);
+	if (ft_strncmp(buff, "Map", 3) == 0)
+		crc_analyse(fd, number, buff, filename);
+	else
+		crc_message_error(filename, "not map file");
 	close(fd);
 	free(buff);
 	return (0);

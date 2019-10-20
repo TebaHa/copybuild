@@ -10,24 +10,29 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = freefps
-CRC = checksum
+NAME = DoomNukem
+EDITOR = DoomEditor
 
 CC = gcc
-FLAGS = -march=native -m64 -Ofast -O2 -flto -funroll-loops
+
+FLAGS_FAST = -march=native -m64 -Ofast -O2 -flto -funroll-loops
+FLAGS_42 = -Wall -Wextra -Werror
+FLAGS = $(FLAGS_FAST)
+
 ID_UN := $(shell id -un)
+
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./lib/libft/
 LIBFT_DIRECTORY_HEADERS = $(LIBFT_DIRECTORY)includes
 
 GAME_SRCS_LIST =	freefps.c \
-					weapon_fire.c \
-					gravitation.c \
-					game_controller_down.c \
-					game_controller_up.c \
-					game_movement.c \
-					multi_threading.c \
-					game_movement_funs.c \
+                    game_controller_down.c \
+                    game_controller_up.c \
+                    game_movement_funs.c \
+                    game_movement.c \
+                    gravitation.c \
+                    multi_threading.c \
+                    weapon_fire.c \
 
 SDL = $(SDL_DIRECTORY)libmlx.a
 SDL_DIRECTORY = ./lib/sdl2/
@@ -56,72 +61,72 @@ GAME_OBJS = $(addprefix $(GAME_OBJS_DIRECTORY), $(GAME_OBJS_LIST))
 
 GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 
-ENGINE_SRCS_LIST =	error_handler.c \
-					utility.c \
-					parser.c \
-					parser_errors.c \
-					parser_filler.c \
-					parser_reader.c \
-					parser_texture.c \
-					parser_utility.c \
-					parser_enemy.c \
-					parser_weapon.c \
-					parser_items.c \
-					parser_hud.c \
-					parser_polygone.c \
-					parser_point_3d.c \
-					parser_errors_2.c \
-					parser_errors_3.c \
-					parser_items_2.c \
-					parser_sector_2.c \
-					parser_sprite.c \
-					parser_sprite_2.c \
-					parser_object.c \
-					parser_color.c \
-					parser_package.c \
-					close.c \
-					sound_2.c \
-					parser_sector.c \
-					parser_player.c \
-					parser_player_2.c \
-					parser_worldbox.c \
-					parser_world.c \
-					parser_sprobject.c \
-					engine.c \
-					render_world.c \
-					render_wall.c \
-					objects.c \
-					objects_help.c \
-					bresenham.c \
-					bresenham2.c \
-					color.c \
-					images.c \
-					texture.c \
-					hud_draw.c \
-					shoot.c \
-					relative_coord.c \
-					sound.c \
-					sort.c \
-					sprite_render.c \
-					sprite_render_2.c \
-					render_stack.c \
-					sprite_render_stack.c \
-					pickup.c \
-					font.c \
-					checksum.c \
-					intersection_funs.c \
-					intersection_funs_help.c \
-					render_cycle.c \
-					render_cycle2.c \
-					render_wall_help.c \
-					render_wall2.c \
-					normal.c \
-					shoot_main.c \
-					shoot_help.c \
-					render_main.c \
-					texture_math.c \
-					render_particle.c \
-					render_particle_2.c \
+ENGINE_SRCS_LIST =	bresenham.c \
+                    bresenham2.c \
+                    checksum.c \
+                    close.c \
+                    color.c \
+                    engine.c \
+                    error_handler.c \
+                    font.c \
+                    hud_draw.c \
+                    images.c \
+                    intersection_funs_help.c \
+                    intersection_funs.c \
+                    normal.c \
+                    objects_help.c \
+                    objects.c \
+                    parser_color.c \
+                    parser_enemy.c \
+                    parser_errors_2.c \
+                    parser_errors_3.c \
+                    parser_errors.c \
+                    parser_filler.c \
+                    parser_hud.c \
+                    parser_items_2.c \
+                    parser_items.c \
+                    parser_object.c \
+                    parser_package.c \
+                    parser_player_2.c \
+                    parser_player.c \
+                    parser_point_3d.c \
+                    parser_polygone.c \
+                    parser_reader.c \
+                    parser_sector_2.c \
+                    parser_sector.c \
+                    parser_sprite_2.c \
+                    parser_sprite.c \
+                    parser_sprobject.c \
+                    parser_texture.c \
+                    parser_utility.c \
+                    parser_weapon.c \
+                    parser_world.c \
+                    parser_worldbox.c \
+                    parser.c \
+                    pickup.c \
+                    relative_coord.c \
+                    render_cycle.c \
+                    render_cycle2.c \
+                    render_main.c \
+                    render_particle_2.c \
+                    render_particle.c \
+                    render_stack.c \
+                    render_wall_help.c \
+                    render_wall.c \
+                    render_wall2.c \
+                    render_world.c \
+                    shoot_help.c \
+                    shoot_main.c \
+                    shoot.c \
+                    sort.c \
+                    sound_2.c \
+                    sound.c \
+                    sprite_render_2.c \
+                    sprite_render_stack.c \
+                    sprite_render.c \
+                    texture_math.c \
+                    texture.c \
+                    utility.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
@@ -151,8 +156,9 @@ EDITOR_OBJS_LIST = $(patsubst %.c, %.o, $(EDITOR_SRCS_LIST))
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS)
-	$(CC) -Ofast -O3 -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
+$(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS) $(EDITOR_OBJS_DIRECTORY) $(EDITOR_OBJS)
+	$(CC) $(FLAGS) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
+	$(CC) -o $(EDITOR) $(ENGINE_OBJS) $(EDITOR_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
 
 $(ENGINE_OBJS_DIRECTORY):
 	mkdir -p $(ENGINE_OBJS_DIRECTORY)
@@ -166,24 +172,25 @@ $(GAME_OBJS_DIRECTORY):
 	echo "$(NAME): $(GAME_OBJS_DIRECTORY) was created"
 
 $(GAME_OBJS_DIRECTORY)%.o: $(GAME_SRCS_DIRECTORY)%.c $(GAME_HEADERS)
-	$(CC) -Ofast -O3 $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
+	$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
 $(LIBFT):
 	$(MAKE) -sC $(LIBFT_DIRECTORY)
 
 clean:
 	rm -rf $(GAME_OBJS_DIRECTORY)/*.o
 	rm -rf $(ENGINE_OBJS_DIRECTORY)/*.o
+	rm -rf $(EDITOR_OBJS_DIRECTORY)/*.o
 	$(MAKE) -sC $(LIBFT_DIRECTORY) clean
-
 
 fclean: clean
 	@rm -rf $(NAME)
+	@rm -rf $(EDITOR)
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) fclean
 
 re: fclean all
 
-crc: $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(EDITOR_OBJS_DIRECTORY) $(EDITOR_OBJS)
-	$(CC) -o $(CRC) $(ENGINE_OBJS) $(EDITOR_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
+editor: $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(EDITOR_OBJS_DIRECTORY) $(EDITOR_OBJS)
+	$(CC) -o $(EDITOR) $(ENGINE_OBJS) $(EDITOR_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
 
 $(EDITOR_OBJS_DIRECTORY):
 	mkdir -p $(EDITOR_OBJS_DIRECTORY)

@@ -3,6 +3,11 @@
 */objs/*
 *.o
 freefps
+DoomEditor
+DoomNukem
+checksum.dSYM/
 .idea/
 cmake-build-debug/
-
+engine/objs/
+game/objs/
+editor/objs/
