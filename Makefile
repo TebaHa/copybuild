@@ -6,12 +6,11 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/21 14:31:02 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/21 14:33:35 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = wolf3d
-EDITOR = DoomEditor
 
 CC = gcc
 
@@ -70,6 +69,7 @@ ENGINE_SRCS_LIST =	bresenham.c \
 					error_handler.c \
 					font.c \
 					hud_draw.c \
+					hud_draw1.c \
 					images.c \
 					intersection_funs_help.c \
 					intersection_funs.c \
@@ -142,23 +142,11 @@ ENGINE_OBJS = $(addprefix $(ENGINE_OBJS_DIRECTORY), $(ENGINE_OBJS_LIST))
 
 ENGINE_OBJS_LIST = $(patsubst %.c, %.o, $(ENGINE_SRCS_LIST))
 
-EDITOR_OBJS_DIRECTORY = ./editor/objs/
-EDITOR_SRCS_DIRECTORY = ./editor/srcs/
-EDITOR_HEADERS_DIRECTORY = ./editor/includes/
-EDITOR_HEADERS_LIST = editor.h
-EDITOR_SRCS_LIST = 		checksum.c \
-						checksum_errors.c
-EDITOR_HEADERS = $(addprefix $(EDITOR_HEADERS_DIRECTORY), $(EDITOR_HEADERS_LIST))
-EDITOR_INCLUDES = -I$(EDITOR_HEADERS_DIRECTORY)
-EDITOR_SRCS = $(addprefix $(EDITOR_SRCS_DIRECTORY), $(EDITOR_SRCS_LIST))
-EDITOR_OBJS = $(addprefix $(EDITOR_OBJS_DIRECTORY), $(EDITOR_OBJS_LIST))
-EDITOR_OBJS_LIST = $(patsubst %.c, %.o, $(EDITOR_SRCS_LIST))
-
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS) $(EDITOR_OBJS_DIRECTORY) $(EDITOR_OBJS)
+$(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS)
 	$(CC) $(FLAGS) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
-	$(CC) -o $(EDITOR) $(ENGINE_OBJS) $(EDITOR_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
+
 
 $(ENGINE_OBJS_DIRECTORY):
 	mkdir -p $(ENGINE_OBJS_DIRECTORY)
@@ -188,13 +176,3 @@ fclean: clean
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) fclean
 
 re: fclean all
-
-editor: $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(EDITOR_OBJS_DIRECTORY) $(EDITOR_OBJS)
-	$(CC) -o $(EDITOR) $(ENGINE_OBJS) $(EDITOR_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
-
-$(EDITOR_OBJS_DIRECTORY):
-	mkdir -p $(EDITOR_OBJS_DIRECTORY)
-	echo "$(NAME): $(EDITOR_OBJS_DIRECTORY) was created"
-
-$(EDITOR_OBJS_DIRECTORY)%.o: $(EDITOR_SRCS_DIRECTORY)%.c $(EDITOR_HEADERS)
-	$(CC) $(FLAGS) -c $(EDITOR_INCLUDES) -I $(EDITOR_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(ENGINE_HEADERS_DIRECTORY) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
