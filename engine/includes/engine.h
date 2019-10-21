@@ -39,6 +39,7 @@
 # define READING_ERROR 41
 # define CYCLE_READING_ERROR 42
 # define PACKAGE_ERROR 43
+# define SOUND_ERROR 44
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
 # define THREAD_POOL_SIZE	4
