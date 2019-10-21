@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_weapon.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:44:08 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/28 12:25:55 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/20 22:56:41 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void			eng_create_rifle(t_engine *eng)
 	rifle->cooldown = 0;
 	rifle->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
 	rifle->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
-	rifle->anmtn[W_IDLE]->a_state = CYCLE;
+	rifle->anmtn[W_IDLE]->a_state = ANIMATE;
 	rifle->anmtn[W_RUN] = rifle->anmtn[W_IDLE];
 	rifle->anmtn[W_FIRE] = util_create_sprite_by_name(eng, "rifle_fire");
 	rifle->anmtn[W_NO_AMMO] = util_create_sprite_by_name(eng, "rifle_no_ammo");

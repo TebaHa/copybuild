@@ -6,12 +6,12 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/20 18:48:52 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/20 23:32:21 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = wolf3d
-EDITOR = DoomEditor
+EDITOR = doom_editor
 
 CC = gcc
 
@@ -26,13 +26,13 @@ LIBFT_DIRECTORY = ./lib/libft/
 LIBFT_DIRECTORY_HEADERS = $(LIBFT_DIRECTORY)includes
 
 GAME_SRCS_LIST =	freefps.c \
-                    game_controller_down.c \
-                    game_controller_up.c \
-                    game_movement_funs.c \
-                    game_movement.c \
-                    gravitation.c \
-                    multi_threading.c \
-                    weapon_fire.c \
+					game_controller_down.c \
+					game_controller_up.c \
+					game_movement_funs.c \
+					game_movement.c \
+					gravitation.c \
+					multi_threading.c \
+					weapon_fire.c \
 
 SDL = $(SDL_DIRECTORY)libmlx.a
 SDL_DIRECTORY = ./lib/sdl2/
@@ -62,71 +62,72 @@ GAME_OBJS = $(addprefix $(GAME_OBJS_DIRECTORY), $(GAME_OBJS_LIST))
 GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 
 ENGINE_SRCS_LIST =	bresenham.c \
-                    bresenham2.c \
-                    checksum.c \
-                    close.c \
-                    color.c \
-                    engine.c \
-                    error_handler.c \
-                    font.c \
-                    hud_draw.c \
-                    images.c \
-                    intersection_funs_help.c \
-                    intersection_funs.c \
-                    normal.c \
-                    objects_help.c \
-                    objects.c \
-                    parser_color.c \
-                    parser_enemy.c \
-                    parser_errors_2.c \
-                    parser_errors_3.c \
-                    parser_errors.c \
-                    parser_filler.c \
-                    parser_hud.c \
-                    parser_items_2.c \
-                    parser_items.c \
-                    parser_object.c \
-                    parser_package.c \
-                    parser_player_2.c \
-                    parser_player.c \
-                    parser_point_3d.c \
-                    parser_polygone.c \
-                    parser_reader.c \
-                    parser_sector_2.c \
-                    parser_sector.c \
-                    parser_sprite_2.c \
-                    parser_sprite.c \
-                    parser_sprobject.c \
-                    parser_texture.c \
-                    parser_utility.c \
-                    parser_weapon.c \
-                    parser_world.c \
-                    parser_worldbox.c \
-                    parser.c \
-                    pickup.c \
-                    relative_coord.c \
-                    render_cycle.c \
-                    render_cycle2.c \
-                    render_main.c \
-                    render_particle_2.c \
-                    render_particle.c \
-                    render_stack.c \
-                    render_wall_help.c \
-                    render_wall.c \
-                    render_wall2.c \
-                    render_world.c \
-                    shoot_help.c \
-                    shoot_main.c \
-                    shoot.c \
-                    sort.c \
-                    sound_2.c \
-                    sound.c \
-                    sprite_render_2.c \
-                    sprite_render_stack.c \
-                    sprite_render.c \
-                    texture_math.c \
-                    texture.c \
-                    utility.c \
+					bresenham2.c \
+					checksum.c \
+					close.c \
+					color.c \
+					engine.c \
+					error_handler.c \
+					font.c \
+					hud_draw.c \
+					hud_draw1.c \
+					images.c \
+					intersection_funs_help.c \
+					intersection_funs.c \
+					normal.c \
+					objects_help.c \
+					objects.c \
+					parser_color.c \
+					parser_enemy.c \
+					parser_errors_2.c \
+					parser_errors_3.c \
+					parser_errors.c \
+					parser_filler.c \
+					parser_hud.c \
+					parser_items_2.c \
+					parser_items.c \
+					parser_object.c \
+					parser_package.c \
+					parser_player_2.c \
+					parser_player.c \
+					parser_point_3d.c \
+					parser_polygone.c \
+					parser_reader.c \
+					parser_sector_2.c \
+					parser_sector.c \
+					parser_sprite_2.c \
+					parser_sprite.c \
+					parser_sprobject.c \
+					parser_texture.c \
+					parser_utility.c \
+					parser_weapon.c \
+					parser_world.c \
+					parser_worldbox.c \
+					parser.c \
+					pickup.c \
+					relative_coord.c \
+					render_cycle.c \
+					render_cycle2.c \
+					render_main.c \
+					render_particle_2.c \
+					render_particle.c \
+					render_stack.c \
+					render_wall_help.c \
+					render_wall.c \
+					render_wall2.c \
+					render_world.c \
+					shoot_help.c \
+					shoot_main.c \
+					shoot.c \
+					sort.c \
+					sound_2.c \
+					sound.c \
+					sprite_render_2.c \
+					sprite_render_stack.c \
+					sprite_render.c \
+					texture_math.c \
+					texture.c \
+					utility.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/

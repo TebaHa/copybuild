@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 23:16:13 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/20 23:26:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1273,6 +1273,8 @@ int					shoot_help4(t_shoot_data *d, t_engine *eng, t_player *plr);
 void				eng_reader_put_data(t_engine *eng, t_read_data *data,
 					t_txtr_pkg ***text_buff, void *mass[2]);
 void				draw_from_s_to_s_help(t_surf_data *data, SDL_Surface *src);
+void				draw_from_s_to_s_help_1(t_surf_data *data,
+					SDL_Surface *src);
 void				engine_check_object(t_find_obj *d,
 					t_world *world, t_point_3d pos);
 void				engine_render_wall_c_val2(t_wall_help3 *data_help,

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/11 18:57:28 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/20 22:20:56 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
-#include <stdio.h>
 
 void		engine_read_plr_pos(t_engine *eng, t_player *plr, t_buff buff)
 {
