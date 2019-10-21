@@ -1071,8 +1071,10 @@ char				**engine_read_level_file(char *filename);
 
 void				util_release_char_matrix(char **mtrx);
 void				util_release_read_buffers(t_buff *buff);
-void				util_float10_data_filler(float *data, char *str);
-void				util_int10_data_filler(int *data, char *str);
+void				util_float10_data_filler(float *data, char *str, int min,
+					int max);
+void				util_int10_data_filler(int *data, char *str, int min,
+					int max);
 void				util_int16_data_filler(int *data, char *str);
 void				util_parsing_error_count_handler(char *problem_from,
 					char **str, int problems_number);
@@ -1091,6 +1093,7 @@ void				util_parsing_error_not_enough(char *problem);
 void				util_parsing_error_lot_of(char *problem);
 void				util_parsing_error_repeats(char *problem,
 					char *problem_from, int id_problem);
+void				util_parsing_value_out_of_limits(int value);
 void				util_parsing_error_no_cap(char *problem, t_engine *eng);
 SDL_Surface			*util_transform_texture_to_sprite(t_image *texture);
 SDL_Surface			*util_create_rgb_surface(Uint32 flags, int width,

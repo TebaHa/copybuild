@@ -40,11 +40,11 @@ void			util_create_polygone(t_engine *eng, t_polygone *polygone,
 	int			vert_count;
 	int			str_count;
 
-	util_int10_data_filler(&polygone->id, str[1]);
-	util_int10_data_filler(&polygone->type, str[2]);
+	util_int10_data_filler(&polygone->id, str[1], 0, 0xFFFF);
+	util_int10_data_filler(&polygone->type, str[2], 1, 1);
 	util_int16_data_filler(&polygone->color, str[3]);
 	util_find_texture_by_name(&polygone->texture, eng, str[4]);
-	util_int10_data_filler(&polygone->vertices_count, str[5]);
+	util_int10_data_filler(&polygone->vertices_count, str[5], 0, 0xFFFF);
 	if (!polygone->vertices_count)
 		util_parsing_error_little_data("vertices", "polygone", str);
 	util_parsing_error_count_handler("polygone", str,

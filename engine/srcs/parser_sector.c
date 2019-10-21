@@ -40,15 +40,15 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 	int			obj_count;
 	int			str_count;
 
-	util_int10_data_filler(&sector->id, str[1]);
-	util_int10_data_filler(&sector->floor, str[2]);
-	util_int10_data_filler(&sector->ceil, str[3]);
+	util_int10_data_filler(&sector->id, str[1], 0, 0xFFFF);
+	util_int10_data_filler(&sector->floor, str[2], -8000, 8000);
+	util_int10_data_filler(&sector->ceil, str[3], -8000, 8000);
 	util_find_texture_by_name(&sector->floor_texture, eng, str[4]);
 	util_find_texture_by_name(&sector->ceil_texture, eng, str[5]);
-	util_int10_data_filler(&sector->objects_count, str[7]);
+	util_int10_data_filler(&sector->objects_count, str[7], 0, 0xFFFF);
 	if (sector->objects_count < 3)
 		util_parsing_error_little_data("objects", "sector", str);
-	util_int10_data_filler(&sector->sprobjects_count, str[8]);
+	util_int10_data_filler(&sector->sprobjects_count, str[8], 0, 0xFFFF);
 	util_parsing_error_count_handler("sector", str, 8 + sector->objects_count
 		+ sector->sprobjects_count);
 	sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object)

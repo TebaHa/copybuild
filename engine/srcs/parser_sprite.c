@@ -40,9 +40,9 @@ void		util_create_sprite(t_engine *eng, t_sprite *sprite, char **str)
 	int		srfc_count;
 
 	util_parsing_error_count_handler("sprite", str, 4);
-	util_int10_data_filler(&sprite->id, str[1]);
-	util_int10_data_filler(&sprite->frames_num, str[2]);
-	util_int10_data_filler(&sprite->frames_delay, str[3]);
+	util_int10_data_filler(&sprite->id, str[1], 0, 0xFFFF);
+	util_int10_data_filler(&sprite->frames_num, str[2], 0, 0xFFFF);
+	util_int10_data_filler(&sprite->frames_delay, str[3], 0, 0xFFFF);
 	sprite->surface = (SDL_Surface **)ft_memalloc(sizeof(SDL_Surface *)
 		* sprite->frames_num);
 	sprite->a_state = STATIC;
