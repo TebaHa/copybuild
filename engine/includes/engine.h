@@ -482,7 +482,7 @@ typedef struct		s_engine
 	t_sprobject		*tmp;
 	TTF_Font		*font;
 	Mix_Chunk		*background_music;
-	char 			*map_name;
+	char			*map_name;
 }					t_engine;
 
 typedef struct		s_tric
