@@ -63,7 +63,7 @@ void				game_threads_recount(t_game *fps);
 
 void				fire(t_player *plr, int state);
 void				fire_anim_change(t_engine *eng, t_player *plr);
-void				game_init(t_game *fps);
+void				game_init(t_game *fps, int argc, char **argv);
 
 void				game_movement_check(t_game *fps);
 void				game_apply_movement_main(t_game *fps);

@@ -12,10 +12,11 @@
 
 #include <engine.h>
 
-void		engine_parser(t_engine *eng, t_player *plr)
+void		engine_parser(t_engine *eng, t_player *plr, int argc, char **argv)
 {
+	parser_filename(eng, argc, argv);
 	engine_create_resources_from_file(eng);
-	engine_create_world_from_file(eng, plr, GAME_PATH);
+	engine_create_world_from_file(eng, plr, eng->map_name);
 	plr->wpn = eng->weapon[1];
 }
 

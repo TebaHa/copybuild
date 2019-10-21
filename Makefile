@@ -83,6 +83,7 @@ ENGINE_SRCS_LIST =	bresenham.c \
 					parser_errors.c \
 					parser_filler.c \
 					parser_hud.c \
+					parser_filename.c \
 					parser_items_2.c \
 					parser_items.c \
 					parser_object.c \

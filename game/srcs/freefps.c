@@ -36,11 +36,11 @@ void		game_init_player(t_player *plr)
 	plr->steps_sound = sound_init("player_steps");
 }
 
-void		game_init(t_game *fps)
+void		game_init(t_game *fps, int argc, char **argv)
 {
 	engine_sdl_init(&fps->eng);
 	game_init_player(&fps->player);
-	engine_parser(fps->eng, &fps->player);
+	engine_parser(fps->eng, &fps->player, argc, argv);
 	fps->player.cursector = engine_object_get_sector(fps->eng->world,
 	(t_point_3d){0.f, fps->player.position.x,
 	fps->player.position.y, 0.f}, fps->player.cursector);
@@ -56,11 +56,11 @@ void		game_init(t_game *fps)
 	fps->eng->y = 0;
 }
 
-int			main(void)
+int			main(int argc, char **argv)
 {
 	t_game			fps;
 
-	game_init(&fps);
+	game_init(&fps, argc, argv);
 	while (1)
 	{
 		game_movement_check(&fps);

@@ -104,7 +104,8 @@ set(ENG_SRC
 		engine/srcs/parser_player_2.c
 		engine/srcs/parser_color.c
 		engine/srcs/parser_package.c
-		engine/srcs/close.c)
+		engine/srcs/close.c
+		engine/srcs/parser_filename.c)
 
 set(EDITOR_INC editor/includes/editor.h)
 set(EDITOR_SRC
@@ -116,12 +117,12 @@ add_executable(DoomNukem
 				${ENG_INC} ${ENG_SRC}
 				${SDL_DIRECTORY} ${SDL_INCLUDES})
 
-add_executable(DoomEditor
-			${ENG_INC} ${ENG_SRC}
-			${EDITOR_INC} ${EDITOR_SRC}
-			${SDL_DIRECTORY} ${SDL_INCLUDES})
+#add_executable(DoomEditor
+#			${ENG_INC} ${ENG_SRC}
+#			${EDITOR_INC} ${EDITOR_SRC}
+#			${SDL_DIRECTORY} ${SDL_INCLUDES})
 
 add_subdirectory(lib/libft)
 
 target_link_libraries(DoomNukem ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)
-target_link_libraries(DoomEditor ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)
+#target_link_libraries(DoomEditor ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)

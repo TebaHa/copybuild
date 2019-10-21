@@ -482,6 +482,7 @@ typedef struct		s_engine
 	t_sprobject		*tmp;
 	TTF_Font		*font;
 	Mix_Chunk		*background_music;
+	char 			*map_name;
 }					t_engine;
 
 typedef struct		s_tric
@@ -1064,7 +1065,9 @@ void				engine_remove_resources_pack(int loudness);
 **	Parsing map functions
 */
 
-void				engine_parser(t_engine *eng, t_player *plr);
+void				engine_parser(t_engine *eng, t_player *plr, int argc,
+					char **argv);
+void				parser_filename(t_engine *eng, int argc, char **argv);
 void				engine_preparser(t_engine *eng, char **json_splited);
 void				engine_count_all_from_file(t_stats *stats, char **buff);
 char				**engine_read_level_file(char *filename);

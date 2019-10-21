@@ -19,7 +19,7 @@ char		**engine_read_level_file(char *filename)
 	char		*buff;
 	char		**splitedbuff;
 
-	fd = open(GAME_PATH, O_RDONLY);
+	fd = open(filename, O_RDONLY);
 	buff = (char*)malloc(sizeof(char) * 10000);
 	if (fd < 2)
 		util_parsing_error_no_lvl_file(filename);
