@@ -12,7 +12,7 @@
 
 #include <engine.h>
 
-void	util_float10_data_filler(float *data, char *str)
+void	util_float10_data_filler(float *data, char *str, int min, int max)
 {
 	int i;
 
@@ -24,9 +24,11 @@ void	util_float10_data_filler(float *data, char *str)
 		i++;
 	}
 	*data = ft_atoi(str);
+	if (*data < min || *data > max || ft_strlen(str) > 9)
+		util_parsing_value_out_of_limits(*data);
 }
 
-void	util_int10_data_filler(int *data, char *str)
+void	util_int10_data_filler(int *data, char *str, int min, int max)
 {
 	int i;
 
@@ -38,6 +40,8 @@ void	util_int10_data_filler(int *data, char *str)
 		i++;
 	}
 	*data = ft_atoi(str);
+	if (*data < min || *data > max || ft_strlen(str) > 9)
+		util_parsing_value_out_of_limits(*data);
 }
 
 void	util_int16_data_filler(int *data, char *str)
@@ -55,4 +59,6 @@ void	util_int16_data_filler(int *data, char *str)
 		i++;
 	}
 	*data = ft_atoi_hex(str);
+	if (*data < 0 || *data > 2147483647 || ft_strlen(str) > 9)
+		util_parsing_value_out_of_limits(*data);
 }

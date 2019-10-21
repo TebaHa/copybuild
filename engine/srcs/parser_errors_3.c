@@ -31,6 +31,7 @@ void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 	ft_putstr("Cant find texture: ");
 	ft_putstr(name);
 	ft_putstr("!\n");
+	close_game(PARSING_ERROR);
 	util_find_texture_by_name(dst, eng, PARSING_ERROR_TEXTURE);
 	close_game(PARSING_ERROR);
 }
@@ -43,6 +44,7 @@ void	util_parsing_error_no_sprite(SDL_Surface **dst, t_engine *eng,
 	ft_putstr("Cant find sprite: ");
 	ft_putstr(name);
 	ft_putstr("!\n");
+	close_game(PARSING_ERROR);
 	util_find_sprite_by_name(dst, eng, PARSING_ERROR_SPRITE);
 	if (!ft_strcmp(name, PARSING_ERROR_SPRITE))
 		close_game(PARSING_ERROR);
@@ -58,4 +60,12 @@ void	util_parsing_error_no_cap(char *problem, t_engine *eng)
 		close_game(CYCLE_READING_ERROR);
 	}
 	eng->stats.cycle_detector++;
+}
+
+void	util_parsing_value_out_of_limits(int value)
+{
+	ft_putendl("Parsing error:");
+	ft_putnbr(value);
+	ft_putendl(" out of limits!");
+	close_game(PARSING_ERROR);
 }

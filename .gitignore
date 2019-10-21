@@ -11,3 +11,5 @@ cmake-build-debug/
 engine/objs/
 game/objs/
 editor/objs/
+doom_editor
+wolf3d

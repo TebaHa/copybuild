@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 23:16:13 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/20 23:26:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define READING_ERROR 41
 # define CYCLE_READING_ERROR 42
 # define PACKAGE_ERROR 43
+# define SOUND_ERROR 44
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
 # define THREAD_POOL_SIZE	4
@@ -1070,8 +1071,10 @@ char				**engine_read_level_file(char *filename);
 
 void				util_release_char_matrix(char **mtrx);
 void				util_release_read_buffers(t_buff *buff);
-void				util_float10_data_filler(float *data, char *str);
-void				util_int10_data_filler(int *data, char *str);
+void				util_float10_data_filler(float *data, char *str, int min,
+					int max);
+void				util_int10_data_filler(int *data, char *str, int min,
+					int max);
 void				util_int16_data_filler(int *data, char *str);
 void				util_parsing_error_count_handler(char *problem_from,
 					char **str, int problems_number);
@@ -1090,6 +1093,7 @@ void				util_parsing_error_not_enough(char *problem);
 void				util_parsing_error_lot_of(char *problem);
 void				util_parsing_error_repeats(char *problem,
 					char *problem_from, int id_problem);
+void				util_parsing_value_out_of_limits(int value);
 void				util_parsing_error_no_cap(char *problem, t_engine *eng);
 SDL_Surface			*util_transform_texture_to_sprite(t_image *texture);
 SDL_Surface			*util_create_rgb_surface(Uint32 flags, int width,
@@ -1273,6 +1277,8 @@ int					shoot_help4(t_shoot_data *d, t_engine *eng, t_player *plr);
 void				eng_reader_put_data(t_engine *eng, t_read_data *data,
 					t_txtr_pkg ***text_buff, void *mass[2]);
 void				draw_from_s_to_s_help(t_surf_data *data, SDL_Surface *src);
+void				draw_from_s_to_s_help_1(t_surf_data *data,
+					SDL_Surface *src);
 void				engine_check_object(t_find_obj *d,
 					t_world *world, t_point_3d pos);
 void				engine_render_wall_c_val2(t_wall_help3 *data_help,

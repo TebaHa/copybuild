@@ -40,13 +40,13 @@ void		util_create_object(t_engine *eng, t_object *object,
 	int			pol_count;
 	int			str_count;
 
-	util_int10_data_filler(&object->id, str[1]);
-	util_int10_data_filler(&object->portal, str[2]);
-	util_int10_data_filler(&object->passble, str[3]);
-	util_int10_data_filler(&object->visible, str[4]);
+	util_int10_data_filler(&object->id, str[1], 0, 0xFFFF);
+	util_int10_data_filler(&object->portal, str[2], -1, 0xFFFF);
+	util_int10_data_filler(&object->passble, str[3], 0, 0);
+	util_int10_data_filler(&object->visible, str[4], 1, 1);
 	util_find_texture_by_name(&object->floor_wall_texture, eng, str[5]);
 	util_find_texture_by_name(&object->ceil_wall_texture, eng, str[6]);
-	util_int10_data_filler(&object->polies_count, str[7]);
+	util_int10_data_filler(&object->polies_count, str[7], 0, 0xFFFF);
 	if (!object->polies_count)
 		util_parsing_error_little_data("polies", "object", str);
 	util_parsing_error_count_handler("object", str, 7 + object->polies_count);

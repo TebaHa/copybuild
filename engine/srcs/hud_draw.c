@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 19:59:06 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/20 23:24:28 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,21 @@ void		engine_render_hud_stats(t_engine *eng, t_player *plr)
 
 void		engine_draw_hud(t_player *plr, SDL_Surface *surf)
 {
-	int				i;
 	t_sprite		*img;
 
-	i = 0;
 	bresenham_line(&(t_point_3d){0, (WIDTH / 2) - 10,
 	(HEIGHT / 2), 0}, &(t_point_3d){0, (WIDTH / 2) + 10,
-	(HEIGHT / 2), 0}, surf, get_rgb(255, 255, 255, 255));
+	(HEIGHT / 2), 0}, surf, get_rgb(0, 0, 0, 255));
 	bresenham_line(&(t_point_3d){0, (WIDTH / 2),
 	(HEIGHT / 2) - 10, 0}, &(t_point_3d){0, (WIDTH / 2),
-	(HEIGHT / 2) + 10, 0}, surf, get_rgb(255, 255, 255, 255));
+	(HEIGHT / 2) + 10, 0}, surf, get_rgb(0, 0, 0, 255));
 	img = plr->wpn->anmtn[plr->wpn->state];
-	if (img->a_state != STATIC)
+	if (img->a_state == ANIMATE)
 	{
-		if (((plr->anim % img->frames_delay
-		/ 2) == 0) && (plr->frame_num < img->frames_num - 1))
+		if (((plr->anim % img->frames_delay) == 0)
+		&& (plr->frame_num < img->frames_num))
 			plr->frame_num++;
-		if (plr->frame_num == img->frames_num - 1)
+		if (plr->frame_num == img->frames_num)
 			plr->frame_num = 0;
 	}
 	draw_from_surface_to_surface(surf, img->surface[plr->frame_num],
@@ -87,32 +85,14 @@ void		draw_from_surface_to_surface(SDL_Surface *dest,
 	data.tx = dx;
 	while (data.x < dest->w)
 	{
-		data.y = 0;
-		data.ty = dy;
-		while (data.y < dest->h)
+		if (data.tx >= 0 && data.tx <= WIDTH)
 		{
-			data.alpha = ((unsigned char *)src->pixels)
-			[(data.y * 4 * src->w + data.x * 4) + 3];
-			if (data.alpha == 255)
-			{
-				draw_from_s_to_s_help(&data, src);
-			}
-			data.y++;
-			data.ty++;
+			data.y = 0;
+			data.ty = dy;
+			while (data.y < dest->h)
+				draw_from_s_to_s_help_1(&data, src);
 		}
 		data.tx++;
 		data.x++;
 	}
-}
-
-void		draw_from_s_to_s_help(t_surf_data *data, SDL_Surface *src)
-{
-	data->red = ((unsigned char *)src->pixels)
-	[(data->y * 4 * src->w + data->x * 4)];
-	data->green = ((unsigned char *)src->pixels)
-	[(data->y * 4 * src->w + data->x * 4) + 1];
-	data->blue = ((unsigned char *)src->pixels)
-	[(data->y * 4 * src->w + data->x * 4) + 2];
-	data->pix[data->ty * WIDTH + data->tx] =
-	get_rgb(data->red, data->green, data->blue, 255);
 }
