@@ -109,5 +109,3 @@ sector:	2	50		650		ceil_wall		ceil_wall		0xFF0000	5		1		10 11 12 13 14	2
 sector:	3	75		675		floor_wall		ceil_wall		0xFF0000	5		1		15 16 17 18 19	3
 
 #remove sector4 and use wrldbx after correcting all uses in code
-
-crc: -1632711702

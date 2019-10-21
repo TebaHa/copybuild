@@ -59,3 +59,17 @@ void	util_parsing_error_repeats(char *problem, char *problem_from,
 	ft_putstr("!\n");
 	close_game(PARSING_ERROR);
 }
+
+void	util_parsing_error_little_data_check(char *problem_from, char **str,
+		int problems_number)
+{
+	int	i;
+
+	i = 0;
+	while (i <= problems_number)
+	{
+		if (!str[i])
+			util_parsing_error_little_data("data", problem_from, str);
+		i++;
+	}
+}

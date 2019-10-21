@@ -36,6 +36,7 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 
 void		util_create_point_3d(t_engine *eng, t_point_3d *point, char **str)
 {
+	util_parsing_error_little_data_check("sector", str, 4);
 	util_parsing_error_count_handler("vertex", str, 4);
 	util_int10_data_filler(&point->id, str[1], 0, 0xFFFF);
 	util_float10_data_filler(&point->x, str[2], -8000, 8000);

@@ -40,6 +40,7 @@ void			util_create_polygone(t_engine *eng, t_polygone *polygone,
 	int			vert_count;
 	int			str_count;
 
+	util_parsing_error_little_data_check("polygone", str, 7);
 	util_int10_data_filler(&polygone->id, str[1], 0, 0xFFFF);
 	util_int10_data_filler(&polygone->type, str[2], 1, 1);
 	util_int16_data_filler(&polygone->color, str[3]);

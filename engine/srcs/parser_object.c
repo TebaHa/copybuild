@@ -27,7 +27,7 @@ t_object	*engine_read_objects_from_file(t_engine *eng, t_buff buff)
 		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "object:") == 0)
 			util_create_object(eng, &o_array_buffer[eng->stats.objects_count],
-				buff.polies, splitted_line);
+				buff, splitted_line);
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
@@ -35,11 +35,12 @@ t_object	*engine_read_objects_from_file(t_engine *eng, t_buff buff)
 }
 
 void		util_create_object(t_engine *eng, t_object *object,
-			t_polygone *polygone_array, char **str)
+			t_buff buff, char **str)
 {
 	int			pol_count;
 	int			str_count;
 
+	util_parsing_error_little_data_check("object", str, 8);
 	util_int10_data_filler(&object->id, str[1], 0, 0xFFFF);
 	util_int10_data_filler(&object->portal, str[2], -1, 0xFFFF);
 	util_int10_data_filler(&object->passble, str[3], 0, 0);
@@ -57,7 +58,7 @@ void		util_create_object(t_engine *eng, t_object *object,
 	while (str_count < 8 + object->polies_count)
 		object->polies_array[pol_count++] =
 			util_get_polygone_from_buff_by_id(ft_atoi(str[str_count++]),
-			eng->stats.polies_count, polygone_array, object->id);
+			eng->stats.polies_count, buff.polies, object->id);
 	eng->stats.objects_count++;
 }
 
@@ -90,4 +91,32 @@ void		util_release_objects_buffer(t_object *object_buff, int size)
 		i++;
 	}
 	free(object_buff);
+}
+
+void		util_parsing_objects_portal(t_engine *eng, t_buff buff)
+{
+	int		sect_count;
+	int		obj_count;
+	int		find;
+
+	obj_count = 0;
+	while (obj_count < eng->stats.objects_count)
+	{
+		find = 0;
+		sect_count = 0;
+		while (sect_count < eng->stats.sectors_count)
+		{
+			if (buff.objects[obj_count].portal == buff.sectors[sect_count].id
+			|| buff.objects[obj_count].portal == -1)
+				find = 1;
+			sect_count++;
+		}
+		if (find != 1)
+		{
+			ft_putendl("Parsing error:");
+			ft_putstr("Portal error!\n");
+			close_game(PARSING_ERROR);
+		}
+		obj_count++;
+	}
 }

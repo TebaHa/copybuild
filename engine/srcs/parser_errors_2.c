@@ -19,6 +19,7 @@ void	util_parsing_error_count_handler(char *problem_from, char **str,
 		util_parsing_error_little_data("data", problem_from, str);
 	if (str[problems_number + 1])
 		util_parsing_error_extra_data("data", problem_from, str);
+	util_parsing_error_little_data_check(problem_from, str, problems_number);
 }
 
 void	util_parsing_error_extra_data(char *problem, char *problem_from,

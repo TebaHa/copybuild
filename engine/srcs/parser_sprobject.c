@@ -37,6 +37,7 @@ t_sprobject		*engine_read_sprobjects_from_file(t_engine *eng, t_buff buff)
 void			util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 				t_buff *buff, char **str)
 {
+	util_parsing_error_little_data_check("sprite object", str, 4);
 	util_parsing_error_count_handler("sprite object", str, 4);
 	util_int10_data_filler(&sprobject->id, str[1], 0, JETPACK);
 	util_int10_data_filler(&sprobject->angle, str[2], 0, 360);
