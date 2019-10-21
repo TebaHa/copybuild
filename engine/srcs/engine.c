@@ -14,7 +14,6 @@
 
 void		engine_sdl_init(t_engine **eng)
 {
-	engine_unpack_resources(MODE_SILENT, MODE_LEAVE);
 	*eng = (t_engine *)ft_memalloc(sizeof(t_engine));
 	if (TTF_Init() != 0)
 		error_handler("SDL_Init Error: ", SDL_GetError(), (*eng));

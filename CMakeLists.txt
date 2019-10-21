@@ -56,6 +56,7 @@ set(ENG_SRC
 		engine/srcs/engine.c
 		engine/srcs/error_handler.c
 		engine/srcs/hud_draw.c
+		engine/srcs/hud_draw1.c
 		engine/srcs/images.c
 		engine/srcs/normal.c
 		engine/srcs/objects.c
