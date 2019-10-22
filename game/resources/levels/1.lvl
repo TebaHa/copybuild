@@ -39,6 +39,13 @@ vertex: 70	450		450		0
 vertex: 71	-450	450		0
 vertex: 72	450		-450	0
 vertex: 73	-450	-450	0
+vertex: 74	350		350		0
+vertex: 75	-350	350		0
+vertex: 76	350		-350	0
+vertex: 77	-350	-350	0
+vertex: 78	400		400		0
+vertex: 79	-400	400		0
+vertex: 80	400		-400	0
 
 #Polygones
 #				(types: 0 for triangle and 1 for wall),
@@ -100,12 +107,19 @@ sobjct:	0	0		0		70
 sobjct:	1	0		1		71
 sobjct:	2	0		2		72
 sobjct:	3	0		1		73
+sobjct:	4	0		6		74
+sobjct:	5	0		6		75
+sobjct:	6	0		6		76
+sobjct:	7	0		5		77
+sobjct:	8	0		7		78
+sobjct:	9	0		9		79
+sobjct:	10	0		8		80
 
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs, #sprobjs,	id of obj,	id of sprobj
-sector:	0	0		600		floor_wall		ceil_wall		0xFF0000	5		1		0 1 2 3 4	1
-sector:	1	25		625		floor_wall		ceil_wall		0xFF0000	5		1		5 6 7 8 9	0
-sector:	2	50		650		ceil_wall		ceil_wall		0xFF0000	5		1		10 11 12 13 14	2
-sector:	3	75		675		floor_wall		ceil_wall		0xFF0000	5		1		15 16 17 18 19	3
+sector:	0	0		600		floor_wall		ceil_wall		0xFF0000	5		3		0 1 2 3 4	1 5 9
+sector:	1	25		625		floor_wall		ceil_wall		0xFF0000	5		3		5 6 7 8 9	0 4 8
+sector:	2	50		650		ceil_wall		ceil_wall		0xFF0000	5		3		10 11 12 13 14	2 6 10
+sector:	3	75		675		floor_wall		ceil_wall		0xFF0000	5		2		15 16 17 18 19	3 7
 
 #remove sector4 and use wrldbx after correcting all uses in code

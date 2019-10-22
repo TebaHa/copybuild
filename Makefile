@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/22 20:12:51 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/22 23:56:02 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = wolf3d
 
 CC = gcc
 
-FLAGS_FAST = -march=native -m64 -Ofast -O2 -flto -funroll-loops
+FLAGS_FAST =
 FLAGS_42 = -Wall -Wextra -Werror
 FLAGS = $(FLAGS_FAST) $(FLAGS_42)
 
