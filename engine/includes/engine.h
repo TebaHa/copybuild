@@ -1104,6 +1104,8 @@ void				util_parsing_error_not_enough(char *problem);
 void				util_parsing_error_lot_of(char *problem);
 void				util_parsing_error_repeats(char *problem,
 					char *problem_from, int id_problem);
+void				util_parsing_error_little_data_check(char *problem_from,
+					char **str, int problems_number);
 void				util_parsing_value_out_of_limits(int value);
 void				util_parsing_error_no_cap(char *problem, t_engine *eng);
 SDL_Surface			*util_transform_texture_to_sprite(t_image *texture);
@@ -1146,9 +1148,10 @@ t_polygone			util_get_polygone_from_buff_by_id(int id, int size,
 
 t_object			*engine_read_objects_from_file(t_engine *eng, t_buff buff);
 void				util_create_object(t_engine *eng, t_object *object,
-					t_polygone *polygone_array, char **str);
+					t_buff buff, char **str);
 t_object			util_get_object_from_buff_by_id(int id, int size,
 					t_object *objects, int sector_id);
+void				util_parsing_objects_portal(t_engine *eng, t_buff buff);
 
 t_sprobject			*engine_read_sprobjects_from_file(t_engine *eng,
 					t_buff buff);
@@ -1166,6 +1169,8 @@ void				util_create_sector(t_engine *eng, t_buff buff,
 					t_sector *sector, char **str);
 void				util_create_sector_sprobjs(t_engine *eng, t_buff buff,
 					t_sector *sector, char **str);
+void				util_check_sprobject_in_sector(t_engine *eng,
+					t_buff buff);
 void				util_find_repeats_in_sector(t_sector *sector);
 void				util_find_sprobjects_repeats_in_sector(t_sector *sector);
 
