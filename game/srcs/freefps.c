@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/20 23:40:03 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/22 20:19:40 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		game_init_player(t_player *plr)
 	plr->armor = 50;
 	plr->health = 75;
 	plr->steps_sound = sound_init("player_steps");
+	initilize_abs_sprt_sizes(plr);
 }
 
 void		game_init(t_game *fps, int argc, char **argv)

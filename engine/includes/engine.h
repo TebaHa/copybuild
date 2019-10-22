@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/20 23:26:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/22 19:55:07 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -418,6 +418,13 @@ typedef	struct		s_control
 	int				fakefall;
 }					t_control;
 
+typedef struct		s_sprts_size
+{
+	float			size_x;
+	float			size_y;
+	float			s_height;
+}					t_sprts_size;
+
 typedef	struct		s_player
 {
 	t_control		controller;
@@ -440,6 +447,7 @@ typedef	struct		s_player
 	int				health;
 	int				armor;
 	int				start_sector;
+	t_sprts_size	**arr_sizes;
 }					t_player;
 
 typedef struct		s_stats
@@ -1320,4 +1328,6 @@ void				engine_render_sprites_in_sector_4(t_sector *sect,
 int					engine_render_sprites_in_sector_wrap(t_sector *sect,
 					t_player *plr, t_sprt_r *d);
 void				sort_sprites(t_sector *sect, t_player *plr);
+void				initilize_abs_sprt_sizes(t_player *plr);
+
 #endif

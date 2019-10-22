@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 19:17:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/20 22:35:32 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/21 14:56:02 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ void	move_player(t_engine *eng, t_player *plr, t_point_2d dd, unsigned sect)
 
 void	change_floor(t_engine *eng, int sect, int change)
 {
-	eng->world->sectors_array[sect].floor += change;
+	if (abs(eng->world->sectors_array[sect].floor + change
+	- eng->world->sectors_array[sect].ceil) > 200)
+		eng->world->sectors_array[sect].floor += change;
 }
 
 void	change_ceil(t_engine *eng, int sect, int change)
 {
-	eng->world->sectors_array[sect].ceil += change;
+	if (abs(eng->world->sectors_array[sect].ceil
+	+ change - eng->world->sectors_array[sect].floor) > 200)
+		eng->world->sectors_array[sect].ceil += change;
 }
 
 void	switch_weapon(t_engine *eng, t_player *plr, int weapon_num)

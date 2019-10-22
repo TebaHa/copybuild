@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 21:46:01 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/22 20:14:42 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			engine_render_sprites_in_sector_wrap(t_sector *sect, t_player *plr,
 void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf,
 			t_player *plr, t_item_sprts *restr)
 {
-	t_sprt_r d;
+	t_sprt_r	d;
 
 	sort_sprites(sect, plr);
 	d.i = 0;
