@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/22 23:56:02 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/23 18:21:08 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,7 +117,7 @@ ENGINE_SRCS_LIST =	bresenham.c \
 					render_wall.c \
 					render_wall2.c \
 					render_world.c \
-					spirte_data.c \
+					sprite_data.c \
 					shoot_help.c \
 					shoot_main.c \
 					shoot.c \
