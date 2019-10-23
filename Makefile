@@ -97,6 +97,7 @@ ENGINE_SRCS_LIST =	bresenham.c \
 					parser_sector.c \
 					parser_sprite_2.c \
 					parser_sprite.c \
+					parser_sprite_360.c \
 					parser_sprobject.c \
 					parser_texture.c \
 					parser_utility.c \

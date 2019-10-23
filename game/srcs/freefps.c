@@ -43,7 +43,7 @@ void		game_init(t_game *fps, int argc, char **argv)
 	game_init_player(&fps->player);
 	engine_parser(fps->eng, &fps->player, argc, argv);
 	fps->player.cursector = engine_object_get_sector(fps->eng->world,
-	(t_point_3d){0.f, fps->player.position.x,
+	(t_point_3d){0, fps->player.position.x,
 	fps->player.position.y, 0.f}, fps->player.cursector);
 	game_init_threads(fps->render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);

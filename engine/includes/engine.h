@@ -67,6 +67,12 @@ typedef enum		e_sprite_type
 	ANIMATBLE
 }					t_sprite_type;
 
+typedef enum		e_rotate_type
+{
+	NON_ROTATABLE,
+	ROTATABLE
+}					t_rotate_type;
+
 typedef enum		e_player_state
 {
 	P_IDLE,
@@ -139,6 +145,19 @@ typedef enum		e_enm_state
 	E_DEAD,
 	E_STATES_NUM
 }					t_enm_state;
+
+typedef enum		e_enm_angle
+{
+	EA_000,
+	EA_045,
+	EA_090,
+	EA_135,
+	EA_180,
+	EA_225,
+	EA_270,
+	EA_315,
+	EA_NUM
+}					t_enm_angle;
 
 typedef enum		e_wpn_type
 {
@@ -312,7 +331,9 @@ typedef struct		s_enemy
 	int				id;
 	char			*name;
 	Mix_Chunk		*death_sound;
+	t_rotate_type	rotatable;
 	t_sprite		*anmtn[E_STATES_NUM];
+	t_sprite		**anmtn_360[E_STATES_NUM];
 }					t_enemy;
 
 typedef struct		s_weapon
@@ -1050,6 +1071,9 @@ t_sprite			*util_get_sprite_from_buff_by_name(char *name,
 char				*util_add_png_to_name(char *old_name);
 char				*util_add_png_num_to_name(char *old_name, int num);
 t_sprite			*util_create_sprite_by_name(t_engine *eng, char *str);
+t_sprite			*util_create_sprite_by_name_suffix(t_engine *eng,
+					char *name, char *suffix);
+t_sprite			**util_create_sprite_360_by_name(t_engine *eng, char *str);
 
 void				sound_mixer_init(void);
 Mix_Chunk			*sound_init(char *name);

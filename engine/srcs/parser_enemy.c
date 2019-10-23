@@ -26,7 +26,9 @@ void		eng_create_afrit(t_engine *eng)
 	afrit = (t_enemy *)ft_memalloc(sizeof(t_enemy));
 	afrit->id = AFRIT;
 	afrit->name = ft_strdup("Afrit");
-	afrit->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "afrit_idle");
+	afrit->rotatable = ROTATABLE;
+	afrit->anmtn_360[E_IDLE] = util_create_sprite_360_by_name(eng, "afrit_idle");
+	afrit->anmtn[E_IDLE] = afrit->anmtn_360[E_IDLE][EA_000];
 	afrit->anmtn[E_IDLE]->a_state = CYCLE;
 	afrit->anmtn[E_RUN] = util_create_sprite_by_name(eng, "afrit_run");
 	afrit->anmtn[E_RUN]->a_state = CYCLE;

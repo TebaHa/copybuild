@@ -105,7 +105,9 @@ set(ENG_SRC
 		engine/srcs/parser_color.c
 		engine/srcs/parser_package.c
 		engine/srcs/close.c
-		engine/srcs/parser_filename.c)
+		engine/srcs/parser_filename.c
+		engine/srcs/parser_enemy_360.c
+		engine/srcs/parser_sprite_360.c)
 
 set(EDITOR_INC editor/includes/editor.h)
 set(EDITOR_SRC
