@@ -34,7 +34,7 @@ void			eng_create_rifle(t_engine *eng)
 	rifle->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
 	rifle->anmtn[W_RUN] = rifle->anmtn[W_IDLE];
 	rifle->anmtn[W_FIRE] = util_create_sprite_by_name(eng, "rifle_fire");
-	rifle->anmtn[W_FIRE]->frames_delay = 5;
+	rifle->anmtn[W_FIRE]->frames_delay = 7;
 	rifle->anmtn[W_NO_AMMO] = util_create_sprite_by_name(eng, "rifle_no_ammo");
 	rifle->anmtn[W_RELOAD] = rifle->anmtn[W_IDLE];
 	rifle->anmtn[W_HURT] = rifle->anmtn[W_IDLE];

@@ -28,12 +28,13 @@ void		eng_create_afrit(t_engine *eng)
 	afrit->name = ft_strdup("Afrit");
 	afrit->rotatable = ROTATABLE;
 	afrit->anmtn_360[E_IDLE] = util_create_sprite_360_by_name(eng, "afrit_idle");
+	afrit->anmtn_360[E_HURT] = util_create_sprite_360_by_name(eng, "afrit_hurt");
+//	afrit->anmtn_360[E_DEAD] = util_create_sprite_0_by_name(eng, "afrit_dead");
 	afrit->anmtn[E_IDLE] = afrit->anmtn_360[E_IDLE][EA_000];
-	afrit->anmtn[E_IDLE]->a_state = CYCLE;
+	afrit->anmtn[E_HURT] = afrit->anmtn_360[E_HURT][EA_000];
+//	afrit->anmtn[E_DEAD] = afrit->anmtn_360[E_DEAD][EA_000];
 	afrit->anmtn[E_RUN] = util_create_sprite_by_name(eng, "afrit_run");
-	afrit->anmtn[E_RUN]->a_state = CYCLE;
 	afrit->anmtn[E_FIRE] = util_create_sprite_by_name(eng, "afrit_fire");
-	afrit->anmtn[E_HURT] = util_create_sprite_by_name(eng, "afrit_hurt");
 	afrit->anmtn[E_DEAD] = util_create_sprite_by_name(eng, "afrit_dead");
 	eng->enemy[AFRIT] = afrit;
 }
@@ -50,11 +51,12 @@ void		eng_create_cacodemon(t_engine *eng)
 	demon->anmtn_360[E_HURT] = util_create_sprite_360_by_name(eng, "cacodemon_hurt");
 	demon->anmtn_360[E_FIRE] = util_create_sprite_360_by_name(eng, "cacodemon_fire");
 	demon->anmtn_360[E_DEAD] = util_create_sprite_0_by_name(eng, "cacodemon_dead");
+	demon->anmtn_360[E_RUN] = demon->anmtn_360[E_IDLE];
 	demon->anmtn[E_IDLE] = demon->anmtn_360[E_IDLE][EA_000];
 	demon->anmtn[E_FIRE] = demon->anmtn_360[E_FIRE][EA_000];
 	demon->anmtn[E_HURT] = demon->anmtn_360[E_HURT][EA_000];
 	demon->anmtn[E_DEAD] = demon->anmtn_360[E_DEAD][EA_000];
-	demon->anmtn[E_RUN] = demon->anmtn[E_IDLE];
+	demon->anmtn[E_RUN] = demon->anmtn_360[E_RUN][EA_000];
 	eng->enemy[CACODEMON] = demon;
 }
 
