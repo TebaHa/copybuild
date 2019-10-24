@@ -60,7 +60,10 @@ void		eng_create_imp(t_engine *eng)
 	imp = (t_enemy *)ft_memalloc(sizeof(t_enemy));
 	imp->id = IMP;
 	imp->name = ft_strdup("Imp");
-	imp->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "imp_idle");
+	imp->rotatable = ROTATABLE;
+	imp->anmtn_360[E_IDLE] = util_create_sprite_360_by_name(eng, "imp_idle");
+	imp->anmtn[E_IDLE] = imp->anmtn_360[E_IDLE][EA_000];
+	imp->anmtn[E_IDLE]->a_state = CYCLE;
 	imp->anmtn[E_RUN] = util_create_sprite_by_name(eng, "imp_run");
 	imp->anmtn[E_RUN]->a_state = CYCLE;
 	imp->anmtn[E_FIRE] = util_create_sprite_by_name(eng, "imp_fire");
