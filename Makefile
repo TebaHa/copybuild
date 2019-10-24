@@ -6,15 +6,15 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/23 18:21:08 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/23 20:25:42 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = wolf3d
+NAME = doom_nukem
 
 CC = gcc
 
-FLAGS_FAST =
+FLAGS_FAST = -Ofast -march=native -m64 -Ofast -O2 -flto -funroll-loops
 FLAGS_42 = -Wall -Wextra -Werror
 FLAGS = $(FLAGS_FAST) $(FLAGS_42)
 
@@ -160,7 +160,7 @@ $(ENGINE_OBJS_DIRECTORY):
 	@echo "$(NAME): $(ENGINE_OBJS_DIRECTORY) was created"
 
 $(ENGINE_OBJS_DIRECTORY)%.o: $(ENGINE_SRCS_DIRECTORY)%.c $(ENGINE_HEADERS)
-	@$(CC) -Ofast $(FLAGS) -c $(ENGINE_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
+	@$(CC) $(FLAGS) -c $(ENGINE_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
 	@echo -n '.'
 
 $(GAME_OBJS_DIRECTORY):

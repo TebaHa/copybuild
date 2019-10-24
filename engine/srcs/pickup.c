@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 13:49:25 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/18 18:34:51 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 01:46:33 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		check_sprite_pick(t_player *plr, t_sprobject *sobj)
 	{
 		tmp = pow((plr->position.x - sobj->position.x), 2)
 		+ pow((plr->position.y - sobj->position.y), 2);
-		if (tmp <= 0.1 && tmp <= 0.1)
+		if (tmp <= 0.1)
 			return ;
 		dist = sqrt(tmp);
 		if (dist <= 20.1)

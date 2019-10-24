@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/22 19:55:07 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 03:41:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define HFOV (1.0 * 0.83f * HEIGHT / WIDTH)
-# define VFOV (1.0 * 0.2f)
+# define HFOV (0.83f * HEIGHT / WIDTH)
+# define VFOV (0.2f)
 # define TEXTURE_PACK_PATH		"./game/resources/images/"
 # define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
 # define SOUND_PATH				"./game/resources/sounds/"
@@ -42,7 +42,7 @@
 # define SOUND_ERROR 44
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
-# define THREAD_POOL_SIZE	4
+# define THREAD_POOL_SIZE	2
 # define DELAY 15
 # define DEFAULT_SPRITE_DELAY	10
 # define FIRERATE 30
@@ -331,6 +331,7 @@ typedef struct		s_enemy
 	int				id;
 	char			*name;
 	Mix_Chunk		*death_sound;
+	t_bool			alive;
 	t_rotate_type	rotatable;
 	t_sprite		*anmtn[E_STATES_NUM];
 	t_sprite		**anmtn_360[E_STATES_NUM];
@@ -369,6 +370,7 @@ typedef struct		s_sprobject
 	t_enemy			*type;
 	t_enm_type		enum_type;
 	int				frame;
+	int				frame_num;
 	t_point_3d		position;
 	t_enm_state		state;
 	t_bool			norender;
@@ -822,6 +824,7 @@ typedef struct		s_ptcl_r
 
 typedef struct		s_sprt_r
 {
+	t_sprite		*img;
 	int				i;
 	int				j;
 	float			planex;
@@ -1358,5 +1361,19 @@ int					engine_render_sprites_in_sector_wrap(t_sector *sect,
 					t_player *plr, t_sprt_r *d);
 void				sort_sprites(t_sector *sect, t_player *plr);
 void				initilize_abs_sprt_sizes(t_player *plr);
+float				dot_product(t_point_3d a, t_point_3d b);
+void				get_sprite_image(t_sector *sect, t_player *plr,
+					t_sprt_r *d);
+void				get_sprite_anim_obj(int angle_id,
+					t_player *plr, t_sprobject *obj, t_sprt_r *d);
+void				get_sprite_anim_obj_std(t_player *plr,
+					t_sprobject *obj, t_sprt_r *d);
+void				get_sprite_rotatable_obj(t_player *plr,
+					t_sprobject	*obj, t_sprt_r *d);
+int					get_id_by_angle(float angle);
+
+float				dot_product_2d(t_point_2d a, t_point_2d b);
+void				normalize_2d(t_point_2d *normal);
+float				magnitude_2d(t_point_2d *normal);
 
 #endif

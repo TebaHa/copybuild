@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 21:37:00 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/22 20:19:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 01:58:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,15 @@ void	engine_render_sprites_in_sector_4(t_sector *sect, SDL_Surface *surf,
 		t_sprt_r *d)
 {
 	d->txtx = (int)((float)(d->x - d->x1) /
-	(float)(d->x2 - d->x1) * sect->sprobjects_array[sect->order[d->i]].
-	type->anmtn[0]->surface[0]->w);
+	(float)(d->x2 - d->x1)
+	* d->img->surface[sect->sprobjects_array[sect->order[d->i]]
+	.frame_num]->w);
 	engine_vline_textured_surface(surf,
 	(t_scaler)scaler_init((float[5]){d->ya, d->cya, d->yb, 0,
-	(sect->sprobjects_array[sect->order[d->i]].
-	type->anmtn[0]->surface[0]->h - 1)})
+	(d->img->surface[sect->sprobjects_array[sect->order[d->i]]
+	.frame_num]->h - 1)})
 	, (t_vline1_in){(t_fix_point_3d){d->x, d->cya + 1, 0},
 	(t_fix_point_3d){d->x, d->cyb, 0}, d->txtx},
-	sect->sprobjects_array[sect->order[d->i]].type->anmtn[0]->surface[0]);
+	d->img->surface[sect->sprobjects_array[sect->order[d->i]].frame_num]);
 	d->x++;
 }
