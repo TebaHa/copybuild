@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 12:48:42 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 14:09:55 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		engine_render_hud_stats(t_engine *eng, t_player *plr)
 	buff = ft_itoa(plr->health);
 	txt = create_text(eng, buff, 0xFFFFFFFF);
 	free(buff);
-	draw_player_stats(eng, txt, (t_point_2d){80, HEIGHT - 50});
+	draw_player_stats(eng, txt, (t_point_2d){80, HEIGHT - 60});
 	buff = ft_itoa(plr->armor);
 	txt = create_text(eng, buff, 0xFFFFFFFF);
 	free(buff);
@@ -51,12 +51,15 @@ void		engine_draw_hud(t_hud *hud, t_player *plr, SDL_Surface *surf)
 		if (plr->frame_num == img->frames_num)
 			plr->frame_num = 0;
 	}
-	//SDL_UnlockSurface(surf);
-	hud = 0;
+	SDL_UnlockSurface(surf);
 	draw_from_surface_to_surface(surf, img->surface[plr->frame_num],
 	(WIDTH - img->surface[plr->frame_num]->w)
 	/ 2, HEIGHT - img->surface[plr->frame_num]->h);
-	//SDL_LockSurface(surf);
+	draw_from_surface_to_surface(surf, hud->health->surface[0],
+	10, HEIGHT - 80);
+	draw_from_surface_to_surface(surf, hud->armor->surface[0],
+	10, HEIGHT - 150);
+	SDL_LockSurface(surf);
 	plr->anim++;
 }
 
@@ -81,6 +84,7 @@ void		draw_from_surface_to_surface(SDL_Surface *dest,
 {
 	t_surf_data	data;
 
+	SDL_UnlockSurface(src);
 	data.x = 0;
 	data.pix = (int *)dest->pixels;
 	data.tx = dx;
@@ -93,4 +97,5 @@ void		draw_from_surface_to_surface(SDL_Surface *dest,
 		data.tx++;
 		data.x++;
 	}
+	SDL_LockSurface(src);
 }
