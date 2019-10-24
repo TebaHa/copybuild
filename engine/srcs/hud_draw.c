@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 01:52:47 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 06:35:49 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,22 @@
 
 void		engine_render_hud_stats(t_engine *eng, t_player *plr)
 {
-	SDL_Surface		*hp;
-	SDL_Surface		*armor;
+	SDL_Surface		*txt;
 	char			*buff;
 
 	buff = ft_itoa(plr->health);
-	hp = create_text(eng, buff, 0xE9967AFF);
+	txt = create_text(eng, buff, 0xE9967AFF);
 	free(buff);
+	draw_player_stats(eng, txt, (t_point_2d){20, HEIGHT - 50});
 	buff = ft_itoa(plr->armor);
-	armor = create_text(eng, buff, 0xE9967AFF);
+	txt = create_text(eng, buff, 0xE9967AFF);
 	free(buff);
-	draw_player_stats(eng, hp, armor);
+	draw_player_stats(eng, txt, (t_point_2d){20, HEIGHT - 80});
+	buff = ft_itoa(plr->wpn->ammo);
+	txt = create_text(eng, buff, 0xE9967AFF);
+	free(buff);
+	draw_player_stats(eng, txt, (t_point_2d){WIDTH - 45,
+	HEIGHT - 50});
 }
 
 void		engine_draw_hud(t_player *plr, SDL_Surface *surf)
@@ -52,27 +57,20 @@ void		engine_draw_hud(t_player *plr, SDL_Surface *surf)
 	plr->anim++;
 }
 
-void		draw_player_stats(t_engine *eng, SDL_Surface *hp,
-			SDL_Surface *armor)
+void		draw_player_stats(t_engine *eng, SDL_Surface *txt,
+			t_point_2d place)
 {
 	int			tex_w;
 	int			tex_h;
-	SDL_Texture	*tex_hp;
-	SDL_Texture	*tex_armor;
+	SDL_Texture	*tex;
 	SDL_Rect	destrect;
 
-	tex_hp = SDL_CreateTextureFromSurface(eng->ren, hp);
-	tex_armor = SDL_CreateTextureFromSurface(eng->ren, armor);
-	SDL_QueryTexture(tex_hp, NULL, NULL, &tex_w, &tex_h);
-	destrect = (SDL_Rect){20, HEIGHT - 60, tex_w, tex_h};
-	SDL_RenderCopy(eng->ren, tex_hp, NULL, &destrect);
-	SDL_QueryTexture(tex_armor, NULL, NULL, &tex_w, &tex_h);
-	destrect = (SDL_Rect){20, HEIGHT - 40, tex_w, tex_h};
-	SDL_RenderCopy(eng->ren, tex_armor, NULL, &destrect);
-	SDL_DestroyTexture(tex_hp);
-	SDL_DestroyTexture(tex_armor);
-	SDL_FreeSurface(hp);
-	SDL_FreeSurface(armor);
+	tex = SDL_CreateTextureFromSurface(eng->ren, txt);
+	SDL_QueryTexture(tex, NULL, NULL, &tex_w, &tex_h);
+	destrect = (SDL_Rect){place.x, place.y, tex_w, tex_h};
+	SDL_RenderCopy(eng->ren, tex, NULL, &destrect);
+	SDL_DestroyTexture(tex);
+	SDL_FreeSurface(txt);
 }
 
 void		draw_from_surface_to_surface(SDL_Surface *dest,

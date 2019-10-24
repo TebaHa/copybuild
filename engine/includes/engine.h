@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 03:41:10 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 06:21:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1254,8 +1254,8 @@ t_bool				modify_players_stat(int *stat, int addtion, int limit);
 */
 
 SDL_Surface			*create_text(t_engine *eng, char *str, int color);
-void				draw_player_stats(t_engine *eng, SDL_Surface *hp,
-					SDL_Surface *armor);
+void				draw_player_stats(t_engine *eng, SDL_Surface *txt,
+					t_point_2d place);
 void				engine_render_hud_stats(t_engine *eng, t_player *plr);
 
 /*

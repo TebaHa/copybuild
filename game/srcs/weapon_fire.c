@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 03:03:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/20 22:54:58 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 06:34:24 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ void	fire(t_player *plr, int state)
 
 void	fire_anim_change(t_engine *eng, t_player *plr)
 {
-	if (plr->shoot)
+	if (plr->shoot && plr->wpn->ammo)
 	{
 		if ((plr->firetime % plr->wpn->cooldown) == 0)
 		{
 			sound_shoot(plr);
 			shoot(eng, plr, 1000);
+			plr->wpn->ammo--;
 		}
 	}
 	else

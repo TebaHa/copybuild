@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 13:49:25 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 01:46:33 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 06:31:09 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,29 @@ void		check_sprite_pick(t_player *plr, t_sprobject *sobj)
 
 void		apply_sprite_obj(t_player *plr, t_sprobject *sobj)
 {
-	t_bool	picked;
+	t_bool		picked;
 
 	picked = false;
 	if (sobj->enum_type == MEDKIT)
 		picked = modify_players_stat(&plr->health, 25, 100);
 	else if (sobj->enum_type == ARMOR)
 		picked = modify_players_stat(&plr->armor, 25, 100);
+	else if (sobj->enum_type == PLASMA_AMMO)
+	{
+		if (ft_strcmp(plr->wpn->name, "Plazma gun") == 0)
+			picked = modify_players_stat(&plr->wpn->ammo, 10, 50);
+		else
+			picked = modify_players_stat(&plr->wpn->prev->ammo,
+			10, 50);
+	}
+	else if (sobj->enum_type == RIFLE_AMMO)
+	{
+		if (ft_strcmp(plr->wpn->name, "Rifle") == 0)
+			picked = modify_players_stat(&plr->wpn->ammo, 25, 300);
+		else
+			picked = modify_players_stat(&plr->wpn->next->ammo,
+			25, 300);
+	}
 	if (picked == true)
 		sobj->norender = true;
 }
@@ -63,8 +79,8 @@ t_bool		modify_players_stat(int *stat, int addtion, int limit)
 	if (*stat >= limit)
 		return (false);
 	result = *stat + addtion;
-	if (result > 100)
-		result = 100;
+	if (result > limit)
+		result = limit;
 	*stat = result;
 	return (true);
 }
