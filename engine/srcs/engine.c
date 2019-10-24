@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/20 19:36:56 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 12:54:42 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		engine_sdl_init(t_engine **eng)
 	800, 400, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
 	if ((*eng)->win == NULL)
 		error_handler("SDL_CreateWindow Error: ", SDL_GetError(), (*eng));
-	(*eng)->ren = SDL_CreateRenderer((*eng)->win, -1, SDL_RENDERER_SOFTWARE);
+	(*eng)->ren = SDL_CreateRenderer((*eng)->win, -1, SDL_RENDERER_ACCELERATED);
 	if ((*eng)->ren == NULL)
 		error_handler("SDL_CreateRenderer Error: ", SDL_GetError(), (*eng));
 	sound_mixer_init();

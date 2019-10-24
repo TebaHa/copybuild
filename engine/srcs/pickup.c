@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 13:49:25 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 06:31:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 12:50:11 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,11 @@ void		apply_sprite_obj(t_player *plr, t_sprobject *sobj)
 	{
 		if (ft_strcmp(plr->wpn->name, "Plazma gun") == 0)
 			picked = modify_players_stat(&plr->wpn->ammo, 10, 50);
-		else
-			picked = modify_players_stat(&plr->wpn->prev->ammo,
-			10, 50);
 	}
 	else if (sobj->enum_type == RIFLE_AMMO)
 	{
 		if (ft_strcmp(plr->wpn->name, "Rifle") == 0)
 			picked = modify_players_stat(&plr->wpn->ammo, 25, 300);
-		else
-			picked = modify_players_stat(&plr->wpn->next->ammo,
-			25, 300);
 	}
 	if (picked == true)
 		sobj->norender = true;

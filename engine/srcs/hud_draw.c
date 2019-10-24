@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 06:37:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 12:48:42 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ void		engine_render_hud_stats(t_engine *eng, t_player *plr)
 	buff = ft_itoa(plr->health);
 	txt = create_text(eng, buff, 0xFFFFFFFF);
 	free(buff);
-	draw_player_stats(eng, txt, (t_point_2d){20, HEIGHT - 50});
+	draw_player_stats(eng, txt, (t_point_2d){80, HEIGHT - 50});
 	buff = ft_itoa(plr->armor);
 	txt = create_text(eng, buff, 0xFFFFFFFF);
 	free(buff);
-	draw_player_stats(eng, txt, (t_point_2d){20, HEIGHT - 80});
+	draw_player_stats(eng, txt, (t_point_2d){80, HEIGHT - 130});
 	buff = ft_itoa(plr->wpn->ammo);
 	txt = create_text(eng, buff, 0xFFFFFFFF);
 	free(buff);
-	draw_player_stats(eng, txt, (t_point_2d){WIDTH - 45,
+	draw_player_stats(eng, txt, (t_point_2d){WIDTH - 100,
 	HEIGHT - 50});
 }
 
-void		engine_draw_hud(t_player *plr, SDL_Surface *surf)
+void		engine_draw_hud(t_hud *hud, t_player *plr, SDL_Surface *surf)
 {
 	t_sprite		*img;
 
@@ -51,9 +51,12 @@ void		engine_draw_hud(t_player *plr, SDL_Surface *surf)
 		if (plr->frame_num == img->frames_num)
 			plr->frame_num = 0;
 	}
+	//SDL_UnlockSurface(surf);
+	hud = 0;
 	draw_from_surface_to_surface(surf, img->surface[plr->frame_num],
 	(WIDTH - img->surface[plr->frame_num]->w)
 	/ 2, HEIGHT - img->surface[plr->frame_num]->h);
+	//SDL_LockSurface(surf);
 	plr->anim++;
 }
 
@@ -81,15 +84,12 @@ void		draw_from_surface_to_surface(SDL_Surface *dest,
 	data.x = 0;
 	data.pix = (int *)dest->pixels;
 	data.tx = dx;
-	while (data.x < dest->w)
+	while (data.x < src->w && data.tx < dest->w)
 	{
-		if (data.tx >= 0 && data.tx <= WIDTH)
-		{
-			data.y = 0;
-			data.ty = dy;
-			while (data.y < dest->h)
-				draw_from_s_to_s_help_1(&data, src);
-		}
+		data.y = 0;
+		data.ty = dy;
+		while (data.y < src->h && data.ty < dest->h)
+			draw_from_s_to_s_help_1(&data, src);
 		data.tx++;
 		data.x++;
 	}

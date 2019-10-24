@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:10:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/22 20:18:35 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 13:00:42 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int			game_thread_wrapper(void *ptr)
 	fps = (t_game *)ptr;
 	engine_render_world(fps->eng, fps->player,
 	fps->render_thread_pool[fps->thread_num].surface);
+	SDL_Delay(8);
 	return (fps->thread_num);
 }
 
@@ -57,7 +58,7 @@ void		game_threads_recount(t_game *fps)
 		SDL_WaitThread(fps->render_thread_pool
 		[fps->logic.thread_end_index].thread,
 		&fps->render_thread_pool[fps->logic.thread_end_index].value);
-		engine_draw_hud(&fps->player,
+		engine_draw_hud(fps->eng->hud, &fps->player,
 		fps->render_thread_pool[fps->logic.thread_end_index].surface);
 		engine_render_frame(fps->eng,
 		fps->render_thread_pool[fps->logic.thread_end_index].surface);

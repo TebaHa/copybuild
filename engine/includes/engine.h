@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 06:21:31 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 13:00:35 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define SOUND_ERROR 44
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
-# define THREAD_POOL_SIZE	2
+# define THREAD_POOL_SIZE	4
 # define DELAY 15
 # define DEFAULT_SPRITE_DELAY	10
 # define FIRERATE 30
@@ -1019,7 +1019,7 @@ t_image				*engine_cut_texture(t_image *world_texture,
 					int xstart, int xsize, int ystart, int ysize);
 void				game_stop_threads(t_thread_pool
 					*render_thread, int thread_count);
-void				engine_draw_hud(t_player *plr, SDL_Surface *surf);
+void				engine_draw_hud(t_hud *hud, t_player *plr, SDL_Surface *surf);
 void				shoot(t_engine *eng, t_player *plr, int weapon_range);
 int					intersect_3d_seg_plane(t_line s,
 					t_plane pn, t_point_3d *res);
