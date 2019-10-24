@@ -127,10 +127,10 @@ object:	21	-1		0		1		floor_wall		ceil_wall	1		21
 
 #Sprites objects	(types from t_enm_type)
 #		id,	angle,	type,	vert
-sobjct:	0	0		3		38
-sobjct:	1	0		4		39
-sobjct:	2	0		9		40
-sobjct:	3	0		9		41
+sobjct:	0	0		7		38
+sobjct:	1	0		7		39
+sobjct:	2	0		7		40
+sobjct:	3	0		7		41
 
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs, #sprobjs,	id of obj,	id of sprobj
