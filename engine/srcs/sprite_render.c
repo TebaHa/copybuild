@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 03:44:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/24 04:00:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,29 +114,31 @@ void		get_sprite_rotatable_obj(t_player *plr,
 	float		dot;
 	float		det;
 
-	obj_dir = (t_point_2d){plr->position.x - obj->position.x, plr->position.y - obj->position.y};
+	obj_dir = (t_point_2d){plr->position.x - obj->position.x,
+	plr->position.y - obj->position.y};
 	plr_dir = (t_point_2d){-obj->position.x, -obj->position.y};
 	dot = obj_dir.x * plr_dir.x + obj_dir.y * plr_dir.y;
 	det = obj_dir.x * plr_dir.y - obj_dir.y * plr_dir.x;
 	angle = atan2(det, dot);
-	get_sprite_anim_obj(get_id_by_angle(angle * 180.0 / M_PI), plr, obj, d);
+	angle = ((int)((angle * 180.0 / M_PI) + 180) + obj->angle) % 360;
+	get_sprite_anim_obj(get_id_by_angle(angle), plr, obj, d);
 }
 
 int			get_id_by_angle(float angle)
 {
-	if (angle >= 0 && angle <= 45)
+	if (angle >= 0.01 && angle <= 45.01)
 		return (0);
-	else if (angle > 45 && angle <= 90)
+	else if (angle > 45.01 && angle <= 90.01)
 		return (1);
-	else if (angle > 90 && angle <= 135)
+	else if (angle > 90.01 && angle <= 135.01)
 		return (2);
-	else if (angle > 135 && angle <= 180)
+	else if (angle > 135.01 && angle <= 180.01)
 		return (3);
-	else if (angle > -180 && angle <= -135)
+	else if (angle > 180.01 && angle <= 225.01)
 		return (4);
-	else if (angle > -135 && angle <= -90)
+	else if (angle > 225.01 && angle <= 270.01)
 		return (5);
-	else if (angle > -90 && angle <= -45)
+	else if (angle > 270.01 && angle <= 315.01)
 		return (6);
 	else
 		return (7);
