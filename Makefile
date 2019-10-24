@@ -188,3 +188,14 @@ fclean: clean
 	@echo "$(RED)DoomNukem deleted$(RESET)"
 
 re: fclean all
+
+le_clean:
+	@rm -rf $(GAME_OBJS_DIRECTORY)/*.o
+	@rm -rf $(ENGINE_OBJS_DIRECTORY)/*.o
+	@rm -rf $(EDITOR_OBJS_DIRECTORY)/*.o
+	@echo "$(RED)Objs deleted (excluding libft)$(RESET)"
+	@rm -rf $(NAME)
+	@rm -rf $(EDITOR)
+	@echo "$(RED)DoomNukem deleted (excluding libft.a)$(RESET)"
+
+le: le_clean all

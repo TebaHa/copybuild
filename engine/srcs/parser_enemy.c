@@ -45,11 +45,16 @@ void		eng_create_cacodemon(t_engine *eng)
 	demon = (t_enemy *)ft_memalloc(sizeof(t_enemy));
 	demon->id = CACODEMON;
 	demon->name = ft_strdup("Cacodemon");
-	demon->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "cacodemon_idle");
+	demon->rotatable = ROTATABLE;
+	demon->anmtn_360[E_IDLE] = util_create_sprite_360_by_name(eng, "cacodemon_idle");
+	demon->anmtn_360[E_HURT] = util_create_sprite_360_by_name(eng, "cacodemon_hurt");
+	demon->anmtn_360[E_FIRE] = util_create_sprite_360_by_name(eng, "cacodemon_fire");
+	demon->anmtn_360[E_DEAD] = util_create_sprite_0_by_name(eng, "cacodemon_dead");
+	demon->anmtn[E_IDLE] = demon->anmtn_360[E_IDLE][EA_000];
+	demon->anmtn[E_FIRE] = demon->anmtn_360[E_FIRE][EA_000];
+	demon->anmtn[E_HURT] = demon->anmtn_360[E_HURT][EA_000];
+	demon->anmtn[E_DEAD] = demon->anmtn_360[E_DEAD][EA_000];
 	demon->anmtn[E_RUN] = demon->anmtn[E_IDLE];
-	demon->anmtn[E_FIRE] = util_create_sprite_by_name(eng, "cacodemon_fire");
-	demon->anmtn[E_HURT] = util_create_sprite_by_name(eng, "cacodemon_hurt");
-	demon->anmtn[E_DEAD] = util_create_sprite_by_name(eng, "cacodemon_dead");
 	eng->enemy[CACODEMON] = demon;
 }
 

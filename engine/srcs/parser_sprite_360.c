@@ -28,6 +28,22 @@ t_sprite	**util_create_sprite_360_by_name(t_engine *eng, char *str)
 	return (res);
 }
 
+t_sprite	**util_create_sprite_0_by_name(t_engine *eng, char *str)
+{
+	t_sprite **res;
+
+	res = (t_sprite **)ft_memalloc(sizeof(t_sprite *) * EA_NUM);
+	res[EA_000] = util_create_sprite_by_name(eng, str);
+	res[EA_045] = res[EA_000];
+	res[EA_090] = res[EA_000];
+	res[EA_135] = res[EA_000];
+	res[EA_180] = res[EA_000];
+	res[EA_225] = res[EA_000];
+	res[EA_270] = res[EA_000];
+	res[EA_315] = res[EA_000];
+	return (res);
+}
+
 t_sprite	*util_create_sprite_by_name_suffix(t_engine *eng, char *name,
 			char *suffix)
 {

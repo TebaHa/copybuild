@@ -1077,6 +1077,7 @@ t_sprite			*util_create_sprite_by_name(t_engine *eng, char *str);
 t_sprite			*util_create_sprite_by_name_suffix(t_engine *eng,
 					char *name, char *suffix);
 t_sprite			**util_create_sprite_360_by_name(t_engine *eng, char *str);
+t_sprite			**util_create_sprite_0_by_name(t_engine *eng, char *str);
 
 void				sound_mixer_init(void);
 Mix_Chunk			*sound_init(char *name);

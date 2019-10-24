@@ -112,8 +112,8 @@ sobjct:	5	0		6		75
 sobjct:	6	0		6		76
 sobjct:	7	0		5		77
 sobjct:	8	0		7		78
-sobjct:	9	0		9		79
-sobjct:	10	0		9		80
+sobjct:	9	180		8		79
+sobjct:	10	180		9		80
 
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs, #sprobjs,	id of obj,	id of sprobj
