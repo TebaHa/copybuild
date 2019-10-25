@@ -46,6 +46,7 @@ void		engine_create_world_from_file(t_engine *eng, t_player *plr,
 	buff.polies = engine_read_polygones_from_file(eng, buff);
 	buff.objects = engine_read_objects_from_file(eng, buff);
 	buff.sprobjects = engine_read_sprobjects_from_file(eng, buff);
+	buff.wallobjects = engine_read_wallobjects_from_file(eng, buff);
 	buff.sectors = engine_read_sectors_from_file(eng, buff);
 	util_parsing_objects_portal(eng, buff);
 	engine_read_world_from_file(eng, buff);
@@ -60,6 +61,7 @@ void		engine_preparser(t_engine *eng, char **buff)
 	eng->stats.polies_count = 0;
 	eng->stats.objects_count = 0;
 	eng->stats.sprobjects_count = 0;
+	eng->stats.wallobjects_count = 0;
 	eng->stats.sectors_count = 0;
 	eng->stats.skins_count = 0;
 	eng->stats.worlds_count = 0;
@@ -96,6 +98,8 @@ void		engine_count_all_from_file(t_stats *stats, char **buff)
 			stats->skins_count++;
 		else if (ft_strwcmp(buff[i], "sobjct:") == 0)
 			stats->sprobjects_count++;
+		else if (ft_strwcmp(buff[i], "wobjct:") == 0)
+			stats->wallobjects_count++;
 		else if (ft_strwcmp(buff[i], "world:") == 0)
 			stats->worlds_count++;
 		else if (ft_strwcmp(buff[i], "player:") == 0)

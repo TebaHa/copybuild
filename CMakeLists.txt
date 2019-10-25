@@ -107,7 +107,9 @@ set(ENG_SRC
 		engine/srcs/close.c
 		engine/srcs/parser_filename.c
 		engine/srcs/parser_sprite_360.c
-		engine/srcs/sprite_data.c engine/srcs/parser_button.c)
+		engine/srcs/sprite_data.c
+		engine/srcs/parser_button.c
+		engine/srcs/parser_wallobjects.c)
 
 set(EDITOR_INC editor/includes/editor.h)
 set(EDITOR_SRC
@@ -126,7 +128,8 @@ add_executable(DoomNukem
 
 add_subdirectory(lib/libft)
 
-add_definitions(-Wall -Werror -Wextra -march=native -m64 -Ofast -O2 -flto -funroll-loops)
+#add_definitions(-Wall -Werror -Wextra -march=native -m64 -Ofast -O2 -flto -funroll-loops)
+#add_definitions(-march=native -m64 -Ofast -O2 -flto -funroll-loops)
 
 target_link_libraries(DoomNukem ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)
 #target_link_libraries(DoomEditor ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)

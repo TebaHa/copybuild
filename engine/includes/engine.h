@@ -28,11 +28,11 @@
 # define MAXSECTORS 32
 # define HFOV (0.83f * HEIGHT / WIDTH)
 # define VFOV (0.2f)
-# define TEXTURE_PACK_PATH		"./game/resources/images/"
-# define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
-# define SOUND_PATH				"./game/resources/sounds/"
-# define GAME_PATH				"./game/resources/levels/1.lvl"
-# define FONT_PATH				"./game/resources/fonts/SEASRN__.ttf"
+# define TEXTURE_PACK_PATH		"../game/resources/images/"
+# define TEXTURE_SPRITE_PATH	"../game/resources/sprites/"
+# define SOUND_PATH				"../game/resources/sounds/"
+# define GAME_PATH				"../game/resources/levels/1.lvl"
+# define FONT_PATH				"../game/resources/fonts/SEASRN__.ttf"
 # define RESOURCES_FOLDER		"game/resources/"
 # define RESOURCES_PACK			"game/resources.doom"
 # define PARSING_ERROR 40
@@ -342,17 +342,6 @@ typedef struct		s_wallobj
 	int				size;
 }					t_wallobj;
 
-typedef struct		s_wobj
-{
-	int				id;
-	t_button_type	type;
-	t_sprite		*texture;
-	int				object_num;
-	int 			height;
-	int 			position;
-	int				sector_num;
-}					t_wobj;
-
 typedef struct		s_button
 {
 	int				id;
@@ -360,6 +349,17 @@ typedef struct		s_button
 	Mix_Chunk		*use_sound;
 	t_sprite		*anmtn[BS_STATES_NUM];
 }					t_button;
+
+typedef struct		s_wobj
+{
+	int				id;
+	t_button		*type;
+	t_button_type	enum_type;
+	int				object_id;
+	int 			height;
+	int 			position;
+	int				sector_id;
+}					t_wobj;
 
 typedef struct		s_enemy
 {
@@ -420,6 +420,7 @@ typedef struct		s_object
 	int				visible;
 	int				status;
 	t_wallobj		particles[128];
+	int 			wallobjects_num;
 	t_wobj			*wallobjects_array;
 	t_image			*floor_wall_texture;
 	t_image			*ceil_wall_texture;
@@ -449,6 +450,7 @@ typedef struct		s_buff
 	t_polygone		*polies;
 	t_object		*objects;
 	t_sprobject		*sprobjects;
+	t_wobj			*wallobjects;
 	t_sector		*sectors;
 	char			**str;
 }					t_buff;
@@ -519,6 +521,7 @@ typedef struct		s_stats
 	int				polies_count;
 	int				objects_count;
 	int				sprobjects_count;
+	int 			wallobjects_count;
 	int				sectors_count;
 	int				textures_count;
 	int				skins_count;
@@ -1247,6 +1250,10 @@ void				util_check_sprobject_in_sector(t_engine *eng,
 					t_buff buff);
 void				util_find_repeats_in_sector(t_sector *sector);
 void				util_find_sprobjects_repeats_in_sector(t_sector *sector);
+
+t_wobj				*engine_read_wallobjects_from_file(t_engine *eng, t_buff buff);
+void				util_create_wallobject(t_engine *eng, t_wobj *wallobject,
+					t_buff *buff, char **str);
 
 void				util_find_texture_by_name(t_image **dst, t_engine *eng,
 					char *name);

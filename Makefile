@@ -133,6 +133,7 @@ PARSER_SRCS_LIST =	parser_button.c \
 					parser_world.c \
 					parser_worldbox.c \
 					parser.c \
+					parser_wallobjects.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
