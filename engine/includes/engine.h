@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 14:04:22 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/25 09:03:55 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define SOUND_ERROR 44
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
-# define THREAD_POOL_SIZE	3
+# define THREAD_POOL_SIZE	2
 # define DELAY 15
 # define DEFAULT_SPRITE_DELAY	10
 # define FIRERATE 30
@@ -418,13 +418,17 @@ typedef struct		s_buff
 	char			**str;
 }					t_buff;
 
+typedef struct		s_render_stacks
+{
+	t_item			*renderstack;
+	t_item_sprts	**sprite_renderstack;
+}					t_render_stacks;
+
 typedef	struct		s_world
 {
 	t_sector		*sectors_array;
 	t_sector		*world_box;
 	int				sectors_count;
-	t_item			*renderstack;
-	t_item_sprts	**sprite_renderstack;
 	int				checkqueue[MAXSECTORS];
 	int				id;
 }					t_world;
@@ -555,6 +559,7 @@ typedef struct		s_thread_pool
 	SDL_Thread		*thread;
 	SDL_Surface		*surface;
 	int				value;
+	t_render_stacks	ren_stacks;
 }					t_thread_pool;
 
 typedef struct		s_line
@@ -859,8 +864,8 @@ void				engine_render_object(t_engine *eng,
 					t_object obj, t_player *plr);
 void				engine_render_frame(t_engine *eng,
 					SDL_Surface *surf);
-void				engine_render_world(t_engine *eng,
-					t_player plr, SDL_Surface *surf);
+void				engine_render_world(t_engine *eng, t_player plr,
+					SDL_Surface *surf, t_render_stacks *stacks);
 void				sdl_clear_window(SDL_Surface *surf);
 void				sdl_put_pixel(SDL_Surface *surf,
 					int x, int y, int color);
@@ -900,8 +905,8 @@ int					engine_init_triangle(t_polygone *t, t_tric *trg);
 void				engine_do_draw(t_engine *eng,
 					t_player *plr, t_tric *trg, int color);
 void				engine_do_calc(t_tric *trg);
-void				engine_render_wall(t_engine *eng,
-					SDL_Surface *surf, t_wall_help2 *data2);
+void				engine_render_wall(t_engine *eng, SDL_Surface *surf,
+					t_wall_help2 *data, t_render_stacks *stacks);
 void				point_swap_3(t_fix_point_3d *t0, t_fix_point_3d *t1);
 void				point_swap_2(t_fix_point_2d *t0, t_fix_point_2d *t1);
 int					get_rgb(int r, int g, int b, int a);
@@ -1243,7 +1248,7 @@ void				sprite_float_swap(float *a, float *b);
 void				engine_render_sprites_in_sector(t_sector *sect,
 					SDL_Surface *surf, t_player *plr, t_item_sprts *restr);
 void				engine_render_sprites(t_engine *eng, t_player *plr,
-					SDL_Surface *surf);
+					SDL_Surface *surf, t_render_stacks *stacks);
 void				check_sprite_pick(t_player *plr, t_sprobject *sobj);
 void				apply_sprite_obj(t_player *plr, t_sprobject *sobj);
 void				check_sprites_in_sector(t_player *plr, t_sector *sect);
@@ -1286,7 +1291,6 @@ t_scaler			scaler_init(float data[5]);
 **	Norm funs
 **	---------------------------------------------------------------------------
 */
-
 void				engine_render_world_data(t_player *plr, t_wall_help2 *data);
 
 void				engine_render_wall_cycle_6(t_wall_clinks *l);
@@ -1298,12 +1302,12 @@ void				engine_render_cycle_1(t_wall_clinks *l);
 void				engine_render_wall_main_cycler(t_wall_clinks *links,
 					t_wall_cycle *cycler, t_wall_mai_data *mdata);
 
-void				engine_render_wall_pusher(t_engine *eng,
-					t_wall_help2 *data, t_wall_mai_data *mdata);
+void				engine_render_wall_pusher(t_engine *eng, t_wall_help2 *data,
+					t_wall_mai_data *mdata,  t_render_stacks *stacks);
 void				engine_render_particles_wall(t_engine *eng,
 					SDL_Surface *surf, t_wall_help2 *data);
 void				engine_render_world_help(t_engine *eng, SDL_Surface *surf,
-					t_wall_help2 *data);
+					t_wall_help2 *data, t_render_stacks *stacks);
 void				engine_set_links(t_wall_clinks *links, void *ls[6]);
 
 void				eng_reader_prep_data(t_read_data *data,
@@ -1376,5 +1380,7 @@ int					get_id_by_angle(float angle);
 float				dot_product_2d(t_point_2d a, t_point_2d b);
 void				normalize_2d(t_point_2d *normal);
 float				magnitude_2d(t_point_2d *normal);
+void				engine_clear_surface(SDL_Surface *surf);
+
 
 #endif

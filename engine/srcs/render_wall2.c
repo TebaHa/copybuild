@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:21:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 21:02:33 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/25 08:48:27 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void			engine_render_wall_main_cycler(t_wall_clinks *links,
 	}
 }
 
-void			engine_render_wall_pusher(t_engine *eng,
-				t_wall_help2 *data, t_wall_mai_data *mdata)
+void			engine_render_wall_pusher(t_engine *eng, t_wall_help2 *data,
+				t_wall_mai_data *mdata,  t_render_stacks *stacks)
 {
-	engine_push_renderstack(eng->world->renderstack,
+	engine_push_renderstack(stacks->renderstack,
 	(t_item){data->portal, mdata->beginx, mdata->endx});
 	eng->world->sectors_array[data->portal].item_sprts.sect_id = (t_item)
 	{data->portal, mdata->beginx, mdata->endx};
 	one_dim_zbuffers_copy(&eng->world->sectors_array[data->portal].item_sprts,
 	data->ytop, data->ybottom);
-	engine_push_spriterenderstack(eng->world->sprite_renderstack,
+	engine_push_spriterenderstack(stacks->sprite_renderstack,
 	&eng->world->sectors_array[data->portal].item_sprts);
 }
 

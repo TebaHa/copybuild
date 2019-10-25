@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 19:12:50 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/11 19:07:36 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/10/25 08:42:27 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void		util_create_world(t_engine *eng, t_world **world,
 	if (!(*world)->sectors_count)
 		util_parsing_error_little_data("sectors", "world", str);
 	util_parsing_error_count_handler("world", str, 2 + (*world)->sectors_count);
-	(*world)->renderstack = (t_item *)ft_memalloc(sizeof(t_item) * MAXSECTORS);
 	(*world)->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector)
 		* (*world)->sectors_count);
 	str_count = 3;
@@ -72,10 +71,6 @@ void		util_create_world(t_engine *eng, t_world **world,
 			eng->stats.sectors_count, sectors_array, (*world)->id);
 	util_find_repeats_in_world(*world);
 	(*world)->world_box = (t_sector *)ft_memalloc(sizeof(t_sector));
-	(*world)->sprite_renderstack =
-		(t_item_sprts **)ft_memalloc(sizeof(t_item_sprts *) * MAXSECTORS);
-	engine_clear_renderstack((*world)->renderstack);
-	engine_clear_spriterenderstack((*world)->sprite_renderstack);
 }
 
 void		util_find_repeats_in_world(t_world *world)
@@ -101,6 +96,5 @@ void		util_find_repeats_in_world(t_world *world)
 void		util_release_world(t_world *world)
 {
 	util_release_sectors_buffer(world->sectors_array, world->sectors_count);
-	free(world->renderstack);
 	free(world);
 }

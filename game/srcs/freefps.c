@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 14:07:00 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/25 08:59:23 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int			main(int argc, char **argv)
 		fire_anim_change(fps.eng, &fps.player);
 		game_apply_movement_main(&fps);
 		game_threads_recount(&fps);
-		SDL_Delay(8);
 	}
 	engine_sdl_uninit(fps.eng);
 	return (0);

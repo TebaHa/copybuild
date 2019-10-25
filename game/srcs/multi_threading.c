@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:10:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 14:05:12 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/25 08:57:22 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int			game_thread_wrapper(void *ptr)
 
 	fps = (t_game *)ptr;
 	engine_render_world(fps->eng, fps->player,
-	fps->render_thread_pool[fps->thread_num].surface);
-	SDL_Delay(25);
+	fps->render_thread_pool[fps->thread_num].surface,
+	&fps->render_thread_pool[fps->thread_num].ren_stacks);
 	return (fps->thread_num);
 }
 
@@ -34,6 +34,13 @@ void		game_init_threads(t_thread_pool *render_thread_pool)
 		WIDTH, HEIGHT, 32, (unsigned int)0xff000000,
 		(unsigned int)0x00ff0000, (unsigned int)0x0000ff00,
 		(unsigned int)0x000000ff);
+		render_thread_pool[i].ren_stacks.renderstack
+		= (t_item *)ft_memalloc(sizeof(t_item) * MAXSECTORS);
+		render_thread_pool[i].ren_stacks.sprite_renderstack =
+		(t_item_sprts **)ft_memalloc(sizeof(t_item_sprts *) * MAXSECTORS);
+		engine_clear_renderstack(render_thread_pool[i].ren_stacks.renderstack);
+		engine_clear_spriterenderstack(render_thread_pool[i].
+		ren_stacks.sprite_renderstack);
 		i++;
 	}
 }

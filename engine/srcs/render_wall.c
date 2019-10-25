@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:19:23 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 22:57:05 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/25 08:54:46 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void			engine_render_wall_c_val3(t_wall_help2 *data,
 	mdata->beginx, mdata->x2, mdata->ny1b, mdata->ny2b});
 }
 
-void			engine_render_wall(t_engine *eng,
-				SDL_Surface *surf, t_wall_help2 *data)
+void			engine_render_wall(t_engine *eng, SDL_Surface *surf,
+				t_wall_help2 *data, t_render_stacks *stacks)
 {
 	t_wall_help3		data_help;
 	t_wall_mai_data		mdata;
@@ -105,6 +105,6 @@ void			engine_render_wall(t_engine *eng,
 	eng, &mdata, surf});
 	engine_render_wall_main_cycler(&links, &cycler, &mdata);
 	if (data_help.push)
-		engine_render_wall_pusher(eng, data, &mdata);
+		engine_render_wall_pusher(eng, data, &mdata, stacks);
 	engine_render_particles_wall(eng, surf, data);
 }

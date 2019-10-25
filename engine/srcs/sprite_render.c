@@ -6,19 +6,19 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 10:05:52 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/25 08:51:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
 void		engine_render_sprites(t_engine *eng, t_player *plr,
-			SDL_Surface *surf)
+			SDL_Surface *surf, t_render_stacks *stacks)
 {
 	t_item_sprts	*restr;
 	t_sector		*sect;
 
-	while (((restr = engine_pop_spriterenderstack(eng->world->
+	while (((restr = engine_pop_spriterenderstack(stacks->
 	sprite_renderstack)) != NULL))
 	{
 		sect = eng->world->sectors_array + restr->sect_id.sectorno;
