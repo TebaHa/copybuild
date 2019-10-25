@@ -43,16 +43,16 @@ vertex: 25 -500		0		600
 vertex: 26 -500		0		600
 vertex: 27 -200		100		600
 
-vertex: 19	200		100		800
+vertex: 19	500		100		800
 vertex: 18	500		0		800
 vertex: 17	500		0		800
-vertex: 16	200		-100	800
-vertex: 15	200		-100	800
+vertex: 16	500		-100	800
+vertex: 15	500		-100	800
 vertex: 14	0		-100	800
 vertex: 13	0		-100	800
 vertex: 12	0		100		800
 vertex: 11	0		100		800
-vertex: 10	200		100		800
+vertex: 10	500		100		800
 
 vertex: 9	-200	100		600
 vertex: 8	0		100		600

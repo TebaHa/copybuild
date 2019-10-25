@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 08:02:52 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/25 13:08:50 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ void		engine_draw_hud(t_hud *hud, t_player *plr, SDL_Surface *surf)
 	(HEIGHT / 2) - 10, 0}, &(t_point_3d){0, (WIDTH / 2),
 	(HEIGHT / 2) + 10, 0}, surf, get_rgb(0, 0, 0, 255));
 	img = plr->wpn->anmtn[plr->wpn->state];
-	if (img->a_state == ANIMATE)
+	if (img->a_state == CYCLE || img->a_state == ANIMATE)
 	{
-		if (((plr->anim % img->frames_delay) == 0)
+		if (((plr->anim % (img->frames_delay * 2)) == 0)
 		&& (plr->frame_num < img->frames_num))
 			plr->frame_num++;
 		if (plr->frame_num == img->frames_num)
 			plr->frame_num = 0;
 	}
-	SDL_UnlockSurface(surf);
+	SDL_LockSurface(surf);
 	draw_from_surface_to_surface(surf, img->surface[plr->frame_num],
 	(WIDTH - img->surface[plr->frame_num]->w)
 	/ 2, HEIGHT - img->surface[plr->frame_num]->h);
@@ -61,7 +61,7 @@ void		engine_draw_hud(t_hud *hud, t_player *plr, SDL_Surface *surf)
 	10, HEIGHT - 150);
 	draw_from_surface_to_surface(surf, hud->ammo->surface[0],
 	WIDTH - 80, HEIGHT - 80);
-	SDL_LockSurface(surf);
+	SDL_UnlockSurface(surf);
 	plr->anim++;
 }
 
@@ -86,7 +86,7 @@ void		draw_from_surface_to_surface(SDL_Surface *dest,
 {
 	t_surf_data	data;
 
-	SDL_UnlockSurface(src);
+	SDL_LockSurface(src);
 	data.x = 0;
 	data.pix = (int *)dest->pixels;
 	data.tx = dx;
@@ -99,5 +99,5 @@ void		draw_from_surface_to_surface(SDL_Surface *dest,
 		data.tx++;
 		data.x++;
 	}
-	SDL_LockSurface(src);
+	SDL_UnlockSurface(src);
 }
