@@ -28,11 +28,11 @@
 # define MAXSECTORS 32
 # define HFOV (0.83f * HEIGHT / WIDTH)
 # define VFOV (0.2f)
-# define TEXTURE_PACK_PATH		"./game/resources/images/"
-# define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
-# define SOUND_PATH				"./game/resources/sounds/"
-# define GAME_PATH				"./game/resources/levels/1.lvl"
-# define FONT_PATH				"./game/resources/fonts/SEASRN__.ttf"
+# define TEXTURE_PACK_PATH		"../game/resources/images/"
+# define TEXTURE_SPRITE_PATH	"../game/resources/sprites/"
+# define SOUND_PATH				"../game/resources/sounds/"
+# define GAME_PATH				"../game/resources/levels/1.lvl"
+# define FONT_PATH				"../game/resources/fonts/SEASRN__.ttf"
 # define RESOURCES_FOLDER		"game/resources/"
 # define RESOURCES_PACK			"game/resources.doom"
 # define PARSING_ERROR 40

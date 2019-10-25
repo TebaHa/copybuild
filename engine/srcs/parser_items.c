@@ -47,6 +47,7 @@ void		eng_create_armor(t_engine *eng)
 	armor->id = ARMOR;
 	armor->name = ft_strdup("Armor");
 	armor->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "armor");
+	armor->anmtn[E_IDLE]->a_state = CYCLE;
 	armor->anmtn[E_RUN] = armor->anmtn[E_IDLE];
 	armor->anmtn[E_FIRE] = armor->anmtn[E_IDLE];
 	armor->anmtn[E_HURT] = armor->anmtn[E_IDLE];
