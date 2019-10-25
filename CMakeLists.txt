@@ -107,7 +107,7 @@ set(ENG_SRC
 		engine/srcs/close.c
 		engine/srcs/parser_filename.c
 		engine/srcs/parser_sprite_360.c
-		engine/srcs/sprite_data.c)
+		engine/srcs/sprite_data.c engine/srcs/parser_button.c)
 
 set(EDITOR_INC editor/includes/editor.h)
 set(EDITOR_SRC

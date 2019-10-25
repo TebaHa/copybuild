@@ -30,6 +30,7 @@ void		engine_create_resources_from_file(t_engine *eng)
 	eng_create_weapons(eng);
 	eng_create_items(eng);
 	eng_create_enemies(eng);
+	eng_create_buttons(eng);
 	eng_create_background_music(eng);
 }
 

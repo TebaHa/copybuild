@@ -159,6 +159,22 @@ typedef enum		e_enm_angle
 	EA_NUM
 }					t_enm_angle;
 
+typedef enum		e_button_state
+{
+	BS_INACTIVE,
+	BS_ACTIVE,
+	BS_PUSHED,
+	BS_STATES_NUM
+}					t_button_state;
+
+typedef enum		e_button_type
+{
+	BT_DOOR,
+	BT_FINISH,
+	BT_RESET,
+	BUTTON_NUM
+}					t_button_type;
+
 typedef enum		e_wpn_type
 {
 	RIFLE,
@@ -326,12 +342,30 @@ typedef struct		s_wallobj
 	int				size;
 }					t_wallobj;
 
+typedef struct		s_wobj
+{
+	int				id;
+	t_button_type	type;
+	t_sprite		*texture;
+	int				object_num;
+	int 			height;
+	int 			position;
+	int				sector_num;
+}					t_wobj;
+
+typedef struct		s_button
+{
+	int				id;
+	char			*name;
+	Mix_Chunk		*use_sound;
+	t_sprite		*anmtn[BS_STATES_NUM];
+}					t_button;
+
 typedef struct		s_enemy
 {
 	int				id;
 	char			*name;
 	Mix_Chunk		*death_sound;
-	t_bool			alive;
 	t_rotate_type	rotatable;
 	t_sprite		*anmtn[E_STATES_NUM];
 	t_sprite		**anmtn_360[E_STATES_NUM];
@@ -386,6 +420,7 @@ typedef struct		s_object
 	int				visible;
 	int				status;
 	t_wallobj		particles[128];
+	t_wobj			*wallobjects_array;
 	t_image			*floor_wall_texture;
 	t_image			*ceil_wall_texture;
 }					t_object;
@@ -511,6 +546,7 @@ typedef struct		s_engine
 	int				*z_buff;
 	t_weapon		*weapon[WEAPON_NUM];
 	t_enemy			*enemy[ENEMY_NUM];
+	t_button		*button[BUTTON_NUM];
 	t_hud			*hud;
 	t_txtr_pkg		**texture_buffer;
 	t_txtr_pkg		**sprites_buffer;
@@ -1072,6 +1108,11 @@ void				eng_create_barrel(t_engine *eng);
 void				eng_create_afrit(t_engine *eng);
 void				eng_create_cacodemon(t_engine *eng);
 void				eng_create_imp(t_engine *eng);
+
+void				eng_create_buttons(t_engine *eng);
+void				eng_create_button_door(t_engine *eng);
+void				eng_create_button_finish(t_engine *eng);
+void				eng_create_button_reset(t_engine *eng);
 
 t_sprite			*util_get_sprite_from_buff_by_name(char *name,
 					t_txtr_pkg *buff,

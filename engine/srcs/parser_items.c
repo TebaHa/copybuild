@@ -63,8 +63,7 @@ void		eng_create_powerup(t_engine *eng)
 	powerup->id = POWER_UP;
 	powerup->name = ft_strdup("Power up");
 	powerup->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "power_up");
-	if (powerup->anmtn[E_IDLE]->a_state == ANIMATE)
-		powerup->anmtn[E_IDLE]->a_state = PENDULUM;
+	powerup->anmtn[W_IDLE]->a_state = CYCLE;
 	powerup->anmtn[E_RUN] = powerup->anmtn[E_IDLE];
 	powerup->anmtn[E_FIRE] = powerup->anmtn[E_IDLE];
 	powerup->anmtn[E_HURT] = powerup->anmtn[E_IDLE];

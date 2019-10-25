@@ -32,8 +32,11 @@ void			eng_create_rifle(t_engine *eng)
 	rifle->cooldown = 0;
 	rifle->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
 	rifle->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
+//	rifle->anmtn[W_IDLE]->a_state = CYCLE;
+//	rifle->anmtn[W_IDLE]->frames_delay = 20;
 	rifle->anmtn[W_RUN] = rifle->anmtn[W_IDLE];
 	rifle->anmtn[W_FIRE] = util_create_sprite_by_name(eng, "rifle_fire");
+	rifle->anmtn[W_FIRE]->a_state = CYCLE;
 	rifle->anmtn[W_FIRE]->frames_delay = 7;
 	rifle->anmtn[W_NO_AMMO] = util_create_sprite_by_name(eng, "rifle_no_ammo");
 	rifle->anmtn[W_RELOAD] = rifle->anmtn[W_IDLE];
@@ -58,6 +61,8 @@ void			eng_create_plasma(t_engine *eng)
 	plasma->state = W_IDLE;
 	plasma->bullet_hole = util_create_sprite_by_name(eng, "plasma_hole");
 	plasma->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "plasma_idle");
+//	plasma->anmtn[W_IDLE]->a_state = CYCLE;
+//	plasma->anmtn[W_IDLE]->frames_delay = 20;
 	plasma->anmtn[W_RUN] = plasma->anmtn[W_IDLE];
 	plasma->anmtn[W_FIRE] = util_create_sprite_by_name(eng, "plasma_fire");
 	plasma->anmtn[W_NO_AMMO] =

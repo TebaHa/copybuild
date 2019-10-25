@@ -60,7 +60,8 @@ GAME_OBJS = $(addprefix $(GAME_OBJS_DIRECTORY), $(GAME_OBJS_LIST))
 
 GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 
-ENGINE_SRCS_LIST =	bresenham.c \
+ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
+					bresenham.c \
 					bresenham2.c \
 					checksum.c \
 					close.c \
@@ -76,6 +77,33 @@ ENGINE_SRCS_LIST =	bresenham.c \
 					normal.c \
 					objects_help.c \
 					objects.c \
+					pickup.c \
+					relative_coord.c \
+					render_cycle.c \
+					render_cycle2.c \
+					render_main.c \
+					render_particle_2.c \
+					render_particle.c \
+					render_stack.c \
+					render_wall_help.c \
+					render_wall.c \
+					render_wall2.c \
+					render_world.c \
+					sprite_data.c \
+					shoot_help.c \
+					shoot_main.c \
+					shoot.c \
+					sort.c \
+					sound_2.c \
+					sound.c \
+					sprite_render_2.c \
+					sprite_render_stack.c \
+					sprite_render.c \
+					texture_math.c \
+					texture.c \
+					utility.c \
+
+PARSER_SRCS_LIST =	parser_button.c \
 					parser_color.c \
 					parser_enemy.c \
 					parser_errors_2.c \
@@ -105,31 +133,6 @@ ENGINE_SRCS_LIST =	bresenham.c \
 					parser_world.c \
 					parser_worldbox.c \
 					parser.c \
-					pickup.c \
-					relative_coord.c \
-					render_cycle.c \
-					render_cycle2.c \
-					render_main.c \
-					render_particle_2.c \
-					render_particle.c \
-					render_stack.c \
-					render_wall_help.c \
-					render_wall.c \
-					render_wall2.c \
-					render_world.c \
-					sprite_data.c \
-					shoot_help.c \
-					shoot_main.c \
-					shoot.c \
-					sort.c \
-					sound_2.c \
-					sound.c \
-					sprite_render_2.c \
-					sprite_render_stack.c \
-					sprite_render.c \
-					texture_math.c \
-					texture.c \
-					utility.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
