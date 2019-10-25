@@ -28,11 +28,11 @@
 # define MAXSECTORS 32
 # define HFOV (0.83f * HEIGHT / WIDTH)
 # define VFOV (0.2f)
-# define TEXTURE_PACK_PATH		"../game/resources/images/"
-# define TEXTURE_SPRITE_PATH	"../game/resources/sprites/"
-# define SOUND_PATH				"../game/resources/sounds/"
-# define GAME_PATH				"../game/resources/levels/1.lvl"
-# define FONT_PATH				"../game/resources/fonts/SEASRN__.ttf"
+# define TEXTURE_PACK_PATH		"./game/resources/images/"
+# define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
+# define SOUND_PATH				"./game/resources/sounds/"
+# define GAME_PATH				"./game/resources/levels/1.lvl"
+# define FONT_PATH				"./game/resources/fonts/SEASRN__.ttf"
 # define RESOURCES_FOLDER		"game/resources/"
 # define RESOURCES_PACK			"game/resources.doom"
 # define PARSING_ERROR 40
@@ -1229,6 +1229,8 @@ void				util_create_object(t_engine *eng, t_object *object,
 t_object			util_get_object_from_buff_by_id(int id, int size,
 					t_object *objects, int sector_id);
 void				util_parsing_objects_portal(t_engine *eng, t_buff buff);
+void				util_fill_object_with_wallobjects(t_engine *eng,
+					t_buff buff, t_object *object);
 
 t_sprobject			*engine_read_sprobjects_from_file(t_engine *eng,
 					t_buff buff);
@@ -1253,7 +1255,7 @@ void				util_find_sprobjects_repeats_in_sector(t_sector *sector);
 
 t_wobj				*engine_read_wallobjects_from_file(t_engine *eng, t_buff buff);
 void				util_create_wallobject(t_engine *eng, t_wobj *wallobject,
-					t_buff *buff, char **str);
+					char **str);
 
 void				util_find_texture_by_name(t_image **dst, t_engine *eng,
 					char *name);

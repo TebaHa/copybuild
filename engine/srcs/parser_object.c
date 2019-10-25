@@ -55,6 +55,7 @@ void		util_create_object(t_engine *eng, t_object *object,
 		* object->polies_count);
 	str_count = 8;
 	pol_count = 0;
+	util_fill_object_with_wallobjects(eng, buff, object);
 	while (str_count < 8 + object->polies_count)
 		object->polies_array[pol_count++] =
 			util_get_polygone_from_buff_by_id(ft_atoi(str[str_count++]),
@@ -118,5 +119,37 @@ void		util_parsing_objects_portal(t_engine *eng, t_buff buff)
 			close_game(PARSING_ERROR);
 		}
 		obj_count++;
+	}
+}
+
+void			util_fill_object_with_wallobjects(t_engine *eng, t_buff buff,
+				t_object *object)
+{
+	int 		wobj_count;
+	int 		obj_count;
+
+	wobj_count = 0;
+	while (wobj_count < eng->stats.wallobjects_count)
+	{
+		if (buff.wallobjects[wobj_count].object_id == object->id)
+			object->wallobjects_num++;
+		wobj_count++;
+	}
+	if (object->wallobjects_num)
+	{
+		object->wallobjects_array = (t_wobj *)ft_memalloc(sizeof(t_wobj) *
+			object->wallobjects_num);
+		wobj_count = 0;
+		obj_count = 0;
+		while (wobj_count < eng->stats.wallobjects_count)
+		{
+			if (buff.wallobjects[wobj_count].object_id == object->id)
+			{
+				object->wallobjects_array[obj_count] =
+						buff.wallobjects[wobj_count];
+				obj_count++;
+			}
+			wobj_count++;
+		}
 	}
 }

@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.13)
 project(DoomNukem)
 
+add_custom_target(makeDoomNukem
+		COMMAND make
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_custom_target(makeDoomNukem_2
+		COMMAND make
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
 set(CMAKE_CXX_STANDARD 14)
 
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror
