@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 08:51:57 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/25 09:25:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void		get_sprite_anim_obj(int angle_id,
 			t_player *plr, t_sprobject *obj, t_sprt_r *d)
 {
 	d->img = obj->type->anmtn_360[obj->state][angle_id];
-	if (((plr->anim % d->img->frames_delay) == 0)
+	if (((plr->anim % (d->img->frames_delay * 2)) == 0)
 	&& (obj->frame_num < d->img->frames_num))
 		obj->frame_num++;
 	if (obj->frame_num == d->img->frames_num)
@@ -159,7 +159,7 @@ void		get_sprite_anim_obj_std(t_player *plr,
 			t_sprobject *obj, t_sprt_r *d)
 {
 	d->img = obj->type->anmtn[obj->state];
-	if (((plr->anim % d->img->frames_delay) == 0)
+	if (((plr->anim % (d->img->frames_delay * 2)) == 0)
 	&& (obj->frame_num < d->img->frames_num))
 		obj->frame_num++;
 	if (obj->frame_num == d->img->frames_num)
