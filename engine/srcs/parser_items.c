@@ -17,6 +17,7 @@ void		eng_create_items(t_engine *eng)
 	eng_create_medkit(eng);
 	eng_create_armor(eng);
 	eng_create_powerup(eng);
+	eng_create_jetpack(eng);
 	eng_create_rifle_ammo(eng);
 	eng_create_plasma_ammo(eng);
 	eng_create_plasma_gun(eng);
@@ -71,4 +72,21 @@ void		eng_create_powerup(t_engine *eng)
 	powerup->anmtn[E_DEAD] = util_create_sprite_by_name(eng, "empty_place");
 	powerup->death_sound = sound_init("pickup_powerup");
 	eng->enemy[POWER_UP] = powerup;
+}
+
+void		eng_create_jetpack(t_engine *eng)
+{
+	t_enemy	*jetpack;
+
+	jetpack = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	jetpack->id = JETPACK;
+	jetpack->name = ft_strdup("Jetpack");
+	jetpack->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "jetpack");
+	jetpack->anmtn[W_IDLE]->a_state = CYCLE;
+	jetpack->anmtn[E_RUN] = jetpack->anmtn[E_IDLE];
+	jetpack->anmtn[E_FIRE] = jetpack->anmtn[E_IDLE];
+	jetpack->anmtn[E_HURT] = jetpack->anmtn[E_IDLE];
+	jetpack->anmtn[E_DEAD] = util_create_sprite_by_name(eng, "empty_place");
+	jetpack->death_sound = sound_init("pickup_jetpack");
+	eng->enemy[JETPACK] = jetpack;
 }

@@ -11,6 +11,11 @@ player: 99
 #		id	X,		Y,		Z
 vertex: 99	150		50		200
 
+vertex: 60	-400	-200	600
+vertex: 61	-450	-250	600
+vertex: 62	-500	-200	600
+vertex: 63	-510	-200	600
+
 vertex: 41	-500	-200	100
 vertex: 40	300		50		300
 vertex: 39	-130	-50		300
@@ -131,6 +136,10 @@ sobjct:	0	0		7		38
 sobjct:	1	0		7		39
 sobjct:	2	0		7		40
 sobjct:	3	0		7		41
+sobjct:	4	0		0		60
+sobjct:	5	0		1		61
+sobjct:	6	0		2		62
+sobjct:	7	0		3		63
 
 #Wall objects	(types from t_button_type)
 #		id,	type,	object, height,	%position,	target_sector
@@ -139,8 +148,8 @@ wobjct:	1	1		4		200		50			3
 
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture, glow,	#objs, id of obj
-sector:	0	0		500		q_floor_vent	q_floor_3	0xFF0000	5		0 1 2 3 4
-sector:	1	0		600		q_floor		q_floor_2		0xFF0000	5		5 6 7 8 9
-sector:	2	-25		715		q_floor_5		q_floor_2		0xFF0000	4		10 11 12 13
-sector:	3	25		615		q_floor		q_floor_2		0xFF0000	4		14 15 16 17
-sector:	4	-2000	500		q_floor		skybox_top	0xFF0000	4		18 19 20 21
+sector:	0	0		500		q_floor_vent	q_floor_3	0xFF0000	5	0 1 2 3 4
+sector:	1	0		600		q_floor			q_floor_2	0xFF0000	5	5 6 7 8 9
+sector:	2	-25		715		q_floor_5		q_floor_2	0xFF0000	4	10 11 12 13
+sector:	3	25		615		q_floor			q_floor_2	0xFF0000	4	14 15 16 17
+sector:	4	-2000	500		q_floor			skybox_top	0xFF0000	4	18 19 20 21

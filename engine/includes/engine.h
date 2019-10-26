@@ -1103,6 +1103,7 @@ void				eng_create_items(t_engine *eng);
 void				eng_create_medkit(t_engine *eng);
 void				eng_create_armor(t_engine *eng);
 void				eng_create_powerup(t_engine *eng);
+void				eng_create_jetpack(t_engine *eng);
 void				eng_create_rifle_ammo(t_engine *eng);
 void				eng_create_plasma_ammo(t_engine *eng);
 void				eng_create_plasma_gun(t_engine *eng);
