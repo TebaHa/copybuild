@@ -26,9 +26,9 @@ void			eng_create_button_door(t_engine *eng)
 	button = (t_button *)ft_memalloc(sizeof(t_button));
 	button->id = BT_DOOR;
 	button->name = ft_strdup("Door button");
-	button->anmtn[BS_INACTIVE] = util_create_sprite_by_name(eng, "q_button_unavaliable");
-	button->anmtn[BS_ACTIVE] = util_create_sprite_by_name(eng, "q_button_avaliable");
-	button->anmtn[BS_PUSHED] = util_create_sprite_by_name(eng, "q_button_pressed");
+	button->anmtn[BS_INACTIVE] = util_create_sprite_by_name(eng, "q_button_1_unavaliable");
+	button->anmtn[BS_ACTIVE] = util_create_sprite_by_name(eng, "q_button_1_avaliable");
+	button->anmtn[BS_PUSHED] = util_create_sprite_by_name(eng, "q_button_1_pressed");
 	eng->button[BT_DOOR] = button;
 }
 
@@ -39,9 +39,9 @@ void			eng_create_button_finish(t_engine *eng)
 	button = (t_button *)ft_memalloc(sizeof(t_button));
 	button->id = BT_FINISH;
 	button->name = ft_strdup("Door button");
-	button->anmtn[BS_INACTIVE] = util_create_sprite_by_name(eng, "q_button_unavaliable");
-	button->anmtn[BS_ACTIVE] = util_create_sprite_by_name(eng, "q_button_avaliable");
-	button->anmtn[BS_PUSHED] = util_create_sprite_by_name(eng, "q_button_pressed");
+	button->anmtn[BS_INACTIVE] = util_create_sprite_by_name(eng, "q_button_2_unavaliable");
+	button->anmtn[BS_ACTIVE] = util_create_sprite_by_name(eng, "q_button_2_avaliable");
+	button->anmtn[BS_PUSHED] = util_create_sprite_by_name(eng, "q_button_2_pressed");
 	eng->button[BT_FINISH] = button;
 }
 
@@ -52,8 +52,8 @@ void			eng_create_button_reset(t_engine *eng)
 	button = (t_button *)ft_memalloc(sizeof(t_button));
 	button->id = BUTTON_NUM;
 	button->name = ft_strdup("Door button");
-	button->anmtn[BS_INACTIVE] = util_create_sprite_by_name(eng, "q_button_unavaliable");
-	button->anmtn[BS_ACTIVE] = util_create_sprite_by_name(eng, "q_button_avaliable");
-	button->anmtn[BS_PUSHED] = util_create_sprite_by_name(eng, "q_button_pressed");
+	button->anmtn[BS_INACTIVE] = util_create_sprite_by_name(eng, "q_button_1_unavaliable");
+	button->anmtn[BS_ACTIVE] = util_create_sprite_by_name(eng, "q_button_1_avaliable");
+	button->anmtn[BS_PUSHED] = util_create_sprite_by_name(eng, "q_button_1_pressed");
 	eng->button[BT_RESET] = button;
 }
