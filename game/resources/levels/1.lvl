@@ -124,10 +124,8 @@ wobjct:	3	1		8		200		50			2
 wobjct:	4	1		12		200		50			1
 
 #Sectors
-#		id,	floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs, #sprobjs,	id of obj,	id of sprobj
-sector:	0	0		600		floor_wall		ceil_wall		0xFF0000	5		3		0 1 2 3 4	1 5 9
-sector:	1	25		625		floor_wall		ceil_wall		0xFF0000	5		3		5 6 7 8 9	0 4 8
-sector:	2	50		650		ceil_wall		ceil_wall		0xFF0000	5		3		10 11 12 13 14	2 6 10
-sector:	3	75		675		floor_wall		ceil_wall		0xFF0000	5		2		15 16 17 18 19	3 7
-
-#remove sector4 and use wrldbx after correcting all uses in code
+#		id,	floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
+sector:	0	0		600		floor_wall		ceil_wall		0xFF0000	5	0 1 2 3 4
+sector:	1	25		625		floor_wall		ceil_wall		0xFF0000	5	5 6 7 8 9
+sector:	2	50		650		ceil_wall		ceil_wall		0xFF0000	5	10 11 12 13 14
+sector:	3	75		675		floor_wall		ceil_wall		0xFF0000	5	15 16 17 18 19

@@ -45,13 +45,12 @@ void		engine_create_world_from_file(t_engine *eng, t_player *plr,
 	buff.sprites = engine_read_sprites_from_file(eng, buff);
 	buff.polies = engine_read_polygones_from_file(eng, buff);
 	buff.wallobjects = engine_read_wallobjects_from_file(eng, buff);
-	buff.objects = engine_read_objects_from_file(eng, buff);
-	buff.sprobjects = engine_read_sprobjects_from_file(eng, buff);
+	buff.objects = engine_read_objects_from_file(eng, &buff);
 	buff.sectors = engine_read_sectors_from_file(eng, buff);
 	util_parsing_objects_portal(eng, buff);
 	engine_read_world_from_file(eng, buff);
+	engine_read_sprobjects_from_file(eng, &buff);
 	engine_read_plr_pos(eng, plr, buff);
-	util_check_sprobject_in_sector(eng, buff);
 	util_release_read_buffers(&buff);
 }
 

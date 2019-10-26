@@ -39,12 +39,12 @@ void			util_create_wallobject(t_engine *eng, t_wobj *wallobject,
 {
 	util_parsing_error_little_data_check("wall object", str, 6);
 	util_parsing_error_count_handler("wall object", str, 6);
-	util_int10_data_filler(&wallobject->id, str[1], 0, 10000);
-	wallobject->enum_type = ft_atoi(str[2]);
+	wallobject->id = util_int10_data_filler(str[1], 0, 10000);
+	wallobject->enum_type = util_int10_data_filler(str[2], 0, BUTTON_NUM - 1);
 	wallobject->type = eng->button[wallobject->enum_type];
-	util_int10_data_filler(&wallobject->object_id, str[3], 0, 10000);
-	util_int10_data_filler(&wallobject->height, str[4], 0, 10000);
-	util_int10_data_filler(&wallobject->position, str[5], 0, 100);
-	util_int10_data_filler(&wallobject->sector_id, str[6], 0, 10000);
+	wallobject->object_id = util_int10_data_filler(str[3], 0, 10000);
+	wallobject->height = util_int10_data_filler(str[4], 0, 10000);
+	wallobject->position = util_int10_data_filler(str[5], 0, 100);
+	wallobject->sector_id = util_int10_data_filler(str[6], 0, 10000);
 	eng->stats.wallobjects_count++;
 }

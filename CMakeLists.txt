@@ -136,8 +136,8 @@ add_executable(DoomNukem
 
 add_subdirectory(lib/libft)
 
-#add_definitions(-Wall -Werror -Wextra -march=native -m64 -Ofast -O2 -flto -funroll-loops)
-#add_definitions(-march=native -m64 -Ofast -O2 -flto -funroll-loops)
+add_definitions(-Wall -Werror -Wextra -march=native -m64 -Ofast -O2 -flto -funroll-loops)
+add_definitions(-march=native -m64 -Ofast -O2 -flto -funroll-loops)
 
 target_link_libraries(DoomNukem ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)
 #target_link_libraries(DoomEditor ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)
