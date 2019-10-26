@@ -369,6 +369,7 @@ typedef struct		s_enemy
 	t_rotate_type	rotatable;
 	t_sprite		*anmtn[E_STATES_NUM];
 	t_sprite		**anmtn_360[E_STATES_NUM];
+	t_sprite		*shot;
 }					t_enemy;
 
 typedef struct		s_weapon
