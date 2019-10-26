@@ -23,7 +23,7 @@ void		engine_read_world_from_file(t_engine *eng, t_buff buff)
 		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
 		if (ft_strcmp(splitted_line[0], "world:") == 0)
 		{
-			util_create_world(eng, &eng->world, buff.sectors, splitted_line);
+			util_create_world(eng, &eng->world, buff, splitted_line);
 			if (eng->world->sectors_count > eng->stats.sectors_count)
 				util_parsing_error_not_enough("sectors");
 		}
@@ -32,7 +32,7 @@ void		engine_read_world_from_file(t_engine *eng, t_buff buff)
 	}
 }
 
-t_sector	util_get_sector_from_buff_by_id(int id, int size,
+t_sector	*util_get_sector_from_buff_by_id(int id, int size,
 			t_sector *sector, int world_id)
 {
 	int			i;
@@ -46,18 +46,18 @@ t_sector	util_get_sector_from_buff_by_id(int id, int size,
 	}
 	if (i == size)
 		util_parsing_error_lost_handler("sector", id, "world", world_id);
-	return (sector[i]);
+	return (&sector[i]);
 }
 
 void		util_create_world(t_engine *eng, t_world **world,
-			t_sector *sectors_array, char **str)
+			t_buff buff, char **str)
 {
 	int		sect_count;
 	int		str_count;
 
 	*world = (t_world *)ft_memalloc(sizeof(t_world));
-	util_int10_data_filler(&(*world)->id, str[1], 0, 0xFFFF);
-	util_int10_data_filler(&(*world)->sectors_count, str[2], 0, 0xFFFF);
+	(*world)->id = util_int10_data_filler(str[1], 0, 0xFFFF);
+	(*world)->sectors_count = util_int10_data_filler(str[2], 0, 0xFFFF);
 	if (!(*world)->sectors_count)
 		util_parsing_error_little_data("sectors", "world", str);
 	util_parsing_error_count_handler("world", str, 2 + (*world)->sectors_count);
@@ -67,8 +67,8 @@ void		util_create_world(t_engine *eng, t_world **world,
 	sect_count = 0;
 	while (str_count < 3 + (*world)->sectors_count)
 		(*world)->sectors_array[sect_count++] =
-			util_get_sector_from_buff_by_id(ft_atoi(str[str_count++]),
-			eng->stats.sectors_count, sectors_array, (*world)->id);
+			*util_get_sector_from_buff_by_id(ft_atoi(str[str_count++]),
+			eng->stats.sectors_count, buff.sectors, (*world)->id);
 	util_find_repeats_in_world(*world);
 	(*world)->world_box = (t_sector *)ft_memalloc(sizeof(t_sector));
 }

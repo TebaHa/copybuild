@@ -110,22 +110,3 @@ int			util_create_animated_sprite(t_engine *eng, char *str, t_sprite *res)
 	}
 	return (0);
 }
-
-t_sprite	util_get_sprite_from_buff_by_id(int id, int size,
-			t_sprite *sprites, int sprobj_id)
-{
-	int		i;
-
-	if (id < 0)
-		util_parsing_error_cant_find("sprite", id);
-	i = 0;
-	while (i < size)
-	{
-		if (sprites[i].id == id)
-			break ;
-		i++;
-	}
-	if (i == size)
-		util_parsing_error_lost_handler("sprite", id, "sprobject", sprobj_id);
-	return (sprites[i]);
-}

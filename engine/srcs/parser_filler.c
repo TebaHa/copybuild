@@ -12,9 +12,10 @@
 
 #include <engine.h>
 
-void	util_float10_data_filler(float *data, char *str, int min, int max)
+float	util_float10_data_filler(char *str, int min, int max)
 {
-	int i;
+	int		i;
+	int		res;
 
 	i = 0;
 	while (str[i])
@@ -23,14 +24,16 @@ void	util_float10_data_filler(float *data, char *str, int min, int max)
 			util_parsing_error_not_digit(str);
 		i++;
 	}
-	*data = ft_atoi(str);
-	if (*data < min || *data > max || ft_strlen(str) > 9)
-		util_parsing_value_out_of_limits(*data);
+	res = ft_atoi(str);
+	if (res < min || res > max || ft_strlen(str) > 9)
+		util_parsing_value_out_of_limits(res);
+	return ((float)res);
 }
 
-void	util_int10_data_filler(int *data, char *str, int min, int max)
+int		util_int10_data_filler(char *str, int min, int max)
 {
 	int i;
+	int res;
 
 	i = 0;
 	while (str[i])
@@ -39,14 +42,16 @@ void	util_int10_data_filler(int *data, char *str, int min, int max)
 			util_parsing_error_not_digit(str);
 		i++;
 	}
-	*data = ft_atoi(str);
-	if (*data < min || *data > max || ft_strlen(str) > 9)
-		util_parsing_value_out_of_limits(*data);
+	res = ft_atoi(str);
+	if (res < min || res > max || ft_strlen(str) > 9)
+		util_parsing_value_out_of_limits(res);
+	return (res);
 }
 
-void	util_int16_data_filler(int *data, char *str)
+int		util_int16_data_filler(char *str)
 {
 	int i;
+	int res;
 
 	if (str[0] != '0' || str[1] != 'x' || !str[2])
 		util_parsing_error_not_hex(str);
@@ -58,7 +63,8 @@ void	util_int16_data_filler(int *data, char *str)
 			util_parsing_error_not_digit(str);
 		i++;
 	}
-	*data = ft_atoi_hex(str);
-	if (*data < 0 || *data > 2147483647 || ft_strlen(str) > 9)
-		util_parsing_value_out_of_limits(*data);
+	res = ft_atoi_hex(str);
+	if (res < 0 || res > 2147483647 || ft_strlen(str) > 9)
+		util_parsing_value_out_of_limits(res);
+	return (res);
 }

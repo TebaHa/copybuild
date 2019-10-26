@@ -12,7 +12,7 @@
 
 #include <engine.h>
 
-t_object	*engine_read_objects_from_file(t_engine *eng, t_buff buff)
+t_object	*engine_read_objects_from_file(t_engine *eng, t_buff *buff)
 {
 	t_object	*o_array_buffer;
 	char		**splitted_line;
@@ -22,9 +22,9 @@ t_object	*engine_read_objects_from_file(t_engine *eng, t_buff buff)
 		eng->stats.objects_count);
 	i = 0;
 	eng->stats.objects_count = 0;
-	while (buff.str[i] != NULL)
+	while (buff->str[i] != NULL)
 	{
-		splitted_line = ft_strsplitwhitespaces(buff.str[i]);
+		splitted_line = ft_strsplitwhitespaces(buff->str[i]);
 		if (ft_strcmp(splitted_line[0], "object:") == 0)
 			util_create_object(eng, &o_array_buffer[eng->stats.objects_count],
 				buff, splitted_line);
@@ -35,19 +35,19 @@ t_object	*engine_read_objects_from_file(t_engine *eng, t_buff buff)
 }
 
 void		util_create_object(t_engine *eng, t_object *object,
-			t_buff buff, char **str)
+			t_buff *buff, char **str)
 {
 	int			pol_count;
 	int			str_count;
 
 	util_parsing_error_little_data_check("object", str, 8);
-	util_int10_data_filler(&object->id, str[1], 0, 0xFFFF);
-	util_int10_data_filler(&object->portal, str[2], -1, 0xFFFF);
-	util_int10_data_filler(&object->passble, str[3], 0, 0);
-	util_int10_data_filler(&object->visible, str[4], 1, 1);
+	object->id = util_int10_data_filler(str[1], 0, 0xFFFF);
+	object->portal = util_int10_data_filler(str[2], -1, 0xFFFF);
+	object->passble = util_int10_data_filler(str[3], 0, 0);
+	object->visible = util_int10_data_filler(str[4], 1, 1);
 	util_find_texture_by_name(&object->floor_wall_texture, eng, str[5]);
 	util_find_texture_by_name(&object->ceil_wall_texture, eng, str[6]);
-	util_int10_data_filler(&object->polies_count, str[7], 0, 0xFFFF);
+	object->polies_count = util_int10_data_filler(str[7], 0, 0xFFFF);
 	if (!object->polies_count)
 		util_parsing_error_little_data("polies", "object", str);
 	util_parsing_error_count_handler("object", str, 7 + object->polies_count);
@@ -55,10 +55,11 @@ void		util_create_object(t_engine *eng, t_object *object,
 		* object->polies_count);
 	str_count = 8;
 	pol_count = 0;
+	util_fill_object_with_wallobjects(eng, buff, object);
 	while (str_count < 8 + object->polies_count)
 		object->polies_array[pol_count++] =
 			util_get_polygone_from_buff_by_id(ft_atoi(str[str_count++]),
-			eng->stats.polies_count, buff.polies, object->id);
+			eng->stats.polies_count, buff->polies, object->id);
 	eng->stats.objects_count++;
 }
 
@@ -118,5 +119,37 @@ void		util_parsing_objects_portal(t_engine *eng, t_buff buff)
 			close_game(PARSING_ERROR);
 		}
 		obj_count++;
+	}
+}
+
+void			util_fill_object_with_wallobjects(t_engine *eng, t_buff *buff,
+				t_object *object)
+{
+	int 		wobj_count;
+	int 		obj_count;
+
+	wobj_count = 0;
+	while (wobj_count < eng->stats.wallobjects_count)
+	{
+		if (buff->wallobjects[wobj_count].object_id == object->id)
+			object->wallobjects_num++;
+		wobj_count++;
+	}
+	if (object->wallobjects_num)
+	{
+		object->wallobjects_array = (t_wobj *)ft_memalloc(sizeof(t_wobj) *
+			object->wallobjects_num);
+		wobj_count = 0;
+		obj_count = 0;
+		while (wobj_count < eng->stats.wallobjects_count)
+		{
+			if (buff->wallobjects[wobj_count].object_id == object->id)
+			{
+				object->wallobjects_array[obj_count] =
+						buff->wallobjects[wobj_count];
+				obj_count++;
+			}
+			wobj_count++;
+		}
 	}
 }

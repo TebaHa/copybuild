@@ -20,6 +20,7 @@ void		util_release_read_buffers(t_buff *buff)
 	free(buff->sprobjects);
 	free(buff->sprites);
 	free(buff->sectors);
+	free(buff->wallobjects);
 	util_release_char_matrix(buff->str);
 }
 

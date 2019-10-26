@@ -159,6 +159,22 @@ typedef enum		e_enm_angle
 	EA_NUM
 }					t_enm_angle;
 
+typedef enum		e_button_state
+{
+	BS_INACTIVE,
+	BS_ACTIVE,
+	BS_PUSHED,
+	BS_STATES_NUM
+}					t_button_state;
+
+typedef enum		e_button_type
+{
+	BT_DOOR,
+	BT_FINISH,
+	BT_RESET,
+	BUTTON_NUM
+}					t_button_type;
+
 typedef enum		e_wpn_type
 {
 	RIFLE,
@@ -326,12 +342,30 @@ typedef struct		s_wallobj
 	int				size;
 }					t_wallobj;
 
+typedef struct		s_button
+{
+	int				id;
+	char			*name;
+	Mix_Chunk		*use_sound;
+	t_sprite		*anmtn[BS_STATES_NUM];
+}					t_button;
+
+typedef struct		s_wobj
+{
+	int				id;
+	t_button		*type;
+	t_button_type	enum_type;
+	int				object_id;
+	int 			height;
+	int 			position;
+	int				sector_id;
+}					t_wobj;
+
 typedef struct		s_enemy
 {
 	int				id;
 	char			*name;
 	Mix_Chunk		*death_sound;
-	t_bool			alive;
 	t_rotate_type	rotatable;
 	t_sprite		*anmtn[E_STATES_NUM];
 	t_sprite		**anmtn_360[E_STATES_NUM];
@@ -369,8 +403,8 @@ typedef struct		s_sprobject
 	int				angle;
 	t_enemy			*type;
 	t_enm_type		enum_type;
-	int				frame;
 	int				frame_num;
+	int				sector_id;
 	t_point_3d		position;
 	t_enm_state		state;
 	t_bool			norender;
@@ -386,6 +420,8 @@ typedef struct		s_object
 	int				visible;
 	int				status;
 	t_wallobj		particles[128];
+	int 			wallobjects_num;
+	t_wobj			*wallobjects_array;
 	t_image			*floor_wall_texture;
 	t_image			*ceil_wall_texture;
 }					t_object;
@@ -414,6 +450,7 @@ typedef struct		s_buff
 	t_polygone		*polies;
 	t_object		*objects;
 	t_sprobject		*sprobjects;
+	t_wobj			*wallobjects;
 	t_sector		*sectors;
 	char			**str;
 }					t_buff;
@@ -484,6 +521,7 @@ typedef struct		s_stats
 	int				polies_count;
 	int				objects_count;
 	int				sprobjects_count;
+	int 			wallobjects_count;
 	int				sectors_count;
 	int				textures_count;
 	int				skins_count;
@@ -511,6 +549,7 @@ typedef struct		s_engine
 	int				*z_buff;
 	t_weapon		*weapon[WEAPON_NUM];
 	t_enemy			*enemy[ENEMY_NUM];
+	t_button		*button[BUTTON_NUM];
 	t_hud			*hud;
 	t_txtr_pkg		**texture_buffer;
 	t_txtr_pkg		**sprites_buffer;
@@ -1073,6 +1112,11 @@ void				eng_create_afrit(t_engine *eng);
 void				eng_create_cacodemon(t_engine *eng);
 void				eng_create_imp(t_engine *eng);
 
+void				eng_create_buttons(t_engine *eng);
+void				eng_create_button_door(t_engine *eng);
+void				eng_create_button_finish(t_engine *eng);
+void				eng_create_button_reset(t_engine *eng);
+
 t_sprite			*util_get_sprite_from_buff_by_name(char *name,
 					t_txtr_pkg *buff,
 					int size);
@@ -1115,11 +1159,11 @@ char				**engine_read_level_file(char *filename);
 
 void				util_release_char_matrix(char **mtrx);
 void				util_release_read_buffers(t_buff *buff);
-void				util_float10_data_filler(float *data, char *str, int min,
+
+float				util_float10_data_filler(char *str, int min,
 					int max);
-void				util_int10_data_filler(int *data, char *str, int min,
-					int max);
-void				util_int16_data_filler(int *data, char *str);
+int					util_int10_data_filler(char *str, int min, int max);
+int					util_int16_data_filler(char *str);
 void				util_parsing_error_count_handler(char *problem_from,
 					char **str, int problems_number);
 void				util_parsing_error_cant_find(char *problem, int id_problem);
@@ -1160,10 +1204,10 @@ void				engine_read_world_from_file(t_engine *eng,
 					t_buff buff);
 void				engine_create_world_from_file(t_engine *eng,
 					t_player *plr, char *filename);
-t_sector			util_get_sector_from_buff_by_id(int id, int size,
+t_sector			*util_get_sector_from_buff_by_id(int id, int size,
 					t_sector *sector, int world_id);
 void				util_create_world(t_engine *eng, t_world **world,
-					t_sector *sectors_array, char **str);
+					t_buff buff, char **str);
 
 t_point_3d			*engine_read_vertexes_from_file(t_engine *eng,
 					char **json_splited);
@@ -1179,20 +1223,21 @@ void				util_create_polygone(t_engine *eng, t_polygone *polygone,
 t_polygone			util_get_polygone_from_buff_by_id(int id, int size,
 					t_polygone *polies, int object_id);
 
-t_object			*engine_read_objects_from_file(t_engine *eng, t_buff buff);
+t_object			*engine_read_objects_from_file(t_engine *eng, t_buff *buff);
 void				util_create_object(t_engine *eng, t_object *object,
-					t_buff buff, char **str);
+					t_buff *buff, char **str);
 t_object			util_get_object_from_buff_by_id(int id, int size,
 					t_object *objects, int sector_id);
 void				util_parsing_objects_portal(t_engine *eng, t_buff buff);
+void				util_fill_object_with_wallobjects(t_engine *eng,
+					t_buff *buff, t_object *object);
 
-t_sprobject			*engine_read_sprobjects_from_file(t_engine *eng,
-					t_buff buff);
+void				engine_read_sprobjects_from_file(t_engine *eng,
+					t_buff *buff);
 void				util_create_sprobject(t_engine *eng, t_sprobject
 					*sprobject,
 					t_buff *buff, char **str);
-t_sprobject			util_get_sprobject_from_buff_by_id(int id, int size,
-					t_sprobject *sprobjects, int sector_id);
+void				util_fill_sector_with_sprobjects(t_engine *eng, t_buff *buff);
 
 t_sector			*engine_read_sectors_from_file(t_engine *eng,
 					t_buff buff);
@@ -1200,12 +1245,15 @@ void				engine_read_worldbox_from_file(t_engine *eng,
 					t_buff buff);
 void				util_create_sector(t_engine *eng, t_buff buff,
 					t_sector *sector, char **str);
-void				util_create_sector_sprobjs(t_engine *eng, t_buff buff,
+void				util_create_sector_sprobjs(t_engine *eng,
 					t_sector *sector, char **str);
-void				util_check_sprobject_in_sector(t_engine *eng,
-					t_buff buff);
 void				util_find_repeats_in_sector(t_sector *sector);
+t_sector			*util_get_sector_from_world_by_id(t_engine *eng, int id);
 void				util_find_sprobjects_repeats_in_sector(t_sector *sector);
+
+t_wobj				*engine_read_wallobjects_from_file(t_engine *eng, t_buff buff);
+void				util_create_wallobject(t_engine *eng, t_wobj *wallobject,
+					char **str);
 
 void				util_find_texture_by_name(t_image **dst, t_engine *eng,
 					char *name);
@@ -1217,9 +1265,6 @@ void				util_create_sprite(t_engine *eng,
 					t_sprite *sprite, char **str);
 void				util_create_sprite_with_num(t_engine *eng, t_sprite *sprite,
 					char **str, int srfc_count);
-t_sprite			util_get_sprite_from_buff_by_id(int id,
-					int size, t_sprite *sprites,
-					int sprobj_id);
 void				util_find_sprite_by_name(SDL_Surface **dst, t_engine *eng,
 					char *name);
 void				util_parsing_error_no_sprite(SDL_Surface

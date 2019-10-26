@@ -98,32 +98,32 @@ polygone:	21	1	0xFF0000	skybox_right	2		42 43
 #Objects
 #			(if >= 0 where goes)
 #		id,	portal, pasble, visble,	floor_wall,		ceil_wall,	#polys,	id of poly
-object:	0	-1		0		1		flooring		ceil_wall	1		0
-object:	1	1		0		1		flooring		ceiling		1		1
-object:	2	-1		0		1		flooring		ceil_wall	1		2
-object:	3	-1		0		1		flooring		ceil_wall	1		3
-object:	4	-1		0		1		flooring		ceil_wall	1		4
+object:	0	-1		0		1		q_floor_wall	q_ceil_wall_4	1		0
+object:	1	1		0		1		q_floor_wall	q_ceil_wall_4	1		1
+object:	2	-1		0		1		q_floor_wall	q_ceil_wall_4	1		2
+object:	3	-1		0		1		q_floor_wall	q_ceil_wall_4	1		3
+object:	4	-1		0		1		q_floor_wall	q_ceil_wall_4	1		4
 
-object:	5	2		0		1		flooring		ceiling		1		5
-object:	6	3		0		1		flooring		ceiling		1		6
-object:	7	-1		0		1		floor_wall		ceil_wall	1		7
-object:	8	0		0		1		flooring		ceiling		1		8
-object:	9	-1		0		1		floor_wall		ceil_wall	1		9
+object:	5	2		0		1		q_floor_wall	q_ceil_wall_4	1		5
+object:	6	3		0		1		q_floor_wall	q_ceil_wall_4	1		6
+object:	7	-1		0		1		q_floor_wall	q_ceil_wall_4	1		7
+object:	8	0		0		1		q_floor_wall	q_ceil_wall_4	1		8
+object:	9	-1		0		1		q_floor_wall	q_ceil_wall_4	1		9
 
-object:	10	-1		0		1		floor_wall		ceil_wall	1		10
-object:	11	-1		0		1		floor_wall		ceil_wall	1		11
-object:	12	-1		0		1		floor_wall		ceil_wall	1		12
-object:	13	1		0		1		flooring		ceiling		1		13
+object:	10	-1		0		1		q_floor_wall	q_ceil_wall_4	1		10
+object:	11	-1		0		1		q_floor_wall	q_ceil_wall_4	1		11
+object:	12	-1		0		1		q_floor_wall	q_ceil_wall_4	1		12
+object:	13	1		0		1		q_floor_wall	q_ceil_wall_4	1		13
 
-object:	14	-1		0		1		floor_wall		ceil_wall	1		14
-object:	15	-1		0		1		floor_wall		ceil_wall	1		15
-object:	16	-1		0		1		floor_wall		ceil_wall	1		16
-object:	17	1		0		1		flooring		ceiling		1		17
+object:	14	-1		0		1		q_floor_wall	q_ceil_wall_4	1		14
+object:	15	-1		0		1		q_floor_wall	q_ceil_wall_4	1		15
+object:	16	-1		0		1		q_floor_wall	q_ceil_wall_4	1		16
+object:	17	1		0		1		q_floor_wall	q_ceil_wall_4	1		17
 
-object:	18	-1		0		1		floor_wall		ceil_wall	1		18
-object:	19	-1		0		1		floor_wall		ceil_wall	1		19
-object:	20	-1		0		1		floor_wall		ceil_wall	1		20
-object:	21	-1		0		1		floor_wall		ceil_wall	1		21
+object:	18	-1		0		1		q_floor_wall	q_ceil_wall_4	1		18
+object:	19	-1		0		1		q_floor_wall	q_ceil_wall_4	1		19
+object:	20	-1		0		1		q_floor_wall	q_ceil_wall_4	1		20
+object:	21	-1		0		1		q_floor_wall	q_ceil_wall_4	1		21
 
 #Sprites objects	(types from t_enm_type)
 #		id,	angle,	type,	vert
@@ -132,10 +132,15 @@ sobjct:	1	0		7		39
 sobjct:	2	0		7		40
 sobjct:	3	0		7		41
 
+#Wall objects	(types from t_button_type)
+#		id,	type,	object, height,	%position,	target_sector
+wobjct:	0	0		16		200		50			1
+wobjct:	1	1		4		200		50			3
+
 #Sectors
-#		id,	floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs, #sprobjs,	id of obj,	id of sprobj
-sector:	0	0		500		q_floor_vent		q_floor		0xFF0000	5		1		0 1 2 3 4	2
-sector:	1	0		600		q_floor		q_floor		0xFF0000	5		1		5 6 7 8 9	1
-sector:	2	-25		715		q_floor		q_floor		0xFF0000	4		1		10 11 12 13	0
-sector:	3	25		615		q_floor		q_floor		0xFF0000	4		1		14 15 16 17	3
-sector:	4	-2000	500		q_floor		skybox_top		0xFF0000	4		0		18 19 20 21
+#		id,	floor,	ceil,	floor_texture,	ceil_texture, glow,	#objs, id of obj
+sector:	0	0		500		q_floor_vent	q_floor_3	0xFF0000	5		0 1 2 3 4
+sector:	1	0		600		q_floor		q_floor_2		0xFF0000	5		5 6 7 8 9
+sector:	2	-25		715		q_floor_5		q_floor_2		0xFF0000	4		10 11 12 13
+sector:	3	25		615		q_floor		q_floor_2		0xFF0000	4		14 15 16 17
+sector:	4	-2000	500		q_floor		skybox_top	0xFF0000	4		18 19 20 21

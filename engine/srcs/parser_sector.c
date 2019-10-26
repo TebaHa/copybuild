@@ -41,48 +41,36 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 	int			str_count;
 
 	util_parsing_error_little_data_check("sector", str, 8);
-	util_int10_data_filler(&sector->id, str[1], 0, 0xFFFF);
-	util_int10_data_filler(&sector->floor, str[2], -8000, 8000);
-	util_int10_data_filler(&sector->ceil, str[3], -8000, 8000);
-	util_int10_data_filler(&sector->objects_count, str[7], 0, 0xFFFF);
+	sector->id = util_int10_data_filler(str[1], 0, 0xFFFF);
+	sector->floor = util_int10_data_filler(str[2], -8000, 8000);
+	sector->ceil = util_int10_data_filler(str[3], -8000, 8000);
+	sector->objects_count = util_int10_data_filler(str[7], 0, 0xFFFF);
 	if (sector->objects_count < 3)
 		util_parsing_error_little_data("objects", "sector", str);
-	util_int10_data_filler(&sector->sprobjects_count, str[8], 0, 0xFFFF);
-	util_parsing_error_count_handler("sector", str, 8 + sector->objects_count
-		+ sector->sprobjects_count);
+	sector->sprobjects_count = 0;
+	util_parsing_error_count_handler("sector", str, 7 + sector->objects_count);
 	sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object)
 		* sector->objects_count);
-	str_count = 9;
+	str_count = 8;
 	obj_count = 0;
-	while (str_count < 9 + sector->objects_count)
+	while (str_count < 8 + sector->objects_count)
 		sector->objects_array[obj_count++] =
 		util_get_object_from_buff_by_id(ft_atoi(str[str_count++]),
 		eng->stats.objects_count, buff.objects, sector->id);
-	util_create_sector_sprobjs(eng, buff, sector, str);
+	util_create_sector_sprobjs(eng, sector, str);
 	util_find_repeats_in_sector(sector);
 	eng->stats.sectors_count++;
 }
 
-void		util_create_sector_sprobjs(t_engine *eng, t_buff buff,
+void		util_create_sector_sprobjs(t_engine *eng,
 			t_sector *sector, char **str)
 {
-	int			sprobj_count;
-	int			str_count;
-
 	util_find_texture_by_name(&sector->floor_texture, eng, str[4]);
 	util_find_texture_by_name(&sector->ceil_texture, eng, str[5]);
 	util_read_color(&sector->color, str[6]);
 	sector->dist = (float *)ft_memalloc(sizeof(float)
 		* sector->objects_count);
 	sector->order = (int *)ft_memalloc(sizeof(int) * sector->objects_count);
-	sector->sprobjects_array = (t_sprobject *)ft_memalloc(sizeof(t_sprobject)
-		* sector->sprobjects_count);
-	str_count = 9 + sector->objects_count;
-	sprobj_count = 0;
-	while (str_count < 9 + sector->objects_count + sector->sprobjects_count)
-		sector->sprobjects_array[sprobj_count++] =
-		util_get_sprobject_from_buff_by_id(ft_atoi(str[str_count++]),
-		eng->stats.sprobjects_count, buff.sprobjects, sector->id);
 }
 
 void		util_find_repeats_in_sector(t_sector *sector)
@@ -129,4 +117,22 @@ void		util_find_sprobjects_repeats_in_sector(t_sector *sector)
 		}
 		i++;
 	}
+}
+
+t_sector		*util_get_sector_from_world_by_id(t_engine *eng, int id)
+{
+	int			sect;
+
+	sect = 0;
+	while (sect < eng->world->sectors_count)
+	{
+		if (eng->world->sectors_array[sect].id == id)
+			return (&eng->world->sectors_array[sect]);
+		sect++;
+	}
+	ft_putstr("Parsing error:\nCan't find sector ");
+	ft_putnbr(id);
+	ft_putstr(" in world!\n");
+	close_game(PARSING_ERROR);
+	return (NULL);
 }
