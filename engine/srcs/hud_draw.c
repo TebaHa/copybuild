@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 13:08:50 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/27 19:56:41 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void		engine_draw_hud(t_hud *hud, t_player *plr, SDL_Surface *surf)
 	bresenham_line(&(t_point_3d){0, (WIDTH / 2),
 	(HEIGHT / 2) - 10, 0}, &(t_point_3d){0, (WIDTH / 2),
 	(HEIGHT / 2) + 10, 0}, surf, get_rgb(0, 0, 0, 255));
+	if ((plr->health > 100) && ((plr->anim % 300) == 0))
+		plr->health--;
 	img = plr->wpn->anmtn[plr->wpn->state];
 	if (img->a_state == CYCLE || img->a_state == ANIMATE)
 	{

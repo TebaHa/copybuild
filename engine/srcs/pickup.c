@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 13:49:25 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 12:50:11 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/27 19:55:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void		check_sprite_pick(t_player *plr, t_sprobject *sobj)
 	double	tmp;
 
 	if (sobj->enum_type == MEDKIT || sobj->enum_type == ARMOR
-	|| sobj->enum_type == PLASMA_AMMO || sobj->enum_type == RIFLE_AMMO)
+	|| sobj->enum_type == PLASMA_AMMO || sobj->enum_type == RIFLE_AMMO
+	|| sobj->enum_type == POWER_UP)
 	{
 		tmp = pow((plr->position.x - sobj->position.x), 2)
 		+ pow((plr->position.y - sobj->position.y), 2);
@@ -52,6 +53,8 @@ void		apply_sprite_obj(t_player *plr, t_sprobject *sobj)
 		picked = modify_players_stat(&plr->health, 25, 100);
 	else if (sobj->enum_type == ARMOR)
 		picked = modify_players_stat(&plr->armor, 25, 100);
+	else if (sobj->enum_type == POWER_UP)
+		picked = modify_players_stat(&plr->health, 200, 200);
 	else if (sobj->enum_type == PLASMA_AMMO)
 	{
 		if (ft_strcmp(plr->wpn->name, "Plazma gun") == 0)

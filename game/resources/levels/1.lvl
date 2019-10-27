@@ -103,15 +103,15 @@ object:	19	-1		0		1		floor_wall		ceiling		1		19
 
 #Sprites objects	(types from t_enm_type)
 #		id,	angle,	type,	vert
-sobjct:	0	0		0		70
-sobjct:	1	0		1		71
-sobjct:	2	0		2		72
-sobjct:	3	0		1		73
-sobjct:	4	0		6		74
-sobjct:	5	0		6		75
-sobjct:	6	0		6		76
-sobjct:	7	0		5		77
-sobjct:	8	0		7		78
+sobjct:	0	90		0		70
+sobjct:	1	90		1		71
+sobjct:	2	90		2		72
+sobjct:	3	90		1		73
+sobjct:	4	90		6		74
+sobjct:	5	90		6		75
+sobjct:	6	90		6		76
+sobjct:	7	90		5		77
+sobjct:	8	180		7		78
 sobjct:	9	180		8		79
 sobjct:	10	180		9		80
 
