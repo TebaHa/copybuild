@@ -11,10 +11,34 @@ player: 99
 #		id	X,		Y,		Z
 vertex: 99	-400	-100 	200
 
+vertex: 59	-460	-100	200
+vertex: 58	-450	100		200
+
+vertex: 57	633		-233	200
+vertex: 56	-750	100		200
+vertex: 55	100		100		200
+vertex: 54	900		-250	200
+
+vertex: 53	-1266	-466	200
+vertex: 52	700		100		200
+vertex: 51	-280	-100	200
+vertex: 50	-600	-300	200
+
+vertex: 49	-633	-233	200
+vertex: 48	350		50		200
+vertex: 47	-160	-50		200
+vertex: 46	-300	-150	200
+
+vertex: 45	-500	200		200
+vertex: 44	300		-50		200
+vertex: 43	130		50		200
+vertex: 42	300		-100	200
+
 vertex: 41	-500	-200	200
 vertex: 40	300		50		200
 vertex: 39	-130	-50		200
 vertex: 38	-300	100		200
+
 
 vertex: 28 -600		-300	200
 vertex: 29 -1500		-900	200
@@ -113,6 +137,26 @@ sobjct:	0	0		7		38
 sobjct:	1	0		7		39
 sobjct:	2	0		7		40
 sobjct:	3	0		7		41
+sobjct:	4	0		7		42
+sobjct:	5	0		7		43
+sobjct:	6	0		7		44
+sobjct:	7	0		7		45
+sobjct:	8	0		7		46
+sobjct:	9	0		7		47
+sobjct:	10	0		7		48
+sobjct:	11	0		7		49
+sobjct:	12	0		7		50
+sobjct:	13	0		7		51
+sobjct:	14	0		7		52
+sobjct:	15	0		7		53
+sobjct:	16	0		7		54
+sobjct:	17	0		7		55
+sobjct:	18	0		7		56
+sobjct:	19	0		7		57
+sobjct:	20	0		7		58
+sobjct:	21	0		7		59
+
+
 
 #Wall objects	(types from t_button_type)
 #		id,	type,	object, height,	%position,	target_sector
