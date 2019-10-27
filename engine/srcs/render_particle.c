@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 20:52:01 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 15:46:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/25 20:45:54 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf,
 	if (particle->texture->a_state == ANIMATE)
 	{
 		if (((particle->timer %
-		(particle->texture->frames_delay)) == 0)
+		(particle->texture->frames_delay )) == 0)
 		&& (particle->frame_num < particle->texture->frames_num - 1))
 			particle->frame_num++;
 		else
