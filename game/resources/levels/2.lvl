@@ -16,45 +16,45 @@ vertex: 40	300		50		200
 vertex: 39	-130	-50		200
 vertex: 38	-300	100		200
 
-vertex: 28 -200		-100	200
-vertex: 29 -500		-300	200
-vertex: 30 -500		-300	200
-vertex: 31 -600		-100	200
-vertex: 32 -600		-100	200
-vertex: 33 -500		0		200
-vertex: 34 -500		0		200
-vertex: 35 -200 	-100	200
+vertex: 28 -600		-300	200
+vertex: 29 -1500		-900	200
+vertex: 30 -1500		-900	200
+vertex: 31 -1800		-300	200
+vertex: 32 -1800		-300	200
+vertex: 33 -1500		0		200
+vertex: 34 -1500		0		200
+vertex: 35 -600 	-300	200
 
-vertex: 20 -200 	100 	200
-vertex: 21 -500		300		200
-vertex: 22 -500		300		200
-vertex: 23 -600		100		200
-vertex: 24 -600		100		200
-vertex: 25 -500		0		200
-vertex: 26 -500		0		200
-vertex: 27 -200		100		200
+vertex: 20 -600 	300 	200
+vertex: 21 -1500		900		200
+vertex: 22 -1500		900		200
+vertex: 23 -1800		300		200
+vertex: 24 -1800		300		200
+vertex: 25 -1500		0		200
+vertex: 26 -1500		0		200
+vertex: 27 -600		300		200
 
-vertex: 19	500		100		200
-vertex: 18	500		0		200
-vertex: 17	500		0		200
-vertex: 16	500		-100	200
-vertex: 15	500		-100	200
-vertex: 14	0		-100	200
-vertex: 13	0		-100	200
-vertex: 12	0		100		200
-vertex: 11	0		100		200
-vertex: 10	500		100		200
+vertex: 19	1500		300		200
+vertex: 18	1500		0		200
+vertex: 17	1500		0		200
+vertex: 16	1500		-300	200
+vertex: 15	1500		-300	200
+vertex: 14	0		-300	200
+vertex: 13	0		-300	200
+vertex: 12	0		300		200
+vertex: 11	0		300		200
+vertex: 10	1500	300		200
 
-vertex: 9	-200	100		0
-vertex: 8	0		100		0
-vertex: 7	0		100		0
-vertex: 6	0		-100	0
-vertex: 5	0		-100	0
-vertex: 4	-200	-100	0
-vertex: 3	-200	-100	0
-vertex: 2	-500	0		0
-vertex: 1	-500	0		0
-vertex: 0	-200	100		0
+vertex: 9	-600	300		0
+vertex: 8	0		300		0
+vertex: 7	0		300		0
+vertex: 6	0		-300	0
+vertex: 5	0		-300	0
+vertex: 4	-600	-300	0
+vertex: 3	-600	-300	0
+vertex: 2	-1500	0		0
+vertex: 1	-1500	0		0
+vertex: 0	-600	300		0
 
 #Polygones
 #				(types: 0 for triangle and 1 for wall),
