@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 00:38:38 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 12:27:12 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/27 15:49:59 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int		engine_object_get_sector(t_world *world, t_point_3d pos, int start_sect)
 			engine_check_object(&data, world, pos);
 		}
 		if (data.res >= 0)
-			return (data.cursect);
+		{
+			if (engine_z_coord_check(&world->sectors_array[data.cursect], pos))
+				return (data.cursect);
+		}
 		data.checked_array[data.cursect] = 1;
 	}
 	return (-1);
@@ -52,6 +55,14 @@ void	engine_check_object(t_find_obj *d, t_world *world, t_point_3d pos)
 		engine_push_checkstack(d->check_stack,
 		world->sectors_array[d->cursect].objects_array[d->i].portal);
 	d->i++;
+}
+
+short	engine_z_coord_check(t_sector *sector, t_point_3d pos)
+{
+	if (((sector->floor - 5) < pos.z)
+	&& ((sector->ceil + 5) > pos.z))
+		return (1);
+	return (0);
 }
 
 void	engine_push_checkstack(int *stack, int sect)

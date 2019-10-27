@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/27 14:21:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/27 15:47:45 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1034,7 +1034,7 @@ void				engine_clear_spriterenderstack(t_item_sprts **renderqueue);
 t_item_sprts		*engine_pop_spriterenderstack(t_item_sprts **renderqueue);
 void				one_dim_zbuffers_copy(t_item_sprts *sprt,
 					int *ytop, int *ybottom);
-
+short				engine_z_coord_check(t_sector *sector, t_point_3d pos);
 /*
 **	---------------------------------------------------------------------------
 **	Image-processing functions

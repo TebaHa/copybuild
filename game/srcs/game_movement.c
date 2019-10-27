@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 08:49:33 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/27 17:52:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	game_movement_check(t_game *fps)
 		fps->logic.sectprev = fps->player.cursector;
 		if ((fps->logic.sect = engine_object_get_sector(fps->eng->world,
 		(t_point_3d){0.f, fps->logic.px + fps->logic.dx, fps->logic.py +
-		fps->logic.dy, 0.f}, fps->player.cursector)) >= 0)
+		fps->logic.dy, fps->player.position.z}, fps->player.cursector)) >= 0)
 			if (fps->eng->world->sectors_array[fps->logic.sect].floor
 			- fps->logic.duck_shift <= fps->player.position.z +
 			KNEE_HEIGHT - 50)
