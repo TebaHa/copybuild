@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/24 12:47:59 by zytrams          ###   ########.fr        #
+#    Updated: 2019/10/27 20:15:59 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,23 +61,23 @@ GAME_OBJS = $(addprefix $(GAME_OBJS_DIRECTORY), $(GAME_OBJS_LIST))
 GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 
 ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
-					bresenham.c \
-					bresenham2.c \
+					line_bresenham.c \
+					line_bresenham2.c \
 					checksum.c \
-					close.c \
-					color.c \
-					engine.c \
+					engine_close.c \
+					line_color.c \
+					engine_main.c \
 					error_handler.c \
-					font.c \
+					engine_font.c \
 					hud_draw.c \
 					hud_draw1.c \
-					images.c \
+					loader_images.c \
 					intersection_funs_help.c \
 					intersection_funs.c \
-					normal.c \
+					vectors_normal.c \
 					objects_help.c \
 					objects.c \
-					pickup.c \
+					game_pickup.c \
 					relative_coord.c \
 					render_cycle.c \
 					render_cycle2.c \
@@ -92,16 +92,17 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					sprite_data.c \
 					shoot_help.c \
 					shoot_main.c \
-					shoot.c \
+					shoot_main2.c \
 					sort.c \
 					sound_2.c \
 					sound.c \
 					sprite_render_2.c \
 					sprite_render_stack.c \
 					sprite_render.c \
-					texture_math.c \
-					texture.c \
+					engine_texture_math.c \
+					engine_texture.c \
 					utility.c \
+					utils_check_stack.c \
 
 PARSER_SRCS_LIST =	parser_button.c \
 					parser_color.c \
