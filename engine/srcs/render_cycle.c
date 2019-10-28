@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:39:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/28 20:47:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 20:52:35 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void				engine_render_cycle_5(t_wall_clinks *l)
 	l->cycler->tex = l->cycler->y < l->mdata->cya
 	? l->eng->world->sectors_array[l->data->sect.sectorno].ceil_texture
 	: l->eng->world->sectors_array[l->data->sect.sectorno].floor_texture;
-	l->cycler->txtx = (l->cycler->pnts.x) * 2;
-	l->cycler->txtz = (l->cycler->pnts.z) * 2;
+	l->cycler->txtx = (l->cycler->pnts.x) * 0.5;
+	l->cycler->txtz = (l->cycler->pnts.z) * 0.5;
 	l->cycler->offset = (((l->cycler->txtz %
 	l->cycler->tex->height) * l->cycler->tex->width)
 	+ (l->cycler->txtx % l->cycler->tex->width)) * l->cycler->tex->channels;
