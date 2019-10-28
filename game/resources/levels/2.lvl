@@ -153,7 +153,7 @@ wobjct:	1	1		4		200		50			3
 
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture, glow,	#objs, id of obj
-sector:	0	0		500		q_floor_vent	null	0xFF0000	5	0 1 2 3 4
+sector:	0	0		500		q_floor_vent	q_floor_2	0xFF0000	5	0 1 2 3 4
 sector:	1	0		600		q_floor			q_floor_2	0xFF0000	5	5 6 7 8 9
 sector:	2	-25		715		q_floor_5		q_floor_2	0xFF0000	4	10 11 12 13
 sector:	3	25		615		q_floor			q_floor_2	0xFF0000	4	14 15 16 17

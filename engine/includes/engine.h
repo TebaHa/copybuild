@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/28 17:59:30 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 20:11:15 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define SOUND_ERROR 44
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
-# define THREAD_POOL_SIZE	4
+# define THREAD_POOL_SIZE	2
 # define DELAY 15
 # define DEFAULT_SPRITE_DELAY	10
 # define FIRERATE 30
