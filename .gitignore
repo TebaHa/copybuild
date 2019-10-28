@@ -12,4 +12,5 @@ engine/objs/
 game/objs/
 editor/objs/
 doom_editor
+doom_nukem
 wolf3d
