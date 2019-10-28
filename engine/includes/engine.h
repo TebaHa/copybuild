@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/28 17:37:20 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 17:59:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 32
-# define HFOV (0.83f * HEIGHT / WIDTH)
-# define VFOV (0.2f)
+# define HFOV (1.0 * 0.83f * HEIGHT / WIDTH)
+# define VFOV (1.0 * 0.2f)
 # define TEXTURE_PACK_PATH		"./game/resources/images/"
 # define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
 # define SOUND_PATH				"./game/resources/sounds/"
