@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:30:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/21 14:46:36 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 17:04:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	game_buttons_control_down1(t_game *fps)
 	if (fps->eng->event.key.keysym.sym == SDLK_j)
 		change_ceil(fps->eng, fps->player.cursector, -10);
 	if (fps->eng->event.key.keysym.sym == SDLK_LSHIFT)
-		fps->player.controller.running = 10;
+		fps->player.controller.running = 3;
 }
 
 void	game_buttons_control_down2(t_game *fps)

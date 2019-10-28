@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:42:24 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/21 15:04:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 17:04:13 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	game_buttons_control_up_main(t_game *fps)
 	if (fps->eng->event.type == SDL_KEYUP)
 	{
 		if (fps->eng->event.key.keysym.sym == SDLK_LSHIFT)
-			fps->player.controller.running = 5;
+			fps->player.controller.running = 6;
 		if (fps->eng->event.key.keysym.sym == SDLK_w)
 			fps->player.controller.wasd[0] = 0;
 		if (fps->eng->event.key.keysym.sym == SDLK_s)

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 21:37:00 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/24 07:35:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 15:58:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	engine_render_sprites_in_sector_2(t_sprt_r *d)
 	d->x2 = WIDTH / 2 - (int)((d->endy) * d->scaledx);
 }
 
-void	engine_render_sprites_in_sector_3(t_sector *sect, t_player *plr,
+short	engine_render_sprites_in_sector_3(t_sector *sect, t_player *plr,
 		t_sprt_r *d)
 {
 	t_enm_type	e_num;
@@ -44,8 +44,11 @@ void	engine_render_sprites_in_sector_3(t_sector *sect, t_player *plr,
 	e_num = sect->sprobjects_array[sect->order[d->i]].enum_type;
 	d->ceil = sect->floor + plr->arr_sizes[0][e_num].size_y - plr->position.z;
 	d->floor = sect->floor - plr->position.z;
+	if (d->ceil == d->floor || d->ceil < d->floor)
+		return (0);
 	d->ya = HEIGHT / 2 - (int)((d->ceil + d->diry * plr->yaw) * d->scaledy);
 	d->yb = HEIGHT / 2 - (int)((d->floor + d->diry * plr->yaw) * d->scaledy);
+	return (1);
 }
 
 void	engine_render_sprites_in_sector_4(t_sector *sect, SDL_Surface *surf,

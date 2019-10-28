@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/27 15:47:45 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 17:37:20 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define SOUND_ERROR 44
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
-# define THREAD_POOL_SIZE	2
+# define THREAD_POOL_SIZE	4
 # define DELAY 15
 # define DEFAULT_SPRITE_DELAY	10
 # define FIRERATE 30
@@ -1394,9 +1394,9 @@ void				engine_render_particle_3(t_ptcl_r *data);
 void				engine_render_particle_4(t_wallobj *particle,
 					t_ptcl_r *data);
 void				engine_render_particle_5(t_ptcl_r *data);
-void				engine_render_particle_6(t_wallobj *particle,
+short				engine_render_particle_6(t_wallobj *particle,
 					t_ptcl_r *data);
-void				engine_render_particle_7(t_engine *eng,
+short				engine_render_particle_7(t_engine *eng,
 					SDL_Surface *surf,
 					t_wallobj *particle, t_ptcl_r *data);
 void				engine_render_particle_links(t_ptcl_r *data,
@@ -1405,7 +1405,7 @@ void				engine_render_particle_links(t_ptcl_r *data,
 void				engine_render_sprites_in_sector_1(t_sector *sect,
 					t_player *plr, t_sprt_r *d);
 void				engine_render_sprites_in_sector_2(t_sprt_r *d);
-void				engine_render_sprites_in_sector_3(t_sector *sect,
+short				engine_render_sprites_in_sector_3(t_sector *sect,
 					t_player *plr, t_sprt_r *d);
 void				engine_render_sprites_in_sector_4(t_sector *sect,
 					SDL_Surface *surf, t_sprt_r *d);

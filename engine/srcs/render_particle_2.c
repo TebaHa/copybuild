@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 21:09:00 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/19 21:12:51 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 17:36:37 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		engine_render_particle_4(t_wallobj *particle, t_ptcl_r *data)
 	}
 }
 
-void		engine_render_particle_6(t_wallobj *particle, t_ptcl_r *data)
+short		engine_render_particle_6(t_wallobj *particle, t_ptcl_r *data)
 {
 	data->yceil = (particle->z + particle->texture->surface
 	[particle->frame_num]->h / 4)
@@ -82,6 +82,8 @@ void		engine_render_particle_6(t_wallobj *particle, t_ptcl_r *data)
 	data->yfloor = (particle->z - particle->texture->surface
 	[particle->frame_num]->h / 4)
 	- data->plr->position.z;
+	if (data->yceil <= data->yfloor)
+		return (0);
 	data->y1a = HEIGHT / 2 + (int)(-(data->yceil
 	+ data->t1.y * data->plr->yaw)
 	* data->yscale1);
@@ -101,13 +103,16 @@ void		engine_render_particle_6(t_wallobj *particle, t_ptcl_r *data)
 	data->yb_int = scaler_init((float[5]){data->x1, data->beginx,
 	data->x2, data->y1b, data->y2b});
 	data->x = data->beginx;
+	return (1);
 }
 
-void		engine_render_particle_7(t_engine *eng, SDL_Surface *surf,
+short		engine_render_particle_7(t_engine *eng, SDL_Surface *surf,
 			t_wallobj *particle, t_ptcl_r *data)
 {
 	data->ya = scaler_next(&data->ya_int);
 	data->yb = scaler_next(&data->yb_int);
+	if (data->ya == data->yb)
+		return (0);
 	data->cya = clamp(data->ya, eng->world->sectors_array
 	[data->sect.sectorno].item_sprts.ytop[data->x],
 	eng->world->sectors_array[data->sect.sectorno].item_sprts.ybottom[data->x]);
@@ -124,4 +129,5 @@ void		engine_render_particle_7(t_engine *eng, SDL_Surface *surf,
 	(t_fix_point_3d){data->x, data->cyb, 0},
 	data->txtx}, particle->texture->surface[particle->frame_num]);
 	data->x++;
+	return (1);
 }

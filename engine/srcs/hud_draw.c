@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/27 19:56:41 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 16:07:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,18 @@ void		engine_render_hud_stats(t_engine *eng, t_player *plr)
 	buff = ft_itoa(plr->health);
 	txt = create_text(eng, buff, 0xFFFFFFFF);
 	free(buff);
-	draw_player_stats(eng, txt, (t_point_2d){80, HEIGHT - 60});
+	if (txt)
+		draw_player_stats(eng, txt, (t_point_2d){80, HEIGHT - 60});
 	buff = ft_itoa(plr->armor);
 	txt = create_text(eng, buff, 0xFFFFFFFF);
 	free(buff);
-	draw_player_stats(eng, txt, (t_point_2d){80, HEIGHT - 130});
+	if (txt)
+		draw_player_stats(eng, txt, (t_point_2d){80, HEIGHT - 130});
 	buff = ft_itoa(plr->wpn->ammo);
 	txt = create_text(eng, buff, 0xFFFFFFFF);
 	free(buff);
-	draw_player_stats(eng, txt, (t_point_2d){WIDTH - 110,
+	if (txt)
+		draw_player_stats(eng, txt, (t_point_2d){WIDTH - 110,
 	HEIGHT - 50});
 }
 

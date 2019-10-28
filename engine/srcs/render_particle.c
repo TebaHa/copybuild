@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 20:52:01 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 20:45:54 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 17:37:33 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ void		engine_render_particle(t_engine *eng, SDL_Surface *surf,
 	data.x2 < data.sect.sx1
 	|| data.x1 > data.sect.sx2)
 		return ;
-	engine_render_particle_6(particle, &data);
+	if (engine_render_particle_6(particle, &data) == 0)
+		return ;
 	while (data.x <= data.endx)
-		engine_render_particle_7(eng, surf, particle, &data);
+		if (engine_render_particle_7(eng, surf, particle, &data) == 0)
+			return ;
 	if (particle->texture->a_state == ANIMATE)
 	{
 		if (((particle->timer %

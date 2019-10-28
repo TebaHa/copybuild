@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 09:25:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/28 16:01:11 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf,
 			continue ;
 		}
 		get_sprite_image(sect, plr, &d);
-		engine_render_sprites_in_sector_3(sect, plr, &d);
+		if (engine_render_sprites_in_sector_3(sect, plr, &d) == 0)
+		{
+			d.i++;
+			continue ;
+		}
 		d.begx = max(d.x1, restr->sect_id.sx1);
 		d.endx = min(d.x2, restr->sect_id.sx2);
 		d.x = d.begx;
