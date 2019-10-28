@@ -17,7 +17,14 @@ void		parser_filename(t_engine *eng, int argc, char **argv)
 	if (argc == 1)
 		eng->map_name = ft_strdup(GAME_PATH);
 	else if (argc == 2)
-		eng->map_name = argv[1];
+	{
+		if (!ft_strcmp(argv[1], "1"))
+			eng->map_name = "game/resources/levels/1.lvl";
+		else if (!ft_strcmp(argv[1], "2"))
+			eng->map_name = "game/resources/levels/2.lvl";
+		else
+			eng->map_name = argv[1];
+	}
 	else
 	{
 		ft_putendl("Parsing error:");
