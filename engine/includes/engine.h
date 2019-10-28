@@ -439,6 +439,7 @@ typedef	struct		s_sector
 	int				floor;
 	int				ceil;
 	t_color			color;
+	t_bool			ceil_visible;
 	t_image			*ceil_texture;
 	t_image			*floor_texture;
 	t_item_sprts	item_sprts;

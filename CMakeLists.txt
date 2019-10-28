@@ -44,8 +44,6 @@ set(GAME_SRC
 
 set(ENG_INC engine/includes/engine.h)
 set(ENG_SRC
-		engine/srcs/bresenham.c
-		engine/srcs/color.c
 		engine/srcs/intersection_funs.c
 		engine/srcs/intersection_funs_help.c
 		engine/srcs/render_cycle.c
@@ -57,16 +55,11 @@ set(ENG_SRC
 		engine/srcs/render_particle.c
 		engine/srcs/render_particle_2.c
 		engine/srcs/sprite_render.c
-		engine/srcs/texture_math.c
 		engine/srcs/sprite_render_2.c
 		engine/srcs/shoot_main.c
-		engine/srcs/bresenham2.c
-		engine/srcs/engine.c
 		engine/srcs/error_handler.c
 		engine/srcs/hud_draw.c
 		engine/srcs/hud_draw1.c
-		engine/srcs/images.c
-		engine/srcs/normal.c
 		engine/srcs/objects.c
 		engine/srcs/parser.c
 		engine/srcs/parser_errors.c
@@ -74,8 +67,6 @@ set(ENG_SRC
 		engine/srcs/parser_reader.c
 		engine/srcs/parser_utility.c
 		engine/srcs/parser_texture.c
-		engine/srcs/shoot.c
-		engine/srcs/texture.c
 		engine/srcs/utility.c
 		engine/srcs/parser_weapon.c
 		engine/srcs/parser_enemy.c
@@ -88,8 +79,6 @@ set(ENG_SRC
 		engine/srcs/sort.c
 		engine/srcs/render_stack.c
 		engine/srcs/checksum.c
-		engine/srcs/pickup.c
-		engine/srcs/font.c
 		engine/srcs/parser_player.c
 		engine/srcs/parser_items_2.c
 		engine/srcs/sound_2.c
@@ -109,15 +98,28 @@ set(ENG_SRC
 		engine/srcs/objects_help.c
 		engine/srcs/render_wall2.c
 		engine/srcs/shoot_help.c
+		engine/srcs/shoot_main.c
+		engine/srcs/shoot_main2.c
+		engine/srcs/utils_check_stack.c
+		engine/srcs/vectors_normal.c
 		engine/srcs/parser_player_2.c
 		engine/srcs/parser_color.c
 		engine/srcs/parser_package.c
-		engine/srcs/close.c
 		engine/srcs/parser_filename.c
 		engine/srcs/parser_sprite_360.c
 		engine/srcs/sprite_data.c
 		engine/srcs/parser_button.c
-		engine/srcs/parser_wallobjects.c)
+		engine/srcs/parser_wallobjects.c
+		engine/srcs/engine_close.c
+		engine/srcs/engine_font.c
+		engine/srcs/engine_main.c
+		engine/srcs/engine_texture.c
+		engine/srcs/engine_texture_math.c
+		engine/srcs/game_pickup.c
+		engine/srcs/line_bresenham.c
+		engine/srcs/line_bresenham2.c
+		engine/srcs/line_color.c
+		engine/srcs/loader_images.c)
 
 set(EDITOR_INC editor/includes/editor.h)
 set(EDITOR_SRC
