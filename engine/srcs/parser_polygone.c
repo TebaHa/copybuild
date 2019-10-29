@@ -40,21 +40,20 @@ void			util_create_polygone(t_engine *eng, t_polygone *polygone,
 	int			vert_count;
 	int			str_count;
 
-	util_parsing_error_little_data_check("polygone", str, 7);
+	util_parsing_error_little_data_check("polygone", str, 6);
 	polygone->id = util_int10_data_filler(str[1], 0, 0xFFFF);
 	polygone->type = util_int10_data_filler(str[2], 1, 1);
-	polygone->color = util_int16_data_filler(str[3]);
-	util_find_texture_by_name(&polygone->texture, eng, str[4]);
-	polygone->vertices_count = util_int10_data_filler(str[5], 0, 0xFFFF);
+	util_find_texture_by_name(&polygone->texture, eng, str[3]);
+	polygone->vertices_count = util_int10_data_filler(str[4], 0, 0xFFFF);
 	if (!polygone->vertices_count)
 		util_parsing_error_little_data("vertices", "polygone", str);
 	util_parsing_error_count_handler("polygone", str,
-		5 + polygone->vertices_count);
+		4 + polygone->vertices_count);
 	polygone->vertices_array = (t_point_3d *)ft_memalloc(sizeof(t_point_3d)
 		* polygone->vertices_count);
-	str_count = 6;
+	str_count = 5;
 	vert_count = 0;
-	while (str_count < 6 + polygone->vertices_count)
+	while (str_count < 5 + polygone->vertices_count)
 		polygone->vertices_array[vert_count++] =
 			util_get_vertex_from_buff_by_id(ft_atoi(str[str_count++]),
 			eng->stats.vertexes_count, vertex_array, polygone->id);

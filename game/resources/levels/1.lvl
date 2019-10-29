@@ -49,30 +49,30 @@ vertex: 80	400		-400	200
 
 #Polygones
 #				(types: 0 for triangle and 1 for wall),
-#			id,	type, color,	texture,		#verts,	id of vert
-polygone:	0	1	0xFF0000	q_bricks_2		2		1 0
-polygone:	1	1	0xFF0000	q_bricks_2		2		2 1
-polygone:	2	1	0xCCFFFF	q_plate			2		3 2
-polygone:	3	1	0xD9D9D9	q_bricks_3		2		4 3
-polygone:	4	1	0xD9D9D9	q_bricks_3		2		0 4
+#			id,	type,	texture,		#verts,	id of vert
+polygone:	0	1		q_bricks_2		2		1 0
+polygone:	1	1		q_bricks_2		2		2 1
+polygone:	2	1		q_plate			2		3 2
+polygone:	3	1		q_bricks_3		2		4 3
+polygone:	4	1		q_bricks_3		2		0 4
 
-polygone:	5	1	0xFF0000	q_bricks_2		2		6 5
-polygone:	6	1	0xFF0000	q_wall		2		7 6
-polygone:	7	1	0xCCFFFF	q_wall		2		8 7
-polygone:	8	1	0xD9D9D9	q_plate		2		9 8
-polygone:	9	1	0xD9D9D9	q_bricks_2		2		5 9
+polygone:	5	1		q_bricks_2		2		6 5
+polygone:	6	1		q_wall		2		7 6
+polygone:	7	1		q_wall		2		8 7
+polygone:	8	1		q_plate		2		9 8
+polygone:	9	1		q_bricks_2		2		5 9
 
-polygone:	10	1	0xFF0000	q_plate		2		11 10
-polygone:	11	1	0xFF0000	q_wall		2		12 11
-polygone:	12	1	0xCCFFFF	q_plate		2		13 12
-polygone:	13	1	0xD9D9D9	q_bricks_3		2		14 13
-polygone:	14	1	0xD9D9D9	q_bricks_3		2		10 14
+polygone:	10	1		q_plate		2		11 10
+polygone:	11	1		q_wall		2		12 11
+polygone:	12	1		q_plate		2		13 12
+polygone:	13	1		q_bricks_3		2		14 13
+polygone:	14	1		q_bricks_3		2		10 14
 
-polygone:	15	1	0xFF0000	q_plate		2		16 15
-polygone:	16	1	0xFF0000	q_bricks_2		2		17 16
-polygone:	17	1	0xCCFFFF	q_bricks_3		2		18 17
-polygone:	18	1	0xD9D9D9	q_plate		2		19 18
-polygone:	19	1	0xD9D9D9	q_bricks_3		2		15 19
+polygone:	15	1		q_plate		2		16 15
+polygone:	16	1		q_bricks_2		2		17 16
+polygone:	17	1		q_bricks_3		2		18 17
+polygone:	18	1		q_plate		2		19 18
+polygone:	19	1		q_bricks_3		2		15 19
 
 #Objects
 #			(if >= 0 where goes)

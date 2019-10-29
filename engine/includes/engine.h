@@ -314,7 +314,6 @@ typedef struct		s_polygone
 	int				vertices_count;
 	int				id;
 	int				type;
-	int				color;
 	t_image			*texture;
 }					t_polygone;
 

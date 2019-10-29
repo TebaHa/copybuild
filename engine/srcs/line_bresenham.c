@@ -12,18 +12,18 @@
 
 #include <engine.h>
 
-void		triangle_lines(t_polygone *t, SDL_Surface *surf)
-{
-	if (t->vertices_array[0].y == t->vertices_array[1].y
-	&& t->vertices_array[0].y == t->vertices_array[2].y)
-		return ;
-	bresenham_line(&(t->vertices_array[0]), &(t->vertices_array[1]),
-	surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
-	bresenham_line(&(t->vertices_array[1]), &(t->vertices_array[2]),
-	surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
-	bresenham_line(&(t->vertices_array[2]), &(t->vertices_array[0]),
-	surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
-}
+//void		triangle_lines(t_polygone *t, SDL_Surface *surf)
+//{
+//	if (t->vertices_array[0].y == t->vertices_array[1].y
+//	&& t->vertices_array[0].y == t->vertices_array[2].y)
+//		return ;
+//	bresenham_line(&(t->vertices_array[0]), &(t->vertices_array[1]),
+//	surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
+//	bresenham_line(&(t->vertices_array[1]), &(t->vertices_array[2]),
+//	surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
+//	bresenham_line(&(t->vertices_array[2]), &(t->vertices_array[0]),
+//	surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
+//}
 
 void		swapper(t_point_3d *a, t_point_3d *b, int *steep)
 {
