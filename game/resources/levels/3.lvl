@@ -107,9 +107,9 @@ object:	27	5		0		1		floor_wall		ceiling		1		27
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
 sector:	0	0		600		q_floor_5		q_floor_3		0xFF0000	4	0 1 2 3
-sector:	1	0		600		q_plate			q_plate			0xFF0000	4	4 5 6 7
-sector:	2	0		600		q_floor_5		q_floor_3		0xFF0000	4	8 9 10 11
-sector:	3	0		600		q_floor_5		q_floor_3		0xFF0000	4	12 13 14 15
-sector:	4	0		600		q_floor_5		q_floor_3		0xFF0000	4	16 17 18 19
-sector:	5	0		600		q_floor_5		q_floor_3		0xFF0000	4	20 21 22 23
-sector:	6	0		600		floor_wall		q_floor_3		0xFF0000	4	24 25 26 27
+sector:	1	-50		600		q_plate			q_plate			0xFF0000	4	4 5 6 7
+sector:	2	-100	600		q_floor_5		q_floor_3		0xFF0000	4	8 9 10 11
+sector:	3	-150	600		q_floor_5		q_floor_3		0xFF0000	4	12 13 14 15
+sector:	4	-200	600		floor_wall		q_floor_3		0xFF0000	4	16 17 18 19
+sector:	5	-250	600		q_floor_5		q_floor_3		0xFF0000	4	20 21 22 23
+sector:	6	-300	600		floor_wall		q_floor_3		0xFF0000	4	24 25 26 27
