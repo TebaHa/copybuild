@@ -88,8 +88,8 @@ void		util_release_objects_buffer(t_object *object_buff, int size)
 	i = 0;
 	while (i < size)
 	{
-		util_release_polies_buffer(object_buff[i].polies_array,
-			object_buff[i].polies_count);
+//		util_release_polies_buffer(object_buff[i].polies_array,
+//			object_buff[i].polies_count);
 		i++;
 	}
 	free(object_buff);

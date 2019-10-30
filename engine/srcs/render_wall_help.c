@@ -65,7 +65,7 @@ void			engine_render_wall_recount_intersect_help(t_wall_help1 *data,
 	}
 }
 
-void			engine_render_wall_recount_intersect(t_polygone *polygone,
+void			engine_render_wall_recount_intersect(t_object *object,
 				t_point_2d *t1, t_point_2d *t2, int *u[2])
 {
 	t_wall_help1	data;
@@ -74,16 +74,16 @@ void			engine_render_wall_recount_intersect(t_polygone *polygone,
 	engine_render_wall_recount_intersect_help(&data, t1, t2);
 	if (fabsf(t2->x - t1->x) > fabsf(t2->y - t1->y))
 	{
-		*u[0] = (t1->x - data.org1.x) * (polygone->texture->height - 1)
+		*u[0] = (t1->x - data.org1.x) * (object->texture->height - 1)
 		/ (data.org2.x - data.org1.x);
-		*u[1] = (t2->x - data.org1.x) * (polygone->texture->height - 1)
+		*u[1] = (t2->x - data.org1.x) * (object->texture->height - 1)
 		/ (data.org2.x - data.org1.x);
 	}
 	else
 	{
-		*u[0] = (t1->y - data.org1.y) * (polygone->texture->width - 1)
+		*u[0] = (t1->y - data.org1.y) * (object->texture->width - 1)
 		/ (data.org2.y - data.org1.y);
-		*u[1] = (t2->y - data.org1.y) * (polygone->texture->width - 1)
+		*u[1] = (t2->y - data.org1.y) * (object->texture->width - 1)
 		/ (data.org2.y - data.org1.y);
 	}
 }
