@@ -18,7 +18,7 @@ void		engine_parser(t_engine *eng, t_player *plr, int argc, char **argv)
 	engine_create_resources_from_file(eng);
 	engine_create_world_from_file(eng, plr, eng->map_name);
 	plr->wpn = eng->weapon[1];
-	plr->cursector = 0; // УДОЛИ
+	plr->cursector = 6; // УДОЛИ
 }
 
 void		engine_create_resources_from_file(t_engine *eng)

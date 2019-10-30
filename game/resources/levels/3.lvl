@@ -5,11 +5,12 @@ world:	1	20				0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
 
 #Vertexes
 #		angle,	vertex
-player: 270		99
+player: 3		99
 
 #Vertexes
 #		id	X,		Y,		Z
-vertex: 99	1680	1850	1000
+/vertex: 99	1680	1850	1000
+vertex: 99	1400	1850	700
 
 vertex: 0	1700	1900	200
 vertex: 1	1700	1800	200
@@ -62,129 +63,129 @@ vertex: 46	2100	1055	200
 #Objects
 #			(if >= 0 where goes)
 #		id,	port, pasble, visble, texture,	floor_wall,		ceil_wall,	id of vert
-object:	0	-1		0	1	q_bricks_2		flooring		ceiling		3 1
-object:	1	-1		0	1	q_bricks_2		flooring	    ceiling		1 0
-object:	2	-1		0	1	q_bricks_2		flooring		ceiling		0 2
-object:	3	1		0	1	q_bricks_2		flooring	    ceiling		2 3
+object:	0	-1		0	1	s_white		s_tile		ceiling		3 1
+object:	1	-1		0	1	s_door_1		s_tile	    ceiling		1 0
+object:	2	-1		0	1	s_white		s_tile		ceiling		0 2
+object:	3	1		0	1	s_white		s_tile	    ceiling		2 3
 
-object:	4	-1		0	1	q_bricks_2		flooring		ceiling		5 3
-object:	5	0		0	1	q_bricks_2		flooring	    ceiling		3 2
-object:	6	-1		0	1	q_bricks_2		flooring		ceiling		2 4
-object:	7	2		0	1	q_bricks_2		flooring	    ceiling		4 5
+object:	4	-1		0	1	s_white		s_tile		ceiling		5 3
+object:	5	0		0	1	s_white		s_tile	    ceiling		3 2
+object:	6	-1		0	1	s_white		s_tile		ceiling		2 4
+object:	7	2		0	1	s_white		s_tile	    ceiling		4 5
 
-object:	8	-1		0	1	q_bricks_2		flooring		ceiling		7 5
-object:	9	1		0	1	q_bricks_2		flooring	    ceiling		5 4
-object:	10	-1		0	1	q_bricks_2		flooring		ceiling		4 6
-object:	11	3		0	1	q_bricks_2		flooring	    ceiling		6 7
+object:	8	-1		0	1	s_white		s_tile		ceiling		7 5
+object:	9	1		0	1	s_white		s_tile	    ceiling		5 4
+object:	10	-1		0	1	s_white		s_tile		ceiling		4 6
+object:	11	3		0	1	s_white		s_tile	    ceiling		6 7
 
-object:	12	-1		0	1	q_bricks_2		flooring		ceiling		9 7
-object:	13	2		0	1	q_bricks_2		flooring	    ceiling		7 6
-object:	14	-1		0	1	q_bricks_2		flooring		ceiling		6 8
-object:	15	4		0	1	q_bricks_2		flooring	    ceiling		8 9
+object:	12	-1		0	1	s_white		s_tile		ceiling		9 7
+object:	13	2		0	1	s_white		s_tile	    ceiling		7 6
+object:	14	-1		0	1	s_white		s_tile		ceiling		6 8
+object:	15	4		0	1	s_white		s_tile	    ceiling		8 9
 
-object:	16	-1		0	1	q_bricks_2		flooring		ceiling		11 9
-object:	17	3		0	1	q_bricks_2		flooring	    ceiling		9 8
-object:	18	-1		0	1	q_bricks_2		flooring		ceiling		8 10
-object:	19	5		0	1	q_bricks_2		flooring	    ceiling		10 11
+object:	16	-1		0	1	s_white		s_tile		ceiling		11 9
+object:	17	3		0	1	s_white		s_tile	    ceiling		9 8
+object:	18	-1		0	1	s_white		s_tile		ceiling		8 10
+object:	19	5		0	1	s_white		s_tile	    ceiling		10 11
 
-object:	20	-1		0	1	q_bricks_2		flooring		ceiling		13 11
-object:	21	4		0	1	q_bricks_2		flooring	    ceiling		11 10
-object:	22	-1		0	1	q_bricks_2		flooring		ceiling		10 12
-object:	23	6		0	1	q_bricks_2		flooring	    ceiling		12 13
+object:	20	-1		0	1	s_white		s_tile		ceiling		13 11
+object:	21	4		0	1	s_white		s_tile	    ceiling		11 10
+object:	22	-1		0	1	s_white		s_tile		ceiling		10 12
+object:	23	6		0	1	s_white		s_tile	    ceiling		12 13
 
-object:	24	7		0	1	q_bricks_2		flooring		ceiling		15 13
-object:	25	5		0	1	q_bricks_2		flooring	    ceiling		13 12
-object:	26	-1		0	1	q_bricks_2		flooring		ceiling		12 16
-object:	27	-1		0	1	q_bricks_2		flooring	    ceiling		16 15
+object:	24	7		0	1	s_white		s_tile		ceiling		15 13
+object:	25	5		0	1	s_white		s_tile	    ceiling		13 12
+object:	26	-1		0	1	s_white		s_tile		ceiling		12 16
+object:	27	-1		0	1	s_white		s_tile	    ceiling		16 15
 
-object:	28	8		0	1	q_bricks_2		flooring		ceiling		18 17
-object:	29	-1		0	1	q_bricks_2		flooring	    ceiling		17 13
-object:	30	6		0	1	q_bricks_2		flooring		ceiling		13 15
-object:	31	-1		0	1	q_bricks_2		flooring	    ceiling		15 18
+object:	28	8		0	1	s_white		s_tile		ceiling		18 17
+object:	29	-1		0	1	s_white		s_tile	    ceiling		17 13
+object:	30	6		0	1	s_white		s_tile		ceiling		13 15
+object:	31	-1		0	1	s_white		s_tile	    ceiling		15 18
 
-object:	32	9		0	1	q_bricks_2		flooring		ceiling		20 19
-object:	33	-1		0	1	q_bricks_2		flooring	    ceiling		19 17
-object:	34	7		0	1	q_bricks_2		flooring		ceiling		17 18
-object:	35	-1		0	1	q_bricks_2		flooring	    ceiling		18 20
+object:	32	9		0	1	s_white		s_tile		ceiling		20 19
+object:	33	-1		0	1	s_white		s_tile	    ceiling		19 17
+object:	34	7		0	1	s_white		s_tile		ceiling		17 18
+object:	35	-1		0	1	s_white		s_tile	    ceiling		18 20
 
-object:	36	10		0	1	q_bricks_2		flooring		ceiling		22 21
-object:	37	-1		0	1	q_bricks_2		flooring	    ceiling		21 19
-object:	38	8		0	1	q_bricks_2		flooring		ceiling		19 20
-object:	39	-1		0	1	q_bricks_2		flooring	    ceiling		20 22
+object:	36	10		0	1	s_white		s_tile		ceiling		22 21
+object:	37	-1		0	1	s_white		s_tile	    ceiling		21 19
+object:	38	8		0	1	s_white		s_tile		ceiling		19 20
+object:	39	-1		0	1	s_white		s_tile	    ceiling		20 22
 
-object:	40	11		0	1	q_bricks_2		flooring		ceiling		24 23
-object:	41	-1		0	1	q_bricks_2		flooring	    ceiling		23 21
-object:	42	9		0	1	q_bricks_2		flooring		ceiling		21 22
-object:	43	-1		0	1	q_bricks_2		flooring	    ceiling		22 24
+object:	40	11		0	1	s_white		s_tile		ceiling		24 23
+object:	41	-1		0	1	s_white		s_tile	    ceiling		23 21
+object:	42	9		0	1	s_white		s_tile		ceiling		21 22
+object:	43	-1		0	1	s_white		s_tile	    ceiling		22 24
 
-object:	44	12		0	1	q_bricks_2		flooring		ceiling		26 25
-object:	45	-1		0	1	q_bricks_2		flooring	    ceiling		25 23
-object:	46	10		0	1	q_bricks_2		flooring		ceiling		23 24
-object:	47	-1		0	1	q_bricks_2		flooring	    ceiling		24 26
+object:	44	12		0	1	s_white		s_tile		ceiling		26 25
+object:	45	-1		0	1	s_white		s_tile	    ceiling		25 23
+object:	46	10		0	1	s_white		s_tile		ceiling		23 24
+object:	47	-1		0	1	s_white		s_tile	    ceiling		24 26
 
-object:	48	-1		0	1	q_bricks_2		flooring		ceiling		27 28
-object:	49	13		0	1	q_bricks_2		flooring	    ceiling		28 25
-object:	50	11		0	1	q_bricks_2		flooring		ceiling		25 26
-object:	51	-1		0	1	q_bricks_2		flooring	    ceiling		26 27
+object:	48	-1		0	1	s_white		s_tile		ceiling		27 28
+object:	49	13		0	1	s_white		s_tile	    ceiling		28 25
+object:	50	11		0	1	s_white		s_tile		ceiling		25 26
+object:	51	-1		0	1	s_white		s_tile	    ceiling		26 27
 
-object:	52	-1		0	1	q_bricks_2		flooring		ceiling		28 30
-object:	53	14		0	1	q_bricks_2		flooring	    ceiling		30 29
-object:	54	-1		0	1	q_bricks_2		flooring		ceiling		29 25
-object:	55	12		0	1	q_bricks_2		flooring	    ceiling		25 28
+object:	52	-1		0	1	s_white		s_tile		ceiling		28 30
+object:	53	14		0	1	s_white		s_tile	    ceiling		30 29
+object:	54	-1		0	1	s_white		s_tile		ceiling		29 25
+object:	55	12		0	1	s_white		s_tile	    ceiling		25 28
 
-object:	56	-1		0	1	q_bricks_2		flooring		ceiling		30 32
-object:	57	15		0	1	q_bricks_2		flooring	    ceiling		32 31
-object:	58	-1		0	1	q_bricks_2		flooring		ceiling		31 29
-object:	59	13		0	1	q_bricks_2		flooring	    ceiling		29 30
+object:	56	-1		0	1	s_white		s_tile		ceiling		30 32
+object:	57	15		0	1	s_white		s_tile	    ceiling		32 31
+object:	58	-1		0	1	s_white		s_tile		ceiling		31 29
+object:	59	13		0	1	s_white		s_tile	    ceiling		29 30
 
-object:	60	-1		0	1	q_bricks_2		flooring		ceiling		32 34
-object:	61	16		0	1	q_bricks_2		flooring	    ceiling		34 33
-object:	62	-1		0	1	q_bricks_2		flooring		ceiling		33 31
-object:	63	14		0	1	q_bricks_2		flooring	    ceiling		31 32
+object:	60	-1		0	1	s_white		s_tile		ceiling		32 34
+object:	61	16		0	1	s_white		s_tile	    ceiling		34 33
+object:	62	-1		0	1	s_white		s_tile		ceiling		33 31
+object:	63	14		0	1	s_white		s_tile	    ceiling		31 32
 
-object:	64	-1		0	1	q_bricks_2		flooring		ceiling		34 36
-object:	65	17		0	1	q_bricks_2		flooring	    ceiling		36 35
-object:	66	-1		0	1	q_bricks_2		flooring		ceiling		35 33
-object:	67	15		0	1	q_bricks_2		flooring	    ceiling		33 34
+object:	64	-1		0	1	s_white		s_tile		ceiling		34 36
+object:	65	17		0	1	s_white		s_tile	    ceiling		36 35
+object:	66	-1		0	1	s_white		s_tile		ceiling		35 33
+object:	67	15		0	1	s_white		s_tile	    ceiling		33 34
 
-object:	68	-1		0	1	q_bricks_2		flooring		ceiling		36 38
-object:	69	18		0	1	q_bricks_2		flooring	    ceiling		38 37
-object:	70	-1		0	1	q_bricks_2		flooring		ceiling		37 35
-object:	71	16		0	1	q_bricks_2		flooring	    ceiling		35 36
+object:	68	-1		0	1	s_white		s_tile		ceiling		36 38
+object:	69	18		0	1	s_white		s_tile	    ceiling		38 37
+object:	70	-1		0	1	s_white		s_tile		ceiling		37 35
+object:	71	16		0	1	s_white		s_tile	    ceiling		35 36
 
-object:	72	-1		0	1	q_bricks_2		flooring		ceiling		41 42
-object:	73	19		0	1	q_bricks_2		flooring	    ceiling		42 43
-object:	74	-1		0	1	q_bricks_2		flooring		ceiling		43 44
-object:	75	-1		0	1	q_bricks_2		flooring	    ceiling		44 40
-object:	76	-1		0	1	q_bricks_2		flooring		ceiling		40 39
-object:	77	-1		0	1	q_bricks_2		flooring	    ceiling		39 37
-object:	78	17		0	1	q_bricks_2		flooring		ceiling		37 38
-object:	79	-1		0	1	q_bricks_2		flooring	    ceiling		38 41
+object:	72	-1		0	1	s_white		s_tile		ceiling		41 42
+object:	73	19		0	1	s_white		s_tile	    ceiling		42 43
+object:	74	-1		0	1	s_white		s_tile		ceiling		43 44
+object:	75	-1		0	1	s_white		s_tile	    ceiling		44 40
+object:	76	-1		0	1	s_white		s_tile		ceiling		40 39
+object:	77	-1		0	1	s_white		s_tile	    ceiling		39 37
+object:	78	17		0	1	s_white		s_tile		ceiling		37 38
+object:	79	-1		0	1	s_white		s_tile	    ceiling		38 41
 
-object:	80	-1		0	1	q_bricks_2		flooring		ceiling		45 46
-object:	81	-1		0	1	q_bricks_2		flooring	    ceiling		46 43
-object:	82	18		0	1	q_bricks_2		flooring		ceiling		43 42
-object:	83	-1		0	1	q_bricks_2		flooring	    ceiling		42 45
+object:	80	-1		0	1	s_door_1		flooring		ceiling		45 46
+object:	81	-1		0	1	s_white		flooring	    ceiling		46 43
+object:	82	18		0	1	s_white		flooring		ceiling		43 42
+object:	83	-1		0	1	s_white		flooring	    ceiling		42 45
 
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
-sector:	0	900		1200		q_floor_5		q_floor_3		0xFF0000	4	0 1 2 3
-sector:	1	850		1200		q_plate			q_plate			0xFF0000	4	4 5 6 7
-sector:	2	800     1200		q_floor_5		q_floor_3		0xFF0000	4	8 9 10 11
-sector:	3	750	    1200		q_floor_5		q_floor_3		0xFF0000	4	12 13 14 15
-sector:	4	700	    1200		floor_wall		q_floor_3		0xFF0000	4	16 17 18 19
-sector:	5	650	    1200		q_floor_5		q_floor_3		0xFF0000	4	20 21 22 23
-sector:	6	600	    1200		floor_wall		q_floor_3		0xFF0000	4	24 25 26 27
-sector:	7	550	    1200		floor_wall		q_floor_3		0xFF0000	4   28 29 30 31
-sector:	8	500	    1200		floor_wall		q_floor_3		0xFF0000	4   32 33 34 35
-sector:	9	450	    1200		floor_wall		q_floor_3		0xFF0000	4   36 37 38 39
-sector:	10	400	    1200		floor_wall		q_floor_3		0xFF0000	4   40 41 42 43
-sector:	11	350	    1200		floor_wall		q_floor_3		0xFF0000	4   44 45 46 47
-sector:	12	300	    1200		floor_wall		q_floor_3		0xFF0000	4   48 49 50 51
-sector:	13	250	    1200		floor_wall		q_floor_3		0xFF0000	4   52 53 54 55
-sector:	14	200	    1200		floor_wall		q_floor_3		0xFF0000	4   56 57 58 59
-sector:	15	150	    1200		floor_wall		q_floor_3		0xFF0000	4   60 61 62 63
-sector:	16	100	    1200		floor_wall		q_floor_3		0xFF0000	4   64 65 66 67
-sector:	17	50	    1200		floor_wall		q_floor_3		0xFF0000	4   68 69 70 71
-sector:	18	0	    1200		floor_wall		q_floor_3		0xFF0000	8   72 73 74 75 76 77 78 79
-sector:	19	0	    1200		floor_wall		q_floor_3		0xFF0000	4   80 81 82 83
+sector:	0	900		1200		s_tile		s_black		0xFF0000	4	0 1 2 3
+sector:	1	850		1200		s_tile		s_black			0xFF0000	4	4 5 6 7
+sector:	2	800     1200		s_tile		s_black		0xFF0000	4	8 9 10 11
+sector:	3	750	    1200		s_tile		s_black		0xFF0000	4	12 13 14 15
+sector:	4	700	    1200		s_tile		s_black		0xFF0000	4	16 17 18 19
+sector:	5	650	    1200		s_tile		s_black		0xFF0000	4	20 21 22 23
+sector:	6	600	    1200		s_tile		s_black		0xFF0000	4	24 25 26 27
+sector:	7	550	    1200		s_tile		s_black		0xFF0000	4   28 29 30 31
+sector:	8	500	    1200		s_tile		s_black		0xFF0000	4   32 33 34 35
+sector:	9	450	    1200		s_tile		s_black		0xFF0000	4   36 37 38 39
+sector:	10	400	    1200		s_tile		s_black		0xFF0000	4   40 41 42 43
+sector:	11	350	    1200		s_tile		s_black		0xFF0000	4   44 45 46 47
+sector:	12	300	    1200		s_tile		s_black		0xFF0000	4   48 49 50 51
+sector:	13	250	    1200		s_tile		s_black		0xFF0000	4   52 53 54 55
+sector:	14	200	    1200		s_tile		s_black		0xFF0000	4   56 57 58 59
+sector:	15	150	    1200		s_tile		s_black		0xFF0000	4   60 61 62 63
+sector:	16	100	    1200		s_tile		s_black		0xFF0000	4   64 65 66 67
+sector:	17	50	    600			s_tile		s_white		0xFF0000	4   68 69 70 71
+sector:	18	0	    800			s_laminate		s_black		0xFF0000	8   72 73 74 75 76 77 78 79
+sector:	19	0	    500			s_laminate		s_white		0xFF0000	4   80 81 82 83
