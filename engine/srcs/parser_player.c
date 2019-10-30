@@ -45,9 +45,10 @@ void		util_create_player(t_engine *eng, t_player *plr, t_buff buff,
 {
 	t_point_3d		position;
 
-	util_parsing_error_count_handler("player", str, 1);
-	position = util_get_vertex_from_buff_by_id(ft_atoi(str[1]),
+	util_parsing_error_count_handler("player", str, 2);
+	position = util_get_vertex_from_buff_by_id(ft_atoi(str[2]),
 		eng->stats.vertexes_count, buff.vertexes, 99);
+	// добавить угол
 	plr->position.x = position.x;
 	plr->position.y = position.y;
 	plr->position.z = position.z;
@@ -59,6 +60,8 @@ void		engine_check_plr_pos(t_world *world, t_player *plr)
 
 	temp.x = plr->position.x - 1;
 	temp.y = plr->position.y - 1;
+	temp.z = plr->position.z;
+	temp.id = 0xFFFF;
 	while (temp.x <= plr->position.x + 1)
 	{
 		while (temp.y <= plr->position.y + 1)

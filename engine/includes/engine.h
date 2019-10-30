@@ -28,11 +28,11 @@
 # define MAXSECTORS 32
 # define HFOV (1.0 * 0.83f * HEIGHT / WIDTH)
 # define VFOV (1.0 * 0.2f)
-# define TEXTURE_PACK_PATH		"./game/resources/images/"
-# define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
-# define SOUND_PATH				"./game/resources/sounds/"
-# define GAME_PATH				"./game/resources/levels/1.lvl"
-# define FONT_PATH				"./game/resources/fonts/SEASRN__.ttf"
+# define TEXTURE_PACK_PATH		"../game/resources/images/"
+# define TEXTURE_SPRITE_PATH	"../game/resources/sprites/"
+# define SOUND_PATH				"../game/resources/sounds/"
+# define GAME_PATH				"../game/resources/levels/1.lvl"
+# define FONT_PATH				"../game/resources/fonts/SEASRN__.ttf"
 # define RESOURCES_FOLDER		"game/resources/"
 # define RESOURCES_PACK			"game/resources.doom"
 # define PARSING_ERROR 40
@@ -310,7 +310,6 @@ typedef	struct		s_point_3d
 typedef struct		s_polygone
 {
 	t_point_3d		*vertices_array;
-	t_point_3d		norm;
 	int				vertices_count;
 	int				id;
 	int				type;
@@ -420,6 +419,9 @@ typedef struct		s_object
 	int				visible;
 	int				status;
 	t_wallobj		particles[128];
+	t_image			*texture;
+	t_point_3d		*vertices_array;
+	int				vertices_count;
 	int 			wallobjects_num;
 	t_wobj			*wallobjects_array;
 	t_image			*floor_wall_texture;
@@ -641,7 +643,7 @@ typedef struct		s_wall_help1
 
 typedef struct		s_wall_help2
 {
-	t_polygone		*polygone;
+	t_object		*object;
 	t_player		*plr;
 	int				ytop[WIDTH];
 	int				ybottom[WIDTH];
@@ -1025,7 +1027,7 @@ void				engine_vline_textured_surface(SDL_Surface *surf,
 					t_vline1_in din, SDL_Surface *texture);
 void				switch_weapon(t_engine *eng, t_player *plr, int weapon_num);
 int					sound_play_thread_wrapper(void *ptr);
-void				engine_render_wall_count_initial_point(t_polygone *polygone,
+void				engine_render_wall_count_initial_point(t_object *object,
 					t_player *plr,
 					t_point_2d	*t1, t_point_2d	*t2);
 void				engine_push_spriterenderstack(t_item_sprts **renderqueue,

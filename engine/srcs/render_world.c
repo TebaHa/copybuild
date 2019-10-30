@@ -48,8 +48,8 @@ void		engine_render_world_help(t_engine *eng, SDL_Surface *surf,
 		{
 			data->portal = eng->world->sectors_array
 			[data->sect.sectorno].objects_array[i].portal;
-			data->polygone = eng->world->sectors_array
-			[data->sect.sectorno].objects_array[i].polies_array;
+			data->object = &eng->world->sectors_array
+			[data->sect.sectorno].objects_array[i];
 			data->obj_id = i;
 			engine_render_wall(eng, surf, data, stacks);
 			i++;

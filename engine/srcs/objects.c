@@ -40,12 +40,12 @@ int		engine_object_get_sector(t_world *world, t_point_3d pos, int start_sect)
 void	engine_check_object(t_find_obj *d, t_world *world, t_point_3d pos)
 {
 	if (intersect_sect((t_point_2d){world->sectors_array[d->cursect].
-	objects_array[d->i].polies_array[0].vertices_array[0].x,
+	objects_array[d->i].vertices_array[0].x,
 	world->sectors_array[d->cursect].objects_array[d->i].
-	polies_array[0].vertices_array[0].y},
+	vertices_array[0].y},
 	(t_point_2d){world->sectors_array[d->cursect].objects_array[d->i].
-	polies_array[0].vertices_array[1].x,
-	world->sectors_array[d->cursect].objects_array[d->i].polies_array[0].
+	vertices_array[1].x,
+	world->sectors_array[d->cursect].objects_array[d->i].
 	vertices_array[1].y}, (t_point_2d){pos.x, pos.y}))
 		d->res = -d->res;
 	if (world->sectors_array[d->cursect].objects_array[d->i].portal >= 0
