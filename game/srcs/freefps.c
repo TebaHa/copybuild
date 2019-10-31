@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/27 19:50:23 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/31 19:36:59 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int			main(int argc, char **argv)
 	while (1)
 	{
 		game_movement_check(&fps);
+		printf("%d\n", fps.player.cursector);
 		if (SDL_PollEvent(&fps.eng->event))
 		{
 			sound_player_control(&fps.player);

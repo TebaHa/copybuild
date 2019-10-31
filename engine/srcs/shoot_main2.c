@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/27 20:13:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/10/31 19:06:22 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	engine_push_partclstack_help(t_sh_part *data,
 	data->dy2 = particle->y - obj->polies_array[0].vertices_array[1].y;
 	data->dist1 = sqrtf(data->dx1 * data->dx1 + data->dy1 * data->dy1);
 	data->dist2 = sqrtf(data->dx2 * data->dx2 + data->dy2 * data->dy2);
-	data->half_w = wpn->bullet_hole->surface[0]->w / 16;
+	data->half_w = wpn->bullet_hole->surface[0]->w / 12;
 	data->w_partcle.texture = wpn->bullet_hole;
 }
 
