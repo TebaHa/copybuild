@@ -15,7 +15,7 @@
 void		util_release_read_buffers(t_buff *buff)
 {
 	free(buff->vertexes);
-	free(buff->polies);
+//	free(buff->polies);
 	free(buff->objects);
 	free(buff->sprobjects);
 	free(buff->sprites);

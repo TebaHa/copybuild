@@ -17,7 +17,7 @@ void		engine_render_wall_cycle_6(t_wall_clinks *l)
 	engine_vline_textured(l->surf,
 	(t_scaler)scaler_init((float[5]){l->mdata->ya,
 	l->mdata->cnyb + 1,
-	l->mdata->yb, 0, l->data->polygone->texture->height - 1}),
+	l->mdata->yb, 0, l->data->object->texture->height - 1}),
 	(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cnyb + 1, 0},
 	(t_fix_point_3d){l->cycler->x, l->mdata->cyb, 0},
 	l->mdata->txtx}, l->eng->world->sectors_array[l->data->sect.sectorno]

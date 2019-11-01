@@ -76,7 +76,7 @@ void				engine_render_wall_cycle_4(t_wall_clinks *l)
 	l->data->ytop[l->cycler->x], l->data->ybottom[l->cycler->x]);
 	engine_vline_textured(l->surf, (t_scaler)scaler_init((float[5])
 	{l->mdata->ya, l->mdata->cya, l->mdata->yb,
-	0, l->data->polygone->texture->height - 1}),
+	0, l->data->object->texture->height - 1}),
 	(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya, 0},
 	(t_fix_point_3d){l->cycler->x,
 	l->mdata->cnya - 1, 0}, l->mdata->txtx},
@@ -95,9 +95,9 @@ void				engine_render_wall_cycle_3(t_wall_clinks *l)
 	{
 		engine_vline_textured(l->surf, (t_scaler)scaler_init((float[5])
 		{l->mdata->ya, l->mdata->cya, l->mdata->yb,
-		0, l->data->polygone->texture->height - 1}),
+		0, l->data->object->texture->height - 1}),
 		(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya + 1, 0},
 		(t_fix_point_3d){l->cycler->x,
-		l->mdata->cyb, 0}, l->mdata->txtx}, l->data->polygone->texture);
+		l->mdata->cyb, 0}, l->mdata->txtx}, l->data->object->texture);
 	}
 }

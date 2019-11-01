@@ -33,21 +33,21 @@ void	shoot_help1(t_shoot_data *d, t_engine *eng,
 void	shoot_help2(t_shoot_data *d)
 {
 	d->plane.n = calc_normal_dots((t_point_3d){0,
-	d->sect->objects_array[d->i].polies_array[0].
+	d->sect->objects_array[d->i].
 	vertices_array[0].x,
-	d->sect->objects_array[d->i].polies_array[0].
+	d->sect->objects_array[d->i].
 	vertices_array[0].y, d->sect->floor},
 	(t_point_3d){0, d->sect->objects_array[d->i].
-	polies_array[0].vertices_array[0].x,
-	d->sect->objects_array[d->i].polies_array[0].
+	vertices_array[0].x,
+	d->sect->objects_array[d->i].
 	vertices_array[0].y, d->sect->ceil},
 	(t_point_3d){0, d->sect->objects_array[d->i].
-	polies_array[0].vertices_array[1].x,
-	d->sect->objects_array[d->i].polies_array[0].
+	vertices_array[1].x,
+	d->sect->objects_array[d->i].
 	vertices_array[1].y, d->sect->ceil});
 	d->plane.p = (t_point_3d){0, d->sect->objects_array[d->i].
-	polies_array[0].vertices_array[1].x,
-	d->sect->objects_array[d->i].polies_array[0].
+	vertices_array[1].x,
+	d->sect->objects_array[d->i].
 	vertices_array[1].y, d->sect->floor};
 	d->res = intersect_3d_seg_plane(d->shoot, d->plane, &d->int_p);
 }

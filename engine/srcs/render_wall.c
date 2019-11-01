@@ -88,14 +88,14 @@ void			engine_render_wall(t_engine *eng, SDL_Surface *surf,
 	t_wall_clinks		links;
 
 	data_help.push = 0;
-	engine_render_wall_count_initial_point(data->polygone,
+	engine_render_wall_count_initial_point(data->object,
 	data->plr, &data_help.t1, &data_help.t2);
 	if (data_help.t1.y <= 0 && data_help.t2.y <= 0)
 		return ;
 	data_help.u0 = 0;
-	data_help.u1 = data->polygone->texture->height - 1;
+	data_help.u1 = data->object->texture->height - 1;
 	if (data_help.t1.y <= 0 || data_help.t2.y <= 0)
-		engine_render_wall_recount_intersect(data->polygone,
+		engine_render_wall_recount_intersect(data->object,
 		&data_help.t1, &data_help.t2,
 		(int *[2]){(int *)&data_help.u0, (int *)&data_help.u1});
 	if (engine_render_wall_count_values(eng, &data_help, data, &mdata) == NULL)

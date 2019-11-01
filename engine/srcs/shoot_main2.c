@@ -29,10 +29,10 @@ int		check_point_inside_box(t_point_3d a,
 	t_point_3d	t0;
 	t_point_3d	t1;
 
-	point_swapper_shoot(&t0.x, &t1.x, obj->polies_array[0].vertices_array[0].x,
-	obj->polies_array[0].vertices_array[1].x);
-	point_swapper_shoot(&t0.y, &t1.y, obj->polies_array[0].vertices_array[0].y,
-	obj->polies_array[0].vertices_array[1].y);
+	point_swapper_shoot(&t0.x, &t1.x, obj->vertices_array[0].x,
+	obj->vertices_array[1].x);
+	point_swapper_shoot(&t0.y, &t1.y, obj->vertices_array[0].y,
+	obj->vertices_array[1].y);
 	t0.z = ceil;
 	t1.z = floor;
 	if (a.x <= t0.x + 0.1 && a.x >= t1.x - 0.1
@@ -72,10 +72,10 @@ int		intersect_3d_seg_plane(t_line s, t_plane pn, t_point_3d *res)
 void	engine_push_partclstack_help(t_sh_part *data,
 		t_object *obj, t_weapon *wpn, t_point_3d *particle)
 {
-	data->dx1 = obj->polies_array[0].vertices_array[0].x - particle->x;
-	data->dy1 = obj->polies_array[0].vertices_array[0].y - particle->y;
-	data->dx2 = particle->x - obj->polies_array[0].vertices_array[1].x;
-	data->dy2 = particle->y - obj->polies_array[0].vertices_array[1].y;
+	data->dx1 = obj->vertices_array[0].x - particle->x;
+	data->dy1 = obj->vertices_array[0].y - particle->y;
+	data->dx2 = particle->x - obj->vertices_array[1].x;
+	data->dy2 = particle->y - obj->vertices_array[1].y;
 	data->dist1 = sqrtf(data->dx1 * data->dx1 + data->dy1 * data->dy1);
 	data->dist2 = sqrtf(data->dx2 * data->dx2 + data->dy2 * data->dy2);
 	data->half_w = wpn->bullet_hole->surface[0]->w / 12;
@@ -93,13 +93,13 @@ void	engine_push_particlestack(t_object *obj, t_weapon *wpn,
 	status = (int *)d[1];
 	engine_push_partclstack_help(&data, obj, wpn, &particle);
 	data.w_partcle.a.x = particle.x - ((data.half_w * (particle.x
-	- obj->polies_array[0].vertices_array[0].x)) / data.dist1);
+	- obj->vertices_array[0].x)) / data.dist1);
 	data.w_partcle.a.y = particle.y - ((data.half_w * (particle.y
-	- obj->polies_array[0].vertices_array[0].y)) / data.dist1);
+	- obj->vertices_array[0].y)) / data.dist1);
 	data.w_partcle.b.x = particle.x - ((data.half_w * (particle.x
-	- obj->polies_array[0].vertices_array[1].x)) / data.dist2);
+	- obj->vertices_array[1].x)) / data.dist2);
 	data.w_partcle.b.y = particle.y - ((data.half_w * (particle.y
-	- obj->polies_array[0].vertices_array[1].y)) / data.dist2);
+	- obj->vertices_array[1].y)) / data.dist2);
 	data.w_partcle.id = 1;
 	data.w_partcle.z = particle.z;
 	data.w_partcle.timer = 0;

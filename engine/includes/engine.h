@@ -28,11 +28,11 @@
 # define MAXSECTORS 32
 # define HFOV (1.0 * 0.63f * HEIGHT / WIDTH)
 # define VFOV (1.0 * 0.2f)
-# define TEXTURE_PACK_PATH		"./game/resources/images/"
-# define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
-# define SOUND_PATH				"./game/resources/sounds/"
-# define GAME_PATH				"./game/resources/levels/1.lvl"
-# define FONT_PATH				"./game/resources/fonts/SEASRN__.ttf"
+# define TEXTURE_PACK_PATH		"../game/resources/images/"
+# define TEXTURE_SPRITE_PATH	"../game/resources/sprites/"
+# define SOUND_PATH				"../game/resources/sounds/"
+# define GAME_PATH				"../game/resources/levels/1.lvl"
+# define FONT_PATH				"../game/resources/fonts/SEASRN__.ttf"
 # define RESOURCES_FOLDER		"game/resources/"
 # define RESOURCES_PACK			"game/resources.doom"
 # define PARSING_ERROR 40
@@ -307,15 +307,14 @@ typedef	struct		s_point_3d
 	float			z;
 }					t_point_3d;
 
-typedef struct		s_polygone
-{
-	t_point_3d		*vertices_array;
-	t_point_3d		norm;
-	int				vertices_count;
-	int				id;
-	int				type;
-	t_image			*texture;
-}					t_polygone;
+//typedef struct		s_polygone
+//{
+//	t_point_3d		*vertices_array;
+//	int				vertices_count;
+//	int				id;
+//	int				type;
+//	t_image			*texture;
+//}					t_polygone;
 
 typedef struct		s_sprite
 {
@@ -412,7 +411,7 @@ typedef struct		s_sprobject
 
 typedef struct		s_object
 {
-	t_polygone		*polies_array;
+//	t_polygone		*polies_array;
 	int				portal;
 	int				passble;
 	int				id;
@@ -420,6 +419,9 @@ typedef struct		s_object
 	int				visible;
 	int				status;
 	t_wallobj		particles[128];
+	t_image			*texture;
+	t_point_3d		*vertices_array;
+	int				vertices_count;
 	int 			wallobjects_num;
 	t_wobj			*wallobjects_array;
 	t_image			*floor_wall_texture;
@@ -448,7 +450,7 @@ typedef struct		s_buff
 {
 	t_point_3d		*vertexes;
 	t_sprite		*sprites;
-	t_polygone		*polies;
+//	t_polygone		*polies;
 	t_object		*objects;
 	t_sprobject		*sprobjects;
 	t_wobj			*wallobjects;
@@ -519,7 +521,7 @@ typedef struct		s_stats
 {
 	int				worlds_count;
 	int				vertexes_count;
-	int				polies_count;
+//	int				polies_count;
 	int				objects_count;
 	int				sprobjects_count;
 	int 			wallobjects_count;
@@ -641,7 +643,7 @@ typedef struct		s_wall_help1
 
 typedef struct		s_wall_help2
 {
-	t_polygone		*polygone;
+	t_object		*object;
 	t_player		*plr;
 	int				ytop[WIDTH];
 	int				ybottom[WIDTH];
@@ -928,8 +930,8 @@ void				util_release_sectors_buffer(
 					t_sector *sector_buff, int size);
 void				util_release_objects_buffer(
 					t_object *object_buff, int size);
-void				util_release_polies_buffer(
-					t_polygone *polies_buff, int size);
+//void				util_release_polies_buffer(
+//					t_polygone *polies_buff, int size);
 void				util_release_vertex_buffer(t_point_3d *vertex_buff);
 void				util_release_world(t_world *world);
 void				util_find_repeats_in_world(t_world *world);
@@ -939,9 +941,9 @@ int					intersect_sect(t_point_2d a, t_point_2d b,
 
 void				eng_read_sprite(t_engine *eng,
 					t_txtr_pkg ***text_buff, int *stats, char *path);
-void				engine_triangle(t_engine *eng,
-					t_player *plr, t_polygone *t);
-int					engine_init_triangle(t_polygone *t, t_tric *trg);
+//void				engine_triangle(t_engine *eng,
+//					t_player *plr, t_polygone *t);
+//int					engine_init_triangle(t_polygone *t, t_tric *trg);
 void				engine_do_draw(t_engine *eng,
 					t_player *plr, t_tric *trg, int color);
 void				engine_do_calc(t_tric *trg);
@@ -959,7 +961,7 @@ int					get_light(int start, int end, float percentage);
 int					get_color(int current, int start,
 					int end, int colors[2]);
 
-void				engine_render_wall_recount_intersect(t_polygone *polygone,
+void				engine_render_wall_recount_intersect(t_object *object,
 					t_point_2d *t1, t_point_2d *t2, int *u[2]);
 void				engine_render_wall_recount_intersect_help(
 					t_wall_help1 *data,
@@ -975,9 +977,9 @@ void				bresenham_put_pixel(t_bcontex *c, SDL_Surface *surf,
 					int color);
 void				bresenham_line(t_point_3d *beg, t_point_3d *end,
 							SDL_Surface *surf, int color);
-void				triangle_lines(t_polygone *t, SDL_Surface *surf);
-void				engine_rasterize_triangle(t_engine *eng,
-					t_player *plr, t_polygone *t);
+//void				triangle_lines(t_polygone *t, SDL_Surface *surf);
+//void				engine_rasterize_triangle(t_engine *eng,
+//					t_player *plr, t_polygone *t);
 void				ft_swap(float *a, float *b);
 t_point_3d			engine_barycentric(t_fix_point_2d pts[3],
 					t_fix_point_2d *p);
@@ -987,19 +989,19 @@ t_point_3d			cross_vec3(t_point_3d v1, t_point_3d v2);
 t_point_3d			create_vector(t_point_3d *a, t_point_3d *b);
 double				magnitude(t_point_3d *normal);
 void				normalize_vec3(t_point_3d *normal);
-t_point_3d			calc_normal(t_polygone *poly);
+//t_point_3d			calc_normal(t_polygone *poly);
 void				engine_bw_procedural_texture(t_engine *eng,
 					t_fix_point_3d a);
 double				engine_gain(double gain, int t);
 double				engine_bias(double b, int t);
-void				engine_render_polygone(t_engine *eng, t_player *plr,
-					t_polygone *wall, int *ytop, int *ybottom);
+//void				engine_render_polygone(t_engine *eng, t_player *plr,
+//					t_polygone *wall, int *ytop, int *ybottom);
 void				engine_vline(t_engine *eng, SDL_Surface *surf,
 					t_fix_point_3d a,
 					t_fix_point_3d b, int color);
-void				engine_render_world_walls(t_engine *eng,
-					t_polygone *polygone,
-					t_player *plr, t_item sect);
+//void				engine_render_world_walls(t_engine *eng,
+//					t_polygone *polygone,
+//					t_player *plr, t_item sect);
 void				engine_render_world_box(t_engine *eng, t_player *plr);
 t_point_3d			calc_normal_dots(t_point_3d a, t_point_3d b, t_point_3d c);
 void				engine_push_particlestack(t_object *obj, t_weapon *wpn,
@@ -1025,7 +1027,7 @@ void				engine_vline_textured_surface(SDL_Surface *surf,
 					t_vline1_in din, SDL_Surface *texture);
 void				switch_weapon(t_engine *eng, t_player *plr, int weapon_num);
 int					sound_play_thread_wrapper(void *ptr);
-void				engine_render_wall_count_initial_point(t_polygone *polygone,
+void				engine_render_wall_count_initial_point(t_object *object,
 					t_player *plr,
 					t_point_2d	*t1, t_point_2d	*t2);
 void				engine_push_spriterenderstack(t_item_sprts **renderqueue,
@@ -1218,12 +1220,12 @@ void				util_create_point_3d(t_engine *eng,
 t_point_3d			util_get_vertex_from_buff_by_id(int id, int size,
 					t_point_3d *vertexes, int polygone_id);
 
-t_polygone			*engine_read_polygones_from_file(t_engine *eng,
-					t_buff buff);
-void				util_create_polygone(t_engine *eng, t_polygone *polygone,
-					t_point_3d *vertex_array, char **str);
-t_polygone			util_get_polygone_from_buff_by_id(int id, int size,
-					t_polygone *polies, int object_id);
+//t_polygone			*engine_read_polygones_from_file(t_engine *eng,
+//					t_buff buff);
+//void				util_create_polygone(t_engine *eng, t_polygone *polygone,
+//					t_point_3d *vertex_array, char **str);
+//t_polygone			util_get_polygone_from_buff_by_id(int id, int size,
+//					t_polygone *polies, int object_id);
 
 t_object			*engine_read_objects_from_file(t_engine *eng, t_buff *buff);
 void				util_create_object(t_engine *eng, t_object *object,

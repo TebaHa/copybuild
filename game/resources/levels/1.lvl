@@ -4,8 +4,8 @@ Map
 world:	1	4				0 1 2 3
 
 #Vertexes
-#		vertex
-player: 99
+#		angle,	vertex
+player: 0		99
 
 #Vertexes
 #		id	X,		Y,		Z
@@ -47,59 +47,32 @@ vertex: 78	400		400		200
 vertex: 79	-400	400		200
 vertex: 80	400		-400	200
 
-#Polygones
-#				(types: 0 for triangle and 1 for wall),
-#			id,	type,	texture,		#verts,	id of vert
-polygone:	0	1		q_bricks_2		2		1 0
-polygone:	1	1		q_bricks_2		2		2 1
-polygone:	2	1		q_plate			2		3 2
-polygone:	3	1		q_bricks_3		2		4 3
-polygone:	4	1		q_bricks_3		2		0 4
-
-polygone:	5	1		q_bricks_2		2		6 5
-polygone:	6	1		q_wall		2		7 6
-polygone:	7	1		q_wall		2		8 7
-polygone:	8	1		q_plate		2		9 8
-polygone:	9	1		q_bricks_2		2		5 9
-
-polygone:	10	1		q_plate		2		11 10
-polygone:	11	1		q_wall		2		12 11
-polygone:	12	1		q_plate		2		13 12
-polygone:	13	1		q_bricks_3		2		14 13
-polygone:	14	1		q_bricks_3		2		10 14
-
-polygone:	15	1		q_plate		2		16 15
-polygone:	16	1		q_bricks_2		2		17 16
-polygone:	17	1		q_bricks_3		2		18 17
-polygone:	18	1		q_plate		2		19 18
-polygone:	19	1		q_bricks_3		2		15 19
-
 #Objects
 #			(if >= 0 where goes)
-#		id,	portal, pasble, visble,	floor_wall,		ceil_wall,	#polys,	id of poly
-object:	0	-1		0		1		flooring		ceiling		1		0
-object:	1	1		0		1		q_floor_wall		ceiling		1		1
-object:	2	-1		0		1		flooring		ceiling		1		2
-object:	3	3		0		1		q_floor_wall		ceiling		1		3
-object:	4	-1		0		1		flooring		ceiling		1		4
+#		id,	port, pasble, visble, texture,		floor_wall,		ceil_wall,	id of vert
+object:	0	-1		0		1	q_bricks_2		flooring		ceiling		1 0
+object:	1	1		0		1	q_bricks_2		q_floor_wall	ceiling		2 1
+object:	2	-1		0		1	q_plate			flooring 		ceiling		3 2
+object:	3	3		0		1	q_bricks_3		q_floor_wall	ceiling		4 3
+object:	4	-1		0		1	q_bricks_3		flooring		ceiling		0 4
 
-object:	5	-1		0		1		flooring		ceiling		1		5
-object:	6	-1		0		1		flooring		ceiling		1		6
-object:	7	2		0		1		q_floor_wall		ceiling		1		7
-object:	8	-1		0		1		flooring		ceiling		1		8
-object:	9	0		0		1		q_floor_wall		ceiling		1		9
+object:	5	-1		0		1	q_bricks_2		flooring		ceiling		6 5
+object:	6	-1		0		1	q_wall			flooring		ceiling		7 6
+object:	7	2		0		1	q_wall			q_floor_wall	ceiling		8 7
+object:	8	-1		0		1	q_plate			flooring		ceiling		9 8
+object:	9	0		0		1	q_bricks_2		q_floor_wall	ceiling		5 9
 
-object:	10	1		0		1		q_floor_wall		ceiling		1		10
-object:	11	-1		0		1		floor_wall		ceiling		1		11
-object:	12	-1		0		1		floor_wall		ceiling		1		12
-object:	13	3		0		1		q_floor_wall		ceiling		1		13
-object:	14	-1		0		1		floor_wall		ceiling		1		14
+object:	10	1		0		1	q_plate			q_floor_wall	ceiling		11 10
+object:	11	-1		0		1	q_wall			floor_wall		ceiling		12 11
+object:	12	-1		0		1	q_plate			floor_wall		ceiling		13 12
+object:	13	3		0		1	q_bricks_3		q_floor_wall	ceiling		14 13
+object:	14	-1		0		1	q_bricks_3		floor_wall		ceiling		10 14
 
-object:	15	0		0		1		q_floor_wall		ceiling		1		15
-object:	16	-1		0		1		floor_wall		ceiling		1		16
-object:	17	2		0		1		q_floor_wall		ceiling		1		17
-object:	18	-1		0		1		floor_wall		ceiling		1		18
-object:	19	-1		0		1		floor_wall		ceiling		1		19
+object:	15	0		0		1	q_plate			q_floor_wall	ceiling		16 15
+object:	16	-1		0		1	q_bricks_2		floor_wall		ceiling		17 16
+object:	17	2		0		1	q_bricks_3		q_floor_wall	ceiling		18 17
+object:	18	-1		0		1	q_plate			floor_wall		ceiling		19 18
+object:	19	-1		0		1	q_bricks_3		floor_wall		ceiling		15 19
 
 #Sprites objects	(types from t_enm_type)
 #		id,	angle,	type,	vert
