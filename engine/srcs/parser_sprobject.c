@@ -55,7 +55,7 @@ void			util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 		ft_putstr(" not in any sector!\n");
 		close_game(PARSING_ERROR);
 	}
-	sector = util_get_sector_from_world_by_id(eng, sprobject->sector_id);
+	sector = util_get_sector_from_world_by_id(eng->world, sprobject->sector_id);
 	sector->sprobjects_count++;
 	sprobject->state = E_IDLE;
 	eng->stats.sprobjects_count++;

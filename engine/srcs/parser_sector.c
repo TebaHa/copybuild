@@ -128,15 +128,15 @@ void		util_find_sprobjects_repeats_in_sector(t_sector *sector)
 	}
 }
 
-t_sector		*util_get_sector_from_world_by_id(t_engine *eng, int id)
+t_sector		*util_get_sector_from_world_by_id(t_world *world, int id)
 {
 	int			sect;
 
 	sect = 0;
-	while (sect < eng->world->sectors_count)
+	while (sect < world->sectors_count)
 	{
-		if (eng->world->sectors_array[sect].id == id)
-			return (&eng->world->sectors_array[sect]);
+		if (world->sectors_array[sect].id == id)
+			return (&world->sectors_array[sect]);
 		sect++;
 	}
 	ft_putstr("Parsing error:\nCan't find sector ");

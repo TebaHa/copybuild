@@ -70,10 +70,10 @@ void		engine_check_plr_pos(t_world *world, t_player *plr)
 			if ((plr->start_sector = engine_object_get_sector(world, temp, 0))
 			== -1)
 			{
-//				plr->cursector = 6;
-//				plr->start_sector = 6;
+				plr->cursector = 20;
+				plr->start_sector = 20;
 				// УДОЛИ
-				util_parsing_error_player_outside("outside of");
+//				util_parsing_error_player_outside("outside of");
 			}
 			temp.y++;
 		}

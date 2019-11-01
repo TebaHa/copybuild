@@ -1252,7 +1252,7 @@ void				util_create_sector(t_engine *eng, t_buff buff,
 void				util_create_sector_sprobjs(t_engine *eng,
 					t_sector *sector, char **str);
 void				util_find_repeats_in_sector(t_sector *sector);
-t_sector			*util_get_sector_from_world_by_id(t_engine *eng, int id);
+t_sector			*util_get_sector_from_world_by_id(t_world *world, int id);
 void				util_find_sprobjects_repeats_in_sector(t_sector *sector);
 
 t_wobj				*engine_read_wallobjects_from_file(t_engine *eng, t_buff buff);
