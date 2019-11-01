@@ -66,6 +66,8 @@ int			main(int argc, char **argv)
 	while (1)
 	{
 		game_movement_check(&fps);
+		ft_putnbr(fps.player.cursector);
+		ft_putendl(".");
 		if (SDL_PollEvent(&fps.eng->event))
 		{
 			sound_player_control(&fps.player);

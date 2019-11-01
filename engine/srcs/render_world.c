@@ -64,6 +64,7 @@ void		engine_render_world(t_engine *eng, t_player plr,
 	t_wall_help2 data;
 
 	SDL_LockSurface(surf);
+	engine_clear_surface(surf);
 	engine_render_world_data(&plr, &data);
 	engine_push_renderstack(stacks->renderstack, data.sect);
 	one_dim_zbuffers_copy(&eng->world->sectors_array[data.sect.sectorno].
@@ -81,7 +82,7 @@ void		engine_render_world(t_engine *eng, t_player plr,
 
 void		engine_clear_surface(SDL_Surface *surf)
 {
-	SDL_memset(surf->pixels, 0, surf->h * surf->pitch);
+	SDL_memset(surf->pixels, get_rgb(200, 0, 200, 0), surf->h * surf->pitch);
 }
 
 void		one_dim_zbuffers_copy(t_item_sprts *sprt, int *ytop, int *ybottom)
