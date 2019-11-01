@@ -116,7 +116,9 @@ void		util_parsing_objects_portal(t_engine *eng, t_buff buff)
 		if (find != 1)
 		{
 			ft_putendl("Parsing error:");
-			ft_putstr("Portal error!\n");
+			ft_putstr("Portal error! in object ");
+			ft_putnbr(buff.objects[obj_count].id);
+			ft_putstr(" !\n");
 			close_game(PARSING_ERROR);
 		}
 		obj_count++;
