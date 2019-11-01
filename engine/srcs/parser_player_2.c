@@ -14,10 +14,6 @@
 
 void		engine_check_plr_vertical_pos(t_world *world, t_player *plr)
 {
-//	if (world->sectors_array[plr->start_sector].floor > plr->position.z)
-//		util_parsing_error_player_outside("under");
-//	if (world->sectors_array[plr->start_sector].ceil < plr->position.z)
-//		util_parsing_error_player_outside("above");
 	t_sector	*plr_sect;
 
 	plr_sect = util_get_sector_from_world_by_id(world, plr->start_sector);

@@ -1,6 +1,7 @@
 Map
 #Worlds
 #		id, num of sects,	sectors
+/world:	1	27				0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 50 51 52 53 54 55 56
 world:	1	27				0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
 
 #Vertexes
@@ -49,7 +50,7 @@ vertex: 32	1200	1000	200
 vertex: 33	1220	1100	200
 vertex: 34	1220	1000	200
 vertex: 35	1240	1100	200
-vertex: 36	1240	1000	200w
+vertex: 36	1240	1000	200
 vertex: 37	1260	1100	200
 vertex: 38	1260	1000	200
 vertex: 39	1260	1180	200
@@ -173,7 +174,7 @@ object:	70	-1		0	1	s_white		s_tile		ceiling		37 35
 object:	71	16		0	1	s_white		s_tile	    ceiling		35 36
 
 object:	72	-1		0	1	s_white		s_tile		ceiling		41 42
-object:	73	19		0	1	s_white		s_tile	    ceiling		42 43
+object:	73	19		0	1	s_white		s_white	    ceiling		42 43
 object:	74	-1		0	1	s_white		s_tile		ceiling		43 44
 object:	75	-1		0	1	s_white		s_tile	    ceiling		44 40
 object:	76	-1		0	1	s_white		s_tile		ceiling		40 39
@@ -186,10 +187,10 @@ object:	81	-1		0	1	s_white		s_tile		ceiling		46 43
 object:	82	18		0	1	s_white		s_tile		ceiling		43 42
 object:	83	-1		0	1	s_white		s_tile		ceiling		42 45
 
-object:	1011 25		0	1	s_white		flooring	ceiling		101 102
+object:	1011 25		0	1	s_white		s_white		ceiling		101 102
 object:	1021 21		0	1	s_white		flooring	ceiling		102 104
 object:	1041 -1		0	1	s_white		flooring	ceiling		104 46
-object:	461	19		0	1	s_white		flooring	ceiling		46 45
+object:	461	19		0	1	s_white		s_white		ceiling		46 45
 object:	451 22		0	1	s_white		flooring	ceiling		45 101
 
 object:	1022 -1		0	1	s_white		flooring	ceiling		102 103
@@ -221,7 +222,7 @@ object:	1013 -1		0	1	s_white		flooring	ceiling		101 112
 object:	1161 -1		0	1	s_white		flooring	ceiling		116 115
 object:	1151 -1		0	1	s_white		flooring	ceiling		115 114
 object:	1141 -1		0	1	s_white		flooring	ceiling		114 113
-object:	1132 25		0	1	s_white		flooring	ceiling		113 112
+object:	1132 25		0	1	s_white		s_white		ceiling		113 112
 object:	1122 -1		0	1	s_white		flooring	ceiling		112 111
 object:	1113 -1		0	1	s_white		flooring	ceiling		111 117
 object:	1172 -1		0	1	s_white		flooring	ceiling		117 116
@@ -257,10 +258,10 @@ sector:	19	0	    300			s_laminate	s_white		0xFF0000	4   80 81 82 83
 /sector:	55	0	    300			s_laminate	s_white		0xFF0000	4	1121 1131 1023 1013
 /sector:	56	0	    300			s_laminate	s_white		0xFF0000	7	1161 1151 1141 1132 1122 1113 1172
 
-sector:	20	0	    300			s_laminate	s_white		0xFF0000	5   1011 1021 1041 461 451
-sector:	21	0	    300			s_laminate	s_white		0xFF0000	3	1022 1031 1042
-sector:	22	0	    300			s_laminate	s_white		0xFF0000	5	1111 1012 452 1051 1061
-sector:	23	0	    300			s_laminate	s_white		0xFF0000	5	1091 1101 1171 1112 1062
-sector:	24	0	    300			s_laminate	s_white		0xFF0000	4	1081 1091 1063 1071
+sector:	20	0	    500			s_laminate	s_black		0xFF0000	5   1011 1021 1041 461 451
+sector:	21	0	    500			s_laminate	s_black		0xFF0000	3	1022 1031 1042
+sector:	22	0	    500			s_laminate	s_black		0xFF0000	5	1111 1012 452 1051 1061
+sector:	23	0	    500			s_laminate	s_black		0xFF0000	5	1091 1101 1171 1112 1062
+sector:	24	0	    500			s_laminate	s_black		0xFF0000	4	1081 1091 1063 1071
 sector:	25	0	    300			s_laminate	s_white		0xFF0000	4	1121 1131 1023 1013
-sector:	26	0	    300			s_laminate	s_white		0xFF0000	7	1161 1151 1141 1132 1122 1113 1172
+sector:	26	0	    500			s_laminate	s_black		0xFF0000	7	1161 1151 1141 1132 1122 1113 1172
