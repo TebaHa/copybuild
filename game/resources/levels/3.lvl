@@ -59,12 +59,30 @@ vertex: 43	1520	780		200
 vertex: 44	1575	780		200
 vertex: 45	1420	760		200
 vertex: 46	1520	760		200
+---
+vertex:	101	1405	545		200
+vertex:	102	1495	570		200
+vertex:	103 1575	570		200
+vertex:	104	1575	760		200
+vertex:	105	1340	760		200
+vertex:	106	1115	655		200
+vertex:	107	975		655		200
+vertex:	108	375		975		200
+vertex:	109	375		1050	200
+vertex:	110	415		1175	200
+vertex:	111	505		1295	200
+vertex:	112	1409	536		200
+vertex:	113	1499	560		200
+vertex:	114	1575	560		200
+vertex:	115	1575	300		200
+vertex:	116	1260	300		200
+vertex:	117	1260	475		200
 
 #Objects
 #			(if >= 0 where goes)
 #		id,	port, pasble, visble, texture,	floor_wall,		ceil_wall,	id of vert
 object:	0	-1		0	1	s_white		s_tile		ceiling		3 1
-object:	1	-1		0	1	s_door_1		s_tile	    ceiling		1 0
+object:	1	-1		0	1	s_door_1	s_tile	    ceiling		1 0
 object:	2	-1		0	1	s_white		s_tile		ceiling		0 2
 object:	3	1		0	1	s_white		s_tile	    ceiling		2 3
 
@@ -162,15 +180,55 @@ object:	77	-1		0	1	s_white		s_tile	    ceiling		39 37
 object:	78	17		0	1	s_white		s_tile		ceiling		37 38
 object:	79	-1		0	1	s_white		s_tile	    ceiling		38 41
 
-object:	80	-1		0	1	s_door_1		flooring		ceiling		45 46
-object:	81	-1		0	1	s_white		flooring	    ceiling		46 43
-object:	82	18		0	1	s_white		flooring		ceiling		43 42
-object:	83	-1		0	1	s_white		flooring	    ceiling		42 45
+object:	80	50		0	1	s_door_1	s_tile		ceiling		45 46
+object:	81	-1		0	1	s_white		s_tile		ceiling		46 43
+object:	82	18		0	1	s_white		s_tile		ceiling		43 42
+object:	83	-1		0	1	s_white		s_tile		ceiling		42 45
+
+object:	1011 55		0	1	s_white		flooring	ceiling		101 102
+object:	1021 51		0	1	s_white		flooring	ceiling		102 104
+object:	1041 -1		0	1	s_white		flooring	ceiling		104 46
+object:	461	19		0	1	s_white		flooring	ceiling		46 45
+object:	451 52		0	1	s_white		flooring	ceiling		45 101
+
+object:	1022 -1		0	1	s_white		flooring	ceiling		102 103
+object:	1031 -1		0	1	s_door_1	flooring	ceiling		103 104
+object:	1042 50		0	1	s_white		flooring	ceiling		104 102
+
+object:	1111 -1		0	1	s_white		flooring	ceiling		111 101
+object:	1012 50		0	1	s_white		flooring	ceiling		101 45
+object:	452	-1		0	1	s_white		flooring	ceiling		45 105
+object:	1051 -1		0	1	s_white		flooring	ceiling		105 106
+object:	1061 53		0	1	s_white		flooring	ceiling		106 111
+
+object:	1091 -1		0	1	s_white		flooring	ceiling		109 110
+object:	1101 -1		0	1	s_white		flooring	ceiling		110 117
+object:	1171 -1		0	1	s_white		flooring	ceiling		117 111
+object:	1112 -1		0	1	s_white		flooring	ceiling		111 106
+object:	1062 -1		0	1	s_white		flooring	ceiling		106 109
+
+object:	1081 -1		0	1	s_white		flooring	ceiling		108 109
+object:	1091 53		0	1	s_white		flooring	ceiling		109 106
+object:	1063 -1		0	1	s_white		flooring	ceiling		106 107
+object:	1071 -1		0	1	s_door_1	flooring	ceiling		107 108
+
+object:	1121 56		0	1	s_white		flooring	ceiling		112 113
+object:	1131 -1		0	1	s_white		flooring	ceiling		113 102
+object:	1023 50		0	1	s_white		flooring	ceiling		102 101
+object:	1013 -1		0	1	s_white		flooring	ceiling		101 112
+
+object:	1161 -1		0	1	s_white		flooring	ceiling		116 115
+object:	1151 -1		0	1	s_white		flooring	ceiling		115 114
+object:	1141 -1		0	1	s_white		flooring	ceiling		114 113
+object:	1132 55		0	1	s_white		flooring	ceiling		113 112
+object:	1122 -1		0	1	s_white		flooring	ceiling		112 111
+object:	1113 -1		0	1	s_white		flooring	ceiling		111 117
+object:	1172 -1		0	1	s_white		flooring	ceiling		117 116
 
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
 sector:	0	900		1200		s_tile		s_black		0xFF0000	4	0 1 2 3
-sector:	1	850		1200		s_tile		s_black			0xFF0000	4	4 5 6 7
+sector:	1	850		1200		s_tile		s_black		0xFF0000	4	4 5 6 7
 sector:	2	800     1200		s_tile		s_black		0xFF0000	4	8 9 10 11
 sector:	3	750	    1150		s_tile		s_black		0xFF0000	4	12 13 14 15
 sector:	4	700	    1100		s_tile		s_black		0xFF0000	4	16 17 18 19
@@ -189,3 +247,11 @@ sector:	16	100	    400			s_tile		s_black		0xFF0000	4   64 65 66 67
 sector:	17	50	    400			s_tile		s_black		0xFF0000	4   68 69 70 71
 sector:	18	0	    400			s_laminate	s_black		0xFF0000	8   72 73 74 75 76 77 78 79
 sector:	19	0	    300			s_laminate	s_white		0xFF0000	4   80 81 82 83
+
+sector:	50	0	    300			s_laminate	s_white		0xFF0000	5   1011 1021 1041 461 451
+sector:	51	0	    300			s_laminate	s_white		0xFF0000	3	1022 1031 1042
+sector:	52	0	    300			s_laminate	s_white		0xFF0000	5	1111 1012 452 1051 1061
+sector:	53	0	    300			s_laminate	s_white		0xFF0000	5	1091 1101 1171 1112 1062
+sector:	54	0	    300			s_laminate	s_white		0xFF0000	4	1081 1091 1063 1071
+sector:	55	0	    300			s_laminate	s_white		0xFF0000	4	1121 1131 1023 1013
+sector:	56	0	    300			s_laminate	s_white		0xFF0000	7	1161 1151 1141 1132 1122 1113 1172
