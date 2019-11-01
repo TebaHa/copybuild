@@ -20,10 +20,10 @@ char		**engine_read_level_file(char *filename)
 	char		**splitedbuff;
 
 	fd = open(filename, O_RDONLY);
-	buff = (char*)malloc(sizeof(char) * 20000);
+	buff = (char*)malloc(sizeof(char) * 50000);
 	if (fd < 2)
 		util_parsing_error_no_lvl_file(filename);
-	number = read(fd, buff, 20000);
+	number = read(fd, buff, 50000);
 	buff[number] = '\0';
 	close(fd);
 	splitedbuff = ft_strsplit(buff, '\n');
