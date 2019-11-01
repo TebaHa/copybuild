@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 00:38:38 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/27 20:09:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/01 08:32:32 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		engine_object_get_sector(t_world *world, t_point_3d pos, int start_sect)
 	while ((data.cursect = engine_pop_checkstack(data.check_stack)) >= 0)
 	{
 		data.i = 0;
+		printf("CURSECTOR %d\n", data.cursect);
 		while (data.i < world->sectors_array[data.cursect].objects_count)
 		{
 			engine_check_object(&data, world, pos);
@@ -49,7 +50,6 @@ void	engine_check_object(t_find_obj *d, t_world *world, t_point_3d pos)
 	vertices_array[1].y}, (t_point_2d){pos.x, pos.y}))
 		d->res = -d->res;
 	if (world->sectors_array[d->cursect].objects_array[d->i].portal >= 0
-	&& world->sectors_array[d->cursect].objects_array[d->i].portal != 4
 	&& d->checked_array[world->sectors_array[d->cursect].
 	objects_array[d->i].portal] == 0)
 		engine_push_checkstack(d->check_stack,

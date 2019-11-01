@@ -13,20 +13,20 @@ vertex: 99	10		50		100
 
 vertex: 0	0		0		200
 vertex: 1	0		100		200
-vertex: 2	150		0		200
-vertex: 3	150		100		200
-vertex: 4	170		0		200
-vertex: 5	170		100		200
-vertex: 6	190		0		200
-vertex: 7	190		100		200
-vertex: 8	210		0		200
-vertex: 9	210		100		200
-vertex: 10	230		0		200
-vertex: 11	230		100		200
-vertex: 12	250		0		200
-vertex: 13	250		100		200
-vertex: 14	350		0		200
-vertex: 15	350		100		200
+vertex: 2	150		-50		200
+vertex: 3	150		150		200
+vertex: 4	170		-50		200
+vertex: 5	170		150		200
+vertex: 6	190		-100	200
+vertex: 7	190		200		200
+vertex: 8	210		-100	200
+vertex: 9	210		200		200
+vertex: 10	230		-150	200
+vertex: 11	230		350		200
+vertex: 12	250		-150	200
+vertex: 13	250		350		200
+vertex: 14	350		-200	200
+vertex: 15	350		400		200
 
 #Polygones
 #				(types: 0 for triangle and 1 for wall),

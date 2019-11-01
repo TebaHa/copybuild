@@ -1,6 +1,6 @@
 Map
 #Worlds
-#		id, num of sects,	sectors
+#		id, num of sects,	sectors, background (image)
 world:	1	4				0 1 2 3
 
 #Vertexes
