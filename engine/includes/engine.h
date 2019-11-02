@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/01 07:48:37 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/02 02:32:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define TWODIM 2
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
-# define MAXSECTORS 32
+# define MAXSECTORS 64
 # define HFOV (1.0 * 0.63f * HEIGHT / WIDTH)
 # define VFOV (1.0 * 0.2f)
 # define TEXTURE_PACK_PATH		"./game/resources/images/"
@@ -554,6 +554,7 @@ typedef struct		s_engine
 	t_hud			*hud;
 	t_txtr_pkg		**texture_buffer;
 	t_txtr_pkg		**sprites_buffer;
+	SDL_Surface		*sky;
 	t_sprobject		*tmp;
 	TTF_Font		*font;
 	Mix_Chunk		*background_music;
@@ -1341,7 +1342,7 @@ t_scaler			scaler_init(float data[5]);
 void				engine_render_world_data(t_player *plr, t_wall_help2 *data);
 
 void				engine_render_wall_cycle_6(t_wall_clinks *l);
-void				engine_render_cycle_5(t_wall_clinks *l);
+int					engine_render_cycle_5(t_wall_clinks *l);
 void				engine_render_wall_cycle_3(t_wall_clinks *l);
 void				engine_render_wall_cycle_4(t_wall_clinks *l);
 void				engine_render_cycle_2(t_wall_clinks *l);
@@ -1429,5 +1430,17 @@ void				normalize_2d(t_point_2d *normal);
 float				magnitude_2d(t_point_2d *normal);
 void				engine_clear_surface(SDL_Surface *surf);
 
+/*
+**	Background functions start
+**	---------------------------------------------------------------------------
+*/
+
+void				engine_find_background(t_engine *eng);
+void				engine_draw_background(t_engine *eng,
+					SDL_Surface *surf, int plrangle);
+/*
+**	Background functions end
+**	---------------------------------------------------------------------------
+*/
 
 #endif

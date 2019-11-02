@@ -6,17 +6,19 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:39:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/28 20:52:35 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/02 02:28:36 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void				engine_render_cycle_5(t_wall_clinks *l)
+int					engine_render_cycle_5(t_wall_clinks *l)
 {
 	l->cycler->tex = l->cycler->y < l->mdata->cya
 	? l->eng->world->sectors_array[l->data->sect.sectorno].ceil_texture
 	: l->eng->world->sectors_array[l->data->sect.sectorno].floor_texture;
+	if (l->cycler->tex == NULL)
+		return (0);
 	l->cycler->txtx = (l->cycler->pnts.x) * 0.5;
 	l->cycler->txtz = (l->cycler->pnts.z) * 0.5;
 	l->cycler->offset = (((l->cycler->txtz %
@@ -25,6 +27,7 @@ void				engine_render_cycle_5(t_wall_clinks *l)
 	l->cycler->red = (l->cycler->tex->data)[l->cycler->offset];
 	l->cycler->green = (l->cycler->tex->data)[l->cycler->offset + 1];
 	l->cycler->blue = (l->cycler->tex->data)[l->cycler->offset + 2];
+	return (1);
 }
 
 void				engine_render_cycle_2(t_wall_clinks *l)
@@ -42,7 +45,11 @@ void				engine_render_cycle_2(t_wall_clinks *l)
 		? l->mdata->yceil : l->mdata->yfloor;
 		l->cycler->pnts = relative_map_coordinate_to_absolute(l->data->plr,
 		l->cycler->hei, l->cycler->x, l->cycler->y);
-		engine_render_cycle_5(l);
+		if (engine_render_cycle_5(l) == 0)
+		{
+			(l->cycler->y) += 1;
+			continue;
+		}
 		((int*)l->surf->pixels)
 		[l->cycler->y * WIDTH + l->cycler->x] = get_rgb((int)l->cycler->red,
 		(int)l->cycler->green, (int)l->cycler->blue, 255);

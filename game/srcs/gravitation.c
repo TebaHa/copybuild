@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:47:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 09:05:54 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/02 00:42:53 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	apply_gravitation(t_game *fps)
 		fps->player.position.z -= fps->logic.dz;
 		fps->logic.dz += 2;
 		if (fps->eng->world->sectors_array[fps->player.cursector].
-		floor + 100 - fps->logic.duck_shift >
+		floor + 150 - fps->logic.duck_shift >
 		fps->player.position.z)
 		{
 			fps->player.controller.falling = 0;
 			fps->player.position.z = fps->eng->world->sectors_array
-			[fps->player.cursector].floor + 100 -
+			[fps->player.cursector].floor + 150 -
 			fps->logic.duck_shift;
 			fps->logic.dz = 0;
 		}

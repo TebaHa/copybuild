@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 14:54:43 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/02 02:33:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void		engine_render_world(t_engine *eng, t_player plr,
 	t_wall_help2 data;
 
 	SDL_LockSurface(surf);
+	engine_draw_background(eng, surf, plr.angle);
 	engine_render_world_data(&plr, &data);
 	engine_push_renderstack(stacks->renderstack, data.sect);
 	one_dim_zbuffers_copy(&eng->world->sectors_array[data.sect.sectorno].

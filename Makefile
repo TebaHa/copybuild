@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/10/28 20:09:54 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/02 02:07:46 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,6 +89,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					render_wall.c \
 					render_wall2.c \
 					render_world.c \
+					render_background.c \
 					sprite_data.c \
 					shoot_help.c \
 					shoot_main.c \

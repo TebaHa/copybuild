@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/01 08:38:04 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/02 00:43:02 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,18 @@ void	game_movement_check(t_game *fps)
 		if ((fps->logic.sect = engine_object_get_sector(fps->eng->world,
 		(t_point_3d){0.f, fps->logic.px + fps->logic.dx, fps->logic.py +
 		fps->logic.dy, fps->player.position.z}, fps->player.cursector)) >= 0)
+		{
 			if (fps->eng->world->sectors_array[fps->logic.sect].floor
 			- fps->logic.duck_shift <= fps->player.position.z +
 			KNEE_HEIGHT - 50)
 				move_player(fps->eng, &fps->player, (t_point_2d){fps->logic.dx,
 				fps->logic.dy}, fps->logic.sect);
+		}
 	}
 	if (fps->player.position.z > fps->eng->world->sectors_array
-	[fps->player.cursector].floor + fps->logic.duck_shift + 100
+	[fps->player.cursector].floor + fps->logic.duck_shift + 150
 	|| fps->player.position.z < fps->eng->world->sectors_array
-	[fps->player.cursector].floor + fps->logic.duck_shift + 90)
+	[fps->player.cursector].floor + fps->logic.duck_shift + 140)
 		fps->player.controller.falling = 1;
 }
 

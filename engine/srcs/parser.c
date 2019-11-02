@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/20 23:42:43 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/11/02 02:05:23 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void		engine_create_resources_from_file(t_engine *eng)
 		&eng->stats.textures_count, TEXTURE_PACK_PATH);
 	eng_read_sprite(eng, &eng->sprites_buffer,
 		&eng->stats.sprites_count, TEXTURE_SPRITE_PATH);
+	engine_find_background(eng);
 	eng_create_hud(eng);
 	eng_create_weapons(eng);
 	eng_create_items(eng);
