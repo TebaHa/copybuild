@@ -2,7 +2,7 @@ Map
 #Worlds
 #		id, num of sects,	sectors
 /world:	1	27				0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 50 51 52 53 54 55 56
-world:	1	48				0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+world:	1	50				0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49
 
 #Vertexes
 #		angle,	vertex
@@ -159,6 +159,18 @@ vertex: 345	1260	2530	200
 vertex: 346	1260	2330	200
 vertex: 347	1260	2430	200
 
+vertex: 400 1260	1530	200
+vertex: 401	1345	1530	200
+vertex: 402	1565	1530	200
+vertex: 403	2485	1530	200
+vertex: 404 2485	2755	200
+vertex: 405	1260	2755	200
+vertex: 406	1345	1450	200
+vertex: 407	1425	1330	200
+vertex: 408	1565	1343	200
+vertex: 409	1435	1328	200
+vertex: 410	1545	1302	200
+vertex: 411	1555	1300	200
 
 #Objects
 #			(if >= 0 where goes)
@@ -437,12 +449,30 @@ object:	3272 45		0	1	s_white		s_white		s_tile		327 326
 
 object:	3401 -1		0	1	s_white		s_white		s_tile		340 343
 object:	3431 -1		0	1	s_window	s_white		s_tile		343 346
-object:	3461 -1		0	1	s_door_1	s_white		s_tile		346 347
+object:	3461 48		0	1	s_door_1	s_white		s_tile		346 347
 object:	3471 -1		0	1	s_window	s_white		s_tile		347 345
 object:	3451 -1		0	1	s_white		s_white		s_tile		345 344
 object:	3441 -1		0	1	s_window	s_white		s_tile		344 342
 object:	3422 46		0	1	s_white		s_white		s_tile		342 341
 object:	3412 -1		0	1	s_window	s_white		s_tile		341 340
+
+object:	4001 -1		0	1	s_white		s_white		s_tile		400 401
+object:	4011 49		0	1	s_white		s_white		s_tile		401 402
+object:	4021 -1		0	1	s_white		s_white		s_tile		402 403
+object:	4031 -1		0	1	s_white		s_white		s_tile		403 404
+object:	4041 -1		0	1	s_white		s_white		s_tile		404 405
+object:	4051 -1		0	1	s_white		s_white		s_tile		405 347
+object:	3472 47		0	1	s_white		s_white		s_tile		347 346
+object:	3462 -1		0	1	s_white		s_white		s_tile		346 400
+
+object:	4071 -1		0	1	s_white		s_white		s_tile		407 409
+object:	4091 -1		0	1	s_black		s_white		s_tile		409 410
+object:	4101 -1		0	1	s_white		s_white		s_tile		410 411
+object:	4111 -1		0	1	s_white		s_white		s_tile		411 408
+object:	4081 -1		0	1	s_white		s_white		s_tile		408 402
+object:	4022 48		0	1	s_white		s_white		s_tile		402 401
+object:	4012 -1		0	1	s_white		s_white		s_tile		401 406
+object:	4061 -1		0	1	s_white		s_white		s_tile		406 407
 
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
@@ -499,3 +529,5 @@ sector:	44	0	    500			s_laminate	s_black		0xFF0000	5	3243 3212 3221 3231 3103
 sector:	45	0	    500			s_laminate	s_black		0xFF0000	6	3232 3222 3261 3271 3291 3281
 sector:	46	0	    500			s_laminate	s_black		0xFF0000	4	3262 3411 3421 3272
 sector:	47	0	    500			s_laminate	s_black		0xFF0000	8	3401 3431 3461 3471 3451 3441 3422 3412
+sector:	48	0	    2500		s_laminate	s_black		0xFF0000	8	4001 4011 4021 4031 4041 4051 3472 3462
+sector:	49	0	    500			s_laminate	s_black		0xFF0000	8	4071 4091 4101 4111 4081 4022 4012 4061
