@@ -11,7 +11,13 @@ player: 3		99
 #		id	X,		Y,		Z
 /vertex: 99	1340	1250	1000
 /vertex: 99	1450	650		100
-vertex: 99	750		2300	100
+
+Оазис
+/vertex: 99	750		2300	100
+
+Атриум
+vertex: 99	2000	2000	100
+
 ---
 vertex: 0	1360	1300	200
 vertex: 1	1360	1200	200
@@ -152,10 +158,10 @@ vertex: 340	870		1480	200
 vertex: 341	870		1680	200
 vertex: 342	870		1780	200
 vertex: 343	1260	1480	200
-vertex: 344	870		2530	200
-vertex: 345	1260	2530	200
-vertex: 346	1260	2330	200
-vertex: 347	1260	2430	200
+vertex: 344	870		2600	200
+vertex: 345	1260	2600	200
+vertex: 346	1260	2400	200
+vertex: 347	1260	2500	200
 
 vertex: 400 1260	1530	200
 vertex: 401	1345	1530	200
@@ -173,8 +179,8 @@ vertex: 430 2485	1935	200
 vertex: 431 2485	2350	200
 vertex: 432 2080	2755	200
 vertex: 433	1665	2755	200
-vertex: 434	1260	2350	200
-vertex: 435	1260	1935	200
+vertex: 434	1260	2385	200
+vertex: 435	1260	1900	200
 vertex: 436	1665	1530	200
 vertex: 437	2080	1530	200
 
@@ -465,19 +471,19 @@ object:	3412 -1		0	1	s_window	s_white		s_tile		341 340
 object:	4001 -1		0	1	s_white		s_white		s_tile		400 401
 object:	4011 49		0	1	s_white		s_white		s_tile		401 402
 object:	4021 -1		0	1	s_white		s_white		s_tile		402 436
-object:	4361 -1		0	1	s_window		s_white		s_tile		436 437
-object:	4371 -1		0	1	s_white		s_white		s_tile		437 403
-object:	4031 -1		0	1	s_white		s_white		s_tile		403 430
-object:	4301 -1		0	1	s_window		s_white		s_tile		430 431
-object:	4311 -1		0	1	s_white		s_white		s_tile		431 404
-object:	4041 -1		0	1	s_white		s_white		s_tile		404 432
-object:	4321 -1		0	1	s_window		s_white		s_tile		432 433
-object:	4331 -1		0	1	s_white		s_white		s_tile		433 405
+object:	4361 -1		0	1	s_atrium_1	s_white		s_tile		436 437
+object:	4371 -1		0	1	s_atrium_1	s_white		s_tile		437 403
+object:	4031 -1		0	1	s_atrium_1	s_white		s_tile		403 430
+object:	4301 -1		0	1	s_atrium_1	s_white		s_tile		430 431
+object:	4311 -1		0	1	s_atrium_1	s_white		s_tile		431 404
+object:	4041 -1		0	1	s_atrium_1	s_white		s_tile		404 432
+object:	4321 -1		0	1	s_atrium_1	s_white		s_tile		432 433
+object:	4331 -1		0	1	s_atrium_1	s_white		s_tile		433 405
 object:	4051 -1		0	1	s_white		s_white		s_tile		405 347
 object:	3472 47		0	1	s_white		s_white		s_tile		347 346
 object:	3462 -1		0	1	s_white		s_white		s_tile		346 434
-object:	4341 -1		0	1	s_window		s_white		s_tile		434 435
-object:	4351 -1		0	1	s_white		s_white		s_tile		435 400
+object:	4341 -1		0	1	s_atrium_2	s_white		s_tile		434 435
+object:	4351 -1		0	1	s_atrium_1	s_white		s_tile		435 400
 
 sector:	48	0	    2500		s_laminate	null		0xFF0000	16	4001 4011 4021 4361 4371 4031 4301 4311 4041 4321 4331 4051 3472 3462 4341 4351
 
