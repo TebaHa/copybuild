@@ -495,7 +495,7 @@ object:	4111 -1		0	1	s_white		s_white		s_tile		411 408
 object:	4081 -1		0	1	s_white		s_white		s_tile		408 402
 object:	4022 48		0	1	s_white		s_white		s_tile		402 401
 object:	4012 -1		0	1	s_white		s_white		s_tile		401 406
-object:	4061 -1		0	1	s_white		s_white		s_tile		406 407
+object:	4061 -1		0	1	s_white	s_white		s_tile		406 407
 
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,

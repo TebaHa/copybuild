@@ -65,7 +65,7 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 void		util_create_sector_sprobjs(t_engine *eng,
 			t_sector *sector, char **str)
 {
-	util_find_texture_by_name(&sector->floor_texture, eng, str[4]);
+	util_find_texture_by_name(&sector->floor_texture, eng, &str[4], &sector->floor_spread);
 	if (!ft_strcmp(str[5], "null"))
 	{
 		sector->ceil_visible = false;
@@ -74,7 +74,7 @@ void		util_create_sector_sprobjs(t_engine *eng,
 	else
 	{
 		sector->ceil_visible = true;
-		util_find_texture_by_name(&sector->ceil_texture, eng, str[5]);
+		util_find_texture_by_name(&sector->ceil_texture, eng, &str[5], &sector->ceil_spread);
 	}
 	util_read_color(&sector->color, str[6]);
 	sector->dist = (float *)ft_memalloc(sizeof(float)
