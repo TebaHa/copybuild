@@ -9,8 +9,7 @@ player: 3		99
 
 #Vertexes
 #		id	X,		Y,		Z
-/vertex: 99	1680	1850	1000
-/vertex: 99	1100	1250	700
+/vertex: 99	1340	1250	1000
 /vertex: 99	1450	650		100
 vertex: 99	750		2300	100
 ---
@@ -528,5 +527,5 @@ sector:	44	0	    500			s_laminate	s_black		0xFF0000	5	3243 3212 3221 3231 3103
 sector:	45	0	    500			s_laminate	s_black		0xFF0000	6	3232 3222 3261 3271 3291 3281
 sector:	46	0	    500			s_laminate	s_black		0xFF0000	4	3262 3411 3421 3272
 sector:	47	0	    500			s_laminate	s_black		0xFF0000	8	3401 3431 3461 3471 3451 3441 3422 3412
-sector:	48	0	    2500		s_laminate	s_black		0xFF0000	8	4001 4011 4021 4031 4041 4051 3472 3462
+sector:	48	0	    2500		s_laminate	null		0xFF0000	8	4001 4011 4021 4031 4041 4051 3472 3462
 sector:	49	0	    500			s_laminate	s_black		0xFF0000	8	4071 4091 4101 4111 4081 4022 4012 4061
