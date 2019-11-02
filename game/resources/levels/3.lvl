@@ -169,6 +169,14 @@ vertex: 408	1565	1343	200
 vertex: 409	1435	1328	200
 vertex: 410	1545	1302	200
 vertex: 411	1555	1300	200
+vertex: 430 2485	1935	200
+vertex: 431 2485	2350	200
+vertex: 432 2080	2755	200
+vertex: 433	1665	2755	200
+vertex: 434	1260	2350	200
+vertex: 435	1260	1935	200
+vertex: 436	1665	1530	200
+vertex: 437	2080	1530	200
 
 #Objects
 #			(if >= 0 where goes)
@@ -319,7 +327,7 @@ object:	1172 -1		0	1	s_white		s_white		s_tile		117 116
 
 object:	1411 -1		0	1	s_white		s_white		s_tile		141 149
 object:	1491 28		0	1	s_white		s_white		s_tile		149 148
-object:	1481 -1		0	1	s_white		s_white		s_tile		148 151
+object:	1481 -1		0	1	s_atlantis_1 s_white	s_tile		148 151
 object:	1511 -1		0	1	s_window	s_white		s_tile		151 150
 object:	1501 -1		0	1	s_white		s_white		s_tile		150 104
 object:	1043 21		0	1	s_white		s_white		s_tile		104 103
@@ -352,7 +360,7 @@ object:	2051 -1		0	1	s_white		s_white		s_tile		205 203
 object:	2032 31		0	1	s_white		s_white		s_tile		203 204
 object:	2042 -1		0	1	s_white		s_white		s_tile		204 207
 object:	2071 33		0	1	s_white		s_white		s_tile		207 212
-object:	2121 -1		0	1	s_white		s_white		s_tile		212 206
+object:	2121 -1		0	1	s_mirage_1	s_white		s_tile		212 206
 object:	2061 -1		0	1	s_window	s_white		s_tile		206 205
 
 object:	2122 32		0	1	s_white		s_white		s_tile		212 207
@@ -379,7 +387,7 @@ object:	2551 -1		0	1	s_window	s_white		s_tile		255 256
 object:	2561 -1		0	1	s_white		s_white		s_tile		256 257
 object:	2571 -1		0	1	s_white		s_white		s_tile		257 258
 object:	2582 35		0	1	s_white		s_white		s_tile		258 259
-object:	2592 -1		0	1	s_white		s_white		s_tile		259 255
+object:	2592 -1		0	1	s_illusion_1 s_white	s_tile		259 255
 
 object:	3011 -1		0	1	s_white		s_white		s_tile		301 302
 object:	3021 -1		0	1	s_white		s_white		s_tile		302 260
@@ -402,7 +410,7 @@ object:	3062 -1		0	1	s_white		s_white		s_tile		306 307
 object:	3071 -1		0	1	s_white		s_white		s_tile		307 308
 object:	3081 -1		0	1	s_white		s_white		s_tile		308 330
 
-object:	3111 -1		0	1	s_white		s_white		s_tile		311 312
+object:	3111 -1		0	1	s_oasis_1	s_white		s_tile		311 312
 object:	3121 -1		0	1	s_white		s_white		s_tile		312 313
 object:	3131 41		0	1	s_white		s_white		s_tile		313 314
 object:	3141 -1		0	1	s_white		s_white		s_tile		314 325
@@ -456,12 +464,22 @@ object:	3412 -1		0	1	s_window	s_white		s_tile		341 340
 
 object:	4001 -1		0	1	s_white		s_white		s_tile		400 401
 object:	4011 49		0	1	s_white		s_white		s_tile		401 402
-object:	4021 -1		0	1	s_white		s_white		s_tile		402 403
-object:	4031 -1		0	1	s_white		s_white		s_tile		403 404
-object:	4041 -1		0	1	s_white		s_white		s_tile		404 405
+object:	4021 -1		0	1	s_white		s_white		s_tile		402 436
+object:	4361 -1		0	1	s_window		s_white		s_tile		436 437
+object:	4371 -1		0	1	s_white		s_white		s_tile		437 403
+object:	4031 -1		0	1	s_white		s_white		s_tile		403 430
+object:	4301 -1		0	1	s_window		s_white		s_tile		430 431
+object:	4311 -1		0	1	s_white		s_white		s_tile		431 404
+object:	4041 -1		0	1	s_white		s_white		s_tile		404 432
+object:	4321 -1		0	1	s_window		s_white		s_tile		432 433
+object:	4331 -1		0	1	s_white		s_white		s_tile		433 405
 object:	4051 -1		0	1	s_white		s_white		s_tile		405 347
 object:	3472 47		0	1	s_white		s_white		s_tile		347 346
-object:	3462 -1		0	1	s_white		s_white		s_tile		346 400
+object:	3462 -1		0	1	s_white		s_white		s_tile		346 434
+object:	4341 -1		0	1	s_window		s_white		s_tile		434 435
+object:	4351 -1		0	1	s_white		s_white		s_tile		435 400
+
+sector:	48	0	    2500		s_laminate	null		0xFF0000	16	4001 4011 4021 4361 4371 4031 4301 4311 4041 4321 4331 4051 3472 3462 4341 4351
 
 object:	4071 -1		0	1	s_white		s_white		s_tile		407 409
 object:	4091 -1		0	1	s_black		s_white		s_tile		409 410
@@ -527,5 +545,5 @@ sector:	44	0	    500			s_laminate	s_black		0xFF0000	5	3243 3212 3221 3231 3103
 sector:	45	0	    500			s_laminate	s_black		0xFF0000	6	3232 3222 3261 3271 3291 3281
 sector:	46	0	    500			s_laminate	s_black		0xFF0000	4	3262 3411 3421 3272
 sector:	47	0	    500			s_laminate	s_black		0xFF0000	8	3401 3431 3461 3471 3451 3441 3422 3412
-sector:	48	0	    2500		s_laminate	null		0xFF0000	8	4001 4011 4021 4031 4041 4051 3472 3462
+
 sector:	49	0	    500			s_laminate	s_black		0xFF0000	8	4071 4091 4101 4111 4081 4022 4012 4061
