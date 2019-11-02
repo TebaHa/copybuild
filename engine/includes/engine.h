@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <libft.h>
-# include <SDL.h>
+# include <SDL2/SDL.h>
 # include <dirent.h>
 # include <SDL_ttf.h>
 # include <SDL_mixer.h>
@@ -28,11 +28,11 @@
 # define MAXSECTORS 64
 # define HFOV (1.0 * 0.63f * HEIGHT / WIDTH)
 # define VFOV (1.0 * 0.2f)
-# define TEXTURE_PACK_PATH		"../game/resources/images/"
-# define TEXTURE_SPRITE_PATH	"../game/resources/sprites/"
-# define SOUND_PATH				"../game/resources/sounds/"
-# define GAME_PATH				"../game/resources/levels/1.lvl"
-# define FONT_PATH				"../game/resources/fonts/SEASRN__.ttf"
+# define TEXTURE_PACK_PATH		"./game/resources/images/"
+# define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
+# define SOUND_PATH				"./game/resources/sounds/"
+# define GAME_PATH				"./game/resources/levels/1.lvl"
+# define FONT_PATH				"./game/resources/fonts/SEASRN__.ttf"
 # define RESOURCES_FOLDER		"game/resources/"
 # define RESOURCES_PACK			"game/resources.doom"
 # define PARSING_ERROR 40
