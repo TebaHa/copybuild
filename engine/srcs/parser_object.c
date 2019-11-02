@@ -31,6 +31,7 @@ t_object	*engine_read_objects_from_file(t_engine *eng, t_buff *buff)
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
+	util_find_repeats_in_objects(o_array_buffer, eng->stats.objects_count);
 	return (o_array_buffer);
 }
 
@@ -79,6 +80,25 @@ t_object	util_get_object_from_buff_by_id(int id, int size,
 	if (i == size)
 		util_parsing_error_lost_handler("object", id, "sector", sector_id);
 	return (objects[i]);
+}
+
+void		util_find_repeats_in_objects(t_object *object, int objects_count)
+{
+	int		j;
+	int		i;
+
+	i = 0;
+	while (i < objects_count)
+	{
+		j = 0;
+		while (j < objects_count)
+		{
+			if (object[i].id == object[j].id && i != j)
+				util_parsing_error_repeats("objects", "null", object[i].id);
+			j++;
+		}
+		i++;
+	}
 }
 
 void		util_release_objects_buffer(t_object *object_buff, int size)

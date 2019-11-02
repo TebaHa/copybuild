@@ -12,7 +12,8 @@ player: 3		99
 #		id	X,		Y,		Z
 /vertex: 99	1680	1850	1000
 /vertex: 99	1100	1250	700
-vertex: 99	1450	650		100
+/vertex: 99	1450	650		100
+vertex: 99	750		2300	100
 ---
 vertex: 0	1360	1300	200
 vertex: 1	1360	1200	200
@@ -289,7 +290,7 @@ object:	1112 22		0	1	s_white		flooring	ceiling		111 106
 object:	1062 24		0	1	s_white		flooring	ceiling		106 109
 
 object:	1081 -1		0	1	s_white		flooring	ceiling		108 109
-object:	1091 23		0	1	s_white		flooring	ceiling		109 106
+object:	1092 23		0	1	s_white		flooring	ceiling		109 106
 object:	1063 -1		0	1	s_white		flooring	ceiling		106 107
 object:	1071 -1		0	1	s_door_1	flooring	ceiling		107 108
 
@@ -319,7 +320,7 @@ object:	1421 29		0	1	s_white		s_white		s_tile		142 145
 object:	1451 -1		0	1	s_white		s_white		s_tile		145 146
 object:	1461 30		0	1	s_door_1	s_white		s_tile		146 147
 object:	1471 -1		0	1	s_white		s_white		s_tile		147 148
-object:	1481 27		0	1	s_white		s_white		s_tile		148 149
+object:	1482 27		0	1	s_white		s_white		s_tile		148 149
 
 object:	1422 -1		0	1	s_white		s_white		s_tile		142 143
 object:	1431 -1		0	1	s_white		s_white		s_tile		143 144
@@ -377,7 +378,7 @@ object:	2612 -1		0	1	s_white		s_white		s_tile		261 300
 object:	3001 -1		0	1	s_white		s_white		s_tile		300 304
 object:	3041 38		0	1	s_white		s_white		s_tile		304 303
 object:	3031 -1		0	1	s_white		s_white		s_tile		303 301
-sector:	37	0	    500			s_laminate	s_black		0xFF0000	7	3011 3021 2602 2612 3001 3041 3031
+
 object:	3051 -1		0	1	s_white		s_white		s_tile		305 303
 object:	3032 37		0	1	s_white		s_white		s_tile		303 304
 object:	3042 -1		0	1	s_white		s_white		s_tile		304 306
@@ -402,7 +403,7 @@ object:	3302 -1		0	1	s_white		s_white		s_tile		330 311
 object:	3132 -1		0	1	s_white		s_white		s_tile		313 315
 object:	3151 42		0	1	s_white		s_white		s_tile		315 316
 object:	3161 -1		0	1	s_white		s_white		s_tile		316 314
-object:	3141 40		0	1	s_white		s_white		s_tile		314 313
+object:	3142 40		0	1	s_white		s_white		s_tile		314 313
 
 object:	3171 -1		0	1	s_white		s_white		s_tile		317 318
 object:	3181 -1		0	1	s_white		s_white		s_tile		318 319
@@ -470,12 +471,12 @@ sector:	20	0	    500			s_laminate	s_black		0xFF0000	5   1011 1021 1041 461 451
 sector:	21	0	    500			s_laminate	s_black		0xFF0000	3	1022 1031 1042
 sector:	22	0	    500			s_laminate	s_black		0xFF0000	5	1111 1012 452 1051 1061
 sector:	23	0	    500			s_laminate	s_black		0xFF0000	5	1091 1101 1171 1112 1062
-sector:	24	0	    500			s_laminate	s_black		0xFF0000	4	1081 1091 1063 1071
+sector:	24	0	    500			s_laminate	s_black		0xFF0000	4	1081 1092 1063 1071
 sector:	25	0	    300			s_laminate	s_white		0xFF0000	4	1121 1131 1023 1013
 sector:	26	0	    500			s_laminate	s_black		0xFF0000	7	1161 1151 1141 1132 1122 1113 1172
 
 sector:	27	0	    500			s_laminate	s_black		0xFF0000	7	1411 1491 1481 1511 1501 1043 1032
-sector:	28	0	    500			s_laminate	s_black		0xFF0000	6	1492 1421 1451 1461 1471 1481
+sector:	28	0	    500			s_laminate	s_black		0xFF0000	6	1492 1421 1451 1461 1471 1482
 sector:	29	0	    500			s_laminate	s_black		0xFF0000	4	1422 1431 1441 1452
 
 sector:	30	0	    500			s_laminate	s_black		0xFF0000	4	1472 1462 2011 2001
@@ -488,10 +489,10 @@ sector:	35	0	    500			s_laminate	s_black		0xFF0000	6	2601 2591 2581 2512 2542 2
 sector:	36	0	    500			s_laminate	s_black		0xFF0000	5	2551 2561 2571 2582 2592
 
 sector:	37	0	    500			s_laminate	s_black		0xFF0000	7	3011 3021 2602 2612 3001 3041 3031
-sector:	38	0	    300			s_laminate	s_white		0xFF0000	4	3132 3151 3161 3141
+sector:	38	0	    300			s_laminate	s_white		0xFF0000	4	3051 3032 3042 3061
 sector:	39	0	    500			s_laminate	s_black		0xFF0000	7	3301 3101 3091 3052 3062 3071 3081
 sector:	40	0	    500			s_laminate	s_black		0xFF0000	7	3111 3121 3131 3141 3251 3102 3302
-sector:	41	0	    500			s_laminate	s_black		0xFF0000	4	3132 3151 3161 3141
+sector:	41	0	    500			s_laminate	s_black		0xFF0000	4	3132 3151 3161 3142
 sector:	42	0	    500			s_laminate	s_black		0xFF0000	6	3171 3181 3191 3241 3162 3152
 sector:	43	0	    500			s_laminate	s_black		0xFF0000	4	3192 3201 3211 3242
 sector:	44	0	    500			s_laminate	s_black		0xFF0000	5	3243 3212 3221 3231 3103

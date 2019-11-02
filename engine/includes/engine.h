@@ -1219,6 +1219,8 @@ void				util_create_point_3d(t_engine *eng,
 					t_point_3d *point, char **str);
 t_point_3d			util_get_vertex_from_buff_by_id(int id, int size,
 					t_point_3d *vertexes, int polygone_id);
+void				util_find_repeats_in_vertexes(t_point_3d *vertex,
+					int vertexes_count);
 
 //t_polygone			*engine_read_polygones_from_file(t_engine *eng,
 //					t_buff buff);
@@ -1232,6 +1234,7 @@ void				util_create_object(t_engine *eng, t_object *object,
 					t_buff *buff, char **str);
 t_object			util_get_object_from_buff_by_id(int id, int size,
 					t_object *objects, int sector_id);
+void				util_find_repeats_in_objects(t_object *object, int objects_count);
 void				util_parsing_objects_portal(t_engine *eng, t_buff buff);
 void				util_fill_object_with_wallobjects(t_engine *eng,
 					t_buff *buff, t_object *object);

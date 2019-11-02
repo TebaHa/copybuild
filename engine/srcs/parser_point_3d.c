@@ -31,6 +31,7 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
+	util_find_repeats_in_vertexes(v_arr_buffer, eng->stats.vertexes_count);
 	return (v_arr_buffer);
 }
 
@@ -60,6 +61,25 @@ t_point_3d	util_get_vertex_from_buff_by_id(int id, int size,
 	if (i == size)
 		util_parsing_error_lost_handler("vertex", id, "polygone", polygone_id);
 	return (vertexes[i]);
+}
+
+void		util_find_repeats_in_vertexes(t_point_3d *vertex, int vertexes_count)
+{
+	int		j;
+	int		i;
+
+	i = 0;
+	while (i < vertexes_count)
+	{
+		j = 0;
+		while (j < vertexes_count)
+		{
+			if (vertex[i].id == vertex[j].id && i != j)
+				util_parsing_error_repeats("vertexes", "null", vertex[i].id);
+			j++;
+		}
+		i++;
+	}
 }
 
 void		util_release_vertex_buffer(t_point_3d *vertex_buff)
