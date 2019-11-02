@@ -97,9 +97,9 @@ void		util_find_repeats_in_sector(t_sector *sector)
 			{
 				if (sector->objects_array[i].id == sector->objects_array[j].id)
 					util_parsing_error_repeats("objects", "sector", sector->id);
-				if (sector->objects_array[i].polies_array[0].id ==
-					sector->objects_array[j].polies_array[0].id)
-					util_parsing_error_repeats("polies", "sector", sector->id);
+//				if (sector->objects_array[i].polies_array[0].id ==
+//					sector->objects_array[j].polies_array[0].id)
+//					util_parsing_error_repeats("polies", "sector", sector->id);
 			}
 			j++;
 		}

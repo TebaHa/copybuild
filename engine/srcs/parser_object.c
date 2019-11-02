@@ -31,35 +31,41 @@ t_object	*engine_read_objects_from_file(t_engine *eng, t_buff *buff)
 		util_release_char_matrix(splitted_line);
 		i++;
 	}
+	util_find_repeats_in_objects(o_array_buffer, eng->stats.objects_count);
 	return (o_array_buffer);
 }
 
 void		util_create_object(t_engine *eng, t_object *object,
 			t_buff *buff, char **str)
 {
-	int			pol_count;
+	int			vert_count;
 	int			str_count;
 
-	util_parsing_error_little_data_check("object", str, 8);
+	util_parsing_error_little_data_check("object", str, 9);
+	util_parsing_error_count_handler("object", str, 9);
 	object->id = util_int10_data_filler(str[1], 0, 0xFFFF);
 	object->portal = util_int10_data_filler(str[2], -1, 0xFFFF);
 	object->passble = util_int10_data_filler(str[3], 0, 0);
 	object->visible = util_int10_data_filler(str[4], 1, 1);
-	util_find_texture_by_name(&object->floor_wall_texture, eng, str[5]);
-	util_find_texture_by_name(&object->ceil_wall_texture, eng, str[6]);
-	object->polies_count = util_int10_data_filler(str[7], 0, 0xFFFF);
-	if (!object->polies_count)
-		util_parsing_error_little_data("polies", "object", str);
-	util_parsing_error_count_handler("object", str, 7 + object->polies_count);
-	object->polies_array = (t_polygone *)ft_memalloc(sizeof(t_polygone)
-		* object->polies_count);
-	str_count = 8;
-	pol_count = 0;
+	util_find_texture_by_name(&object->polies_array->texture, eng, str[5]);
+	util_find_texture_by_name(&object->floor_wall_texture, eng, str[6]);
+	util_find_texture_by_name(&object->ceil_wall_texture, eng, str[7]);
+	object->polies_count = 1;
+	object->polies_array->vertices_count = 2;
+	object->polies_array->id = object->id;
+	object->polies_array->type = 1;
+	object->polies_array->vertices_array =
+		(t_point_3d *)ft_memalloc(sizeof(t_point_3d) * 2);
 	util_fill_object_with_wallobjects(eng, buff, object);
-	while (str_count < 8 + object->polies_count)
-		object->polies_array[pol_count++] =
-			util_get_polygone_from_buff_by_id(ft_atoi(str[str_count++]),
-			eng->stats.polies_count, buff->polies, object->id);
+	str_count = 8;
+	vert_count = 0;
+	while (str_count < 10)
+		object->polies_array->vertices_array[vert_count++] =
+			util_get_vertex_from_buff_by_id(ft_atoi(str[str_count++]),
+			eng->stats.vertexes_count, buff->vertexes, object->id);
+	if (object->polies_array->vertices_array[0].id ==
+	object->polies_array->vertices_array[1].id)
+		util_parsing_error_repeats("vertexes", "object", object->id);
 	eng->stats.objects_count++;
 }
 
@@ -80,6 +86,25 @@ t_object	util_get_object_from_buff_by_id(int id, int size,
 	return (objects[i]);
 }
 
+void		util_find_repeats_in_objects(t_object *object, int objects_count)
+{
+	int		j;
+	int		i;
+
+	i = 0;
+	while (i < objects_count)
+	{
+		j = 0;
+		while (j < objects_count)
+		{
+			if (object[i].id == object[j].id && i != j)
+				util_parsing_error_repeats("objects", "null", object[i].id);
+			j++;
+		}
+		i++;
+	}
+}
+
 void		util_release_objects_buffer(t_object *object_buff, int size)
 {
 	int		i;
@@ -87,8 +112,9 @@ void		util_release_objects_buffer(t_object *object_buff, int size)
 	i = 0;
 	while (i < size)
 	{
-		util_release_polies_buffer(object_buff[i].polies_array,
-			object_buff[i].polies_count);
+		util_release_vertex_buffer(object_buff[i].polies_array->vertices_array);
+//		util_release_polies_buffer(object_buff[i].polies_array,
+//			object_buff[i].polies_count);
 		i++;
 	}
 	free(object_buff);
