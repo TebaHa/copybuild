@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:39:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 15:54:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 19:19:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ void				engine_render_wall_cycle_4(t_wall_clinks *l)
 	l->data->ytop[l->cycler->x], l->data->ybottom[l->cycler->x]);
 	engine_vline_textured(l->surf, (t_scaler)scaler_init((float[5])
 	{l->mdata->ya, l->mdata->cya, l->mdata->yb,
-	0, l->data->polygone->texture->height - 1}),
+	0, l->data->polygone->tex_scale_koef}),
 	(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya, 0},
 	(t_fix_point_3d){l->cycler->x,
-	l->mdata->cnya, 0}, l->mdata->txtx},
+	l->mdata->cnya - 1, 0}, l->mdata->txtx},
 	l->eng->world->sectors_array[l->data->sect.sectorno]
 	.objects_array[l->data->obj_id].floor_wall_texture);
 	l->data->ytop[l->cycler->x] = clamp(max(l->mdata->cya, l->mdata->cnya),
@@ -102,9 +102,9 @@ void				engine_render_wall_cycle_3(t_wall_clinks *l)
 	{
 		engine_vline_textured(l->surf, (t_scaler)scaler_init((float[5])
 		{l->mdata->ya, l->mdata->cya, l->mdata->yb,
-		0, l->data->polygone->texture->height - 1}),
+		0, l->data->polygone->tex_scale_koef}),
 		(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya, 0},
 		(t_fix_point_3d){l->cycler->x,
-		l->mdata->cyb + 1, 0}, l->mdata->txtx}, l->data->polygone->texture);
+		l->mdata->cyb, 0}, l->mdata->txtx}, l->data->polygone->texture);
 	}
 }

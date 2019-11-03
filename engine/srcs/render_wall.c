@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:19:23 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 08:54:46 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 19:13:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void			engine_render_wall(t_engine *eng, SDL_Surface *surf,
 	if (data_help.t1.y <= 0 && data_help.t2.y <= 0)
 		return ;
 	data_help.u0 = 0;
-	data_help.u1 = data->polygone->texture->height - 1;
+	data_help.u1 = data->polygone->tex_scale_koef;
 	if (data_help.t1.y <= 0 || data_help.t2.y <= 0)
 		engine_render_wall_recount_intersect(data->polygone,
 		&data_help.t1, &data_help.t2,

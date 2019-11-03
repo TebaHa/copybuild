@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 17:17:14 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 19:13:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,6 +313,7 @@ typedef struct		s_polygone
 	t_point_3d		*vertices_array;
 	t_point_3d		norm;
 	int				vertices_count;
+	int				tex_scale_koef;
 	int				id;
 	int				type;
 	t_image			*texture;
@@ -649,6 +650,7 @@ typedef struct		s_wall_help1
 typedef struct		s_wall_help2
 {
 	t_polygone		*polygone;
+	float			koef;
 	t_player		*plr;
 	int				ytop[WIDTH];
 	int				ybottom[WIDTH];
@@ -1458,5 +1460,6 @@ void				engine_draw_background(t_engine *eng,
 **	---------------------------------------------------------------------------
 */
 int					line_intersection_check(t_line_2d a, t_line_2d b);
+void				prepare_polygones(t_engine *eng);
 
 #endif

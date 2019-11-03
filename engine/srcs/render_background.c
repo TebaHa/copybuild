@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:21:26 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 10:47:52 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 18:16:38 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	engine_draw_background(t_engine *eng,
 			sx = 0;
 		y = 0;
 		sy = oy;
-		while (y <= HEIGHT)
+		while (y <= HEIGHT && sy < eng->sky->h)
 		{
 			red = ((unsigned char *)spix)
 			[((sy * eng->sky->w + sx) * 4)];

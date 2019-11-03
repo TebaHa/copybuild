@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 17:29:13 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 18:26:45 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	game_movement_check(t_game *fps)
 		fps->logic.py + fps->logic.dy}},
 		&fps->player.controller.moving);
 		if (engine_object_get_sector(fps->eng->world,
-		(t_point_3d){0.f, fps->logic.px
+		(t_point_3d){0.f, fps->player.position.x
 		+ fps->player.velocity.x,
-		fps->logic.py
+		fps->player.position.y
 		+ fps->player.velocity.y, fps->player.position.z},
 		fps->player.cursector) >= 0)
 		{

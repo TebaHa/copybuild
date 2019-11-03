@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/03 13:49:09 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/03 19:16:20 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = doom_nukem
 
 CC = gcc
 
-FLAGS_FAST = -Ofast -march=native -m64 -O2 -flto -funroll-loops
+FLAGS_FAST = -Ofast -march=native -m64 -flto -funroll-loops
 FLAGS_42 = -Wall -Wextra -Werror
 FLAGS = $(FLAGS_FAST)
 
@@ -80,6 +80,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					hud_draw1.c \
 					loader_images.c \
 					intersection_funs_help.c \
+					engine_texture_scale_koef.c \
 					intersection_funs.c \
 					vectors_normal.c \
 					objects_help.c \
