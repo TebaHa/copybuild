@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:30:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/28 17:04:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 14:38:12 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ int		game_buttons_control_down_main(t_game *fps)
 	{
 		game_buttons_control_down1(fps);
 		if (fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
-		{
-			close_game(0);
-			game_stop_threads(fps->render_thread_pool,
-			THREAD_POOL_SIZE);
-			return (0);
-		}
+			game_quit(fps);
 		game_buttons_control_down2(fps);
 		game_buttons_control_down3(fps);
 	}

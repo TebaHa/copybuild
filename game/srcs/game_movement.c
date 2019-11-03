@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 12:37:36 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 17:29:13 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,21 @@ void	game_movement_check(t_game *fps)
 		fps->logic.dx = fps->player.velocity.x;
 		fps->logic.dy = fps->player.velocity.y;
 		fps->logic.sectprev = fps->player.cursector;
-		if ((fps->logic.sect = check_wall_passed(
-		((t_line_2d){
-		(t_point_2d){fps->logic.px, fps->logic.py},
+		check_wall_passed(fps->eng, &fps->player,
+		(t_line_2d){(t_point_2d){fps->logic.px, fps->logic.py},
 		(t_point_2d){fps->logic.px + fps->logic.dx,
-		fps->logic.py + fps->logic.dy}}), fps->player.cursector,
-		&fps->eng->world->sectors_array[fps->player.cursector])) >= 0)
+		fps->logic.py + fps->logic.dy}},
+		&fps->player.controller.moving);
+		if (engine_object_get_sector(fps->eng->world,
+		(t_point_3d){0.f, fps->logic.px
+		+ fps->player.velocity.x,
+		fps->logic.py
+		+ fps->player.velocity.y, fps->player.position.z},
+		fps->player.cursector) >= 0)
 		{
-			if (fps->eng->world->sectors_array[fps->logic.sect].floor
-			- fps->logic.duck_shift <= fps->player.position.z +
-			KNEE_HEIGHT - 50)
-				move_player(fps->eng, &fps->player,
-				(t_point_2d){fps->logic.dx,
-				fps->logic.dy}, fps->logic.sect);
+			move_player(fps->eng, &fps->player,
+			(t_point_2d){fps->player.velocity.x,
+			fps->player.velocity.y});
 		}
 	}
 	if (fps->player.position.z > fps->eng->world->sectors_array
@@ -53,7 +55,7 @@ void	game_apply_movement_main(t_game *fps)
 	fps->logic.yaw = clamp(fps->logic.yaw - fps->logic.xy.y * 0.03f, -3, 3);
 	fps->player.yaw = fps->logic.yaw - fps->player.velocity.z * 0.5f;
 	move_player(fps->eng, &fps->player,
-	(t_point_2d){0, 0}, fps->player.cursector);
+	(t_point_2d){0, 0});
 	fps->logic.move_vec[0] = 0.f;
 	fps->logic.move_vec[1] = 0.f;
 	game_apply_movement_main_count1(fps);

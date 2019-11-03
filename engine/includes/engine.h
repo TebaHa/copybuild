@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 12:28:29 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 17:17:14 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1061,8 +1061,7 @@ t_image				load_textures(const char *fname);
 int					scaler_next(t_scaler *i);
 void				engine_vline_textured(SDL_Surface *surf, t_scaler ty,
 					t_vline1_in din, t_image *texture);
-void				move_player(t_engine *eng, t_player *plr,
-					t_point_2d dd, unsigned sect);
+void				move_player(t_engine *eng, t_player *plr, t_point_2d dd);
 t_costil			relative_map_coordinate_to_absolute(t_player *plr,
 					float map_y, float screen_x, float screen_y);
 t_costil			ceiling_floor_screen_coordinates_to_map_coordinates(
@@ -1458,8 +1457,6 @@ void				engine_draw_background(t_engine *eng,
 **	Background functions end
 **	---------------------------------------------------------------------------
 */
-
-int					check_wall_passed(t_line_2d plr_dir, int cursect, t_sector *sector);
 int					line_intersection_check(t_line_2d a, t_line_2d b);
 
 #endif

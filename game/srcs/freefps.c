@@ -6,11 +6,19 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/01 08:22:39 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 14:35:19 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
+
+void		game_quit(t_game *fps)
+{
+	game_stop_threads(fps->render_thread_pool,
+	THREAD_POOL_SIZE);
+	engine_sdl_uninit(fps->eng);
+	close_game(0);
+}
 
 void		game_init_player(t_player *plr)
 {
@@ -70,10 +78,7 @@ int			main(int argc, char **argv)
 		{
 			sound_player_control(&fps.player);
 			if (fps.eng->event.type == SDL_QUIT)
-			{
-				game_stop_threads(fps.render_thread_pool, THREAD_POOL_SIZE);
-				break ;
-			}
+				game_quit(&fps);
 			game_buttons_control_up_main(&fps);
 			if (game_buttons_control_down_main(&fps) == 0)
 				break ;
@@ -84,6 +89,5 @@ int			main(int argc, char **argv)
 		game_threads_recount(&fps);
 		SDL_Delay(3);
 	}
-	engine_sdl_uninit(fps.eng);
 	return (0);
 }
