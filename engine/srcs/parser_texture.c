@@ -13,16 +13,17 @@
 #include <engine.h>
 
 void		util_find_texture_by_name(t_image **dst, t_engine *eng,
-			char *name)
+			char **name, int *spread)
 {
 	int		i;
 	int		find;
 	char	*name_png;
 
+	util_find_texture_spread(spread, name);
 	i = 0;
 	find = 0;
-	name_png = ft_strnew(ft_strlen(name) + ft_strlen(".png"));
-	name_png = ft_strcat(ft_strcpy(name_png, name), ".png");
+	name_png = ft_strnew(ft_strlen(*name) + ft_strlen(".png"));
+	name_png = ft_strcat(ft_strcpy(name_png, *name), ".png");
 	while (i < eng->stats.textures_count)
 	{
 		if (!ft_strcmp(name_png, eng->texture_buffer[i]->filename))
@@ -33,10 +34,45 @@ void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 		i++;
 	}
 	if (i >= eng->stats.textures_count && !find)
-		util_parsing_error_no_texture(dst, eng, name);
+		util_parsing_error_no_texture(dst, eng, *name);
 	else
 		eng->stats.cycle_detector = 0;
 	free(name_png);
+}
+
+void		util_find_texture_spread(int *spread, char **str)
+{
+	char 	*spreading;
+
+	if ((spreading = ft_strcut(str, ',')))
+	{
+		*spread = util_int10_data_filler(spreading, 0, 0xFFFF);
+		free(spreading);
+	}
+	else
+		*spread = 0;
+}
+
+char		*ft_strcut(char **s, char c)
+{
+	char	*output;
+	char	*str;
+	size_t	c_pos;
+	size_t	len;
+
+	if (!ft_strchr(*s, c))
+		return (NULL);
+	c_pos = ft_strchr(*s, c) - *s;
+	len = ft_strlen(*s) - c_pos;
+	if (!(str = ft_strsub(*s, 0, c_pos)))
+		return (NULL);
+	if (len > 0)
+		output = ft_strsub(*s, (unsigned int)c_pos + 1, len);
+	else
+		output = (ft_strnew(0));
+	free(*s);
+	*s = str;
+	return (output);
 }
 
 SDL_Surface	*util_transform_texture_to_sprite(t_image *texture)

@@ -16,9 +16,15 @@ CC = gcc
 
 FLAGS_FAST = -Ofast -march=native -m64 -O2 -flto -funroll-loops
 FLAGS_42 = -Wall -Wextra -Werror
-FLAGS = $(FLAGS_FAST) $(FLAGS_42)
+FLAGS = $(FLAGS_FAST)
 
 ID_UN := $(shell id -un)
+
+ifeq ($(ID_UN), tyanyahiao)
+	CELLAR_FOLDER = /usr/local/Cellar/
+else
+	CELLAR_FOLDER = /Users/$(ID_UN)/.brew/Cellar/
+endif
 
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./lib/libft/
@@ -35,16 +41,16 @@ GAME_SRCS_LIST =	freefps.c \
 
 SDL = $(SDL_DIRECTORY)libmlx.a
 SDL_DIRECTORY = ./lib/sdl2/
-SDL_INCLUDES = ./engine/includes/SDL2/
+SDL_INCLUDES_DIRECTORY = ./engine/includes/SDL2/
 
-SDL_FOLDER = /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.10/include/SDL2
-SDL_LIB = /Users/$(ID_UN)/.brew/Cellar/sdl2/2.0.10/lib
+SDL_FOLDER = $(CELLAR_FOLDER)sdl2/2.0.10/include/SDL2
+SDL_LIB = $(CELLAR_FOLDER)sdl2/2.0.10/lib
 
-SDL_TTF_FOLDER = /Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2
-SDL_TTF_LIB = /Users/$(ID_UN)/.brew/Cellar/sdl2_ttf/2.0.15/lib
+SDL_TTF_FOLDER = $(CELLAR_FOLDER)sdl2_ttf/2.0.15/include/SDL2
+SDL_TTF_LIB = $(CELLAR_FOLDER)sdl2_ttf/2.0.15/lib
 
-SDL_MIXER_FOLDER = /Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.4/include/SDL2
-SDL_MIXER_LIB = /Users/$(ID_UN)/.brew/Cellar/sdl2_mixer/2.0.4/lib
+SDL_MIXER_FOLDER = $(CELLAR_FOLDER)sdl2_mixer/2.0.4/include/SDL2
+SDL_MIXER_LIB = $(CELLAR_FOLDER)sdl2_mixer/2.0.4/lib
 
 GAME_OBJS_DIRECTORY = ./game/objs/
 GAME_SRCS_DIRECTORY = ./game/srcs/
@@ -145,6 +151,8 @@ ENGINE_HEADERS_LIST = engine.h
 ENGINE_HEADERS = $(addprefix $(ENGINE_HEADERS_DIRECTORY), $(ENGINE_HEADERS_LIST))
 ENGINE_INCLUDES = -I $(ENGINE_HEADERS_DIRECTORY)
 
+SDL_INCLUDES = -I $(SDL_INCLUDES_DIRECTORY)
+
 ENGINE_SRCS = $(addprefix $(ENGINE_SRCS_DIRECTORY), $(ENGINE_SRCS_LIST))
 
 ENGINE_OBJS = $(addprefix $(ENGINE_OBJS_DIRECTORY), $(ENGINE_OBJS_LIST))
@@ -158,7 +166,7 @@ RESET = \033[0m
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS)
-	@$(CC) $(FLAGS) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
+	@$(CC) $(FLAGS) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) $(SDL_INCLUDES) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
 	@echo "\n$(GREEN)DoomNukem created$(RESET)"
 
 $(ENGINE_OBJS_DIRECTORY):
@@ -166,7 +174,7 @@ $(ENGINE_OBJS_DIRECTORY):
 	@echo "$(NAME): $(ENGINE_OBJS_DIRECTORY) was created"
 
 $(ENGINE_OBJS_DIRECTORY)%.o: $(ENGINE_SRCS_DIRECTORY)%.c $(ENGINE_HEADERS)
-	@$(CC) $(FLAGS) -c $(ENGINE_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
+	@$(CC) $(FLAGS) -c $(ENGINE_INCLUDES) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) $(SDL_INCLUDES) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
 	@echo -n '.'
 
 $(GAME_OBJS_DIRECTORY):
@@ -174,7 +182,7 @@ $(GAME_OBJS_DIRECTORY):
 	@echo "$(NAME): $(GAME_OBJS_DIRECTORY) was created"
 
 $(GAME_OBJS_DIRECTORY)%.o: $(GAME_SRCS_DIRECTORY)%.c $(GAME_HEADERS)
-	@$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
+	@$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) $(SDL_INCLUDES) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
 	@echo -n '.'
 
 $(LIBFT):
@@ -205,3 +213,6 @@ le_clean:
 	@echo "$(RED)DoomNukem deleted (excluding libft.a)$(RESET)"
 
 le: le_clean all
+
+id:
+	echo $(ID_UN)

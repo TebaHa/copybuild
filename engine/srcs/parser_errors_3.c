@@ -26,13 +26,10 @@ void	util_parsing_error_cant_find(char *problem, int id_problem)
 void	util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 		char *name)
 {
-	util_parsing_error_no_cap("texture", eng);
 	ft_putendl("Parsing error:");
 	ft_putstr("Cant find texture: ");
 	ft_putstr(name);
 	ft_putstr("!\n");
-	close_game(PARSING_ERROR);
-	util_find_texture_by_name(dst, eng, PARSING_ERROR_TEXTURE);
 	close_game(PARSING_ERROR);
 }
 

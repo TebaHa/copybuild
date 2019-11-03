@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <libft.h>
-# include <SDL.h>
+# include <SDL2/SDL.h>
 # include <dirent.h>
 # include <SDL_ttf.h>
 # include <SDL_mixer.h>
@@ -28,11 +28,12 @@
 # define MAXSECTORS 64
 # define HFOV (1.0 * 0.63f * HEIGHT / WIDTH)
 # define VFOV (1.0 * 0.2f)
-# define TEXTURE_PACK_PATH		"./game/resources/images/"
-# define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
-# define SOUND_PATH				"./game/resources/sounds/"
-# define GAME_PATH				"./game/resources/levels/1.lvl"
-# define FONT_PATH				"./game/resources/fonts/SEASRN__.ttf"
+# define CLION					0
+# define TEXTURE_PACK_PATH		CLION ? "../game/resources/images/" : "./game/resources/images/"
+# define TEXTURE_SPRITE_PATH	CLION ? "../game/resources/sprites/" : "./game/resources/sprites/"
+# define SOUND_PATH				CLION ? "../game/resources/sounds/" : "./game/resources/sounds/"
+# define GAME_PATH				CLION ? "../game/resources/levels/1.lvl" : "./game/resources/levels/1.lvl"
+# define FONT_PATH				CLION ? "../game/resources/fonts/SEASRN__.ttf" : "./game/resources/fonts/SEASRN__.ttf"
 # define RESOURCES_FOLDER		"game/resources/"
 # define RESOURCES_PACK			"game/resources.doom"
 # define PARSING_ERROR 40
@@ -315,6 +316,7 @@ typedef struct		s_polygone
 	int				id;
 	int				type;
 	t_image			*texture;
+	int 			texture_spread;
 }					t_polygone;
 
 typedef struct		s_sprite
@@ -423,7 +425,9 @@ typedef struct		s_object
 	int 			wallobjects_num;
 	t_wobj			*wallobjects_array;
 	t_image			*floor_wall_texture;
+	int 			floor_wall_spread;
 	t_image			*ceil_wall_texture;
+	int 			ceil_wall_spread;
 }					t_object;
 
 typedef	struct		s_sector
@@ -440,7 +444,9 @@ typedef	struct		s_sector
 	t_color			color;
 	t_bool			ceil_visible;
 	t_image			*ceil_texture;
+	int				ceil_spread;
 	t_image			*floor_texture;
+	int 			floor_spread;
 	t_item_sprts	item_sprts;
 }					t_sector;
 
@@ -1261,7 +1267,9 @@ void				util_create_wallobject(t_engine *eng, t_wobj *wallobject,
 					char **str);
 
 void				util_find_texture_by_name(t_image **dst, t_engine *eng,
-					char *name);
+					char **name, int *spread);
+void				util_find_texture_spread(int *spread, char **str);
+char				*ft_strcut(char **s, char c);
 void				util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 					char *name);
 
