@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/02 00:43:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 10:06:21 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	game_apply_movement_main(t_game *fps)
 {
 	get_relative_xy(fps->eng, &fps->logic.xy);
 	fps->player.angle += fps->logic.xy.x * 0.03f;
-	fps->logic.yaw = clamp(fps->logic.yaw - fps->logic.xy.y * 0.03f, -5, 5);
+	fps->logic.yaw = clamp(fps->logic.yaw - fps->logic.xy.y * 0.03f, -3, 3);
 	fps->player.yaw = fps->logic.yaw - fps->player.velocity.z * 0.5f;
 	move_player(fps->eng, &fps->player,
 	(t_point_2d){0, 0}, fps->player.cursector);

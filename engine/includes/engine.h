@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/02 09:05:48 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 09:45:36 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1439,7 +1439,7 @@ void				engine_clear_surface(SDL_Surface *surf);
 
 void				engine_find_background(t_engine *eng);
 void				engine_draw_background(t_engine *eng,
-					SDL_Surface *surf, float plrangle);
+					SDL_Surface *surf, float yaw, float plrangle);
 /*
 **	Background functions end
 **	---------------------------------------------------------------------------
