@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 09:45:36 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 12:28:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -903,6 +903,12 @@ typedef struct		s_sprt_r
 	int				txtx;
 }					t_sprt_r;
 
+typedef struct		s_line_2d
+{
+	t_point_2d		a;
+	t_point_2d		b;
+}					t_line_2d;
+
 void				engine_sdl_init(t_engine **eng);
 void				engine_sdl_uninit(t_engine *eng);
 void				engine_draw_line(t_engine *eng, t_point_2d a,
@@ -1452,5 +1458,8 @@ void				engine_draw_background(t_engine *eng,
 **	Background functions end
 **	---------------------------------------------------------------------------
 */
+
+int					check_wall_passed(t_line_2d plr_dir, int cursect, t_sector *sector);
+int					line_intersection_check(t_line_2d a, t_line_2d b);
 
 #endif

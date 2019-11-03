@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 10:06:21 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/03 12:37:36 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,18 @@ void	game_movement_check(t_game *fps)
 		fps->logic.dx = fps->player.velocity.x;
 		fps->logic.dy = fps->player.velocity.y;
 		fps->logic.sectprev = fps->player.cursector;
-		if ((fps->logic.sect = engine_object_get_sector(fps->eng->world,
-		(t_point_3d){0.f, fps->logic.px + fps->logic.dx, fps->logic.py +
-		fps->logic.dy, fps->player.position.z}, fps->player.cursector)) >= 0)
+		if ((fps->logic.sect = check_wall_passed(
+		((t_line_2d){
+		(t_point_2d){fps->logic.px, fps->logic.py},
+		(t_point_2d){fps->logic.px + fps->logic.dx,
+		fps->logic.py + fps->logic.dy}}), fps->player.cursector,
+		&fps->eng->world->sectors_array[fps->player.cursector])) >= 0)
 		{
 			if (fps->eng->world->sectors_array[fps->logic.sect].floor
 			- fps->logic.duck_shift <= fps->player.position.z +
 			KNEE_HEIGHT - 50)
-				move_player(fps->eng, &fps->player, (t_point_2d){fps->logic.dx,
+				move_player(fps->eng, &fps->player,
+				(t_point_2d){fps->logic.dx,
 				fps->logic.dy}, fps->logic.sect);
 		}
 	}
