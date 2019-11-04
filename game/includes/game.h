@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 17:02:10 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/04 17:46:39 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,7 @@ int					check_wall_passed(t_engine *eng, t_player *plr,
 					t_line_2d plr_dir, int *moving);
 void				vector_projection(t_player *plr, t_point_3d v1, t_point_3d v2);
 
-
+void				game_render_menu(t_menu *menu, SDL_Surface *surf);
+void				game_menu_main(t_game *fps);
+void				game_menu_quit(t_game *fps);
 #endif

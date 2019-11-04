@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 19:13:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/04 18:22:03 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1133,7 +1133,6 @@ void				util_parsing_error_wrong_crc(void);
 void				engine_create_resources_from_file(t_engine *eng);
 
 void				eng_create_menu(t_engine *eng);
-
 void				eng_create_hud(t_engine *eng);
 void				eng_create_face_100_60(t_engine *eng, t_hud *hud);
 void				eng_create_face_40_0(t_engine *eng, t_hud *hud);

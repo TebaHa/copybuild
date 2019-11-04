@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/03 19:16:20 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/04 17:43:59 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ GAME_SRCS_LIST =	freefps.c \
 					game_movement.c \
 					game_collision_detector.c \
 					gravitation.c \
+					menu.c \
 					multi_threading.c \
 					weapon_fire.c \
 

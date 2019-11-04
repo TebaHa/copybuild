@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 19:23:47 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/04 18:49:38 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ int			main(int argc, char **argv)
 	t_game			fps;
 
 	game_init(&fps, argc, argv);
+	game_menu_main(&fps);
 	while (1)
 	{
+		SDL_ShowCursor(SDL_DISABLE);
 		game_movement_check(&fps);
 		if (SDL_PollEvent(&fps.eng->event))
 		{
