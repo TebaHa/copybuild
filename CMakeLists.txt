@@ -122,7 +122,10 @@ set(ENG_SRC
 		engine/srcs/line_bresenham2.c
 		engine/srcs/line_color.c
 		engine/srcs/loader_images.c
-		engine/srcs/render_background.c)
+		engine/srcs/render_background.c
+		engine/srcs/parser_menu.c
+		engine/srcs/engine_texture_scale_koef.c
+		engine/srcs/engine_wall_objects_init.c)
 
 set(EDITOR_INC editor/includes/editor.h)
 set(EDITOR_SRC

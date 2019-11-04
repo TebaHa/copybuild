@@ -14,7 +14,7 @@
 
 void	game_render_menu(void)
 {
-	return (0);
+//	return (0);
 }
 
 void	game_menu_main(t_game *fps)
@@ -35,10 +35,11 @@ void	game_menu_main(t_game *fps)
 	}
 }
 
-void	game_quit(t_game *fps)
-{
-	game_stop_threads(fps->render_thread_pool,
-	THREAD_POOL_SIZE);
-	engine_sdl_uninit(fps->eng);
-	close_game(0);
-}
+// В freefps дубликат
+//void	game_quit(t_game *fps)
+//{
+//	game_stop_threads(fps->render_thread_pool,
+//	THREAD_POOL_SIZE);
+//	engine_sdl_uninit(fps->eng);
+//	close_game(0);
+//}

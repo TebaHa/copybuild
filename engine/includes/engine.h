@@ -183,6 +183,17 @@ typedef enum		e_wpn_type
 	WEAPON_NUM
 }					t_wpn_type;
 
+typedef enum		e_menu_section
+{
+	M_NONE = -1,
+	M_STORY,
+	M_LOAD_MAP,
+	M_EDITOR,
+	M_AUTHOR,
+	M_EXIT,
+	M_SECTIONS_NUM
+}					t_menu_section;
+
 typedef enum		e_wpn_state
 {
 	W_IDLE,
@@ -390,6 +401,21 @@ typedef struct		s_weapon
 	struct s_weapon	*prev;
 }					t_weapon;
 
+typedef struct		s_menu_button
+{
+	t_fix_point_2d	position;
+	t_sprite		*normal;
+	t_sprite		*active;
+}					t_menu_button;
+
+typedef struct		s_menu
+{
+	t_fix_point_2d	position;
+	t_menu_section	active_section;
+	t_sprite		*background;
+	t_menu_button	*button[M_SECTIONS_NUM];
+}					t_menu;
+
 typedef struct		s_hud
 {
 	t_emo_state		emo_state;
@@ -558,6 +584,7 @@ typedef struct		s_engine
 	t_weapon		*weapon[WEAPON_NUM];
 	t_enemy			*enemy[ENEMY_NUM];
 	t_button		*button[BUTTON_NUM];
+	t_menu			*menu;
 	t_hud			*hud;
 	t_txtr_pkg		**texture_buffer;
 	t_txtr_pkg		**sprites_buffer;
@@ -1104,6 +1131,8 @@ void				util_parsing_error_wrong_crc(void);
 */
 
 void				engine_create_resources_from_file(t_engine *eng);
+
+void				eng_create_menu(t_engine *eng);
 
 void				eng_create_hud(t_engine *eng);
 void				eng_create_face_100_60(t_engine *eng, t_hud *hud);
