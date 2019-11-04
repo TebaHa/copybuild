@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 10:48:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 17:24:23 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/04 17:07:38 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ int		check_wall_passed(t_engine *eng, t_player *plr,
 		}}))
 		{
 			if (sector->objects_array[i].portal >= 0)
+			{
+				plr->cursector = sector->objects_array[i].portal;
 				count_heights(&hole_low, &hole_high,
 				&eng->world->sectors_array[sector->objects_array[i].portal]);
+			}
 			if(hole_high < plr->position.z + HEAD_MARGIN
 			|| hole_low  > plr->position.z - EYE_HEIGHT + KNEE_HEIGHT)
 			{
