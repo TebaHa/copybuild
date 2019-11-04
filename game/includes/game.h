@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/04 17:46:39 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/04 20:25:26 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@
 # define DUCK_HEIGHT 2.5
 # define KNEE_HEIGHT 10
 # include <engine.h>
+
+typedef enum		e_menu_section
+{
+	M_NONE = -1,
+	M_STORY,
+	M_LOAD_MAP,
+	M_EDITOR,
+	M_AUTHOR,
+	M_EXIT,
+	M_SECTIONS_NUM
+}					t_menu_section;
 
 typedef struct		s_game_logic
 {
@@ -44,9 +55,26 @@ typedef struct		s_game_logic
 	int				grav;
 	t_fix_point_2d	xy;
 }					t_game_logic;
+
+typedef struct		s_menu_button
+{
+	t_fix_point_2d	position;
+	t_sprite		*normal;
+	t_sprite		*active;
+}					t_menu_button;
+
+typedef struct		s_menu
+{
+	t_fix_point_2d	position;
+	t_menu_section	active_section;
+	t_sprite		*background;
+	t_menu_button	*button[M_SECTIONS_NUM];
+}					t_menu;
+
 typedef	struct		s_game
 {
 	t_engine		*eng;
+	t_menu			*menu;
 	t_player		player;
 	int				thread_num;
 	t_thread_pool	render_thread_pool[THREAD_POOL_SIZE];
@@ -88,4 +116,13 @@ void				vector_projection(t_player *plr, t_point_3d v1, t_point_3d v2);
 void				game_render_menu(t_menu *menu, SDL_Surface *surf);
 void				game_menu_main(t_game *fps);
 void				game_menu_quit(t_game *fps);
+void				parser_game(t_game *fps, int argc, char **argv);
+void				game_create_resources_from_file(t_game *fps);
+void				eng_create_menu(t_game *fps);
+
+int					check_button(int x, int y,
+					t_fix_point_2d pos_a, t_fix_point_2d pos_b);
+void				game_find_button(t_game *fps);
+
+
 #endif

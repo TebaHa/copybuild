@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:49:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/04 20:03:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/04 20:27:50 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,43 @@ void	game_render_menu(t_menu *menu, SDL_Surface *surf)
 	draw_from_surface_to_surface(surf, menu->background->surface[0], 0, 0);
 	while (i < 5)
 	{
-		draw_from_surface_to_surface(surf, menu->button[i]->normal->surface[0],
-		menu->button[i]->position.x, menu->button[i]->position.y);
+		if (menu->active_section == i)
+			draw_from_surface_to_surface(surf, menu->button[i]->active->surface[0],
+			menu->button[i]->position.x, menu->button[i]->position.y);
+		else
+			draw_from_surface_to_surface(surf, menu->button[i]->normal->surface[0],
+			menu->button[i]->position.x, menu->button[i]->position.y);
 		i++;
 	}
 }
 
-void	game_find_button()
+void	game_find_button(t_game *fps)
 {
+	int	i;
 
+	i = 0;
+	fps->menu->active_section = -1;
+	while (i < 5)
+	{
+		if (check_button(fps->eng->x, fps->eng->y,
+		(t_fix_point_2d){fps->menu->button[i]->position.x,
+		fps->menu->button[i]->position.y},
+		(t_fix_point_2d){fps->menu->button[i]->position.x +
+		fps->menu->button[i]->normal->surface[0]->w,
+		fps->menu->button[i]->position.y +
+		fps->menu->button[i]->normal->surface[0]->h}))
+			fps->menu->active_section = i;
+		i++;
+	}
+}
+
+int		check_button(int x, int y,
+		t_fix_point_2d pos_a, t_fix_point_2d pos_b)
+{
+	if ((x >= pos_a.x && x <= pos_b.x)
+	&& (y >= pos_a.y && y <= pos_b.y))
+		return (1);
+	return (0);
 }
 
 void	game_menu_main(t_game *fps)
@@ -47,7 +75,7 @@ void	game_menu_main(t_game *fps)
 	{
 		SDL_GetMouseState(&fps->eng->x, &fps->eng->y);
 		game_find_button(fps);
-		game_render_menu(fps->eng->menu, fps->render_thread_pool[0].surface);
+		game_render_menu(fps->menu, fps->render_thread_pool[0].surface);
 		if (SDL_PollEvent(&fps->eng->event))
 		{
 			if (fps->eng->event.type == SDL_QUIT)
