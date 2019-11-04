@@ -40,7 +40,9 @@ set(GAME_SRC
 		game/srcs/game_movement.c
 		game/srcs/game_movement_funs.c
 		game/srcs/gravitation.c
-		game/srcs/multi_threading.c)
+		game/srcs/multi_threading.c
+		game/srcs/menu.c
+		game/srcs/game_collision_detector.c)
 
 set(ENG_INC engine/includes/engine.h)
 set(ENG_SRC
