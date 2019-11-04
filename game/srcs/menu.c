@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:49:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/04 20:27:50 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/04 20:43:01 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ void	game_render_menu(t_menu *menu, SDL_Surface *surf)
 	while (i < 5)
 	{
 		if (menu->active_section == i)
-			draw_from_surface_to_surface(surf, menu->button[i]->active->surface[0],
+			draw_from_surface_to_surface(surf,
+			menu->button[i]->active->surface[0],
 			menu->button[i]->position.x, menu->button[i]->position.y);
 		else
-			draw_from_surface_to_surface(surf, menu->button[i]->normal->surface[0],
+			draw_from_surface_to_surface(surf,
+			menu->button[i]->normal->surface[0],
 			menu->button[i]->position.x, menu->button[i]->position.y);
 		i++;
 	}
@@ -68,6 +70,24 @@ int		check_button(int x, int y,
 	return (0);
 }
 
+int		check_button_pushed(t_game *fps)
+{
+	if (fps->menu->active_section == M_LOAD_MAP)
+		return (1);
+	else if (fps->menu->active_section == M_EXIT)
+		return (1);
+	else
+		return (0);
+}
+
+void	apply_button(t_game *fps)
+{
+	if (fps->menu->active_section == M_LOAD_MAP)
+		run_game(fps);
+	else if (fps->menu->active_section == M_EXIT)
+		game_menu_quit(fps);
+}
+
 void	game_menu_main(t_game *fps)
 {
 	SDL_ShowCursor(SDL_ENABLE);
@@ -85,10 +105,15 @@ void	game_menu_main(t_game *fps)
 				if (fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
 				game_menu_quit(fps);
 			}
+			if (fps->eng->event.button.type == SDL_MOUSEBUTTONDOWN)
+				if (fps->eng->event.button.button == SDL_BUTTON_LEFT)
+					if (check_button_pushed(fps))
+						break;
 		}
 		engine_render_frame(fps->eng,
 		fps->render_thread_pool[fps->logic.thread_end_index].surface);
 		engine_present_and_clear_frame(fps->eng);
 	}
+	apply_button(fps);
 }
 

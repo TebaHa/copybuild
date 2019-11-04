@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/04 18:49:38 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/04 20:44:45 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		game_quit(t_game *fps)
 {
+	SDL_Delay(50);
 	game_stop_threads(fps->render_thread_pool,
 	THREAD_POOL_SIZE);
 	engine_sdl_uninit(fps->eng);
@@ -68,30 +69,33 @@ void		game_init(t_game *fps, int argc, char **argv)
 	fps->eng->y = 0;
 }
 
+void		run_game(t_game *fps)
+{
+	while (1)
+	{
+		SDL_ShowCursor(SDL_DISABLE);
+		game_movement_check(fps);
+		if (SDL_PollEvent(&fps->eng->event))
+		{
+			sound_player_control(&fps->player);
+			if (fps->eng->event.type == SDL_QUIT)
+				game_quit(fps);
+			game_buttons_control_up_main(fps);
+			game_buttons_control_down_main(fps);
+		}
+		apply_gravitation(fps);
+		fire_anim_change(fps->eng, &fps->player);
+		game_apply_movement_main(fps);
+		game_threads_recount(fps);
+		SDL_Delay(3);
+	}
+}
+
 int			main(int argc, char **argv)
 {
 	t_game			fps;
 
 	game_init(&fps, argc, argv);
 	game_menu_main(&fps);
-	while (1)
-	{
-		SDL_ShowCursor(SDL_DISABLE);
-		game_movement_check(&fps);
-		if (SDL_PollEvent(&fps.eng->event))
-		{
-			sound_player_control(&fps.player);
-			if (fps.eng->event.type == SDL_QUIT)
-				game_quit(&fps);
-			game_buttons_control_up_main(&fps);
-			if (game_buttons_control_down_main(&fps) == 0)
-				break ;
-		}
-		apply_gravitation(&fps);
-		fire_anim_change(fps.eng, &fps.player);
-		game_apply_movement_main(&fps);
-		game_threads_recount(&fps);
-		SDL_Delay(3);
-	}
 	return (0);
 }

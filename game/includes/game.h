@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/04 20:25:26 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/04 20:41:14 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void				game_apply_movement_main_count1(t_game *fps);
 void				game_apply_movement_main_count2(t_game *fps);
 
 void				game_buttons_control_up_main(t_game *fps);
-int					game_buttons_control_down_main(t_game *fps);
+void				game_buttons_control_down_main(t_game *fps);
 void				game_buttons_control_down1(t_game *fps);
 void				game_buttons_control_down2(t_game *fps);
 void				game_buttons_control_down3(t_game *fps);
@@ -123,6 +123,6 @@ void				eng_create_menu(t_game *fps);
 int					check_button(int x, int y,
 					t_fix_point_2d pos_a, t_fix_point_2d pos_b);
 void				game_find_button(t_game *fps);
-
+void				run_game(t_game *fps);
 
 #endif

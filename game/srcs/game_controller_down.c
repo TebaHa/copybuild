@@ -6,13 +6,13 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:30:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 14:38:12 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/04 20:38:59 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
 
-int		game_buttons_control_down_main(t_game *fps)
+void	game_buttons_control_down_main(t_game *fps)
 {
 	if (fps->eng->event.type == SDL_KEYDOWN)
 	{
@@ -22,7 +22,6 @@ int		game_buttons_control_down_main(t_game *fps)
 		game_buttons_control_down2(fps);
 		game_buttons_control_down3(fps);
 	}
-	return (1);
 }
 
 void	game_buttons_control_down1(t_game *fps)
