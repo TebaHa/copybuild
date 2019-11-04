@@ -42,7 +42,7 @@ set(GAME_SRC
 		game/srcs/gravitation.c
 		game/srcs/multi_threading.c
 		game/srcs/menu.c
-		game/srcs/game_collision_detector.c)
+		game/srcs/game_collision_detector.c game/srcs/parser_game.c)
 
 set(ENG_INC engine/includes/engine.h)
 set(ENG_SRC
@@ -107,7 +107,7 @@ set(ENG_SRC
 		engine/srcs/parser_player_2.c
 		engine/srcs/parser_color.c
 		engine/srcs/parser_package.c
-		engine/srcs/parser_filename.c
+		game/srcs/parser_filename.c
 		engine/srcs/parser_sprite_360.c
 		engine/srcs/sprite_data.c
 		engine/srcs/parser_button.c
@@ -123,7 +123,7 @@ set(ENG_SRC
 		engine/srcs/line_color.c
 		engine/srcs/loader_images.c
 		engine/srcs/render_background.c
-		engine/srcs/parser_menu.c
+		game/srcs/parser_menu.c
 		engine/srcs/engine_texture_scale_koef.c
 		engine/srcs/engine_wall_objects_init.c)
 

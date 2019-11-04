@@ -24,6 +24,17 @@
 # define KNEE_HEIGHT 10
 # include <engine.h>
 
+typedef enum		e_menu_section
+{
+	M_NONE = -1,
+	M_STORY,
+	M_LOAD_MAP,
+	M_EDITOR,
+	M_AUTHOR,
+	M_EXIT,
+	M_SECTIONS_NUM
+}					t_menu_section;
+
 typedef struct		s_game_logic
 {
 	int				dz;
@@ -44,9 +55,26 @@ typedef struct		s_game_logic
 	int				grav;
 	t_fix_point_2d	xy;
 }					t_game_logic;
+
+typedef struct		s_menu_button
+{
+	t_fix_point_2d	position;
+	t_sprite		*normal;
+	t_sprite		*active;
+}					t_menu_button;
+
+typedef struct		s_menu
+{
+	t_fix_point_2d	position;
+	t_menu_section	active_section;
+	t_sprite		*background;
+	t_menu_button	*button[M_SECTIONS_NUM];
+}					t_menu;
+
 typedef	struct		s_game
 {
 	t_engine		*eng;
+	t_menu			*menu;
 	t_player		player;
 	int				thread_num;
 	t_thread_pool	render_thread_pool[THREAD_POOL_SIZE];
@@ -85,5 +113,8 @@ int					check_wall_passed(t_engine *eng, t_player *plr,
 					t_line_2d plr_dir, int *moving);
 void				vector_projection(t_player *plr, t_point_3d v1, t_point_3d v2);
 
+void				parser_game(t_game *fps, int argc, char **argv);
+void				game_create_resources_from_file(t_game *fps);
+void				eng_create_menu(t_game *fps);
 
 #endif

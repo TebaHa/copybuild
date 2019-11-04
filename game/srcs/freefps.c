@@ -49,7 +49,8 @@ void		game_init(t_game *fps, int argc, char **argv)
 {
 	engine_sdl_init(&fps->eng);
 	game_init_player(&fps->player);
-	engine_parser(fps->eng, &fps->player, argc, argv);
+	parser_game(fps, argc, argv);
+	parser_engine(fps->eng, &fps->player);
 	fps->player.cursector = engine_object_get_sector(fps->eng->world,
 	(t_point_3d){0, fps->player.position.x,
 	fps->player.position.y, fps->player.position.z},

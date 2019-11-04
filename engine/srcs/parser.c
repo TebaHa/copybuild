@@ -12,23 +12,17 @@
 
 #include <engine.h>
 
-void		engine_parser(t_engine *eng, t_player *plr, int argc, char **argv)
+void		parser_engine(t_engine *eng, t_player *plr)
 {
-	parser_filename(eng, argc, argv);
-	engine_create_resources_from_file(eng);
+	engine_create_engine_resources(eng);
 	engine_create_world_from_file(eng, plr, eng->map_name);
 	plr->wpn = eng->weapon[1];
 	plr->cursector = 0; // УДОЛИ
 }
 
-void		engine_create_resources_from_file(t_engine *eng)
+void		engine_create_engine_resources(t_engine *eng)
 {
-	eng_read_sprite(eng, &eng->texture_buffer,
-		&eng->stats.textures_count, TEXTURE_PACK_PATH);
-	eng_read_sprite(eng, &eng->sprites_buffer,
-		&eng->stats.sprites_count, TEXTURE_SPRITE_PATH);
 	engine_find_background(eng);
-	eng_create_menu(eng);
 	eng_create_hud(eng);
 	eng_create_weapons(eng);
 	eng_create_items(eng);

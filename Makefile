@@ -39,6 +39,9 @@ GAME_SRCS_LIST =	freefps.c \
 					gravitation.c \
 					multi_threading.c \
 					weapon_fire.c \
+					parser_filename.c \
+					parser_game.c \
+					parser_menu.c \
 
 SDL = $(SDL_DIRECTORY)libmlx.a
 SDL_DIRECTORY = ./lib/sdl2/
@@ -121,7 +124,6 @@ PARSER_SRCS_LIST =	parser_button.c \
 					parser_errors.c \
 					parser_filler.c \
 					parser_hud.c \
-					parser_filename.c \
 					parser_items_2.c \
 					parser_items.c \
 					parser_object.c \
@@ -144,7 +146,6 @@ PARSER_SRCS_LIST =	parser_button.c \
 					parser_worldbox.c \
 					parser.c \
 					parser_wallobjects.c \
-					parser_menu.c \
 
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
