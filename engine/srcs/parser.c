@@ -28,6 +28,7 @@ void		engine_create_resources_from_file(t_engine *eng)
 	eng_read_sprite(eng, &eng->sprites_buffer,
 		&eng->stats.sprites_count, TEXTURE_SPRITE_PATH);
 	engine_find_background(eng);
+	eng_create_menu(eng);
 	eng_create_hud(eng);
 	eng_create_weapons(eng);
 	eng_create_items(eng);
