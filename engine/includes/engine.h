@@ -134,6 +134,9 @@ typedef enum		e_enm_type
 	CACODEMON,
 	IMP,
 	JETPACK,
+	KEY_RED,
+	KEY_BLUE,
+	KEY_YELLOW,
 	ENEMY_NUM
 }					t_enm_type;
 
@@ -519,6 +522,9 @@ typedef	struct		s_player
 	int				health;
 	int				armor;
 	int				start_sector;
+	t_bool			key_red;
+	t_bool			key_blue;
+	t_bool			key_yellow;
 	t_sprts_size	**arr_sizes;
 }					t_player;
 
@@ -1122,6 +1128,9 @@ void				eng_create_jetpack(t_engine *eng);
 void				eng_create_rifle_ammo(t_engine *eng);
 void				eng_create_plasma_ammo(t_engine *eng);
 void				eng_create_plasma_gun(t_engine *eng);
+void				eng_create_key_red(t_engine *eng);
+void				eng_create_key_blue(t_engine *eng);
+void				eng_create_key_yellow(t_engine *eng);
 
 void				eng_create_enemies(t_engine *eng);
 void				eng_create_barrel(t_engine *eng);
