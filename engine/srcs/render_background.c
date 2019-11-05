@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:21:26 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/05 19:10:22 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/05 19:32:39 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	engine_draw_background(t_engine *eng,
 	oy = ((((HEIGHT) / (400)) * ((yaw + 3.0) * 100)));
 	while (x <= WIDTH)
 	{
-		if (sx > WIDTH)
-			sx = -1;
+		if (sx > WIDTH - 3)
+			sx = 0;
 		y = 0;
 		sy = oy;
 		while (y <= HEIGHT && sy < eng->sky->h)

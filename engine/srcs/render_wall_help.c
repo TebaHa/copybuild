@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:58:58 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/05 19:23:21 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/05 19:42:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void			engine_redner_wall_recount_prep_data(t_wall_help1 *data,
 	data->nearz = 1e-4f;
 	data->farz = 5;
 	data->nearside = 1e-5f;
-	data->farside = 20.f;
+	data->farside = 60.f;
 	data->i1 = intersect(*t1, *t2,
 	(t_point_2d){-data->nearside, data->nearz},
 	(t_point_2d){-data->farside, data->farz});
@@ -61,18 +61,6 @@ void			engine_render_wall_recount_intersect_help(t_wall_help1 *data,
 			*t2 = data->i1;
 		else
 			*t2 = data->i2;
-	}
-	if (t1->y <= 0.1f)
-	{
-		t1->x = (0.1f - t1->y) * (t2->x - t1->x)
-		/ (t2->y - t1->y) + t1->x;
-		t1->y = 0.1f;
-	}
-	if (t2->y <= 0.1f)
-	{
-		t2->x = (0.1f - t2->y)* (t1->x - t2->x)
-		/ (t1->y - t2->y) + t2->x;
-		t2->y = 0.1f;
 	}
 }
 
