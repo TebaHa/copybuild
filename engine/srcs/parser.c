@@ -39,7 +39,7 @@ void		engine_create_world_from_file(t_engine *eng, t_player *plr,
 	buff.str = engine_read_level_file(filename);
 	engine_preparser(eng, buff.str);
 	buff.vertexes = engine_read_vertexes_from_file(eng, buff.str);
-	buff.sprites = engine_read_sprites_from_file(eng, buff);
+//	buff.sprites = engine_read_sprites_from_file(eng, buff);
 //	buff.polies = engine_read_polygones_from_file(eng, buff);
 	buff.wallobjects = engine_read_wallobjects_from_file(eng, buff);
 	buff.objects = engine_read_objects_from_file(eng, &buff);
@@ -59,7 +59,7 @@ void		engine_preparser(t_engine *eng, char **buff)
 	eng->stats.sprobjects_count = 0;
 	eng->stats.wallobjects_count = 0;
 	eng->stats.sectors_count = 0;
-	eng->stats.skins_count = 0;
+//	eng->stats.skins_count = 0;
 	eng->stats.worlds_count = 0;
 	eng->stats.players_count = 0;
 	engine_count_all_from_file(&eng->stats, buff);
