@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/04 20:44:45 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/06 21:29:54 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void		game_init(t_game *fps, int argc, char **argv)
 	fps->player.position.y, fps->player.position.z},
 	fps->player.cursector);
 	prepare_polygones(fps->eng);
+	wall_objects_init(fps->eng);
 	game_init_threads(fps->render_thread_pool);
 	SDL_ShowCursor(SDL_DISABLE);
 	fps->logic.duck_shift = 0;

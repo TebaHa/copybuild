@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/04 20:32:33 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/06 22:16:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -424,6 +424,7 @@ typedef struct		s_object
 	int				status;
 	t_wallobj		particles[128];
 	int 			wallobjects_num;
+	t_wallobj		*stuff;
 	t_wobj			*wallobjects_array;
 	t_image			*floor_wall_texture;
 	int 			floor_wall_spread;
@@ -1461,5 +1462,13 @@ void				engine_draw_background(t_engine *eng,
 */
 int					line_intersection_check(t_line_2d a, t_line_2d b);
 void				prepare_polygones(t_engine *eng);
+
+void				wall_objects_init(t_engine *eng);
+void				wall_object_init(t_object *obj,
+					t_wobj *particlestack, t_point_3d particle);
+
+void				use(t_engine *eng, t_player *plr);
+int					check_point_inside_wbox(t_point_3d a,
+					t_wallobj *obj, float ceil, float floor);
 
 #endif

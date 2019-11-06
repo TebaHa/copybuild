@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:21:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/25 08:48:27 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/06 21:05:24 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,17 @@ void			engine_render_particles_wall(t_engine *eng, SDL_Surface *surf,
 			objects_array[data->obj_id].particles[i],
 			(t_ptcl_h){&eng->world->sectors_array[data->sect.sectorno].
 			objects_array[data->obj_id], data->plr, data->sect});
+		i++;
+	}
+	i = 0;
+	while (i < eng->world->sectors_array[data->sect.sectorno].
+	objects_array[data->obj_id].wallobjects_num)
+	{
+		engine_render_particle(eng, surf,
+		&eng->world->sectors_array[data->sect.sectorno].
+		objects_array[data->obj_id].stuff[i],
+		(t_ptcl_h){&eng->world->sectors_array[data->sect.sectorno].
+		objects_array[data->obj_id], data->plr, data->sect});
 		i++;
 	}
 }

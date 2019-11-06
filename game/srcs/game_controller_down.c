@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:30:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/04 20:38:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/06 22:20:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	game_buttons_control_down2(t_game *fps)
 		fps->player.controller.wasd[2] = 1;
 	if (fps->eng->event.key.keysym.sym == SDLK_d)
 		fps->player.controller.wasd[1] = 1;
+	if (fps->eng->event.key.keysym.sym == SDLK_e)
+		use(fps->eng, &fps->player);
 	if (fps->eng->event.key.keysym.sym == SDLK_c)
 	{
 		if (fps->player.controller.ducking == 1)

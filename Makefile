@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/04 17:43:59 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/06 22:19:37 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,6 +103,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					render_world.c \
 					render_background.c \
 					sprite_data.c \
+					use.c \
 					shoot_help.c \
 					shoot_main.c \
 					shoot_main2.c \
@@ -114,6 +115,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					sprite_render.c \
 					engine_texture_math.c \
 					engine_texture.c \
+					engine_wall_objects_init.c \
 					utility.c \
 					utils_check_stack.c \
 
