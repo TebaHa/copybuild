@@ -33,7 +33,7 @@ void			eng_create_rifle(t_engine *eng)
 	rifle->bullet_hole = util_create_sprite_by_name(eng, "bullet_hole");
 	rifle->anmtn[W_IDLE] = util_create_sprite_by_name(eng, "rifle_idle");
 	rifle->anmtn[W_IDLE]->a_state = CYCLE;
-	rifle->anmtn[W_IDLE]->frames_delay = 20;
+	rifle->anmtn[W_IDLE]->frames_delay = 30;
 	rifle->anmtn[W_RUN] = rifle->anmtn[W_IDLE];
 	rifle->anmtn[W_FIRE] = util_create_sprite_by_name(eng, "rifle_fire");
 	rifle->anmtn[W_FIRE]->a_state = CYCLE;
