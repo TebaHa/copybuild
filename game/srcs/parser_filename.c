@@ -24,6 +24,8 @@ void		parser_filename(t_engine *eng, int argc, char **argv)
 			eng->map_name = "game/resources/levels/2.lvl";
 		else if (!ft_strcmp(argv[1], "3"))
 			eng->map_name = "game/resources/levels/3.lvl";
+		else if (!ft_strcmp(argv[1], "4"))
+			eng->map_name = "game/resources/levels/4.lvl";
 		else
 			eng->map_name = argv[1];
 	}

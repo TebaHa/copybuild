@@ -1,0 +1,82 @@
+Map
+#Worlds
+#		id, num of sects,	sectors
+world:	1	4				0 1 2 3
+
+#Vertexes
+#		angle,	vertex
+player: 3		0
+
+#Vertexes
+
+#Start position
+vertex: 0	100		600		100
+---
+vertex: 8	-10		550		100
+vertex: 9	-10		650		100
+
+vertex: 10	0		450		100
+vertex: 11	500		450		100
+vertex: 12	500		550		100
+vertex: 13	500		650		100
+vertex: 14	500		750		100
+vertex: 15	0		750		100
+vertex: 16	0		650		100
+vertex: 17	0		550		100
+
+vertex: 20	700		550		100
+vertex: 21	700		650		100
+
+vertex: 30	1050	0		100
+vertex: 31	1550	0		100
+vertex: 32	1900	350		100
+vertex: 33	1900	550		100
+vertex: 34	1900	650		100
+vertex: 35	1900	850		100
+vertex: 36	1550	1200	100
+vertex: 37	1050	1200	100
+vertex: 38	700		850		100
+vertex: 39	700		350		100
+
+
+#Objects
+#			(if >= 0 where goes)
+#		id,	port, pasble, visble, texture,	floor_wall,		ceil_wall,	id of vert
+object:	81	-1		0		1	s_white		s_tile			ceiling		8 17
+object:	172	1		0		1	s_white		s_tile			ceiling		17 16
+object:	162	-1		0		1	s_white		s_tile			ceiling		16 9
+object:	91	-1		0		1	s_white		s_tile			ceiling		9 8
+
+object:	101	-1		0		1	s_white		s_tile			ceiling		10 11
+object:	111	-1		0		1	s_white		s_tile			ceiling		11 12
+object:	121	2		0		1	s_white		s_tile			ceiling		12 13
+object:	131	-1		0		1	s_white		s_tile			ceiling		13 14
+object:	141	-1		0		1	s_white		s_tile			ceiling		14 15
+object:	151	-1		0		1	s_white		s_tile			ceiling		15 16
+object:	161	0		0		1	s_white		s_tile			ceiling		16 17
+object:	171	-1		0		1	s_white		s_tile			ceiling		17 10
+
+object:	122	-1		0		1	s_white		s_tile			ceiling		12 20
+object:	201	3		0		1	s_white		s_tile			ceiling		20 21
+object:	211	-1		0		1	s_white		s_tile			ceiling		21 13
+object:	132	1		0		1	s_white		s_tile			ceiling		13 12
+
+object:	301	-1		0		1	s_white		s_tile			ceiling		30 31
+object:	311	-1		0		1	s_white		s_tile			ceiling		31 32
+object:	321	-1		0		1	s_white		s_tile			ceiling		32 33
+object:	331	-1		0		1	s_white		s_tile			ceiling		33 34
+object:	341	-1		0		1	s_white		s_tile			ceiling		34 35
+object:	351	-1		0		1	s_white		s_tile			ceiling		35 36
+object:	361	-1		0		1	s_white		s_tile			ceiling		36 37
+object:	371	-1		0		1	s_white		s_tile			ceiling		37 38
+object:	381	-1		0		1	s_white		s_tile			ceiling		38 21
+object:	212	2		0		1	s_white		s_tile			ceiling		21 20
+object:	202	-1		0		1	s_white		s_tile			ceiling		20 39
+object:	391	-1		0		1	s_white		s_tile			ceiling		39 30
+
+#Sectors
+#		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
+sector:	0	0		300		s_tile		s_black			0xFF0000	4	81 172 162 91
+sector:	1	0		500		s_tile		s_black			0xFF0000	8	101 111 121 131 141 151 161 171
+sector:	2	0		300		s_tile		s_black			0xFF0000	4	122 201 211 132
+sector:	3	0		1000	s_tile		null			0xFF0000	12	301 311 321 331 341 351 361 371 381 212 202 391
