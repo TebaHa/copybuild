@@ -1,7 +1,7 @@
 Map
 #Worlds
 #		id, num of sects,	sectors
-world:	1	4				0 1 2 3
+world:	1	7				0 1 2 3 4 5 6
 
 #Vertexes
 #		angle,	vertex
@@ -38,45 +38,80 @@ vertex: 37	1050	1200	100
 vertex: 38	700		850		100
 vertex: 39	700		350		100
 
+vertex: 40	2100	550		100
+vertex: 41	2100	650		100
+
+vertex: 50	2100	450		100
+vertex: 51	2500	450		100
+vertex: 52	2500	550		100
+vertex: 53	2500	650		100
+vertex: 54	2500	750		100
+vertex: 55	2100	750		100
+
+vertex: 60	2700	550		100
+vertex: 61	2700	650		100
+
 
 #Objects
 #			(if >= 0 where goes)
 #		id,	port, pasble, visble, texture,	floor_wall,		ceil_wall,	id of vert
-object:	81	-1		0		1	s_white		s_tile			ceiling		8 17
-object:	172	1		0		1	s_white		s_tile			ceiling		17 16
-object:	162	-1		0		1	s_white		s_tile			ceiling		16 9
-object:	91	-1		0		1	s_white		s_tile			ceiling		9 8
+object:	81	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1		8 17
+object:	172	1		0		1	q_elevator	q_bricks_1		q_bricks_1		17 16
+object:	162	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1		16 9
+object:	91	-1		0		1	q_elevator	q_bricks_1		q_bricks_1		9 8
 
-object:	101	-1		0		1	s_white		s_tile			ceiling		10 11
-object:	111	-1		0		1	s_white		s_tile			ceiling		11 12
-object:	121	2		0		1	s_white		s_tile			ceiling		12 13
-object:	131	-1		0		1	s_white		s_tile			ceiling		13 14
-object:	141	-1		0		1	s_white		s_tile			ceiling		14 15
-object:	151	-1		0		1	s_white		s_tile			ceiling		15 16
-object:	161	0		0		1	s_white		s_tile			ceiling		16 17
-object:	171	-1		0		1	s_white		s_tile			ceiling		17 10
+object:	101	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1		10 11
+object:	111	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1		11 12
+object:	121	2		0		1	q_elevator	q_ceil_wall_4	q_bricks_1		12 13
+object:	131	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1		13 14
+object:	141	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1		14 15
+object:	151	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1		15 16
+object:	161	0		0		1	q_elevator	q_ceil_wall_2	q_bricks_1		16 17
+object:	171	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1		17 10
 
-object:	122	-1		0		1	s_white		s_tile			ceiling		12 20
-object:	201	3		0		1	s_white		s_tile			ceiling		20 21
-object:	211	-1		0		1	s_white		s_tile			ceiling		21 13
-object:	132	1		0		1	s_white		s_tile			ceiling		13 12
+object:	122	-1		0		1	q_wall		s_tile			ceiling		12 20
+object:	201	3		0		1	q_elevator	s_tile			ceiling		20 21
+object:	211	-1		0		1	q_wall		s_tile			ceiling		21 13
+object:	132	1		0		1	q_elevator	s_tile			ceiling		13 12
 
-object:	301	-1		0		1	s_white		s_tile			ceiling		30 31
-object:	311	-1		0		1	s_white		s_tile			ceiling		31 32
-object:	321	-1		0		1	s_white		s_tile			ceiling		32 33
-object:	331	-1		0		1	s_white		s_tile			ceiling		33 34
-object:	341	-1		0		1	s_white		s_tile			ceiling		34 35
-object:	351	-1		0		1	s_white		s_tile			ceiling		35 36
-object:	361	-1		0		1	s_white		s_tile			ceiling		36 37
-object:	371	-1		0		1	s_white		s_tile			ceiling		37 38
-object:	381	-1		0		1	s_white		s_tile			ceiling		38 21
-object:	212	2		0		1	s_white		s_tile			ceiling		21 20
-object:	202	-1		0		1	s_white		s_tile			ceiling		20 39
-object:	391	-1		0		1	s_white		s_tile			ceiling		39 30
+object:	301	-1		0		1	q_plate		s_tile			ceiling		30 31
+object:	311	-1		0		1	q_floor		s_tile			ceiling		31 32
+object:	321	-1		0		1	q_plate		s_tile			ceiling		32 33
+object:	331	4		0		1	q_elevator	q_plate			q_plate		33 34
+object:	341	-1		0		1	q_plate		s_tile			ceiling		34 35
+object:	351	-1		0		1	q_plate_2	s_tile			ceiling		35 36
+object:	361	-1		0		1	q_plate		s_tile			ceiling		36 37
+object:	371	-1		0		1	q_floor		s_tile			ceiling		37 38
+object:	381	-1		0		1	q_plate		s_tile			ceiling		38 21
+object:	212	2		0		1	q_elevator	q_plate			q_plate		21 20
+object:	202	-1		0		1	q_plate		s_tile			ceiling		20 39
+object:	391	-1		0		1	q_plate_2	s_tile			ceiling		39 30
+
+object:	332	-1		0		1	q_wall		s_tile			ceiling		33 40
+object:	401	5		0		1	q_elevator	s_tile			ceiling		40 41
+object:	411	-1		0		1	q_wall		s_tile			ceiling		41 34
+object:	342	3		0		1	q_elevator	s_tile			ceiling		34 33
+
+object:	501	-1		0		1	q_bricks_3	q_bricks_3		ceiling		50 51
+object:	511	-1		0		1	q_bricks_3	q_bricks_3		ceiling		51 52
+object:	521	6		0		1	q_elevator	q_ceil_wall_2		ceiling		52 53
+object:	531	-1		0		1	q_bricks_3	q_bricks_3		ceiling		53 54
+object:	541	-1		0		1	q_bricks_3	q_bricks_3		ceiling		54 55
+object:	551	-1		0		1	q_bricks_3	q_bricks_3		ceiling		55 41
+object:	412	4		0		1	q_elevator	q_ceil_wall_2		ceiling		41 40
+object:	402	-1		0		1	q_bricks_3	q_bricks_3		ceiling		40 50
+
+object:	522	-1		0		1	q_wall		s_tile			ceiling		52 60
+object:	601	-1		0		1	q_elevator	s_tile			ceiling		60 61
+object:	611	-1		0		1	q_wall		s_tile			ceiling		61 53
+object:	632	5		0		1	q_elevator	s_tile			ceiling		53 52
 
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
-sector:	0	0		300		s_tile		s_black			0xFF0000	4	81 172 162 91
-sector:	1	0		500		s_tile		s_black			0xFF0000	8	101 111 121 131 141 151 161 171
-sector:	2	0		300		s_tile		s_black			0xFF0000	4	122 201 211 132
-sector:	3	0		1000	s_tile		null			0xFF0000	12	301 311 321 331 341 351 361 371 381 212 202 391
+sector:	0	0		300		q_floor_4	q_bricks_1		0xFF0000	4	81 172 162 91
+sector:	1	0		500		q_floor_3	q_floor_2			0xFF0000	8	101 111 121 131 141 151 161 171
+sector:	2	0		300		q_floor_4	q_wall			0xFF0000	4	122 201 211 132
+sector:	3	-50		1000	q_floor_5	null			0xFF0000	12	301 311 321 331 341 351 361 371 381 212 202 391
+sector:	4	0		300		q_floor_4	q_wall			0xFF0000	4	332 401 411 342
+sector:	5	0		500		q_floor_2	q_floor_3			0xFF0000	8	501 511 521 531 541 551 412 402
+sector:	6	0		300		q_floor_4	q_wall			0xFF0000	4	522 601 611 632
