@@ -34,7 +34,7 @@ void	fire_anim_change(t_engine *eng, t_player *plr)
 			plr->wpn->ammo--;
 		}
 	}
-	else
+	else if (plr->plr_state != P_IDLE || plr->wpn->state != W_IDLE)
 	{
 		plr->plr_state = P_IDLE;
 		plr->frame_num = 0;

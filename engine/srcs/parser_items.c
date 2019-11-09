@@ -22,6 +22,9 @@ void		eng_create_items(t_engine *eng)
 	eng_create_plasma_ammo(eng);
 	eng_create_plasma_gun(eng);
 	eng_create_barrel(eng);
+	eng_create_key_red(eng);
+	eng_create_key_blue(eng);
+	eng_create_key_yellow(eng);
 }
 
 void		eng_create_medkit(t_engine *eng)
