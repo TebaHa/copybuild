@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:21:18 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/07 02:41:52 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/07 20:31:53 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		wall_objects_init(t_engine *eng)
 		{
 			obj = &sect->objects_array[j];
 			wall_object_init(obj, obj->wallobjects_array,
-			(t_point_3d){0, 0, 0, (sect->ceil - sect->floor) / 2});
+			(t_point_3d){0, 0, 0, sect->floor + 100});
 			j++;
 		}
 		i++;
@@ -62,7 +62,7 @@ void		wall_object_init(t_object *obj,
 		max = obj->polies_array[0].vertices_array[0].y >
 		obj->polies_array[0].vertices_array[1].y ? obj->polies_array[0].vertices_array[0].y
 		: obj->polies_array[0].vertices_array[1].y;
-		particle.y = min + (max - min) / 2;;
+		particle.y = min + (max - min) / 2;
 		data.dx1 = obj->polies_array[0].vertices_array[0].x - particle.x;
 		data.dy1 = obj->polies_array[0].vertices_array[0].y - particle.y;
 		data.dx2 = particle.x - obj->polies_array[0].vertices_array[1].x;
