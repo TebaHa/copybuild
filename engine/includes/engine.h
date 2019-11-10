@@ -78,7 +78,6 @@ typedef enum		e_player_state
 {
 	P_IDLE,
 	P_FIRE,
-	P_RELOAD
 }					t_player_state;
 
 typedef enum		e_sprt_obj_type

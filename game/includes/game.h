@@ -32,8 +32,15 @@ typedef enum		e_menu_section
 	M_EDITOR,
 	M_AUTHOR,
 	M_EXIT,
+	M_BACK,
 	M_SECTIONS_NUM
 }					t_menu_section;
+
+typedef enum		e_menu_element_enum
+{
+	ME_AUTHORS,
+	ME_ELEMENTS_NUM
+}					t_menu_element_enum;
 
 typedef struct		s_game_logic
 {
@@ -58,17 +65,26 @@ typedef struct		s_game_logic
 
 typedef struct		s_menu_button
 {
+	t_bool			active;
 	t_fix_point_2d	position;
 	t_sprite		*normal;
-	t_sprite		*active;
+	t_sprite		*mouseover;
 }					t_menu_button;
+
+typedef struct		s_menu_element
+{
+	t_bool			active;
+	t_fix_point_2d	position;
+	t_sprite		*sprite;
+}					t_menu_element;
 
 typedef struct		s_menu
 {
 	t_fix_point_2d	position;
-	t_menu_section	active_section;
+	t_menu_section	mouseover_section;
 	t_sprite		*background;
 	t_menu_button	*button[M_SECTIONS_NUM];
+	t_menu_element	*element[ME_ELEMENTS_NUM];
 }					t_menu;
 
 typedef	struct		s_game
@@ -115,6 +131,8 @@ void				vector_projection(t_player *plr, t_point_3d v1, t_point_3d v2);
 
 void				game_render_menu(t_menu *menu, SDL_Surface *surf);
 void				game_menu_main(t_game *fps);
+void 				game_menu_author(t_game *fps);
+void 				game_menu_mainframe(t_game *fps);
 void				game_menu_quit(t_game *fps);
 void				parser_game(t_game *fps, int argc, char **argv);
 void				game_create_resources_from_file(t_game *fps);
