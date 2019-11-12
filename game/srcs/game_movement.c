@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/06 19:30:37 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/12 23:31:22 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	game_movement_check(t_game *fps)
 		+ fps->player.velocity.y, fps->player.position.z},
 		fps->player.cursector);
 		if (fps->logic.sectprev >= 0 && fps->logic.sectprev
-		== fps->player.cursector)
+		== fps->player.cursector &&
+		fps->eng->world->sectors_array
+		[fps->player.cursector].opening.closed == false)
 		{
 			move_player(fps->eng, &fps->player,
 			(t_point_2d){fps->player.velocity.x,

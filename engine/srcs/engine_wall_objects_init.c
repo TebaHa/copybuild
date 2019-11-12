@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:21:18 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/07 20:31:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/12 22:55:35 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		wall_objects_init(t_engine *eng)
 		{
 			obj = &sect->objects_array[j];
 			wall_object_init(obj, obj->wallobjects_array,
-			(t_point_3d){0, 0, 0, sect->floor + 100});
+			(t_point_3d){0, 0, 0, sect->floor});
 			j++;
 		}
 		i++;
@@ -80,7 +80,7 @@ void		wall_object_init(t_object *obj,
 		data.w_partcle.b.y = particle.y - ((data.half_w * (particle.y
 		- obj->polies_array[0].vertices_array[1].y)) / data.dist2);
 		data.w_partcle.id = 1;
-		data.w_partcle.z = particle.z;
+		data.w_partcle.z = particle.z + txtr->height;
 		obj->stuff[i] = data.w_partcle;
 		i++;
 	}

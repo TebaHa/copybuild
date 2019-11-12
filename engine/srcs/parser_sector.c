@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:28:46 by fsmith            #+#    #+#             */
-/*   Updated: 2019/10/28 20:07:43 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/12 23:25:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 		* sector->objects_count);
 	str_count = 8;
 	obj_count = 0;
+	sector->opening.range = sector->ceil - sector->floor;
 	while (str_count < 8 + sector->objects_count)
 		sector->objects_array[obj_count++] =
 		util_get_object_from_buff_by_id(ft_atoi(str[str_count++]),

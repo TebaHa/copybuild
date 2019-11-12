@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/06 22:19:37 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/12 23:27:25 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,6 +118,8 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					engine_wall_objects_init.c \
 					utility.c \
 					utils_check_stack.c \
+					engine_door_stack.c \
+					init_sectors.c \
 
 PARSER_SRCS_LIST =	parser_button.c \
 					parser_color.c \

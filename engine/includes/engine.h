@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/06 22:16:57 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/12 23:24:55 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@
 # define FIRERATE 30
 # define BACKGROUND_MUSIC_VOLUME	0.2
 # define GAME_SOUNDS_VOLUME			1
+# define MAX_DOORS 10
+
 
 typedef enum		e_pack_loudness
 {
@@ -271,6 +273,7 @@ typedef struct		s_item
 	int				sx2;
 }					t_item;
 
+
 typedef struct		s_item_sprts
 {
 	t_item			sect_id;
@@ -432,6 +435,14 @@ typedef struct		s_object
 	int 			ceil_wall_spread;
 }					t_object;
 
+typedef struct		s_door_task
+{
+	int				id;
+	t_bool			closed;
+	int				delta;
+	int				range;
+}					t_door_task;
+
 typedef	struct		s_sector
 {
 	t_object		*objects_array;
@@ -450,6 +461,7 @@ typedef	struct		s_sector
 	t_image			*floor_texture;
 	int 			floor_spread;
 	t_item_sprts	item_sprts;
+	t_door_task		opening;
 }					t_sector;
 
 typedef struct		s_buff
@@ -570,6 +582,7 @@ typedef struct		s_engine
 	TTF_Font		*font;
 	Mix_Chunk		*background_music;
 	char			*map_name;
+	t_door_task		*doors[MAX_DOORS];
 }					t_engine;
 
 typedef struct		s_tric
@@ -1476,5 +1489,15 @@ void				wall_object_init(t_object *obj,
 void				use(t_engine *eng, t_player *plr);
 int					check_point_inside_wbox(t_point_3d a,
 					t_wallobj *obj, float ceil, float floor);
+
+void				engine_run_doors(t_engine *eng, t_door_task **stack);
+int					execute_door(t_door_task *door, t_sector *sect);
+void				engine_push_doorqueue(t_door_task **stack,
+					t_door_task *item);
+void				engine_flush_doorqueue(t_door_task **stack);
+void				add_task(t_engine *eng, t_sector *sect);
+int					close_door(t_door_task *door, t_sector *sect);
+int					open_door(t_door_task *door, t_sector *sect);
+void				init_sectors(t_engine *eng);
 
 #endif
