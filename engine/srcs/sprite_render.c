@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/13 15:23:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/13 16:24:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void			engine_render_sprites(t_engine *eng, t_player *plr,
 	{
 		sect = eng->world->sectors_array + restr->sect_id.sectorno;
 		aimed = engine_render_sprites_in_sector(sect, surf, plr, restr);
-		eng->aim = aimed;
+		if (aimed)
+			eng->aim = aimed;
 	}
 }
 
@@ -75,8 +76,8 @@ t_sprobject		*engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf,
 		d.begx = max(d.x1, restr->sect_id.sx1);
 		d.endx = min(d.x2, restr->sect_id.sx2);
 		d.x = d.begx;
-		if ((d.ya <= (HEIGHT / 2) && d.cyb >= (HEIGHT / 2))
-		&& (d.begx <= (WIDTH / 2) && d.endx >= (WIDTH / 2)))
+		if (d.ya <= (HEIGHT / 2) + 5 && d.cyb >= (HEIGHT / 2) - 5
+		&& d.begx <= (WIDTH / 2) + 5 && d.endx >= (WIDTH / 2) - 5)
 			aimed = &sect->sprobjects_array[sect->order[d.i]];
 		while (d.x < d.endx)
 		{

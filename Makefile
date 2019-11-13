@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/12 23:27:25 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/13 16:24:30 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = doom_nukem
 
 CC = gcc
 
-FLAGS_FAST = -Ofast -march=native -m64 -flto -funroll-loops
+FLAGS_FAST = -march=native -m64 -flto -funroll-loops
 FLAGS_42 = -Wall -Wextra -Werror
 FLAGS = $(FLAGS_FAST)
 
