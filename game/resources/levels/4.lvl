@@ -14,7 +14,7 @@ vertex: 0	100		600		100
 #Middle position
 vertex: 1	2800	50		100
 #Start position
-vertex: 2	2150	1650	100
+vertex: 2	2150	1600	100
 ---
 vertex: 8	-10		550		100
 vertex: 9	-10		650		100
@@ -104,8 +104,64 @@ vertex: 153	3200	1500	100
 vertex: 154	2950	1500	100
 
 vertex: 161	2100	1500	100
-vertex: 162	2900	1800	100
-vertex: 163	2100	1800	100
+vertex: 162	2900	1700	100
+vertex: 163	2100	1700	100
+
+vertex: 900	1050	600		100
+vertex: 901	1150	350		100
+vertex: 902	1150	850		100
+vertex: 903	1250	450		100
+vertex: 904	1250	750		100
+vertex: 905	1450	400		100
+vertex: 906	1350	500		100
+vertex: 907	1350	700		100
+vertex: 908	1450	800		100
+
+vertex: 910	2000	600		100
+
+vertex: 911	2200	500		100
+vertex: 912	2300	500		100
+vertex: 913	2400	500		100
+vertex: 914	2200	700		100
+vertex: 915	2300	700		100
+vertex: 916	2400	700		100
+vertex: 917	2300	600		100
+
+vertex: 931	2400	900		100
+vertex: 932	2400	1200	100
+vertex: 933	2300	1050	100
+vertex: 934	2200	1000	100
+vertex: 935	2200	1100	100
+
+vertex: 941	3100	150		100
+vertex: 942	3100	250		100
+vertex: 943	3100	350		100
+vertex: 944	3000	100		100
+vertex: 945	3000	400		100
+
+vertex: 951	3050	1250	100
+vertex: 952	3100	1150	100
+vertex: 953	3100	1350	100
+vertex: 954	3000	1100	100
+vertex: 955	3000	1400	100
+
+vertex: 961	3100	750		100
+vertex: 962	3200	650		100
+vertex: 963	3200	850		100
+vertex: 964	3250	750		100
+vertex: 965	3050	600		100
+vertex: 966	3050	900		100
+
+vertex: 971	2400	150		100
+vertex: 972	2400	250		100
+vertex: 973	2300	200		100
+vertex: 974	2200	100		100
+vertex: 975	2200	300		100
+vertex: 976 2100	150		100
+vertex: 977 2100	250		100
+
+vertex: 981	2400	1600	100
+vertex:	982	2500	1600	100
 
 #Objects
 #			(if >= 0 where goes)
@@ -235,7 +291,67 @@ object:	1611 -1		0		1	q_bricks_1	s_tile			ceiling		161 80
 object:	802	7		0		1	q_elevator	q_ceil_wall_4	ceiling		80 79
 object:	792	-1		0		1	q_bricks_1	s_tile			ceiling		79 162
 object:	1621 -1		0		1	q_bricks_1	s_tile			ceiling		162 163
-object:	1631 -1		0		1	q_bricks_1	s_tile			ceiling		163 161
+object:	1631 -1		0		1	q_box		s_tile			ceiling		163 161
+
+#Sprites objects	(types from t_enm_type)
+#		id,	angle,	type,	vert
+sobjct:	0	0		8		900
+sobjct:	1	0		8		901
+sobjct:	2	0		8		902
+sobjct:	3	0		7		903
+sobjct:	4	0		7		904
+sobjct:	5	0		9		905
+sobjct:	6	0		9		906
+sobjct:	7	0		9		907
+sobjct:	8	0		9		908
+sobjct:	10	0		2		910
+
+sobjct:	20	0		3		911
+sobjct:	21	0		0		912
+sobjct:	22	0		5		913
+sobjct:	23	0		5		914
+sobjct:	24	0		1		915
+sobjct:	25	0		3		916
+sobjct:	26	0		8		917
+
+sobjct:	27	0		9		931
+sobjct:	28	0		9		932
+sobjct:	29	0		9		933
+sobjct:	30	0		0		934
+sobjct:	31	0		3		935
+
+sobjct:	32	180		9		941
+sobjct:	33	180		7		942
+sobjct:	34	180		9		943
+sobjct:	35	180		5		944
+sobjct:	36	180		13		945
+
+sobjct:	37	180		9		951
+sobjct:	38	180		7		952
+sobjct:	39	180		7		953
+sobjct:	40	180		3		955
+
+sobjct:	41	180		7		961
+sobjct:	42	180		7		962
+sobjct:	43	180		7		963
+sobjct:	44	180		12		964
+sobjct:	45	180		1		965
+sobjct:	46	180		5		966
+
+sobjct:	47	0		9		971
+sobjct:	48	0		9		972
+sobjct:	49	0		7		973
+sobjct:	50	0		7		974
+sobjct:	51	0		7		975
+sobjct:	52	0		11		976
+sobjct:	53	0		3		977
+
+sobjct:	54	0		5		981
+sobjct:	55	0		3		982
+
+#Wall objects	(types from t_button_type)
+#		id,	type,	object, height,	%position,	target_sector
+wobjct:	0	0		1412	100		70			12
 
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
