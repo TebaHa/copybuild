@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 21:32:24 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/12 23:25:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/13 00:01:20 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,5 @@ void	use(t_engine *eng, t_player *plr)
 void	add_task(t_engine *eng, t_sector *sect)
 {
 	sect->opening.delta = 10;
-	printf("%d\n", sect->id);
 	engine_push_doorqueue(eng->doors, &sect->opening);
 }
