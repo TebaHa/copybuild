@@ -6,28 +6,32 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/28 16:01:11 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:53:32 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void		engine_render_sprites(t_engine *eng, t_player *plr,
-			SDL_Surface *surf, t_render_stacks *stacks)
+void			engine_render_sprites(t_engine *eng, t_player *plr,
+				SDL_Surface *surf, t_render_stacks *stacks)
 {
 	t_item_sprts	*restr;
 	t_sector		*sect;
+	t_sprobject		*aimed;
 
+	aimed = NULL;
+	eng->aim = NULL;
 	while (((restr = engine_pop_spriterenderstack(stacks->
 	sprite_renderstack)) != NULL))
 	{
 		sect = eng->world->sectors_array + restr->sect_id.sectorno;
-		engine_render_sprites_in_sector(sect, surf, plr, restr);
+		aimed = engine_render_sprites_in_sector(sect, surf, plr, restr);
+		eng->aim = aimed;
 	}
 }
 
-int			engine_render_sprites_in_sector_wrap(t_sector *sect, t_player *plr,
-			t_sprt_r *d)
+int				engine_render_sprites_in_sector_wrap(t_sector *sect,
+				t_player *plr, t_sprt_r *d)
 {
 	if (sect->sprobjects_array[sect->order[d->i]].norender == true)
 	{
@@ -44,11 +48,13 @@ int			engine_render_sprites_in_sector_wrap(t_sector *sect, t_player *plr,
 	return (1);
 }
 
-void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf,
-			t_player *plr, t_item_sprts *restr)
+t_sprobject		*engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf,
+				t_player *plr, t_item_sprts *restr)
 {
 	t_sprt_r	d;
+	t_sprobject	*aimed;
 
+	aimed = NULL;
 	sort_sprites(sect, plr);
 	d.i = 0;
 	while (d.i < sect->sprobjects_count)
@@ -69,6 +75,9 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf,
 		d.begx = max(d.x1, restr->sect_id.sx1);
 		d.endx = min(d.x2, restr->sect_id.sx2);
 		d.x = d.begx;
+		if ((d.ya <= (HEIGHT / 2) && d.cyb >= (HEIGHT / 2))
+		&& (d.begx <= (WIDTH / 2) && d.endx >= (WIDTH / 2)))
+			aimed = &sect->sprobjects_array[sect->order[d.i]];
 		while (d.x < d.endx)
 		{
 			d.cya = clamp(d.ya, restr->ytop[d.x], restr->ybottom[d.x]);
@@ -77,6 +86,7 @@ void		engine_render_sprites_in_sector(t_sector *sect, SDL_Surface *surf,
 		}
 		d.i++;
 	}
+	return (aimed);
 }
 
 void		sort_sprites(t_sector *sect, t_player *plr)

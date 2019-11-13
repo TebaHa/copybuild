@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/13 12:00:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:55:26 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -585,6 +585,7 @@ typedef struct		s_engine
 	Mix_Chunk		*background_music;
 	char			*map_name;
 	t_door_task		*doors[MAX_DOORS];
+	t_sprobject		*aim;
 }					t_engine;
 
 typedef struct		s_tric
@@ -1332,7 +1333,7 @@ void				close_game(int error);
 void				sprite_comb_sort(t_sector *sect);
 void				sprite_int_swap(int *a, int *b);
 void				sprite_float_swap(float *a, float *b);
-void				engine_render_sprites_in_sector(t_sector *sect,
+t_sprobject			*engine_render_sprites_in_sector(t_sector *sect,
 					SDL_Surface *surf, t_player *plr, t_item_sprts *restr);
 void				engine_render_sprites(t_engine *eng, t_player *plr,
 					SDL_Surface *surf, t_render_stacks *stacks);
@@ -1501,5 +1502,7 @@ void				add_task(t_engine *eng, t_sector *sect, t_button_type type);
 int					close_door(t_door_task *door, t_sector *sect);
 int					open_door(t_door_task *door, t_sector *sect);
 void				init_sectors(t_engine *eng);
+void				kill(t_sprobject *sobj);
+
 
 #endif

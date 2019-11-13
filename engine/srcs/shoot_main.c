@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 21:14:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/06 22:25:45 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:55:11 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,11 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 {
 	t_shoot_data	d;
 
+	if (eng->aim)
+	{
+		kill(eng->aim);
+		return ;
+	}
 	shoot_help1(&d, eng, plr, weapon_range);
 	while (((d.sect_id = engine_pop_checkstack(eng->world->checkqueue)) >= 0))
 	{
@@ -114,4 +119,9 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 			d.i++;
 		}
 	}
+}
+
+void	kill(t_sprobject *sobj)
+{
+	sobj->state = E_DEAD;
 }

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 21:37:00 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/28 15:58:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:43:07 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ short	engine_render_sprites_in_sector_3(t_sector *sect, t_player *plr,
 void	engine_render_sprites_in_sector_4(t_sector *sect, SDL_Surface *surf,
 		t_sprt_r *d)
 {
+
 	d->txtx = (int)((float)(d->x - d->x1) /
 	(float)(d->x2 - d->x1)
 	* d->img->surface[sect->sprobjects_array[sect->order[d->i]]
