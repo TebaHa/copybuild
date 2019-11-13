@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:21:18 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/12 22:55:35 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/13 12:02:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void		wall_object_init(t_object *obj,
 		data.w_partcle.id = 1;
 		data.w_partcle.z = particle.z + txtr->height;
 		obj->stuff[i] = data.w_partcle;
+		obj->stuff[i].type = txtr->enum_type;
 		i++;
 	}
 }

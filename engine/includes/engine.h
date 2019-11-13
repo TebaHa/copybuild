@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/12 23:24:55 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/13 12:00:02 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,6 +345,7 @@ typedef struct		s_wallobj
 	int				frame_num;
 	t_sprite		*texture;
 	int				size;
+	t_button_type	type;
 }					t_wallobj;
 
 typedef struct		s_button
@@ -439,6 +440,7 @@ typedef struct		s_door_task
 {
 	int				id;
 	t_bool			closed;
+	t_bool			renderable;
 	int				delta;
 	int				range;
 }					t_door_task;
@@ -1495,7 +1497,7 @@ int					execute_door(t_door_task *door, t_sector *sect);
 void				engine_push_doorqueue(t_door_task **stack,
 					t_door_task *item);
 void				engine_flush_doorqueue(t_door_task **stack);
-void				add_task(t_engine *eng, t_sector *sect);
+void				add_task(t_engine *eng, t_sector *sect, t_button_type type);
 int					close_door(t_door_task *door, t_sector *sect);
 int					open_door(t_door_task *door, t_sector *sect);
 void				init_sectors(t_engine *eng);

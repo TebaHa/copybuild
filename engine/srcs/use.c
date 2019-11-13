@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 21:32:24 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/13 00:01:20 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/13 11:40:20 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	use(t_engine *eng, t_player *plr)
 					d.sect->ceil, d.sect->floor))
 					{
 						add_task(eng,
-						&eng->world->sectors_array[d.sect->objects_array[d.i].wallobjects_array[i].sector_id]);
+						&eng->world->sectors_array[d.sect->objects_array[d.i].wallobjects_array[i].sector_id],
+						d.sect->objects_array[d.i].wallobjects_array[i].enum_type);
 						break ;
 					}
 					i++;
@@ -67,8 +68,10 @@ void	use(t_engine *eng, t_player *plr)
 	}
 }
 
-void	add_task(t_engine *eng, t_sector *sect)
+void	add_task(t_engine *eng, t_sector *sect, t_button_type type)
 {
 	sect->opening.delta = 10;
 	engine_push_doorqueue(eng->doors, &sect->opening);
+	//if (type == BT_FINISH)
+		//exit(1);
 }

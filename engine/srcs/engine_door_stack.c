@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/10 15:53:42 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/12 23:25:37 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/13 12:08:02 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int				close_door(t_door_task *door, t_sector *sect)
 	sect->floor += door->delta;
 	if (abs(sect->ceil - sect->floor) <= 50)
 	{
+		door->renderable = false;
 		door->closed = true;
 		return (1);
 	}
@@ -45,6 +46,7 @@ int				open_door(t_door_task *door, t_sector *sect)
 {
 	sect->ceil += door->delta;
 	sect->floor -= door->delta;
+	door->renderable = true;
 	if ((sect->ceil - sect->floor) >= door->range)
 	{
 		door->closed = false;
