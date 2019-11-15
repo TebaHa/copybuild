@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/14 12:13:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:51:55 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		game_init_player(t_player *plr)
 	plr->controller.falling = 0;
 	plr->controller.ground = 1;
 	plr->controller.moving = 0;
-	plr->controller.running = 7;
+	plr->controller.running = 4;
 	plr->controller.fakefall = 0;
 	plr->plr_state = P_IDLE;
 	plr->anim = 0;

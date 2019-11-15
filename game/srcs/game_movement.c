@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 17:43:49 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:47:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	game_movement_check(t_game *fps)
 	fps->thread_num = fps->logic.thread_start_index;
 	fps->render_thread_pool[fps->logic.thread_start_index].
 	thread = SDL_CreateThread(game_thread_wrapper, NULL, (void *)fps);
-	fps->player.aim = fps->eng->aim;
 	if (fps->player.controller.moving)
 	{
 		fps->logic.px = fps->player.position.x;

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:30:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/06 22:20:25 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:50:49 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	game_buttons_control_down1(t_game *fps)
 	if (fps->eng->event.key.keysym.sym == SDLK_j)
 		change_ceil(fps->eng, fps->player.cursector, -10);
 	if (fps->eng->event.key.keysym.sym == SDLK_LSHIFT)
-		fps->player.controller.running = 3;
+		fps->player.controller.running = 2;
 }
 
 void	game_buttons_control_down2(t_game *fps)
@@ -59,14 +59,14 @@ void	game_buttons_control_down2(t_game *fps)
 		if (fps->player.controller.ducking == 1)
 		{
 			fps->logic.duck_shift = 50;
-			fps->player.controller.running -= 3;
+			fps->player.controller.running -= 1;
 			fps->player.controller.ducking = -1;
 			fps->player.controller.falling = 1;
 		}
 		else if (fps->player.controller.ducking == -1)
 		{
 			fps->logic.duck_shift = 0;
-			fps->player.controller.running += 3;
+			fps->player.controller.running += 1;
 			fps->player.controller.ducking = 1;
 			fps->player.position.z += 50;
 		}
