@@ -1246,7 +1246,7 @@ void				util_parsing_error_repeats(char *problem,
 					char *problem_from, int id_problem);
 void				util_parsing_error_little_data_check(char *problem_from,
 					char **str, int problems_number);
-void				util_parsing_value_out_of_limits(int value);
+void				util_parsing_value_out_of_limits(char *str);
 void				util_parsing_error_no_cap(char *problem, t_engine *eng);
 SDL_Surface			*util_transform_texture_to_sprite(t_image *texture);
 SDL_Surface			*util_create_rgb_surface(Uint32 flags, int width,

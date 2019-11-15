@@ -18,7 +18,7 @@ void		util_read_color(t_color *color, char *str)
 
 	argb_color = util_int16_data_filler(str);
 	color->argb = argb_color;
-	color->alpha = ((argb_color >> 24) & 0xFF);
+	color->alpha = ((argb_color >> 20) & 0xFF);
 	color->red = ((argb_color >> 16) & 0xFF);
 	color->green = ((argb_color >> 8) & 0xFF);
 	color->blue = (argb_color & 0xFF);

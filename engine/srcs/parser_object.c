@@ -45,13 +45,13 @@ void		util_create_object(t_engine *eng, t_object *object,
 	util_parsing_error_count_handler("object", str, 9);
 	object->id = util_int10_data_filler(str[1], 0, 0xFFFF);
 	object->portal = util_int10_data_filler(str[2], -1, 0xFFFF);
-	object->passble = util_int10_data_filler(str[3], 0, 0);
-	object->visible = util_int10_data_filler(str[4], 1, 1);
-//	util_find_texture_spread(&object->polies_array->texture_spread, &str[5]);
-	util_find_texture_by_name(&object->polies_array->texture, eng, &str[5], &object->polies_array->texture_spread);
-//	util_find_texture_spread(&object->floor_wall_spread, &str[6]);
+	object->passble = util_int10_data_filler(str[3], 0, 1);
+	object->visible = util_int10_data_filler(str[4], 0, 1);
+	if (!ft_strcmp(str[5], "null"))
+		object->polies_array->texture = NULL;
+	else
+		util_find_texture_by_name(&object->polies_array->texture, eng, &str[5], &object->polies_array->texture_spread);
 	util_find_texture_by_name(&object->floor_wall_texture, eng, &str[6], &object->floor_wall_spread);
-//	util_find_texture_spread(&object->ceil_wall_spread, &str[7]);
 	util_find_texture_by_name(&object->ceil_wall_texture, eng, &str[7], &object->ceil_wall_spread);
 	object->polies_count = 1;
 	object->polies_array->vertices_count = 2;
