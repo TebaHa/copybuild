@@ -64,7 +64,7 @@ int		util_int16_data_filler(char *str)
 		i++;
 	}
 	res = ft_atoi_hex(str);
-	if (res < 0 || res > 2147483647 || ft_strlen(str) > 9)
+	if (res < 0 || res > 2147483647 || ft_strlen(str) > 8)
 		util_parsing_value_out_of_limits(res);
 	return (res);
 }
