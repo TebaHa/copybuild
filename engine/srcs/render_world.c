@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 16:01:04 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:21:24 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,24 @@ void		engine_render_world_help(t_engine *eng, SDL_Surface *surf,
 	}
 }
 
+void		sprt_first_push(t_render_stacks *stacks, t_item_sprts *sptrs)
+{
+	t_trns_item		trs_item;
+
+	trs_item.sprite_renderstack = sptrs;
+	engine_push_tsrenderstack(stacks->helpstack,
+	trs_item);
+}
+
 void		engine_render_world(t_engine *eng, t_player plr,
 			SDL_Surface *surf, t_render_stacks *stacks)
 {
-	t_wall_help2 data;
+	t_wall_help2	data;
+	t_surf_and_plr	ps;
 
 	SDL_LockSurface(surf);
+	ps.plr = &plr;
+	ps.surf = surf;
 	engine_draw_background(eng, surf, plr.yaw, plr.angle);
 	engine_render_world_data(&plr, &data);
 	engine_push_renderstack(stacks->renderstack, data.sect);
@@ -71,12 +83,12 @@ void		engine_render_world(t_engine *eng, t_player plr,
 	item_sprts, data.ytop, data.ybottom);
 	eng->world->sectors_array[data.sect.sectorno].
 	item_sprts.sect_id = data.sect;
-	engine_push_spriterenderstack(stacks->sprite_renderstack,
+	sprt_first_push(stacks,
 	&eng->world->sectors_array[data.sect.sectorno].item_sprts);
 	engine_render_world_help(eng, surf, &data, stacks);
-	engine_render_sprites(eng, &plr, surf, stacks);
+	engine_render_ts_objects(eng, ps, &data, stacks);
 	engine_clear_renderstack(stacks->renderstack);
-	engine_clear_spriterenderstack(stacks->sprite_renderstack);
+	engine_clear_tsrenderstack(stacks->helpstack);
 	SDL_UnlockSurface(surf);
 }
 

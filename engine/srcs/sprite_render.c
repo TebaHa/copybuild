@@ -6,30 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/13 16:24:25 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:11:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
-
-void			engine_render_sprites(t_engine *eng, t_player *plr,
-				SDL_Surface *surf, t_render_stacks *stacks)
-{
-	t_item_sprts	*restr;
-	t_sector		*sect;
-	t_sprobject		*aimed;
-
-	aimed = NULL;
-	eng->aim = NULL;
-	while (((restr = engine_pop_spriterenderstack(stacks->
-	sprite_renderstack)) != NULL))
-	{
-		sect = eng->world->sectors_array + restr->sect_id.sectorno;
-		aimed = engine_render_sprites_in_sector(sect, surf, plr, restr);
-		if (aimed)
-			eng->aim = aimed;
-	}
-}
 
 int				engine_render_sprites_in_sector_wrap(t_sector *sect,
 				t_player *plr, t_sprt_r *d)

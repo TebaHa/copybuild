@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/13 14:55:26 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:39:56 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -478,10 +478,24 @@ typedef struct		s_buff
 	char			**str;
 }					t_buff;
 
+typedef struct		s_twall_item
+{
+	t_item_sprts	*sx;
+	t_object		*obj;
+}					t_twall_item;
+
+typedef struct		s_trns_item
+{
+	int				status;
+	t_item_sprts	*sprite_renderstack;
+	t_twall_item	trnsprtstack;
+}					t_trns_item;
+
+
 typedef struct		s_render_stacks
 {
 	t_item			*renderstack;
-	t_item_sprts	**sprite_renderstack;
+	t_trns_item		helpstack[MAXSECTORS * 2];
 }					t_render_stacks;
 
 typedef	struct		s_world
@@ -538,6 +552,7 @@ typedef	struct		s_player
 	t_bool			key_blue;
 	t_bool			key_yellow;
 	t_sprts_size	**arr_sizes;
+	t_sprobject		*aim;
 }					t_player;
 
 typedef struct		s_stats
@@ -674,6 +689,8 @@ typedef struct		s_wall_help2
 	t_player		*plr;
 	int				ytop[WIDTH];
 	int				ybottom[WIDTH];
+	int				*tytop;
+	int				*tybottom;
 	int				portal;
 	t_item			sect;
 	int				obj_id;
@@ -930,6 +947,13 @@ typedef struct		s_line_2d
 	t_point_2d		a;
 	t_point_2d		b;
 }					t_line_2d;
+
+typedef struct		s_surf_and_plr
+{
+	t_player		*plr;
+	SDL_Surface		*surf;
+}					t_surf_and_plr;
+
 
 void				engine_sdl_init(t_engine **eng);
 void				engine_sdl_uninit(t_engine *eng);
@@ -1503,6 +1527,36 @@ int					close_door(t_door_task *door, t_sector *sect);
 int					open_door(t_door_task *door, t_sector *sect);
 void				init_sectors(t_engine *eng);
 void				kill(t_sprobject *sobj);
+
+void				engine_push_tsrenderstack(t_trns_item *renderqueue,
+					t_trns_item item);
+void				engine_clear_tsrenderstack(t_trns_item *renderqueue);
+t_trns_item			engine_pop_tsrenderstack(t_trns_item *renderqueue);
+void				engine_render_twall_main_cycler(t_wall_clinks *l,
+					t_wall_cycle *cycler, t_wall_mai_data *mdata);
+void				engine_set_tlinks(t_wall_clinks *links, void *ls[6]);
+void				engine_render_twall(t_engine *eng, SDL_Surface *surf,
+					t_wall_help2 *data, t_render_stacks *stacks);
+void				engine_render_twall_c_val3(t_wall_help2 *data,
+					t_wall_mai_data *mdata);
+void				engine_render_twall_c_val2(t_wall_help3 *data_help,
+					t_wall_help2 *data, t_wall_mai_data *mdata);
+void				*engine_render_twall_count_values(t_engine *eng,
+		t_wall_help3 *data_help, t_wall_help2 *data, t_wall_mai_data *mdata);
+void				engine_render_twall_count_initial_point(t_polygone *polygone,
+					t_player *plr, t_point_2d *t1, t_point_2d *t2);
+void				engine_redner_twall_recount_prep_data(t_wall_help1 *data,
+					t_point_2d *t1, t_point_2d *t2);
+void				engine_render_twall_recount_intersect_help(t_wall_help1 *data,
+					t_point_2d *t1, t_point_2d *t2);
+void				engine_render_twall_recount_intersect(t_polygone *polygone,
+					t_point_2d *t1, t_point_2d *t2, int *u[2]);
+void				engine_render_twall_cycle(t_wall_clinks *l);
+void				engine_render_twalls(t_engine *eng, SDL_Surface *surf,
+					t_wall_help2 *data, t_render_stacks *stacks);
+void				engine_render_ts_objects(t_engine *eng, t_surf_and_plr ps,
+					t_wall_help2 *data, t_render_stacks *stacks);
+void				sprt_first_push(t_render_stacks *stacks, t_item_sprts *sptrs);
 
 
 #endif

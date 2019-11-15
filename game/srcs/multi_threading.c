@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:10:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/27 13:45:55 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:06:24 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,9 @@ void		game_init_threads(t_thread_pool *render_thread_pool)
 		(unsigned int)0x000000ff);
 		render_thread_pool[i].ren_stacks.renderstack
 		= (t_item *)ft_memalloc(sizeof(t_item) * MAXSECTORS);
-		render_thread_pool[i].ren_stacks.sprite_renderstack =
-		(t_item_sprts **)ft_memalloc(sizeof(t_item_sprts *) * MAXSECTORS);
 		engine_clear_renderstack(render_thread_pool[i].ren_stacks.renderstack);
-		engine_clear_spriterenderstack(render_thread_pool[i].
-		ren_stacks.sprite_renderstack);
+		engine_clear_tsrenderstack(render_thread_pool[i].
+		ren_stacks.helpstack);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/13 16:24:30 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/15 17:40:05 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,6 +120,12 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					utils_check_stack.c \
 					engine_door_stack.c \
 					init_sectors.c \
+					engine_render_twall_cycler.c \
+					engine_render_twall_help.c \
+					engine_render_twall_main.c \
+					engine_render_twall_main2.c \
+					engine_render_twalls.c \
+					engine_transprt_stack.c \
 
 PARSER_SRCS_LIST =	parser_button.c \
 					parser_color.c \

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 21:14:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/13 15:21:55 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:38:38 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,17 @@ void	kill(t_sprobject *sobj)
 	int	i;
 
 	i = 0;
-	sobj->state = E_DEAD;
-	sobj->type->anmtn[E_DEAD]->a_state = ANIMATE;
-	while (i < 8)
+	if (sobj->enum_type == IMP ||
+	sobj->enum_type == AFRIT ||
+	sobj->enum_type == CACODEMON)
 	{
-		sobj->type->anmtn_360[E_DEAD][i]->a_state = ANIMATE;
-		i++;
+		sobj->state = E_DEAD;
+		sobj->type->anmtn[E_DEAD]->a_state = ANIMATE;
+		while (i < 8)
+		{
+			sobj->type->anmtn_360[E_DEAD][i]->a_state = ANIMATE;
+			i++;
+		}
+		sobj->frame_num = 0;
 	}
-	sobj->frame_num = 0;
 }

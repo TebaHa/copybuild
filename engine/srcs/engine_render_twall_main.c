@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_wall.c                                      :+:      :+:    :+:   */
+/*   engine_render_twall_main.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/14 19:19:23 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 16:32:38 by zytrams          ###   ########.fr       */
+/*   Created: 2019/11/15 14:58:34 by zytrams           #+#    #+#             */
+/*   Updated: 2019/11/15 16:22:06 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void			*engine_render_wall_count_values(t_engine *eng,
-		t_wall_help3 *data_help, t_wall_help2 *data, t_wall_mai_data *mdata)
+void			*engine_render_twall_count_values(t_engine *eng,
+	t_wall_help3 *data_help, t_wall_help2 *data, t_wall_mai_data *mdata)
 {
 	mdata->xscale1 = (WIDTH * HFOV) / data_help->t1.y;
 	mdata->yscale1 = (HEIGHT * VFOV) / data_help->t1.y;
@@ -22,28 +22,17 @@ void			*engine_render_wall_count_values(t_engine *eng,
 	mdata->yscale2 = (HEIGHT * VFOV) / data_help->t2.y;
 	mdata->x2 = WIDTH / 2 + (-data_help->t2.x * mdata->xscale2);
 	if (mdata->x1 >= mdata->x2 || mdata->x2 <
-	data->sect.sx1 || mdata->x1 > data->sect.sx2)
+	0 || mdata->x1 > WIDTH - 1)
 		return (NULL);
 	mdata->yceil = eng->world->sectors_array[data->sect.sectorno].
 	ceil - data->plr->position.z;
 	mdata->yfloor = eng->world->sectors_array[data->sect.sectorno].
 	floor - data->plr->position.z;
-	mdata->nyceil = 0;
-	mdata->nyfloor = 0;
-	if (data->portal >= 0 && data->prev != data->portal &&
-	eng->world->sectors_array[data->portal].opening.renderable == true)
-	{
-		mdata->nyceil = eng->world->sectors_array[data->portal].
-		ceil - data->plr->position.z;
-		mdata->nyfloor = eng->world->sectors_array[data->portal].
-		floor - data->plr->position.z;
-		data_help->push = 1;
-	}
-	engine_render_wall_c_val2(data_help, data, mdata);
+	engine_render_twall_c_val2(data_help, data, mdata);
 	return (mdata);
 }
 
-void			engine_render_wall_c_val2(t_wall_help3 *data_help,
+void			engine_render_twall_c_val2(t_wall_help3 *data_help,
 				t_wall_help2 *data, t_wall_mai_data *mdata)
 {
 	mdata->y1a = HEIGHT / 2 + (int)(-(mdata->yceil
@@ -62,10 +51,10 @@ void			engine_render_wall_c_val2(t_wall_help3 *data_help,
 	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
 	mdata->ny2b = HEIGHT / 2 + (int)(-(mdata->nyfloor
 	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
-	engine_render_wall_c_val3(data, mdata);
+	engine_render_twall_c_val3(data, mdata);
 }
 
-void			engine_render_wall_c_val3(t_wall_help2 *data,
+void			engine_render_twall_c_val3(t_wall_help2 *data,
 				t_wall_mai_data *mdata)
 {
 	mdata->beginx = max(mdata->x1, data->sect.sx1);
@@ -80,7 +69,7 @@ void			engine_render_wall_c_val3(t_wall_help2 *data,
 	mdata->beginx, mdata->x2, mdata->ny1b, mdata->ny2b});
 }
 
-void			engine_render_wall(t_engine *eng, SDL_Surface *surf,
+void			engine_render_twall(t_engine *eng, SDL_Surface *surf,
 				t_wall_help2 *data, t_render_stacks *stacks)
 {
 	t_wall_help3		data_help;
@@ -89,23 +78,20 @@ void			engine_render_wall(t_engine *eng, SDL_Surface *surf,
 	t_wall_clinks		links;
 
 	data_help.push = 0;
-	engine_render_wall_count_initial_point(data->polygone,
+	engine_render_twall_count_initial_point(data->polygone,
 	data->plr, &data_help.t1, &data_help.t2);
 	if (data_help.t1.y <= 0 && data_help.t2.y <= 0)
 		return ;
 	data_help.u0 = 0;
 	data_help.u1 = data->polygone->tex_scale_koef;
 	if (data_help.t1.y <= 0 || data_help.t2.y <= 0)
-		engine_render_wall_recount_intersect(data->polygone,
+		engine_render_twall_recount_intersect(data->polygone,
 		&data_help.t1, &data_help.t2,
 		(int *[2]){(int *)&data_help.u0, (int *)&data_help.u1});
-	if (engine_render_wall_count_values(eng, &data_help, data, &mdata) == NULL)
+	if (engine_render_twall_count_values(eng, &data_help, data, &mdata) == NULL)
 		return ;
 	cycler.x = mdata.beginx;
-	engine_set_links(&links, (void *[6]){&cycler, data, &data_help,
+	engine_set_tlinks(&links, (void *[6]){&cycler, data, &data_help,
 	eng, &mdata, surf});
-	engine_render_wall_main_cycler(&links, &cycler, &mdata);
-	if (data_help.push)
-		engine_render_wall_pusher(eng, data, &mdata, stacks);
-	engine_render_particles_wall(eng, surf, data);
+	engine_render_twall_main_cycler(&links, &cycler, &mdata);
 }

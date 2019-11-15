@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:21:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/06 21:05:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:32:33 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,23 @@ void			engine_render_wall_main_cycler(t_wall_clinks *links,
 void			engine_render_wall_pusher(t_engine *eng, t_wall_help2 *data,
 				t_wall_mai_data *mdata,  t_render_stacks *stacks)
 {
+	t_trns_item		trs_item;
+
+	trs_item.trnsprtstack.sx = &eng->world->sectors_array[data->portal].item_sprts;
+	trs_item.trnsprtstack.obj = &eng->world->sectors_array[data->sect.sectorno].
+	objects_array[data->obj_id];
+	trs_item.sprite_renderstack = NULL;
+	if (data->polygone->texture != NULL)
+		engine_push_tsrenderstack(stacks->helpstack, trs_item);
 	engine_push_renderstack(stacks->renderstack,
 	(t_item){data->portal, mdata->beginx, mdata->endx});
 	eng->world->sectors_array[data->portal].item_sprts.sect_id = (t_item)
 	{data->portal, mdata->beginx, mdata->endx};
 	one_dim_zbuffers_copy(&eng->world->sectors_array[data->portal].item_sprts,
 	data->ytop, data->ybottom);
-	engine_push_spriterenderstack(stacks->sprite_renderstack,
-	&eng->world->sectors_array[data->portal].item_sprts);
+	trs_item.sprite_renderstack = &eng->world->sectors_array[data->portal].item_sprts;
+	engine_push_tsrenderstack(stacks->helpstack,
+	trs_item);
 }
 
 void			engine_render_particles_wall(t_engine *eng, SDL_Surface *surf,
