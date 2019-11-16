@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 15:50:00 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 18:00:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	engine_vline_textured(SDL_Surface *surf, t_scaler ty,
 		+ (din.txtx % texture->width)) * texture->channels;
 		if ((texture->data)[d.offset + 3] == 255)
 		{
-			d.red = (texture->data)[d.offset];
-			d.green = (texture->data)[d.offset + 1];
-			d.blue = (texture->data)[d.offset + 2];
+			d.red = (texture->data)[d.offset] * din.color.red;
+			d.green = (texture->data)[d.offset + 1] * din.color.green;
+			d.blue = (texture->data)[d.offset + 2] * din.color.blue;
 			d.color = get_rgb((int)d.red, (int)d.green, (int)d.blue, 255);
 			*d.pixd = d.color;
 		}
@@ -58,10 +58,10 @@ void	engine_vline_textured_sprite(SDL_Surface *surf, t_scaler ty,
 		* texture->surface[0]->w) + (din.txtx % texture->surface[0]->w)) * 4;
 		if ((d.pixs)[d.offset + 3] == 255)
 		{
-			d.red = (d.pixs)[d.offset];
-			d.green = (d.pixs)[d.offset + 1];
-			d.blue = (d.pixs)[d.offset + 2];
-			d.color = get_rgb((int)d.red, (int)d.green, (int)d.blue, 255);
+			d.red = (d.pixs)[d.offset] * din.color.red;
+			d.green = (d.pixs)[d.offset + 1] * din.color.green;
+			d.blue = (d.pixs)[d.offset + 2] * din.color.blue;
+			d.color = get_rgb((int)d.red , (int)d.green, (int)d.blue, 255);
 			*d.pixd = d.color;
 		}
 		d.pixd += WIDTH;

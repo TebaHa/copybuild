@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 23:22:17 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 19:01:34 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 18:04:03 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	init_sectors(t_engine *eng)
 		sect = &eng->world->sectors_array[i];
 		sect->opening.id = i;
 		sect->opening.renderable = true;
+		sect->color.red = 1;
+		sect->color.green = 0.5;
+		sect->color.blue = 0.5;
 		i++;
 	}
 }

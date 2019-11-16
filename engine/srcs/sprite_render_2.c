@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 21:37:00 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/13 14:43:07 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 17:44:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	engine_render_sprites_in_sector_4(t_sector *sect, SDL_Surface *surf,
 	(d->img->surface[sect->sprobjects_array[sect->order[d->i]]
 	.frame_num]->h - 1)})
 	, (t_vline1_in){(t_fix_point_3d){d->x, d->cya + 1, 0},
-	(t_fix_point_3d){d->x, d->cyb, 0}, d->txtx},
+	(t_fix_point_3d){d->x, d->cyb, 0}, sect->color, d->txtx},
 	d->img->surface[sect->sprobjects_array[sect->order[d->i]].frame_num]);
 	d->x++;
 }

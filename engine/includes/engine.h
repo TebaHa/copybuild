@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 17:39:56 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 18:01:23 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,9 +285,9 @@ typedef	struct		s_color
 {
 	int				argb;
 	int				alpha;
-	int				red;
-	int				green;
-	int				blue;
+	float			red;
+	float			green;
+	float			blue;
 }					t_color;
 
 typedef	struct		s_fix_point_3d
@@ -754,9 +754,9 @@ typedef struct		s_wall_cycle
 	unsigned		txtx;
 	unsigned		txtz;
 	int				offset;
-	int8_t			red;
-	int8_t			green;
-	int8_t			blue;
+	uint8_t			red;
+	uint8_t			green;
+	uint8_t			blue;
 }					t_wall_cycle;
 
 typedef struct		s_wall_clinks
@@ -860,6 +860,7 @@ typedef struct		s_vline1_in
 {
 	t_fix_point_3d	a;
 	t_fix_point_3d	b;
+	t_color			color;
 	int				txtx;
 }					t_vline1_in;
 

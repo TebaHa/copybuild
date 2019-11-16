@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 21:09:00 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/28 17:36:37 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 17:47:46 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ short		engine_render_particle_6(t_wallobj *particle, t_ptcl_r *data)
 short		engine_render_particle_7(t_engine *eng, SDL_Surface *surf,
 			t_wallobj *particle, t_ptcl_r *data)
 {
+	t_color	color;
+
+	color = eng->world->sectors_array[data->sect.sectorno].color;
 	data->ya = scaler_next(&data->ya_int);
 	data->yb = scaler_next(&data->yb_int);
 	if (data->ya == data->yb)
@@ -126,7 +129,7 @@ short		engine_render_particle_7(t_engine *eng, SDL_Surface *surf,
 	(t_scaler)scaler_init((float[5]){data->ya, data->cya, data->yb,
 	0, particle->texture->surface[particle->frame_num]->w - 1}),
 	(t_vline1_in){(t_fix_point_3d){data->x, data->cya + 1, 0},
-	(t_fix_point_3d){data->x, data->cyb, 0},
+	(t_fix_point_3d){data->x, data->cyb, 0}, color,
 	data->txtx}, particle->texture->surface[particle->frame_num]);
 	data->x++;
 	return (1);

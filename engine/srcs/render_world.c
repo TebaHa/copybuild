@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 17:21:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 17:57:27 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int			get_rgb(int r, int g, int b, int a)
 {
 	return (((((int)r) << 24) & 0xFF000000) |
 	((((int)g) << 16) & 0x00FF0000) |
-	(((b) << 8) & 0x0000FF00) | (((a)) & 0x000000FF));
+	((((int)b) << 8) & 0x0000FF00) | (((a)) & 0x000000FF));
 }
 
 void		engine_render_world_data(t_player *plr, t_wall_help2 *data)
