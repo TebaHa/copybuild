@@ -59,10 +59,10 @@ void	util_parsing_error_no_cap(char *problem, t_engine *eng)
 	eng->stats.cycle_detector++;
 }
 
-void	util_parsing_value_out_of_limits(int value)
+void	util_parsing_value_out_of_limits(char *str)
 {
-	ft_putendl("Parsing error:");
-	ft_putnbr(value);
+	ft_putendl("Parsing error: ");
+	ft_putstr(str);
 	ft_putendl(" out of limits!");
 	close_game(PARSING_ERROR);
 }

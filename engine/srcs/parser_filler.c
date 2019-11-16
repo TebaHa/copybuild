@@ -26,7 +26,7 @@ float	util_float10_data_filler(char *str, int min, int max)
 	}
 	res = ft_atoi(str);
 	if (res < min || res > max || ft_strlen(str) > 9)
-		util_parsing_value_out_of_limits(res);
+		util_parsing_value_out_of_limits(str);
 	return ((float)res);
 }
 
@@ -44,7 +44,7 @@ int		util_int10_data_filler(char *str, int min, int max)
 	}
 	res = ft_atoi(str);
 	if (res < min || res > max || ft_strlen(str) > 9)
-		util_parsing_value_out_of_limits(res);
+		util_parsing_value_out_of_limits(str);
 	return (res);
 }
 
@@ -65,6 +65,6 @@ int		util_int16_data_filler(char *str)
 	}
 	res = ft_atoi_hex(str);
 	if (res < 0 || res > 2147483647 || ft_strlen(str) > 9)
-		util_parsing_value_out_of_limits(res);
+		util_parsing_value_out_of_limits(str);
 	return (res);
 }
