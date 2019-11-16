@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 18:00:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 18:09:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	engine_vline_textured_surface(SDL_Surface *surf, t_scaler ty,
 		+ (din.txtx % texture->w)) * 4;
 		if ((d.pixs)[d.offset + 3] == 255)
 		{
-			d.red = (d.pixs)[d.offset];
-			d.green = (d.pixs)[d.offset + 1];
-			d.blue = (d.pixs)[d.offset + 2];
+			d.red = (d.pixs)[d.offset] * din.color.red;
+			d.green = (d.pixs)[d.offset + 1] * din.color.green;
+			d.blue = (d.pixs)[d.offset + 2] * din.color.blue;
 			d.color = get_rgb((int)d.red, (int)d.green, (int)d.blue, 255);
 			*d.pixd = d.color;
 		}
