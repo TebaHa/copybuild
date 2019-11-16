@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 10:48:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/12 23:35:56 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 19:05:38 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int		check_wall_passed(t_engine *eng, t_player *plr,
 		}}))
 		{
 			if (sector->objects_array[i].portal >= 0
-			&& eng->world->sectors_array[sector->objects_array[i].portal].opening.closed == false)
+			&& eng->world->sectors_array[sector->objects_array[i].portal].opening.closed == false
+			&& sector->objects_array[i].passble == true)
 			{
 				plr->cursector = sector->objects_array[i].portal;
 				count_heights(&hole_low, &hole_high,

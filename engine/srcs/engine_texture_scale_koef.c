@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 18:58:51 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/03 19:23:43 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 15:15:26 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,20 @@ void	prepare_polygones(t_engine *eng)
 		s = &eng->world->sectors_array[i];
 		while (j < s->objects_count)
 		{
-			if (s->objects_array[j].polies_array[0].texture_spread == 1 ||
-			s->objects_array[j].polies_array[0].texture_spread == 0)
+			if (s->objects_array[j].polies_array[0].texture != NULL)
 			{
-				s->objects_array[j].polies_array[0].tex_scale_koef
-				= s->objects_array[j].polies_array[0].texture->height;
-			}
-			else
-			{
-				s->objects_array[j].polies_array[0].tex_scale_koef
-				= s->objects_array[j].polies_array[0].texture->height
-				/ s->objects_array[j].polies_array[0].texture_spread;
+				if (s->objects_array[j].polies_array[0].texture_spread == 1 ||
+				s->objects_array[j].polies_array[0].texture_spread == 0)
+				{
+					s->objects_array[j].polies_array[0].tex_scale_koef
+					= s->objects_array[j].polies_array[0].texture->height;
+				}
+				else
+				{
+					s->objects_array[j].polies_array[0].tex_scale_koef
+					= s->objects_array[j].polies_array[0].texture->height
+					/ s->objects_array[j].polies_array[0].texture_spread;
+				}
 			}
 			j++;
 		}

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:49:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/04 20:43:01 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 15:13:13 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void		game_menu_quit(t_game *fps)
 {
 	SDL_Delay(50);
-	game_stop_threads(fps->render_thread_pool,
-	1);
 	engine_sdl_uninit(fps->eng);
 	close_game(0);
 }

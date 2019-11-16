@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 17:51:55 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 19:14:01 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void		game_init_player(t_player *plr)
 void		game_init(t_game *fps, int argc, char **argv)
 {
 	engine_sdl_init(&fps->eng);
-	game_init_player(&fps->player);
 	parser_game(fps, argc, argv);
 	parser_engine(fps->eng, &fps->player);
 	fps->player.cursector = engine_object_get_sector(fps->eng->world,
@@ -60,6 +59,7 @@ void		game_init(t_game *fps, int argc, char **argv)
 	wall_objects_init(fps->eng);
 	init_sectors(fps->eng);
 	game_init_threads(fps->render_thread_pool);
+	game_init_player(&fps->player);
 	SDL_ShowCursor(SDL_DISABLE);
 	fps->logic.duck_shift = 0;
 	fps->logic.thread_end_index = 0;

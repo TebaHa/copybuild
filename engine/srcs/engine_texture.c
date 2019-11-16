@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/13 16:17:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 15:50:00 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	engine_vline_textured(SDL_Surface *surf, t_scaler ty,
 
 	d.pixd = (int *)surf->pixels;
 	d.y1 = clamp(din.a.y, 0, HEIGHT - 1);
-	d.y2 = clamp(din.b.y, 0, HEIGHT - 1);
+	d.y2 = clamp(din.b.y + 1, 0, HEIGHT - 1);
 	d.pixd += d.y1 * WIDTH + din.a.x;
 	d.y = d.y1;
 	while (d.y < d.y2)

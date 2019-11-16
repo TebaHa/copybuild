@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 17:47:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/15 19:17:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,11 @@ void	game_movement_check(t_game *fps)
 	thread = SDL_CreateThread(game_thread_wrapper, NULL, (void *)fps);
 	if (fps->player.controller.moving)
 	{
-		fps->logic.px = fps->player.position.x;
-		fps->logic.py = fps->player.position.y;
-		fps->logic.dx = fps->player.velocity.x;
-		fps->logic.dy = fps->player.velocity.y;
 		fps->logic.sectprev = fps->player.cursector;
 		check_wall_passed(fps->eng, &fps->player,
-		(t_line_2d){(t_point_2d){fps->logic.px, fps->logic.py},
-		(t_point_2d){fps->logic.px + fps->logic.dx,
-		fps->logic.py + fps->logic.dy}},
+		(t_line_2d){(t_point_2d){fps->player.position.x, fps->player.position.y},
+		(t_point_2d){fps->player.position.x + fps->player.velocity.x,
+		fps->player.position.y + fps->player.velocity.y}},
 		&fps->player.controller.moving);
 		fps->logic.sectprev = engine_object_get_sector(fps->eng->world,
 		(t_point_3d){0.f, fps->player.position.x
