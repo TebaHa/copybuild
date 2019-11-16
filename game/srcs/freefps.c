@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 19:14:01 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 16:44:06 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void		game_quit(t_game *fps)
 void		game_init_player(t_player *plr)
 {
 	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
-	plr->cursector = 1;
 	plr->angle = 0;
 	plr->sinangle = sinf(plr->angle);
 	plr->cosangle = cosf(plr->angle);
