@@ -28,7 +28,7 @@
 # define MAXSECTORS 64
 # define HFOV (1.0 * 0.63f * HEIGHT / WIDTH)
 # define VFOV (1.0 * 0.2f)
-# define CLION					0
+# define CLION					1
 # define TEXTURE_PACK_PATH		CLION ? "../game/resources/images/" : "./game/resources/images/"
 # define TEXTURE_SPRITE_PATH	CLION ? "../game/resources/sprites/" : "./game/resources/sprites/"
 # define SOUND_PATH				CLION ? "../game/resources/sounds/" : "./game/resources/sounds/"
@@ -258,6 +258,7 @@ typedef struct		s_int_4
 
 typedef struct		s_image
 {
+	char 			*name;
 	int				width;
 	int				height;
 	int				channels;

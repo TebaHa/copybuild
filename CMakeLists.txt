@@ -127,7 +127,15 @@ set(ENG_SRC
 		engine/srcs/render_background.c
 		engine/srcs/use.c
 		engine/srcs/engine_texture_scale_koef.c
-		engine/srcs/engine_wall_objects_init.c)
+		engine/srcs/engine_wall_objects_init.c
+		engine/srcs/engine_door_stack.c
+		engine/srcs/engine_render_twall_cycler.c
+		engine/srcs/engine_render_twall_help.c
+		engine/srcs/engine_render_twall_main.c
+		engine/srcs/engine_render_twall_main2.c
+		engine/srcs/engine_render_twalls.c
+		engine/srcs/engine_transprt_stack.c
+		engine/srcs/init_sectors.c)
 
 set(EDITOR_INC editor/includes/editor.h)
 set(EDITOR_SRC

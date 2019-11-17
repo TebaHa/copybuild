@@ -35,6 +35,7 @@ void		game_init_player(t_player *plr)
 	plr->controller.running = 4;
 	plr->controller.fakefall = 0;
 	plr->plr_state = P_IDLE;
+	plr->frame_num = 0;
 	plr->anim = 0;
 	plr->yaw = 0;
 	plr->shoot = 0;

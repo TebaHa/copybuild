@@ -29,6 +29,7 @@ void		image_load(t_image *img, const char *fname)
 	{
 		img->size = img->height * img->width * img->channels;
 		img->allocation_ = STB_ALLOCATED;
+		img->name = ft_strdup(fname);
 	}
 }
 
