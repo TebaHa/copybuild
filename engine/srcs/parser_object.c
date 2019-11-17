@@ -47,7 +47,7 @@ void		util_create_object(t_engine *eng, t_object *object,
 	object->portal = util_int10_data_filler(str[2], -1, 0xFFFF);
 	object->passble = util_int10_data_filler(str[3], 0, 1);
 	object->visible = util_int10_data_filler(str[4], 0, 1);
-	if (!ft_strcmp(str[5], "null"))
+	if (!ft_strcmp(str[5], "null") && object->portal >= 0)
 		object->polies_array->texture = NULL;
 	else
 		util_find_texture_by_name(&object->polies_array->texture, eng, &str[5], &object->polies_array->texture_spread);

@@ -1,0 +1,70 @@
+world:	1	1	0
+player:	99 1
+
+vertex:	99	2652	2644	200
+
+vertex:	0	2576	2204	300
+vertex:	1	2976	1804	300
+vertex:	2	3576	2204	300
+vertex:	3	3176	2804	300
+vertex:	4	2576	2804	300
+vertex:	5	2576	2204	300
+
+vertex:	6	3252	2220	300
+vertex:	7	3136	2096	300
+vertex:	8	2952	2080	300
+vertex:	9	2888	2184	300
+vertex:	10	2756	2356	300
+vertex:	11	2784	2552	300
+vertex:	12	2872	2624	300
+vertex:	13	3024	2616	300
+vertex:	14	3148	2460	300
+vertex:	15	3232	2400	300
+vertex:	16	3372	2308	300
+vertex:	17	3032	1952	300
+vertex:	18	2720	2708	300
+vertex:	19	3244	2540	300
+vertex:	20	2664	2288	300
+vertex:	21	2932	2300	300
+vertex:	22	2912	2352	300
+vertex:	23	2920	2368	300
+vertex:	24	2956	2376	300
+vertex:	25	2976	2376	300
+vertex:	26	2984	2360	300
+vertex:	27	2984	2324	300
+vertex:	28	2960	2312	300
+
+
+object:	0	-1	0	1	q_bricks_2 floor_wall	ceil_wall	0	1
+object:	1	-1	0	1	q_bricks_2 floor_wall	ceil_wall	1	2
+object:	2	-1	0	1	q_bricks_2 floor_wall	ceil_wall	2	3
+object:	3	-1	0	1	q_bricks_2 floor_wall	ceil_wall	3	4
+object:	4	-1	0	1	q_bricks_2 floor_wall	ceil_wall	4	0
+
+
+sobjct:	0	0	8	6
+sobjct:	1	0	8	7
+sobjct:	2	0	8	8
+sobjct:	3	0	8	9
+sobjct:	4	0	8	10
+sobjct:	5	0	8	11
+sobjct:	6	0	8	12
+sobjct:	7	0	8	13
+sobjct:	8	0	8	14
+sobjct:	9	0	8	15
+sobjct:	10	0	9	16
+sobjct:	11	0	9	17
+sobjct:	12	0	9	18
+sobjct:	13	0	9	19
+sobjct:	14	0	9	20
+sobjct:	15	0	4	21
+sobjct:	16	0	4	22
+sobjct:	17	0	4	23
+sobjct:	18	0	4	24
+sobjct:	19	0	4	25
+sobjct:	20	0	4	26
+sobjct:	21	0	4	27
+sobjct:	22	0	4	28
+
+
+sector: 0	0	675	q_floor_5	q_floor_3	0xFF0000	5	0 1 2 3 4

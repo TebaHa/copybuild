@@ -23,9 +23,9 @@ void	init_sectors(t_engine *eng)
 		sect = &eng->world->sectors_array[i];
 		sect->opening.id = i;
 		sect->opening.renderable = true;
-		sect->color.red = 1;
-		sect->color.green = 0.5;
-		sect->color.blue = 0.5;
+//		sect->color.red = 1;
+//		sect->color.green = 0.5;
+//		sect->color.blue = 0.5;
 		i++;
 	}
 }
