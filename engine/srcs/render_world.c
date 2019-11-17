@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 17:57:27 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/17 18:11:39 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void		engine_render_world_help(t_engine *eng, SDL_Surface *surf,
 			engine_render_wall(eng, surf, data, stacks);
 			i++;
 		}
-		data->prev = data->sect.sectorno;
 	}
 }
 
@@ -83,12 +82,15 @@ void		engine_render_world(t_engine *eng, t_player plr,
 	item_sprts, data.ytop, data.ybottom);
 	eng->world->sectors_array[data.sect.sectorno].
 	item_sprts.sect_id = data.sect;
+	data.rendered = stacks->rendered;
+	data.rendered[plr.cursector] = 1;
 	sprt_first_push(stacks,
 	&eng->world->sectors_array[data.sect.sectorno].item_sprts);
 	engine_render_world_help(eng, surf, &data, stacks);
 	engine_render_ts_objects(eng, ps, &data, stacks);
 	engine_clear_renderstack(stacks->renderstack);
 	engine_clear_tsrenderstack(stacks->helpstack);
+	ft_bzero(stacks->rendered, eng->stats.sectors_count);
 	SDL_UnlockSurface(surf);
 }
 

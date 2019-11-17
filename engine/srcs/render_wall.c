@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:19:23 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 16:32:38 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/17 18:05:26 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			*engine_render_wall_count_values(t_engine *eng,
 	floor - data->plr->position.z;
 	mdata->nyceil = 0;
 	mdata->nyfloor = 0;
-	if (data->portal >= 0 && data->prev != data->portal &&
+	if (data->portal >= 0 && data->rendered[data->portal] == 0 &&
 	eng->world->sectors_array[data->portal].opening.renderable == true)
 	{
 		mdata->nyceil = eng->world->sectors_array[data->portal].

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/05 19:38:28 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/17 17:52:58 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef	struct		s_game
 void				game_init_player(t_player *plr);
 void				game_quit(t_game *fps);
 int					game_thread_wrapper(void *ptr);
-void				game_init_threads(t_thread_pool *render_thread_pool);
+void				game_init_threads(t_thread_pool *render_thread_pool, int sectors);
 void				game_stop_threads(t_thread_pool	*render_thread,
 					int thread_count);
 void				game_threads_recount(t_game *fps);

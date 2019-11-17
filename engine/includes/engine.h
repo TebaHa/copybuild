@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 18:01:23 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/17 17:49:28 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -496,6 +496,7 @@ typedef struct		s_render_stacks
 {
 	t_item			*renderstack;
 	t_trns_item		helpstack[MAXSECTORS * 2];
+	char			*rendered;
 }					t_render_stacks;
 
 typedef	struct		s_world
@@ -694,6 +695,7 @@ typedef struct		s_wall_help2
 	int				portal;
 	t_item			sect;
 	int				obj_id;
+	char			*rendered;
 	int				prev;
 }					t_wall_help2;
 

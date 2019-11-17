@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:21:26 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/05 19:32:39 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 19:02:26 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	engine_draw_background(t_engine *eng,
 	dpix = (int *)surf->pixels;
 	sx = ((float)((float)eng->sky->w / 360)) * ((int)(plrangle * 180 / M_PI) % 360);
 	oy = ((((HEIGHT) / (400)) * ((yaw + 3.0) * 100)));
-	while (x <= WIDTH)
+	while (x < WIDTH)
 	{
-		if (sx > WIDTH - 3)
+		if (sx >= WIDTH)
 			sx = 0;
 		y = 0;
 		sy = oy;
-		while (y <= HEIGHT && sy < eng->sky->h)
+		while (y < HEIGHT - 1 && sy < eng->sky->h - 1)
 		{
 			red = ((unsigned char *)spix)
 			[((sy * eng->sky->w + sx) * 4)];

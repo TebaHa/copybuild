@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:10:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 17:06:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/17 17:56:34 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			game_thread_wrapper(void *ptr)
 	return (fps->thread_num);
 }
 
-void		game_init_threads(t_thread_pool *render_thread_pool)
+void		game_init_threads(t_thread_pool *render_thread_pool, int sectors)
 {
 	int		i;
 
@@ -36,6 +36,9 @@ void		game_init_threads(t_thread_pool *render_thread_pool)
 		(unsigned int)0x000000ff);
 		render_thread_pool[i].ren_stacks.renderstack
 		= (t_item *)ft_memalloc(sizeof(t_item) * MAXSECTORS);
+		render_thread_pool[i].ren_stacks.rendered
+		= (char *)ft_memalloc(sizeof(char) * sectors);
+		ft_bzero(render_thread_pool[i].ren_stacks.rendered, sectors);
 		engine_clear_renderstack(render_thread_pool[i].ren_stacks.renderstack);
 		engine_clear_tsrenderstack(render_thread_pool[i].
 		ren_stacks.helpstack);

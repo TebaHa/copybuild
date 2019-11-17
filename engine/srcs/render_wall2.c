@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:21:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 17:58:41 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/17 18:10:15 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,19 @@ void			engine_render_wall_pusher(t_engine *eng, t_wall_help2 *data,
 	trs_item.sprite_renderstack = NULL;
 	if (data->polygone->texture != NULL)
 		engine_push_tsrenderstack(stacks->helpstack, trs_item);
-	engine_push_renderstack(stacks->renderstack,
-	(t_item){data->portal, mdata->beginx, mdata->endx});
-	eng->world->sectors_array[data->portal].item_sprts.sect_id = (t_item)
-	{data->portal, mdata->beginx, mdata->endx};
-	one_dim_zbuffers_copy(&eng->world->sectors_array[data->portal].item_sprts,
-	data->ytop, data->ybottom);
-	trs_item.sprite_renderstack = &eng->world->sectors_array[data->portal].item_sprts;
-	engine_push_tsrenderstack(stacks->helpstack,
-	trs_item);
+	if (data->rendered[data->portal] == 0)
+	{
+		engine_push_renderstack(stacks->renderstack,
+		(t_item){data->portal, mdata->beginx, mdata->endx});
+		eng->world->sectors_array[data->portal].item_sprts.sect_id = (t_item)
+		{data->portal, mdata->beginx, mdata->endx};
+		one_dim_zbuffers_copy(&eng->world->sectors_array[data->portal].item_sprts,
+		data->ytop, data->ybottom);
+		trs_item.sprite_renderstack = &eng->world->sectors_array[data->portal].item_sprts;
+		engine_push_tsrenderstack(stacks->helpstack,
+		trs_item);
+		data->rendered[data->portal] = 1;
+	}
 }
 
 void			engine_render_particles_wall(t_engine *eng, SDL_Surface *surf,

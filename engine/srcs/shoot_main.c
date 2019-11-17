@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 21:14:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 17:38:38 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 19:11:11 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	shoot_help2(t_shoot_data *d)
 
 int		shoot_help3(t_shoot_data *d, t_engine *eng, t_player *plr)
 {
+	if (d->sect->objects_array[d->i].polies_array[0].texture != NULL)
+		return (1);
 	if ((d->int_p.z < eng->world->sectors_array
 	[d->sect->objects_array[d->i].portal].floor && d->int_p.z > d->sect->floor)
 	|| (d->int_p.z > eng->world->sectors_array

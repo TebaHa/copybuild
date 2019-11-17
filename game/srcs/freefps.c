@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 16:44:06 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/17 17:55:53 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void		game_init_player(t_player *plr)
 	plr->plr_state = P_IDLE;
 	plr->anim = 0;
 	plr->yaw = 0;
+	plr->frame_num = 0;
 	plr->shoot = 0;
 	plr->delay = 3;
 	plr->armor = 100;
@@ -57,7 +58,7 @@ void		game_init(t_game *fps, int argc, char **argv)
 	prepare_polygones(fps->eng);
 	wall_objects_init(fps->eng);
 	init_sectors(fps->eng);
-	game_init_threads(fps->render_thread_pool);
+	game_init_threads(fps->render_thread_pool, fps->eng->stats.sectors_count);
 	game_init_player(&fps->player);
 	SDL_ShowCursor(SDL_DISABLE);
 	fps->logic.duck_shift = 0;

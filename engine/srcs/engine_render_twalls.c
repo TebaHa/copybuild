@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 15:14:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 17:41:01 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/16 19:22:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	engine_render_ts_objects(t_engine *eng, t_surf_and_plr ps,
 	t_sector		*sect;
 	t_sprobject		*aimed;
 
-	aimed = NULL;
 	eng->aim = NULL;
 	while (((item = engine_pop_tsrenderstack(
 	stacks->helpstack)).status != 0))
