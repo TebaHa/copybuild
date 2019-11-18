@@ -216,7 +216,7 @@ object:	611	-1		0		1	q_wall		s_tile			ceiling		61 53
 object:	632	5		1		1	null		s_tile			ceiling		53 52
 
 object:	701	-1		0		1	q_bricks_1	s_tile			ceiling		70 71
-object:	711	9		1		1	q_bricks_1	s_tile			ceiling		71 74
+object:	711	9		0		1	q_bricks_1	s_tile			ceiling		71 74
 object:	741	-1		0		1	q_bricks_1	s_tile			ceiling		74 75
 object:	751	12		1		1	null		q_ceil_wall_4	ceiling		75 76
 object:	761	-1		0		1	q_bricks_1	s_tile			ceiling		76 77
