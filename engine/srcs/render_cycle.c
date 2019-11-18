@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:39:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/17 17:44:14 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/18 19:16:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void				engine_render_wall_cycle_4(t_wall_clinks *l)
 	l->data->ytop[l->cycler->x], l->data->ybottom[l->cycler->x]);
 	engine_vline_textured(l->surf, (t_scaler)scaler_init((float[5])
 	{l->mdata->ya, l->mdata->cya, l->mdata->yb,
-	0, l->data->polygone->tex_scale_koef}),
+	0, l->eng->world->sectors_array[l->data->sect.sectorno]
+	.objects_array[l->data->obj_id].ceil_wall_texture->height - 1}),
 	(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya, 0},
 	(t_fix_point_3d){l->cycler->x,
 	l->mdata->cnya, 0}, color, l->mdata->txtx},
@@ -106,7 +107,9 @@ void				engine_render_wall_cycle_3(t_wall_clinks *l)
 
 	color = l->eng->world->sectors_array[l->data->sect.sectorno].color;
 	if (l->data->portal >= 0)
+	{
 		engine_render_wall_cycle_4(l);
+	}
 	else
 	{
 		engine_vline_textured(l->surf, (t_scaler)scaler_init((float[5])

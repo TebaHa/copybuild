@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 18:58:51 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 15:15:26 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/18 18:56:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,14 @@ void	prepare_polygones(t_engine *eng)
 				{
 					s->objects_array[j].polies_array[0].tex_scale_koef
 					= s->objects_array[j].polies_array[0].texture->height
-					/ s->objects_array[j].polies_array[0].texture_spread;
+					* s->objects_array[j].polies_array[0].texture_spread;
 				}
+			}
+			else
+			{
+				if (s->objects_array[j].ceil_wall_spread == 0)
+					s->objects_array[j].polies_array[0].tex_scale_koef =
+					64;
 			}
 			j++;
 		}

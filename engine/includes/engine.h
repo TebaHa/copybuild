@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/17 17:49:28 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/18 19:11:59 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -482,6 +482,7 @@ typedef struct		s_twall_item
 {
 	t_item_sprts	*sx;
 	t_object		*obj;
+	t_color			color;
 }					t_twall_item;
 
 typedef struct		s_trns_item
@@ -697,6 +698,7 @@ typedef struct		s_wall_help2
 	int				obj_id;
 	char			*rendered;
 	int				prev;
+	t_color			color;
 }					t_wall_help2;
 
 typedef struct		s_wall_help3

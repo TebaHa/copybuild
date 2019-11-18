@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 15:14:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 19:22:25 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/18 19:13:01 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	engine_render_ts_objects(t_engine *eng, t_surf_and_plr ps,
 		{
 			data->polygone = item.trnsprtstack.obj->polies_array;
 			data->sect.sectorno = item.trnsprtstack.sx->sect_id.sectorno;
+			data->color = item.trnsprtstack.color;
 			data->sect = item.trnsprtstack.sx->sect_id;
 			data->tybottom = item.trnsprtstack.sx->ybottom;
 			data->tytop = item.trnsprtstack.sx->ytop;
