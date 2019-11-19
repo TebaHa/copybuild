@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/17 18:09:46 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/18 22:16:30 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ GAME_SRCS_LIST =	freefps.c \
 					parser_filename.c \
 					parser_game.c \
 					parser_menu.c \
+					run_controller.c \
 
 SDL = $(SDL_DIRECTORY)libmlx.a
 SDL_DIRECTORY = ./lib/sdl2/
@@ -158,6 +159,32 @@ PARSER_SRCS_LIST =	parser_button.c \
 					parser.c \
 					parser_wallobjects.c \
 
+EDITOR_FILES =		editor.c \
+					draw.c \
+					redraw.c \
+					draw_sidebar.c \
+					draw_buttons0.c \
+					draw_buttons1.c \
+					draw_buttons2.c \
+					draw_input_field.c \
+					draw_headline.c \
+					draw_grid.c \
+					init_grid.c \
+					bigloop.c \
+					clicks.c \
+					take_a_lap.c \
+					remover.c \
+					reset.c \
+					put_stuff.c \
+					commands.c \
+					utils.c \
+					init.c \
+					check_intersection.c \
+					save_map.c \
+					save_utils.c \
+					write_to_file.c \
+					write_vertexes.c
+
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
 
@@ -174,6 +201,16 @@ ENGINE_OBJS = $(addprefix $(ENGINE_OBJS_DIRECTORY), $(ENGINE_OBJS_LIST))
 
 ENGINE_OBJS_LIST = $(patsubst %.c, %.o, $(ENGINE_SRCS_LIST))
 
+HEADERS_DIRECTORY_EDITOR = ./editor/includes
+HEADERS_EDITOR_EDITOR  = $(HEADERS_DIRECTORY_EDITOR)/editor.h
+
+OBJ_FILES_EDITOR = $(patsubst %.c, %.o, $(EDITOR_FILES))
+
+OBJ_DIRECTORY = ./editor/objects/
+OBJ_DIRECTORY_EDITOR = $(OBJ_DIRECTORY)editor/
+
+OBJ_EDITOR_FILES = $(addprefix $(OBJ_DIRECTORY_EDITOR), $(OBJ_FILES_EDITOR))
+
 GREEN = \033[0;32m
 RED = \033[0;31m
 RESET = \033[0m
@@ -181,7 +218,8 @@ RESET = \033[0m
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(ENGINE_OBJS_DIRECTORY) $(ENGINE_OBJS) $(GAME_OBJS_DIRECTORY) $(GAME_OBJS)
-	@$(CC) $(FLAGS) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) $(SDL_INCLUDES) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
+	@$(MAKE) -sC ./editor
+	@$(CC) $(FLAGS) -o $(NAME) $(GAME_OBJS) $(ENGINE_OBJS) $(OBJ_EDITOR_FILES) -I $(HEADERS_DIRECTORY_EDITOR) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) $(SDL_INCLUDES) -I $(SDL_MIXER_FOLDER) $(LIBFT) -L $(SDL_LIB) -lSDL2 -L $(SDL_TTF_LIB) -lSDL2_ttf -L $(SDL_MIXER_LIB) -lSDL2_mixer
 	@echo "\n$(GREEN)DoomNukem created$(RESET)"
 
 $(ENGINE_OBJS_DIRECTORY):
@@ -197,7 +235,7 @@ $(GAME_OBJS_DIRECTORY):
 	@echo "$(NAME): $(GAME_OBJS_DIRECTORY) was created"
 
 $(GAME_OBJS_DIRECTORY)%.o: $(GAME_SRCS_DIRECTORY)%.c $(GAME_HEADERS)
-	@$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(LIBFT_DIRECTORY_HEADERS) $(SDL_INCLUDES) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
+	$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(HEADERS_DIRECTORY_EDITOR) -I $(LIBFT_DIRECTORY_HEADERS) $(SDL_INCLUDES) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
 	@echo -n '.'
 
 $(LIBFT):

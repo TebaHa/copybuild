@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:30:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 18:50:38 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/18 22:15:04 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	game_buttons_control_down_main(t_game *fps)
 	if (fps->eng->event.type == SDL_KEYDOWN)
 	{
 		game_buttons_control_down1(fps);
-		if (fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
-			game_quit(fps);
 		game_buttons_control_down2(fps);
 		game_buttons_control_down3(fps);
 	}

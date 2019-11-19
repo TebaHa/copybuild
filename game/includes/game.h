@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/17 17:52:58 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/18 21:56:27 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define DUCK_HEIGHT 2.5
 # define KNEE_HEIGHT 10
 # include <engine.h>
+# include <editor.h>
 
 typedef enum		e_menu_section
 {
@@ -87,14 +88,24 @@ typedef struct		s_menu
 	t_menu_element	*element[ME_ELEMENTS_NUM];
 }					t_menu;
 
+typedef struct		s_controller
+{
+	t_bool			editor;
+	t_bool			menu;
+	t_bool			game;
+	t_bool			work;
+}					t_controller;
+
 typedef	struct		s_game
 {
+	t_sdl			*editor;
 	t_engine		*eng;
 	t_menu			*menu;
 	t_player		player;
 	int				thread_num;
 	t_thread_pool	render_thread_pool[THREAD_POOL_SIZE];
 	t_game_logic	logic;
+	t_controller	work;
 }					t_game;
 
 void				game_init_player(t_player *plr);
@@ -142,5 +153,6 @@ int					check_button(int x, int y,
 					t_fix_point_2d pos_a, t_fix_point_2d pos_b);
 void				game_find_button(t_game *fps);
 void				run_game(t_game *fps);
+void				run_controller(t_game *fps);
 
 #endif

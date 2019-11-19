@@ -6,18 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:49:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 15:13:13 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/18 22:46:51 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
-
-void		game_menu_quit(t_game *fps)
-{
-	SDL_Delay(50);
-	engine_sdl_uninit(fps->eng);
-	close_game(0);
-}
 
 void	game_render_menu(t_menu *menu, SDL_Surface *surf)
 {
@@ -92,6 +85,8 @@ int		check_button_pushed(t_game *fps)
 		game_menu_author(fps);
 	else if (fps->menu->mouseover_section == M_BACK)
 		game_menu_mainframe(fps);
+	else if (fps->menu->mouseover_section == M_EDITOR)
+		return (1);
 	else if (fps->menu->mouseover_section == M_EXIT)
 		return (1);
 	return (0);
@@ -100,15 +95,25 @@ int		check_button_pushed(t_game *fps)
 void	apply_button(t_game *fps)
 {
 	if (fps->menu->mouseover_section == M_LOAD_MAP)
-		run_game(fps);
+	{
+		fps->work.menu = false;
+		fps->work.game = true;
+		fps->work.editor = false;
+	}
+	else if (fps->menu->mouseover_section == M_EDITOR)
+	{
+		fps->work.editor = true;
+		fps->work.game = false;
+		fps->work.menu = false;
+	}
 	else if (fps->menu->mouseover_section == M_EXIT)
-		game_menu_quit(fps);
+		game_quit(fps);
 }
 
 void	game_menu_main(t_game *fps)
 {
 	SDL_ShowCursor(SDL_ENABLE);
-	while (1)
+	while (fps->work.menu == true)
 	{
 		SDL_GetMouseState(&fps->eng->x, &fps->eng->y);
 		game_find_button(fps);
@@ -116,11 +121,17 @@ void	game_menu_main(t_game *fps)
 		if (SDL_PollEvent(&fps->eng->event))
 		{
 			if (fps->eng->event.type == SDL_QUIT)
-				game_menu_quit(fps);
+			{
+				game_quit(fps);
+				break ;
+			}
 			if (fps->eng->event.type == SDL_KEYDOWN)
 			{
 				if (fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
-				game_menu_quit(fps);
+				{
+					game_quit(fps);
+					break ;
+				}
 			}
 			if (fps->eng->event.button.type == SDL_MOUSEBUTTONDOWN)
 				if (fps->eng->event.button.button == SDL_BUTTON_LEFT)
@@ -128,7 +139,7 @@ void	game_menu_main(t_game *fps)
 						break;
 		}
 		engine_render_frame(fps->eng,
-		fps->render_thread_pool[fps->logic.thread_end_index].surface);
+		fps->render_thread_pool[0].surface);
 		engine_present_and_clear_frame(fps->eng);
 	}
 	apply_button(fps);

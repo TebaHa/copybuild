@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 00:57:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/02 02:05:23 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/19 05:31:15 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		engine_create_engine_resources(t_engine *eng)
 	eng_create_items(eng);
 	eng_create_enemies(eng);
 	eng_create_buttons(eng);
-	eng_create_background_music(eng);
+	//eng_create_background_music(eng);
 }
 
 void		engine_create_world_from_file(t_engine *eng, t_player *plr,

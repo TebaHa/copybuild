@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/17 17:55:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/19 05:28:38 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 void		game_quit(t_game *fps)
 {
+	fps->work.work = false;
 	SDL_Delay(50);
-	game_stop_threads(fps->render_thread_pool,
-	THREAD_POOL_SIZE);
-	engine_sdl_uninit(fps->eng);
-	close_game(0);
 }
 
 void		game_init_player(t_player *plr)
@@ -60,6 +57,7 @@ void		game_init(t_game *fps, int argc, char **argv)
 	init_sectors(fps->eng);
 	game_init_threads(fps->render_thread_pool, fps->eng->stats.sectors_count);
 	game_init_player(&fps->player);
+	fps->editor = init_editor();
 	SDL_ShowCursor(SDL_DISABLE);
 	fps->logic.duck_shift = 0;
 	fps->logic.thread_end_index = 0;
@@ -69,10 +67,17 @@ void		game_init(t_game *fps, int argc, char **argv)
 	fps->logic.yaw = 0;
 	fps->eng->x = 0;
 	fps->eng->y = 0;
+	fps->work.editor = false;
+	fps->work.menu = true;
+	fps->work.game = false;
+	fps->work.work = true;
 }
 
 void		run_game(t_game *fps)
 {
+	fps->logic.thread_end_index = 0;
+	fps->logic.thread_start_index = 0;
+	fps->logic.init = 0;
 	while (1)
 	{
 		SDL_ShowCursor(SDL_DISABLE);
@@ -82,6 +87,12 @@ void		run_game(t_game *fps)
 			sound_player_control(&fps->player);
 			if (fps->eng->event.type == SDL_QUIT)
 				game_quit(fps);
+			if (fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
+			{
+				game_stop_threads(fps->render_thread_pool,
+				THREAD_POOL_SIZE);
+				break ;
+			}
 			game_buttons_control_up_main(fps);
 			game_buttons_control_down_main(fps);
 		}
@@ -92,6 +103,7 @@ void		run_game(t_game *fps)
 		game_threads_recount(fps);
 		SDL_Delay(3);
 	}
+
 }
 
 int			main(int argc, char **argv)
@@ -99,6 +111,6 @@ int			main(int argc, char **argv)
 	t_game			fps;
 
 	game_init(&fps, argc, argv);
-	game_menu_main(&fps);
+	run_controller(&fps);
 	return (0);
 }
