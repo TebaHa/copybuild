@@ -40,6 +40,7 @@ typedef enum		e_menu_section
 typedef enum		e_menu_element_enum
 {
 	ME_AUTHORS,
+	ME_ENDGAME,
 	ME_ELEMENTS_NUM
 }					t_menu_element_enum;
 
@@ -144,6 +145,7 @@ void				game_render_menu(t_menu *menu, SDL_Surface *surf);
 void				game_menu_main(t_game *fps);
 void 				game_menu_author(t_game *fps);
 void 				game_menu_mainframe(t_game *fps);
+void 				game_menu_endgame(t_game *fps);
 void				game_menu_quit(t_game *fps);
 void				parser_game(t_game *fps, int argc, char **argv);
 void				game_create_resources_from_file(t_game *fps);

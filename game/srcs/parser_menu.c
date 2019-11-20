@@ -52,4 +52,8 @@ void		eng_create_menu(t_game *fps)
 	fps->menu->element[ME_AUTHORS]->position = (t_fix_point_2d){332, 180};
 	fps->menu->element[ME_AUTHORS]->sprite = util_create_sprite_by_name(fps->eng, "m_authors");
 	fps->menu->element[ME_AUTHORS]->active = false;
+	fps->menu->element[ME_ENDGAME] = (t_menu_element *)ft_memalloc(sizeof(t_menu_element));
+	fps->menu->element[ME_ENDGAME]->position = (t_fix_point_2d){332, 180};
+	fps->menu->element[ME_ENDGAME]->sprite = util_create_sprite_by_name(fps->eng, "m_endgame");
+	fps->menu->element[ME_ENDGAME]->active = false;
 }

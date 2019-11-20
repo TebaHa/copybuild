@@ -154,6 +154,7 @@ void 	game_menu_author(t_game *fps)
 	fps->menu->button[M_EXIT]->active = false;
 	fps->menu->button[M_BACK]->active = true;
 	fps->menu->element[ME_AUTHORS]->active = true;
+	fps->menu->element[ME_ENDGAME]->active = false;
 }
 
 void 	game_menu_mainframe(t_game *fps)
@@ -165,4 +166,17 @@ void 	game_menu_mainframe(t_game *fps)
 	fps->menu->button[M_EXIT]->active = true;
 	fps->menu->button[M_BACK]->active = false;
 	fps->menu->element[ME_AUTHORS]->active = false;
+	fps->menu->element[ME_ENDGAME]->active = false;
+}
+
+void 	game_menu_endgame(t_game *fps)
+{
+	fps->menu->button[M_STORY]->active = false;
+	fps->menu->button[M_LOAD_MAP]->active = false;
+	fps->menu->button[M_EDITOR]->active = false;
+	fps->menu->button[M_AUTHOR]->active = false;
+	fps->menu->button[M_EXIT]->active = true;
+	fps->menu->button[M_BACK]->active = false;
+	fps->menu->element[ME_AUTHORS]->active = false;
+	fps->menu->element[ME_ENDGAME]->active = true;
 }
