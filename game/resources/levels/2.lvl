@@ -1,0 +1,132 @@
+Map
+#Worlds
+#		id, num of sects,	sectors, background (image)
+world:	1	4				0 1 2 3
+
+#Vertexes
+#		angle,	vertex
+player: 0		99
+
+#Vertexes
+#		id	X,		Y,		Z
+vertex: 99	-400	-100 	200
+
+vertex: 59	-460	-100	200
+vertex: 58	-450	100		200
+
+vertex: 57	633		-233	200
+vertex: 56	-750	100		200
+vertex: 55	100		100		200
+vertex: 54	900		-250	200
+
+vertex: 53	-1266	-466	200
+vertex: 52	700		100		200
+vertex: 51	-280	-100	200
+vertex: 50	-600	-300	200
+
+vertex: 49	-633	-233	200
+vertex: 48	350		50		200
+vertex: 47	-160	-50		200
+vertex: 46	-300	-150	200
+
+vertex: 45	-500	200		200
+vertex: 44	300		-50		200
+vertex: 43	130		50		200
+vertex: 42	300		-100	200
+
+vertex: 41	-500	-200	200
+vertex: 40	300		50		200
+vertex: 39	-130	-50		200
+vertex: 38	-300	100		200
+
+
+vertex: 28 -600		-300	200
+vertex: 29 -1500		-900	200
+vertex: 30 -1500		-900	200
+vertex: 31 -1800		-300	200
+vertex: 32 -1800		-300	200
+vertex: 33 -1500		0		200
+vertex: 34 -1500		0		200
+vertex: 35 -600 	-300	200
+
+vertex: 20 -600 	300 	200
+vertex: 21 -1500		900		200
+vertex: 22 -1500		900		200
+vertex: 23 -1800		300		200
+vertex: 24 -1800		300		200
+vertex: 25 -1500		0		200
+vertex: 26 -1500		0		200
+vertex: 27 -600		300		200
+
+vertex: 19	1500		300		200
+vertex: 18	1500		0		200
+vertex: 17	1500		0		200
+vertex: 16	1500		-300	200
+vertex: 15	1500		-300	200
+vertex: 14	0		-300	200
+vertex: 13	0		-300	200
+vertex: 12	0		300		200
+vertex: 11	0		300		200
+vertex: 10	1500	300		200
+
+vertex: 9	-600	300		0
+vertex: 8	0		300		0
+vertex: 7	0		300		0
+vertex: 6	0		-300	0
+vertex: 5	0		-300	0
+vertex: 4	-600	-300	0
+vertex: 3	-600	-300	0
+vertex: 2	-1500	0		0
+vertex: 1	-1500	0		0
+vertex: 0	-600	300		0
+
+#Objects
+#			(if >= 0 where goes)
+#		id,	port, pasble, visble, texture,	floor_wall,		ceil_wall,	id of vert
+object:	0	-1		0		1	q_bricks_2	bricks			bricks		10 11
+object:	1	1		1		1	null		q_floor_wall	q_floor_2	12 13
+object:	2	-1		0		1	q_bricks_2	bricks			q_ceil_wall_4	14 15
+object:	3	-1		0		1	q_bricks_2	bricks			q_ceil_wall_4	16 17
+object:	4	-1		0		1	q_bricks_2	bricks			q_ceil_wall_4	18 19
+
+object:	5	2		1		1	null		q_floor_wall	q_ceil_wall_4	0 1
+object:	6	3		1		1	null		q_floor_wall	q_ceil_wall_4	2 3
+object:	7	-1		0		1	q_bricks_3	bricks			q_ceil_wall_4	4 5
+object:	8	0		1		1	null		q_floor_wall	q_floor_wall	6 7
+object:	9	-1		0		1	q_bricks_3	bricks			q_ceil_wall_4	8 9
+
+object:	10	-1		0		1	q_plate		bricks			q_ceil_wall_4	20 21
+object:	11	-1		0		1	q_plate		bricks			q_ceil_wall_4	22 23
+object:	12	-1		0		1	q_plate		bricks			q_ceil_wall_4	24 25
+object:	13	1		1		1	null		q_floor_wall	q_ceil_wall_4	26 27
+
+object:	14	-1		0		1	q_wall		bricks			q_ceil_wall_4	29 28
+object:	15	-1		0		1	q_wall		bricks			q_ceil_wall_4	31 30
+object:	16	-1		0		1	q_wall		bricks			q_ceil_wall_4	33 32
+object:	17	1		1		1	null		q_floor_wall	q_ceil_wall_4	35 34
+
+
+#Sprites objects	(types from t_enm_type)
+#		id,	angle,	type,	vert
+sobjct:	0	0		7		38
+sobjct:	1	0		7		39
+sobjct:	2	0		7		40
+sobjct:	3	0		7		41
+sobjct:	4	0		7		42
+sobjct:	5	0		7		43
+sobjct:	6	0		7		44
+sobjct:	7	0		7		45
+sobjct:	8	0		7		46
+sobjct:	9	0		7		47
+
+#Wall objects	(types from t_button_type)
+#		id,	type,	object, height,	%position,	tar_sect,	req keys (red, blue, yellow)
+wobjct:	0	0		16		200		50			1			0 0 0
+wobjct:	1	1		4		200		50			3			0 0 0
+
+#Sectors
+#		id,	floor,	ceil,	floor_texture,	ceil_texture, glow,	#objs, id of obj
+sector:	0	0		500		q_floor_vent	q_floor_2	0xFF0000	5	0 1 2 3 4
+sector:	1	0		600		q_floor			q_floor_2	0xFF0000	5	5 6 7 8 9
+sector:	2	-25		715		q_floor_5		q_floor_2	0xFF0000	4	10 11 12 13
+sector:	3	25		615		q_floor			q_floor_2	0xFF0000	4	14 15 16 17
