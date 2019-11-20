@@ -159,6 +159,7 @@ PARSER_SRCS_LIST =	parser_button.c \
 					parser.c \
 					parser_wallobjects.c \
 
+
 EDITOR_FILES =		editor.c \
 					draw.c \
 					redraw.c \

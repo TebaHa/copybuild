@@ -1156,7 +1156,11 @@ void				util_parsing_error_wrong_crc(void);
 **	Resources parsing functions start
 */
 
-void				engine_create_resources_from_file(t_engine *eng);
+void				engine_pack_resources(int loudness, int cleaning);
+void				engine_unpack_resources(int loudness, int cleaning);
+void				engine_remove_resources_folder(int loudness);
+void				engine_remove_resources_pack(int loudness);
+
 void				engine_create_engine_resources(t_engine *eng);
 
 void				eng_create_hud(t_engine *eng);
@@ -1190,9 +1194,6 @@ void				eng_create_button_door(t_engine *eng);
 void				eng_create_button_finish(t_engine *eng);
 void				eng_create_button_reset(t_engine *eng);
 
-t_sprite			*util_get_sprite_from_buff_by_name(char *name,
-					t_txtr_pkg *buff,
-					int size);
 char				*util_add_png_to_name(char *old_name);
 char				*util_add_png_num_to_name(char *old_name, int num);
 t_sprite			*util_create_sprite_by_name(t_engine *eng, char *str);
@@ -1206,16 +1207,10 @@ Mix_Chunk			*sound_init(char *name);
 char				*util_add_wav_to_name(char *old_name);
 void				sound_play(Mix_Chunk *sound_name, t_sound_ch channel);
 void				sound_shoot(t_player *plr);
-void				sound_free(t_engine *eng);
 void				sound_player_control(t_player *plr);
 void				eng_create_background_music(t_engine *eng);
 
 void				infinite_loop(void);
-
-void				engine_unpack_resources(int loudness, int cleaning);
-void				engine_pack_resources(int loudness, int cleaning);
-void				engine_remove_resources_folder(int loudness);
-void				engine_remove_resources_pack(int loudness);
 
 /*
 **	Resources parsing functions end
@@ -1289,13 +1284,6 @@ t_point_3d			util_get_vertex_from_buff_by_id(int id, int size,
 					t_point_3d *vertexes, int polygone_id);
 void				util_find_repeats_in_vertexes(t_point_3d *vertex, int vertexes_count);
 
-t_polygone			*engine_read_polygones_from_file(t_engine *eng,
-					t_buff buff);
-void				util_create_polygone(t_engine *eng, t_polygone *polygone,
-					t_point_3d *vertex_array, char **str);
-t_polygone			util_get_polygone_from_buff_by_id(int id, int size,
-					t_polygone *polies, int object_id);
-
 t_object			*engine_read_objects_from_file(t_engine *eng, t_buff *buff);
 void				util_create_object(t_engine *eng, t_object *object,
 					t_buff *buff, char **str);
@@ -1336,11 +1324,6 @@ char				*ft_strcut(char **s, char c);
 void				util_parsing_error_no_texture(t_image **dst, t_engine *eng,
 					char *name);
 
-t_sprite			*engine_read_sprites_from_file(t_engine *eng, t_buff buff);
-void				util_create_sprite(t_engine *eng,
-					t_sprite *sprite, char **str);
-void				util_create_sprite_with_num(t_engine *eng, t_sprite *sprite,
-					char **str, int srfc_count);
 void				util_find_sprite_by_name(SDL_Surface **dst, t_engine *eng,
 					char *name);
 void				util_parsing_error_no_sprite(SDL_Surface

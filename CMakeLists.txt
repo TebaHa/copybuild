@@ -127,7 +127,7 @@ set(ENG_SRC
 		engine/srcs/render_background.c
 		engine/srcs/use.c
 		engine/srcs/engine_texture_scale_koef.c
-		engine/srcs/engine_wall_objects_init.c)
+		engine/srcs/engine_wall_objects_init.c engine/srcs/checksum_errors.c)
 
 set(EDITOR_INC editor/includes/editor.h)
 set(EDITOR_SRC
