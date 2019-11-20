@@ -80,7 +80,7 @@ sobjct:	0	90		0		70
 sobjct:	1	90		1		71
 sobjct:	2	90		2		72
 sobjct:	3	90		1		73
-sobjct:	4	90		6		74
+sobjct:	4	90		10		74
 sobjct:	5	90		6		75
 sobjct:	6	90		6		76
 sobjct:	7	90		5		77
@@ -89,12 +89,12 @@ sobjct:	9	180		8		79
 sobjct:	10	180		9		80
 
 #Wall objects	(types from t_button_type)
-#		id,	type,	object, height,	%position,	target_sector
-wobjct:	0	0		16		150		70			1
-wobjct:	1	1		4		150		70			3
-wobjct:	2	2		0		150		70			1
-wobjct:	3	1		8		150		70			2
-wobjct:	4	1		12		150		70			1
+#		id,	type,	object, height,	%position,	tar_sect,	req keys (red, blue, yellow)
+wobjct:	0	0		16		150		70			1			0 0 0
+wobjct:	1	1		4		150		70			3			0 0 0
+wobjct:	2	2		0		150		70			1			0 0 0
+wobjct:	3	1		8		150		70			2			0 0 0
+wobjct:	4	1		12		150		70			1			0 0 0
 
 #Sectors
 #		id, render_ceil(true, false),	floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,

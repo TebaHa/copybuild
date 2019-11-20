@@ -120,9 +120,9 @@ sobjct:	8	0		7		46
 sobjct:	9	0		7		47
 
 #Wall objects	(types from t_button_type)
-#		id,	type,	object, height,	%position,	target_sector
-wobjct:	0	0		16		200		50			1
-wobjct:	1	1		4		200		50			3
+#		id,	type,	object, height,	%position,	tar_sect,	req keys (red, blue, yellow)
+wobjct:	0	0		16		200		50			1			0 0 0
+wobjct:	1	1		4		200		50			3			0 0 0
 
 #Sectors
 #		id,	floor,	ceil,	floor_texture,	ceil_texture, glow,	#objs, id of obj

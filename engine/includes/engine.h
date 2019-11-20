@@ -258,6 +258,7 @@ typedef struct		s_int_4
 
 typedef struct		s_image
 {
+	char 			*name;
 	int				width;
 	int				height;
 	int				channels;
@@ -365,6 +366,9 @@ typedef struct		s_wobj
 	int 			height;
 	int 			position;
 	int				sector_id;
+	t_bool			red_key;
+	t_bool			blue_key;
+	t_bool			yellow_key;
 }					t_wobj;
 
 typedef struct		s_enemy

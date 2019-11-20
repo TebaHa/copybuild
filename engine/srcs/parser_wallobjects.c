@@ -37,8 +37,8 @@ t_wobj			*engine_read_wallobjects_from_file(t_engine *eng, t_buff buff)
 void			util_create_wallobject(t_engine *eng, t_wobj *wallobject,
 				char **str)
 {
-	util_parsing_error_little_data_check("wall object", str, 6);
-	util_parsing_error_count_handler("wall object", str, 6);
+	util_parsing_error_little_data_check("wall object", str, 9);
+	util_parsing_error_count_handler("wall object", str, 9);
 	wallobject->id = util_int10_data_filler(str[1], 0, 10000);
 	wallobject->enum_type = util_int10_data_filler(str[2], 0, BUTTON_NUM - 1);
 	wallobject->type = eng->button[wallobject->enum_type];
@@ -46,5 +46,8 @@ void			util_create_wallobject(t_engine *eng, t_wobj *wallobject,
 	wallobject->height = util_int10_data_filler(str[4], 0, 10000);
 	wallobject->position = util_int10_data_filler(str[5], 0, 100);
 	wallobject->sector_id = util_int10_data_filler(str[6], 0, 10000);
+	wallobject->red_key = util_int10_data_filler(str[7], 0, 1);
+	wallobject->blue_key = util_int10_data_filler(str[8], 0, 1);
+	wallobject->yellow_key = util_int10_data_filler(str[9], 0, 1);
 	eng->stats.wallobjects_count++;
 }
