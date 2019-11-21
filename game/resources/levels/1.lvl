@@ -77,14 +77,14 @@ object:	19	-1		0		1	q_bricks_3		floor_wall		ceiling		15 19
 #Sprites objects	(types from t_enm_type)
 #		id,	angle,	type,	vert
 sobjct:	0	90		0		70
-sobjct:	1	90		1		71
+sobjct:	1	90		13		71
 sobjct:	2	90		2		72
 sobjct:	3	90		1		73
 sobjct:	4	90		10		74
 sobjct:	5	90		6		75
-sobjct:	6	90		6		76
+sobjct:	6	90		12		76
 sobjct:	7	90		5		77
-sobjct:	8	180		7		78
+sobjct:	8	180		11		78
 sobjct:	9	180		8		79
 sobjct:	10	180		9		80
 

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 19:17:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/12 23:37:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 22:20:36 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,17 @@ void	move_player(t_engine *eng, t_player *plr, t_point_2d dd)
 		}
 		i++;
 	}
-	plr->position.x += dd.x;
-	plr->position.y += dd.y;
-	plr->sinangle = sinf(plr->angle);
-	plr->cosangle = cosf(plr->angle);
-	check_sprites_in_sector(plr,
-	&eng->world->sectors_array[plr->cursector]);
+	if (plr->position.z > eng->world->sectors_array[plr->cursector].floor
+	&& plr->position.z < eng->world->sectors_array[plr->cursector].ceil)
+	{
+		plr->position.x += dd.x;
+		plr->position.y += dd.y;
+		plr->sinangle = sinf(plr->angle);
+		plr->cosangle = cosf(plr->angle);
+		check_sprites_in_sector(plr,
+		&eng->world->sectors_array[plr->cursector]);
+		eng->grav = plr->grav;
+	}
 }
 
 void	change_floor(t_engine *eng, int sect, int change)

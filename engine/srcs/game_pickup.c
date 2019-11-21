@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pickup.c                                           :+:      :+:    :+:   */
+/*   game_pickup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 13:49:25 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/27 20:11:01 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 22:28:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void		check_sprites_in_sector(t_player *plr, t_sector *sect)
 	while (i < sect->sprobjects_count)
 	{
 		if (sect->sprobjects_array[i].norender == false)
+		{
+			sect->sprobjects_array[i].position.z = sect->floor;
 			check_sprite_pick(plr, &sect->sprobjects_array[i]);
+		}
 		i++;
 	}
 }
@@ -32,16 +35,42 @@ void		check_sprite_pick(t_player *plr, t_sprobject *sobj)
 
 	if (sobj->enum_type == MEDKIT || sobj->enum_type == ARMOR
 	|| sobj->enum_type == PLASMA_AMMO || sobj->enum_type == RIFLE_AMMO
-	|| sobj->enum_type == POWER_UP)
+	|| sobj->enum_type == POWER_UP || sobj->enum_type == KEY_RED ||
+	sobj->enum_type == KEY_BLUE || sobj->enum_type == KEY_YELLOW ||
+	sobj->enum_type == JETPACK)
 	{
 		tmp = pow((plr->position.x - sobj->position.x), 2)
-		+ pow((plr->position.y - sobj->position.y), 2);
+		+ pow((plr->position.y - sobj->position.y), 2) +
+		+ pow(((plr->position.z - 150) - sobj->position.z), 2);
 		if (tmp <= 0.1)
 			return ;
 		dist = sqrt(tmp);
-		if (dist <= 20.1)
+		if (dist <= 30.1)
 			apply_sprite_obj(plr, sobj);
 	}
+}
+
+t_bool		apply_sprite_key(t_player *plr, t_sprobject *sobj)
+{
+	t_bool	res;
+
+	res = false;
+	if (sobj->enum_type == KEY_RED)
+	{
+		res = true;
+		plr->key_red = true;
+	}
+	else if (sobj->enum_type == KEY_BLUE)
+	{
+		res = true;
+		plr->key_blue = true;
+	}
+	else if (sobj->enum_type == KEY_YELLOW)
+	{
+		res = true;
+		plr->key_yellow = true;
+	}
+	return (res);
 }
 
 void		apply_sprite_obj(t_player *plr, t_sprobject *sobj)
@@ -51,6 +80,11 @@ void		apply_sprite_obj(t_player *plr, t_sprobject *sobj)
 	picked = false;
 	if (sobj->enum_type == MEDKIT)
 		picked = modify_players_stat(&plr->health, 25, 100);
+	else if (sobj->enum_type == JETPACK)
+	{
+		plr->grav = false;
+		picked = true;
+	}
 	else if (sobj->enum_type == ARMOR)
 		picked = modify_players_stat(&plr->armor, 25, 100);
 	else if (sobj->enum_type == POWER_UP)
@@ -65,6 +99,8 @@ void		apply_sprite_obj(t_player *plr, t_sprobject *sobj)
 		if (ft_strcmp(plr->wpn->name, "Rifle") == 0)
 			picked = modify_players_stat(&plr->wpn->ammo, 25, 300);
 	}
+	else
+		picked = apply_sprite_key(plr, sobj);
 	if (picked == true)
 		sobj->norender = true;
 }

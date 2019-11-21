@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:47:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/02 00:42:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 22:04:49 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	apply_gravitation(t_game *fps)
 {
-	if (fps->player.controller.falling == 1 && fps->logic.grav == 1)
+	if (fps->player.controller.falling == 1 && fps->eng->grav == true)
 	{
 		fps->player.position.z -= fps->logic.dz;
 		fps->logic.dz += 2;

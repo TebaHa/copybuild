@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 20:53:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 22:02:14 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -559,6 +559,7 @@ typedef	struct		s_player
 	t_bool			key_yellow;
 	t_sprts_size	**arr_sizes;
 	t_sprobject		*aim;
+	t_bool			grav;
 }					t_player;
 
 typedef struct		s_stats
@@ -608,6 +609,7 @@ typedef struct		s_engine
 	t_door_task		*doors[MAX_DOORS];
 	t_sprobject		*aim;
 	t_bool			ending;
+	t_bool			grav;
 }					t_engine;
 
 typedef struct		s_tric
@@ -1550,6 +1552,6 @@ void				engine_render_twalls(t_engine *eng, SDL_Surface *surf,
 void				engine_render_ts_objects(t_engine *eng, t_surf_and_plr ps,
 					t_wall_help2 *data, t_render_stacks *stacks);
 void				sprt_first_push(t_render_stacks *stacks, t_item_sprts *sptrs);
-
+t_bool				apply_sprite_key(t_player *plr, t_sprobject *sobj);
 
 #endif

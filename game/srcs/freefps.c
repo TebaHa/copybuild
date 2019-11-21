@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 21:03:10 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 22:20:42 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void		game_init_player(t_player *plr)
 	plr->armor = 100;
 	plr->health = 100;
 	plr->steps_sound = sound_init("player_steps");
+	plr->grav = true;
 	initilize_abs_sprt_sizes(plr);
 }
 
@@ -87,7 +88,8 @@ void		run_game(t_game *fps)
 		game_movement_check(fps);
 		if (SDL_PollEvent(&fps->eng->event))
 		{
-			sound_player_control(&fps->player);
+			if (fps->eng->grav == true)
+				sound_player_control(&fps->player);
 			if (fps->eng->event.type == SDL_QUIT)
 				game_quit(fps);
 			if (fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
