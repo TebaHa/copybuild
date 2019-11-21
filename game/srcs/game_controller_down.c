@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:30:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 22:24:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 22:29:37 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	game_buttons_control_down2(t_game *fps)
 			fps->player.position.z =
 			fps->eng->world->sectors_array[fps->player.cursector].floor + 150;
 	}
-	if (fps->eng->event.key.keysym.sym == SDLK_x &&
+	if (fps->eng->event.key.keysym.sym == SDLK_SPACE &&
 	fps->eng->grav == false)
 	{
 		if (fps->player.position.z + 30 <
@@ -95,7 +95,7 @@ void	game_buttons_control_down2(t_game *fps)
 void	game_buttons_control_down3(t_game *fps)
 {
 	if (fps->eng->event.key.keysym.sym == SDLK_SPACE
-	&& fps->player.controller.falling != 1)
+	&& fps->player.controller.falling != 1 && fps->eng->grav == true)
 	{
 		if (fps->player.controller.ducking == -1)
 		{
