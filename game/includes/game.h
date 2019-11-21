@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/18 21:56:27 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 20:57:45 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,7 @@ int					check_button(int x, int y,
 void				game_find_button(t_game *fps);
 void				run_game(t_game *fps);
 void				run_controller(t_game *fps);
+void				game_end(t_game *fps);
+void				game_render_endframe(t_menu *menu, SDL_Surface *surf);
 
 #endif

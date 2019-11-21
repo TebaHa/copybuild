@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/18 19:11:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 20:53:59 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -607,6 +607,7 @@ typedef struct		s_engine
 	char			*map_name;
 	t_door_task		*doors[MAX_DOORS];
 	t_sprobject		*aim;
+	t_bool			ending;
 }					t_engine;
 
 typedef struct		s_tric

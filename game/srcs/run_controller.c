@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 21:31:01 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/18 22:36:13 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 21:02:20 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ void	run_controller(t_game *fps)
 		else if (fps->work.game == true)
 		{
 			run_game(fps);
+			if (fps->eng->ending == true)
+			{
+				game_end(fps);
+				break ;
+			}
 			fps->work.menu = true;
 			fps->work.game = false;
 			fps->work.editor = false;

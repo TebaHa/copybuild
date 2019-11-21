@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/19 05:28:38 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 21:03:10 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void		game_init(t_game *fps, int argc, char **argv)
 	fps->logic.init = 0;
 	fps->logic.grav = 1;
 	fps->logic.yaw = 0;
+	fps->eng->ending = false;
 	fps->eng->x = 0;
 	fps->eng->y = 0;
 	fps->work.editor = false;
@@ -80,6 +81,8 @@ void		run_game(t_game *fps)
 	fps->logic.init = 0;
 	while (1)
 	{
+		if (fps->eng->ending == true)
+			break ;
 		SDL_ShowCursor(SDL_DISABLE);
 		game_movement_check(fps);
 		if (SDL_PollEvent(&fps->eng->event))

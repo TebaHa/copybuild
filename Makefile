@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/18 22:16:30 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/21 20:58:39 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ LIBFT_DIRECTORY = ./lib/libft/
 LIBFT_DIRECTORY_HEADERS = $(LIBFT_DIRECTORY)includes
 
 GAME_SRCS_LIST =	freefps.c \
+					end.c \
 					game_controller_down.c \
 					game_controller_up.c \
 					game_movement_funs.c \

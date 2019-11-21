@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 21:32:24 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/13 14:21:32 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 20:54:15 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ void	add_task(t_engine *eng, t_sector *sect, t_button_type type)
 {
 	sect->opening.delta = 10;
 	engine_push_doorqueue(eng->doors, &sect->opening);
-	//if (type == BT_FINISH)
-		//exit(1);
+	if (type == BT_FINISH)
+		eng->ending = true;
 }
