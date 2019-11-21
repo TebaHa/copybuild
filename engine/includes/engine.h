@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 22:02:14 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 22:50:57 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 # define BACKGROUND_MUSIC_VOLUME	0.2
 # define GAME_SOUNDS_VOLUME			1
 # define MAX_DOORS 10
-
+# define TEXT_TIME 15
 
 typedef enum		e_pack_loudness
 {
@@ -608,6 +608,8 @@ typedef struct		s_engine
 	char			*map_name;
 	t_door_task		*doors[MAX_DOORS];
 	t_sprobject		*aim;
+	char			*str_info;
+	int				text_time;
 	t_bool			ending;
 	t_bool			grav;
 }					t_engine;

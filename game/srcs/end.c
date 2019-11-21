@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:47:00 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 21:18:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/21 23:33:37 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ void	game_end(t_game *fps)
 
 void	game_render_endframe(t_menu *menu, SDL_Surface *surf)
 {
-	if (menu->background->surface[0] != NULL)
-	{
-		draw_from_surface_to_surface(surf,
-		menu->background->surface[0], 0, 0);
-	}
+	draw_from_surface_to_surface(surf,
+	menu->background->surface[0], 0,
+	0);
+	draw_from_surface_to_surface(surf,
+	menu->element[ME_ENDGAME]->sprite->surface[0], (WIDTH -
+	menu->element[ME_ENDGAME]->sprite->surface[0]->w) / 2,
+	(HEIGHT -
+	menu->element[ME_ENDGAME]->sprite->surface[0]->h) / 2);
 }
