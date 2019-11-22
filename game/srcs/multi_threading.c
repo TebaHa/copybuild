@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:10:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 22:48:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/22 20:17:06 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void		game_threads_recount(t_game *fps)
 		engine_render_frame(fps->eng,
 		fps->render_thread_pool[fps->logic.thread_end_index].surface);
 		engine_render_hud_stats(fps->eng, &fps->player);
+		engine_render_text(fps->eng, &fps->player);
 		engine_present_and_clear_frame(fps->eng);
 		fps->logic.thread_start_index = fps->logic.thread_end_index;
 		fps->logic.thread_end_index = fps->logic.thread_end_index

@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/21 20:58:39 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/22 20:20:38 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,6 +104,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					render_wall2.c \
 					render_world.c \
 					render_background.c \
+					engine_render_text.c \
 					sprite_data.c \
 					use.c \
 					shoot_help.c \
@@ -237,7 +238,7 @@ $(GAME_OBJS_DIRECTORY):
 	@echo "$(NAME): $(GAME_OBJS_DIRECTORY) was created"
 
 $(GAME_OBJS_DIRECTORY)%.o: $(GAME_SRCS_DIRECTORY)%.c $(GAME_HEADERS)
-	$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(HEADERS_DIRECTORY_EDITOR) -I $(LIBFT_DIRECTORY_HEADERS) $(SDL_INCLUDES) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
+	@$(CC) $(FLAGS) -c $(GAME_INCLUDES) -I $(ENGINE_HEADERS_DIRECTORY) -I $(HEADERS_DIRECTORY_EDITOR) -I $(LIBFT_DIRECTORY_HEADERS) $(SDL_INCLUDES) -I $(SDL_FOLDER) -I $(SDL_TTF_FOLDER) -I $(SDL_MIXER_FOLDER) $< -o $@
 	@echo -n '.'
 
 $(LIBFT):

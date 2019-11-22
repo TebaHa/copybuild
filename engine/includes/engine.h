@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 22:50:57 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/22 20:17:15 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 # define BACKGROUND_MUSIC_VOLUME	0.2
 # define GAME_SOUNDS_VOLUME			1
 # define MAX_DOORS 10
-# define TEXT_TIME 15
+# define TEXT_TIME 150
 
 typedef enum		e_pack_loudness
 {
@@ -560,6 +560,8 @@ typedef	struct		s_player
 	t_sprts_size	**arr_sizes;
 	t_sprobject		*aim;
 	t_bool			grav;
+	char			*costil;
+	int				text_time;
 }					t_player;
 
 typedef struct		s_stats
@@ -1555,5 +1557,10 @@ void				engine_render_ts_objects(t_engine *eng, t_surf_and_plr ps,
 					t_wall_help2 *data, t_render_stacks *stacks);
 void				sprt_first_push(t_render_stacks *stacks, t_item_sprts *sptrs);
 t_bool				apply_sprite_key(t_player *plr, t_sprobject *sobj);
+
+void				engine_replace_text(t_player *plr, char *str);
+void				engine_check_text(t_engine *eng);
+void				engine_put_text(t_engine *eng, t_player *plr);
+void				engine_render_text(t_engine *eng, t_player *plr);
 
 #endif

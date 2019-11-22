@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:41:43 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/02 02:46:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/22 19:52:04 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void		engine_sdl_init(t_engine **eng)
 	(*eng)->font = TTF_OpenFont(FONT_PATH, 16);
 	if ((*eng)->font == NULL)
 		error_handler("SDL_CreateFonts Error: ", SDL_GetError(), (*eng));
+	(*eng)->str_info = NULL;
 }
 
 void		engine_sdl_uninit(t_engine *eng)

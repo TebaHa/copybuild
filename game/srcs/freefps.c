@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 22:20:42 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/22 20:16:14 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void		game_init_player(t_player *plr)
 	plr->health = 100;
 	plr->steps_sound = sound_init("player_steps");
 	plr->grav = true;
+	plr->costil = NULL;
 	initilize_abs_sprt_sizes(plr);
 }
 

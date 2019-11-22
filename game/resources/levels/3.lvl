@@ -499,57 +499,57 @@ object:	4061 -1		0	1	s_white		s_white		s_tile		406 407
 
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
-sector:	0	900		1200		s_tile		s_black		0xFF0000	4	0 1 2 3
-sector:	1	850		1200		s_tile		s_black		0xFF0000	4	4 5 6 7
-sector:	2	800     1200		s_tile		s_black		0xFF0000	4	8 9 10 11
-sector:	3	750	    1150		s_tile		s_black		0xFF0000	4	12 13 14 15
-sector:	4	700	    1100		s_tile		s_black		0xFF0000	4	16 17 18 19
-sector:	5	650	    1050		s_tile		s_black		0xFF0000	4	20 21 22 23
-sector:	6	600	    1000		s_tile		s_black		0xFF0000	4	24 25 26 27
-sector:	7	550	    950			s_tile		s_black		0xFF0000	4   28 29 30 31
-sector:	8	500	    900			s_tile		s_black		0xFF0000	4   32 33 34 35
-sector:	9	450	    850			s_tile		s_black		0xFF0000	4   36 37 38 39
-sector:	10	400	    800			s_tile		s_black		0xFF0000	4   40 41 42 43
-sector:	11	350	    750			s_tile		s_black		0xFF0000	4   44 45 46 47
-sector:	12	300	    700			s_tile		s_black		0xFF0000	4   48 49 50 51
-sector:	13	250	    650			s_tile		s_black		0xFF0000	4   52 53 54 55
-sector:	14	200	    600			s_tile		s_black		0xFF0000	4   56 57 58 59
-sector:	15	150	    550			s_tile		s_black		0xFF0000	4   60 61 62 63
-sector:	16	100	    400			s_tile		s_black		0xFF0000	4   64 65 66 67
-sector:	17	50	    400			s_tile		s_black		0xFF0000	4   68 69 70 71
-sector:	18	0	    400			s_laminate	s_black		0xFF0000	8   72 73 74 75 76 77 78 79
-sector:	19	0	    300			s_laminate	s_white		0xFF0000	4   80 81 82 83
+sector:	0	900		1200		s_tile		s_black		0xFFFFFF	4	0 1 2 3
+sector:	1	850		1200		s_tile		s_black		0xFFFFFF	4	4 5 6 7
+sector:	2	800     1200		s_tile		s_black		0xFFFFFF	4	8 9 10 11
+sector:	3	750	    1150		s_tile		s_black		0xFFFFFF	4	12 13 14 15
+sector:	4	700	    1100		s_tile		s_black		0xFFFFFF	4	16 17 18 19
+sector:	5	650	    1050		s_tile		s_black		0xFFFFFF	4	20 21 22 23
+sector:	6	600	    1000		s_tile		s_black		0xFFFFFF	4	24 25 26 27
+sector:	7	550	    950			s_tile		s_black		0xFFFFFF	4   28 29 30 31
+sector:	8	500	    900			s_tile		s_black		0xFFFFFF	4   32 33 34 35
+sector:	9	450	    850			s_tile		s_black		0xFFFFFF	4   36 37 38 39
+sector:	10	400	    800			s_tile		s_black		0xFFFFFF	4   40 41 42 43
+sector:	11	350	    750			s_tile		s_black		0xFFFFFF	4   44 45 46 47
+sector:	12	300	    700			s_tile		s_black		0xFFFFFF	4   48 49 50 51
+sector:	13	250	    650			s_tile		s_black		0xFFFFFF	4   52 53 54 55
+sector:	14	200	    600			s_tile		s_black		0xFFFFFF	4   56 57 58 59
+sector:	15	150	    550			s_tile		s_black		0xFFFFFF	4   60 61 62 63
+sector:	16	100	    400			s_tile		s_black		0xFFFFFF	4   64 65 66 67
+sector:	17	50	    400			s_tile		s_black		0xFFFFFF	4   68 69 70 71
+sector:	18	0	    400			s_laminate	s_black		0xFFFFFF	8   72 73 74 75 76 77 78 79
+sector:	19	0	    300			s_laminate	s_white		0xFFFFFF	4   80 81 82 83
 
-sector:	20	0	    500			s_laminate	s_black		0xFF0000	5   1011 1021 1041 461 451
-sector:	21	0	    500			s_laminate	s_black		0xFF0000	3	1022 1031 1042
-sector:	22	0	    500			s_laminate	s_black		0xFF0000	5	1111 1012 452 1051 1061
-sector:	23	0	    500			s_laminate	s_black		0xFF0000	5	1091 1101 1171 1112 1062
-sector:	24	0	    500			s_laminate	s_black		0xFF0000	4	1081 1092 1063 1071
-sector:	25	0	    300			s_laminate	s_white		0xFF0000	4	1121 1131 1023 1013
-sector:	26	0	    500			s_laminate	s_black		0xFF0000	7	1161 1151 1141 1132 1122 1113 1172
-sector:	27	0	    800			s_laminate	s_black		0xFF0000	10	1411 1491 1481 1511 4032 4372 4362 1501 1043 1032
-sector:	28	0	    800			s_laminate	s_black		0xFF0000	6	1492 1421 1451 1461 1471 1482
-sector:	29	0	    800			s_laminate	s_black		0xFF0000	4	1422 1431 1441 1452
+sector:	20	0	    500			s_laminate	s_black		0xFFFFFF	5   1011 1021 1041 461 451
+sector:	21	0	    500			s_laminate	s_black		0xFFFFFF	3	1022 1031 1042
+sector:	22	0	    500			s_laminate	s_black		0xFFFFFF	5	1111 1012 452 1051 1061
+sector:	23	0	    500			s_laminate	s_black		0xFFFFFF	5	1091 1101 1171 1112 1062
+sector:	24	0	    500			s_laminate	s_black		0xFFFFFF	4	1081 1092 1063 1071
+sector:	25	0	    300			s_laminate	s_white		0xFFFFFF	4	1121 1131 1023 1013
+sector:	26	0	    500			s_laminate	s_black		0xFFFFFF	7	1161 1151 1141 1132 1122 1113 1172
+sector:	27	0	    800			s_laminate	s_black		0xFFFFFF	10	1411 1491 1481 1511 4032 4372 4362 1501 1043 1032
+sector:	28	0	    800			s_laminate	s_black		0xFFFFFF	6	1492 1421 1451 1461 1471 1482
+sector:	29	0	    800			s_laminate	s_black		0xFFFFFF	4	1422 1431 1441 1452
 
-sector:	30	0	    500			s_laminate	s_white		0xFF0000	4	1472 1462 2011 2001
-sector:	31	0	    800			s_laminate	s_black		0xFF0000	5	2002 2012 2021 2041 2031
-sector:	32	0	    800			s_laminate	s_black		0xFF0000	6	2051 2032 2042 2071 2121 2061
-sector:	33	0	    800			s_laminate	s_black		0xFF0000	6	2122 2072 2111 2101 2091 2081
+sector:	30	0	    500			s_laminate	s_white		0xFFFFFF	4	1472 1462 2011 2001
+sector:	31	0	    800			s_laminate	s_black		0xFFFFFF	5	2002 2012 2021 2041 2031
+sector:	32	0	    800			s_laminate	s_black		0xFFFFFF	6	2051 2032 2042 2071 2121 2061
+sector:	33	0	    800			s_laminate	s_black		0xFFFFFF	6	2122 2072 2111 2101 2091 2081
 
-sector:	34	0	    500			s_laminate	s_black		0xFF0000	5	2092 2102 2531 2541 2511
-sector:	35	0	    800			s_laminate	s_black		0xFF0000	6	2601 2591 2581 2512 2542 2611
-sector:	36	0	    800			s_laminate	s_black		0xFF0000	5	2551 2561 2571 2582 2592
+sector:	34	0	    500			s_laminate	s_black		0xFFFFFF	5	2092 2102 2531 2541 2511
+sector:	35	0	    800			s_laminate	s_black		0xFFFFFF	6	2601 2591 2581 2512 2542 2611
+sector:	36	0	    800			s_laminate	s_black		0xFFFFFF	5	2551 2561 2571 2582 2592
 
-sector:	37	0	    500			s_laminate	s_black		0xFF0000	7	3011 3021 2602 2612 3001 3041 3031
-sector:	38	0	    400			s_laminate	s_white		0xFF0000	4	3051 3032 3042 3061
-sector:	39	0	    800			s_laminate	s_black		0xFF0000	7	3301 3101 3091 3052 3062 3071 3081
-sector:	40	0	    800			s_laminate	s_black		0xFF0000	7	3111 3121 3131 3141 3251 3102 3302
-sector:	41	0	    400			s_laminate	s_white		0xFF0000	4	3132 3151 3161 3142
-sector:	42	0	    500			s_laminate	s_black		0xFF0000	6	3171 3181 3191 3241 3162 3152
-sector:	43	0	    500			s_laminate	s_black		0xFF0000	4	3192 3201 3211 3242
-sector:	44	0	    500			s_laminate	s_black		0xFF0000	5	3243 3212 3221 3231 3103
-sector:	45	0	    500			s_laminate	s_black		0xFF0000	6	3232 3222 3261 3271 3291 3281
-sector:	46	0	    400			s_laminate	s_white		0xFF0000	4	3262 3411 3421 3272
-sector:	47	0	    800			s_laminate	s_black		0xFF0000	8	3401 3431 3461 3471 3451 3441 3422 3412
-sector:	48	0	    2500		s_laminate	null		0xFF0000	16	4001 4011 4021 4361 4371 4031 4301 4311 4041 4321 4331 4051 3472 3462 4341 4351
-sector:	49	0	    500			s_laminate	s_black		0xFF0000	8	4071 4091 4101 4111 4081 4022 4012 4061
+sector:	37	0	    500			s_laminate	s_black		0xFFFFFF	7	3011 3021 2602 2612 3001 3041 3031
+sector:	38	0	    400			s_laminate	s_white		0xFFFFFF	4	3051 3032 3042 3061
+sector:	39	0	    800			s_laminate	s_black		0xFFFFFF	7	3301 3101 3091 3052 3062 3071 3081
+sector:	40	0	    800			s_laminate	s_black		0xFFFFFF	7	3111 3121 3131 3141 3251 3102 3302
+sector:	41	0	    400			s_laminate	s_white		0xFFFFFF	4	3132 3151 3161 3142
+sector:	42	0	    500			s_laminate	s_black		0xFFFFFF	6	3171 3181 3191 3241 3162 3152
+sector:	43	0	    500			s_laminate	s_black		0xFFFFFF	4	3192 3201 3211 3242
+sector:	44	0	    500			s_laminate	s_black		0xFFFFFF	5	3243 3212 3221 3231 3103
+sector:	45	0	    500			s_laminate	s_black		0xFFFFFF	6	3232 3222 3261 3271 3291 3281
+sector:	46	0	    400			s_laminate	s_white		0xFFFFFF	4	3262 3411 3421 3272
+sector:	47	0	    800			s_laminate	s_black		0xFFFFFF	8	3401 3431 3461 3471 3451 3441 3422 3412
+sector:	48	0	    2500		s_laminate	null		0xFFFFFF	16	4001 4011 4021 4361 4371 4031 4301 4311 4041 4321 4331 4051 3472 3462 4341 4351
+sector:	49	0	    500			s_laminate	s_black		0xFFFFFF	8	4071 4091 4101 4111 4081 4022 4012 4061

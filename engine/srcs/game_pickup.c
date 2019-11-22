@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 13:49:25 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 22:28:05 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/22 18:58:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ void		apply_sprite_obj(t_player *plr, t_sprobject *sobj)
 	else if (sobj->enum_type == ARMOR)
 		picked = modify_players_stat(&plr->armor, 25, 100);
 	else if (sobj->enum_type == POWER_UP)
+	{
+		engine_replace_text(plr, "HP INCREASED TO MAX LEVEL");
 		picked = modify_players_stat(&plr->health, 200, 200);
+	}
 	else if (sobj->enum_type == PLASMA_AMMO)
 	{
 		if (ft_strcmp(plr->wpn->name, "Plazma gun") == 0)
