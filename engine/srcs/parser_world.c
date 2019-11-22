@@ -58,6 +58,8 @@ void		util_create_world(t_engine *eng, t_world **world,
 	*world = (t_world *)ft_memalloc(sizeof(t_world));
 	(*world)->id = util_int10_data_filler(str[1], 0, 0xFFFF);
 	(*world)->sectors_count = util_int10_data_filler(str[2], 0, 0xFFFF);
+	if (((*world)->sectors_count) != eng->stats.sectors_count)
+		util_parsing_error_not_enough("sectors");
 	if (!(*world)->sectors_count)
 		util_parsing_error_little_data("sectors", "world", str);
 	util_parsing_error_count_handler("world", str, 2 + (*world)->sectors_count);
