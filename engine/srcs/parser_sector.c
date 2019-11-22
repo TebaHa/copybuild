@@ -12,7 +12,7 @@
 
 #include <engine.h>
 
-t_sector	*engine_read_sectors_from_file(t_engine *eng, t_buff buff)
+t_sector		*engine_read_sectors_from_file(t_engine *eng, t_buff buff)
 {
 	t_sector	*s_array_buffer;
 	char		**splitted_line;
@@ -34,8 +34,8 @@ t_sector	*engine_read_sectors_from_file(t_engine *eng, t_buff buff)
 	return (s_array_buffer);
 }
 
-void		util_create_sector(t_engine *eng, t_buff buff,
-			t_sector *sector, char **str)
+void			util_create_sector(t_engine *eng, t_buff buff,
+				t_sector *sector, char **str)
 {
 	int			obj_count;
 	int			str_count;
@@ -63,10 +63,11 @@ void		util_create_sector(t_engine *eng, t_buff buff,
 	eng->stats.sectors_count++;
 }
 
-void		util_create_sector_sprobjs(t_engine *eng,
-			t_sector *sector, char **str)
+void			util_create_sector_sprobjs(t_engine *eng,
+				t_sector *sector, char **str)
 {
-	util_find_texture_by_name(&sector->floor_texture, eng, &str[4], &sector->floor_spread);
+	util_find_texture_by_name(&sector->floor_texture, eng, &str[4],
+		&sector->floor_spread);
 	if (!ft_strcmp(str[5], "null"))
 	{
 		sector->ceil_visible = false;
@@ -75,7 +76,8 @@ void		util_create_sector_sprobjs(t_engine *eng,
 	else
 	{
 		sector->ceil_visible = true;
-		util_find_texture_by_name(&sector->ceil_texture, eng, &str[5], &sector->ceil_spread);
+		util_find_texture_by_name(&sector->ceil_texture, eng, &str[5],
+			&sector->ceil_spread);
 	}
 	util_read_color(&sector->color, str[6]);
 	sector->dist = (float *)ft_memalloc(sizeof(float)
@@ -83,36 +85,10 @@ void		util_create_sector_sprobjs(t_engine *eng,
 	sector->order = (int *)ft_memalloc(sizeof(int) * sector->objects_count);
 }
 
-void		util_find_repeats_in_sector(t_sector *sector)
+void			util_find_sprobjects_repeats_in_sector(t_sector *sector)
 {
-	int		j;
-	int		i;
-
-	i = 0;
-	while (i < sector->objects_count)
-	{
-		j = 0;
-		while (j < sector->objects_count)
-		{
-			if (i != j)
-			{
-				if (sector->objects_array[i].id == sector->objects_array[j].id)
-					util_parsing_error_repeats("objects", "sector", sector->id);
-//				if (sector->objects_array[i].polies_array[0].id ==
-//					sector->objects_array[j].polies_array[0].id)
-//					util_parsing_error_repeats("polies", "sector", sector->id);
-			}
-			j++;
-		}
-		i++;
-	}
-	util_find_sprobjects_repeats_in_sector(sector);
-}
-
-void		util_find_sprobjects_repeats_in_sector(t_sector *sector)
-{
-	int		j;
-	int		i;
+	int			j;
+	int			i;
 
 	i = 0;
 	while (i < sector->sprobjects_count)

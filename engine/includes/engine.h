@@ -26,6 +26,7 @@
 # define THREEDIM 3
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 64
+# define MAXBUFF	900000
 # define HFOV (1.0 * 0.63f * HEIGHT / WIDTH)
 # define VFOV (1.0 * 0.2f)
 # define CLION					0
@@ -1174,7 +1175,9 @@ void				eng_create_face_40_0(t_engine *eng, t_hud *hud);
 
 void				eng_create_weapons(t_engine *eng);
 void				eng_create_rifle(t_engine *eng);
+void				eng_create_rifle_2(t_engine *eng, t_weapon *rifle);
 void				eng_create_plasma(t_engine *eng);
+void				eng_create_plasma_2(t_engine *eng, t_weapon *plasma);
 
 void				eng_create_items(t_engine *eng);
 void				eng_create_medkit(t_engine *eng);
@@ -1292,6 +1295,8 @@ void				util_find_repeats_in_vertexes(t_point_3d *vertex, int vertexes_count);
 t_object			*engine_read_objects_from_file(t_engine *eng, t_buff *buff);
 void				util_create_object(t_engine *eng, t_object *object,
 					t_buff *buff, char **str);
+void				util_create_object_2(t_engine *eng, t_object *object,
+					t_buff *buff, char **str);
 t_object			util_get_object_from_buff_by_id(int id, int size,
 					t_object *objects, int sector_id);
 void				util_find_repeats_in_objects(t_object *object, int objects_count);
@@ -1305,6 +1310,8 @@ void				util_create_sprobject(t_engine *eng, t_sprobject
 					*sprobject,
 					t_buff *buff, char **str);
 void				util_fill_sector_with_sprobjects(t_engine *eng, t_buff *buff);
+void				util_fill_sector_with_sprobjects_2(t_sector *sector,
+					t_buff *buff, int *sprobj_count, int *sprobj_count_global);
 
 t_sector			*engine_read_sectors_from_file(t_engine *eng,
 					t_buff buff);

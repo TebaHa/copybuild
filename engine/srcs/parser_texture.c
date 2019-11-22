@@ -42,7 +42,7 @@ void		util_find_texture_by_name(t_image **dst, t_engine *eng,
 
 void		util_find_texture_spread(int *spread, char **str)
 {
-	char 	*spreading;
+	char	*spreading;
 
 	if ((spreading = ft_strcut(str, ',')))
 	{

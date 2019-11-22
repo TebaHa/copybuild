@@ -48,7 +48,7 @@ t_sprite	*util_create_sprite_by_name_suffix(t_engine *eng, char *name,
 			char *suffix)
 {
 	t_sprite	*res;
-	char 		*full_name;
+	char		*full_name;
 
 	full_name = ft_strjoin(name, suffix);
 	res = util_create_sprite_by_name(eng, full_name);

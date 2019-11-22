@@ -76,7 +76,6 @@ GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					line_bresenham.c \
 					line_bresenham2.c \
-					checksum.c \
 					engine_close.c \
 					line_color.c \
 					engine_main.c \
@@ -130,6 +129,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					engine_transprt_stack.c \
 
 PARSER_SRCS_LIST =	parser_button.c \
+					parser_checksum.c \
 					parser_color.c \
 					parser_enemy.c \
 					parser_errors_2.c \
@@ -137,14 +137,15 @@ PARSER_SRCS_LIST =	parser_button.c \
 					parser_errors.c \
 					parser_filler.c \
 					parser_hud.c \
-					parser_items_2.c \
 					parser_items.c \
+					parser_items_2.c \
+					parser_items_3.c \
 					parser_object.c \
+					parser_object_2.c \
 					parser_package.c \
 					parser_player_2.c \
 					parser_player.c \
 					parser_point_3d.c \
-					parser_polygone.c \
 					parser_reader.c \
 					parser_sector_2.c \
 					parser_sector.c \
@@ -159,7 +160,6 @@ PARSER_SRCS_LIST =	parser_button.c \
 					parser_worldbox.c \
 					parser.c \
 					parser_wallobjects.c \
-
 
 EDITOR_FILES =		editor.c \
 					draw.c \
