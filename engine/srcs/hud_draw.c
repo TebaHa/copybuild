@@ -6,11 +6,24 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/22 20:16:07 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 13:33:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
+
+void		engine_render_keys(t_hud *hud, t_player *plr, SDL_Surface *surf)
+{
+	if (plr->key_red)
+		draw_from_surface_to_surface(surf, hud->key_red->surface[0],
+		WIDTH - 40, HEIGHT - 200);
+	if (plr->key_blue)
+		draw_from_surface_to_surface(surf, hud->key_blue->surface[0],
+		WIDTH - 40, HEIGHT - 250);
+	if (plr->key_yellow)
+		draw_from_surface_to_surface(surf, hud->key_yellow->surface[0],
+		WIDTH - 40, HEIGHT - 300);
+}
 
 void		engine_render_hud_stats(t_engine *eng, t_player *plr)
 {
@@ -66,6 +79,7 @@ void		engine_draw_hud(t_hud *hud, t_player *plr, SDL_Surface *surf)
 	10, HEIGHT - 150);
 	draw_from_surface_to_surface(surf, hud->ammo->surface[0],
 	WIDTH - 80, HEIGHT - 80);
+	engine_render_keys(hud, plr, surf);
 	SDL_UnlockSurface(surf);
 	plr->anim++;
 }

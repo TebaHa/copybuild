@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/22 20:17:15 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 13:26:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,6 +346,9 @@ typedef struct		s_wallobj
 	t_sprite		*texture;
 	int				size;
 	t_button_type	type;
+	t_bool			red;
+	t_bool			blue;
+	t_bool			yellow;
 }					t_wallobj;
 
 typedef struct		s_button
@@ -1518,7 +1521,7 @@ int					line_intersection_check(t_line_2d a, t_line_2d b);
 void				prepare_polygones(t_engine *eng);
 
 void				wall_objects_init(t_engine *eng);
-void				wall_object_init(t_object *obj,
+void				wall_object_init(t_engine *eng, t_object *obj,
 					t_wobj *particlestack, t_point_3d particle);
 
 void				use(t_engine *eng, t_player *plr);
@@ -1530,7 +1533,8 @@ int					execute_door(t_door_task *door, t_sector *sect);
 void				engine_push_doorqueue(t_door_task **stack,
 					t_door_task *item);
 void				engine_flush_doorqueue(t_door_task **stack);
-void				add_task(t_engine *eng, t_sector *sect, t_button_type type);
+void				add_task(t_engine *eng, t_sector *sect,
+					t_wobj *obj, t_player *plr);
 int					close_door(t_door_task *door, t_sector *sect);
 int					open_door(t_door_task *door, t_sector *sect);
 void				init_sectors(t_engine *eng);
@@ -1574,5 +1578,7 @@ void				engine_replace_text(t_player *plr, char *str);
 void				engine_check_text(t_engine *eng);
 void				engine_put_text(t_engine *eng, t_player *plr);
 void				engine_render_text(t_engine *eng, t_player *plr);
+void				engine_render_keys(t_hud *hud, t_player *plr, SDL_Surface *surf);
+void				instant_close_dooe(t_sector *sect);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 21:32:24 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 21:58:52 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 13:27:58 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	use(t_engine *eng, t_player *plr)
 					{
 						add_task(eng,
 						&eng->world->sectors_array[d.sect->objects_array[d.i].wallobjects_array[i].sector_id],
-						d.sect->objects_array[d.i].wallobjects_array[i].enum_type);
+						&d.sect->objects_array[d.i].wallobjects_array[i], plr);
 						break ;
 					}
 					i++;
@@ -68,13 +68,29 @@ void	use(t_engine *eng, t_player *plr)
 	}
 }
 
-void	add_task(t_engine *eng, t_sector *sect, t_button_type type)
+void	add_task(t_engine *eng, t_sector *sect, t_wobj *obj, t_player *plr)
 {
-	if (type == BT_DOOR)
+	t_bool	red;
+	t_bool	blue;
+	t_bool	yellow;
+
+	red = true;
+	blue = true;
+	yellow = true;
+	if (obj->enum_type == BT_DOOR)
 	{
-		sect->opening.delta = 10;
-		engine_push_doorqueue(eng->doors, &sect->opening);
+		if (obj->red_key)
+			red = plr->key_red;
+		if (obj->blue_key)
+			blue = plr->key_blue;
+		if (obj->blue_key)
+			yellow = plr->key_yellow;
+		if (red && blue && yellow)
+		{
+			sect->opening.delta = 10;
+			engine_push_doorqueue(eng->doors, &sect->opening);
+		}
 	}
-	else if (type == BT_FINISH)
+	else if (obj->enum_type == BT_FINISH)
 		eng->ending = true;
 }
