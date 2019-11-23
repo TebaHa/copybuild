@@ -165,6 +165,10 @@ vertex: 977 2100	250		100
 vertex: 981	2400	1600	100
 vertex:	982	2500	1600	100
 
+vertex:	985 400		500		100
+vertex:	986	400		700		100
+vertex:	987	300		600		100
+
 vertex: 991	2150	1600	100
 
 #Objects
@@ -342,6 +346,10 @@ sobjct:	54	0		5		981
 sobjct:	55	0		3		982
 
 sobjct:	52	0		11		976
+
+sobjct:	61	0		8		985
+sobjct:	62	0		8		986
+sobjct:	63	0		8		987
 
 sobjct:	91	0		13		991
 
