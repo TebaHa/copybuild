@@ -6,24 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 00:12:42 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/28 17:02:47 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:41:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
-
-//void		triangle_lines(t_polygone *t, SDL_Surface *surf)
-//{
-//	if (t->vertices_array[0].y == t->vertices_array[1].y
-//	&& t->vertices_array[0].y == t->vertices_array[2].y)
-//		return ;
-//	bresenham_line(&(t->vertices_array[0]), &(t->vertices_array[1]),
-//	surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
-//	bresenham_line(&(t->vertices_array[1]), &(t->vertices_array[2]),
-//	surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
-//	bresenham_line(&(t->vertices_array[2]), &(t->vertices_array[0]),
-//	surf, get_rgb(((t->color) >> 16), ((t->color) >> 8), ((t->color)), 255));
-//}
 
 void		swapper(t_point_3d *a, t_point_3d *b, int *steep)
 {

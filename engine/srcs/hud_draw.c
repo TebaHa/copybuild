@@ -6,14 +6,24 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 10:59:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 13:33:08 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 16:00:12 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void		engine_render_keys(t_hud *hud, t_player *plr, SDL_Surface *surf)
+void		engine_render_keys(t_hud *hud, t_sprite *img,
+			t_player *plr, SDL_Surface *surf)
 {
+	draw_from_surface_to_surface(surf, img->surface[plr->frame_num],
+	(WIDTH - img->surface[plr->frame_num]->w)
+	/ 2, HEIGHT - img->surface[plr->frame_num]->h);
+	draw_from_surface_to_surface(surf, hud->health->surface[0],
+	10, HEIGHT - 80);
+	draw_from_surface_to_surface(surf, hud->armor->surface[0],
+	10, HEIGHT - 150);
+	draw_from_surface_to_surface(surf, hud->ammo->surface[0],
+	WIDTH - 80, HEIGHT - 80);
 	if (plr->key_red)
 		draw_from_surface_to_surface(surf, hud->key_red->surface[0],
 		WIDTH - 40, HEIGHT - 200);
@@ -50,7 +60,7 @@ void		engine_render_hud_stats(t_engine *eng, t_player *plr)
 
 void		engine_draw_hud(t_hud *hud, t_player *plr, SDL_Surface *surf)
 {
-	t_sprite		*img;
+	t_sprite	*img;
 
 	bresenham_line(&(t_point_3d){0, (WIDTH / 2) - 10,
 	(HEIGHT / 2), 0}, &(t_point_3d){0, (WIDTH / 2) + 10,
@@ -70,16 +80,7 @@ void		engine_draw_hud(t_hud *hud, t_player *plr, SDL_Surface *surf)
 			plr->frame_num = 0;
 	}
 	SDL_LockSurface(surf);
-	draw_from_surface_to_surface(surf, img->surface[plr->frame_num],
-	(WIDTH - img->surface[plr->frame_num]->w)
-	/ 2, HEIGHT - img->surface[plr->frame_num]->h);
-	draw_from_surface_to_surface(surf, hud->health->surface[0],
-	10, HEIGHT - 80);
-	draw_from_surface_to_surface(surf, hud->armor->surface[0],
-	10, HEIGHT - 150);
-	draw_from_surface_to_surface(surf, hud->ammo->surface[0],
-	WIDTH - 80, HEIGHT - 80);
-	engine_render_keys(hud, plr, surf);
+	engine_render_keys(hud, img, plr, surf);
 	SDL_UnlockSurface(surf);
 	plr->anim++;
 }

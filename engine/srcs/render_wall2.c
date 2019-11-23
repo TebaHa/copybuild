@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:21:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 14:15:53 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:39:47 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,16 @@ void			engine_render_wall_main_cycler(t_wall_clinks *links,
 }
 
 void			engine_render_wall_pusher(t_engine *eng, t_wall_help2 *data,
-				t_wall_mai_data *mdata,  t_render_stacks *stacks)
+				t_wall_mai_data *mdata, t_render_stacks *stacks)
 {
 	t_trns_item		trs_item;
 
-	trs_item.trnsprtstack.sx = &eng->world->sectors_array[data->portal].item_sprts;
-	trs_item.trnsprtstack.obj = &eng->world->sectors_array[data->sect.sectorno].
-	objects_array[data->obj_id];
-	trs_item.trnsprtstack.color = eng->world->sectors_array[data->sect.sectorno].color;
+	trs_item.trnsprtstack.sx =
+	&eng->world->sectors_array[data->portal].item_sprts;
+	trs_item.trnsprtstack.obj = &eng->world->sectors_array
+	[data->sect.sectorno].objects_array[data->obj_id];
+	trs_item.trnsprtstack.color =
+	eng->world->sectors_array[data->sect.sectorno].color;
 	trs_item.sprite_renderstack = NULL;
 	if (data->polygone->texture != NULL)
 		engine_push_tsrenderstack(stacks->helpstack, trs_item);
@@ -53,7 +55,8 @@ void			engine_render_wall_pusher(t_engine *eng, t_wall_help2 *data,
 	data->ytop, data->ybottom);
 	if (data->rendered[data->portal] == 0)
 	{
-		trs_item.sprite_renderstack = &eng->world->sectors_array[data->portal].item_sprts;
+		trs_item.sprite_renderstack =
+		&eng->world->sectors_array[data->portal].item_sprts;
 		engine_push_tsrenderstack(stacks->helpstack,
 		trs_item);
 		data->rendered[data->portal] = 1;
@@ -82,6 +85,14 @@ void			engine_render_particles_wall(t_engine *eng, SDL_Surface *surf,
 			objects_array[data->obj_id], data->plr, data->sect});
 		i++;
 	}
+	engine_render_particles_wall_help(eng, surf, data);
+}
+
+void			engine_render_particles_wall_help(t_engine *eng,
+				SDL_Surface *surf, t_wall_help2 *data)
+{
+	int	i;
+
 	i = 0;
 	while (i < eng->world->sectors_array[data->sect.sectorno].
 	objects_array[data->obj_id].wallobjects_num)

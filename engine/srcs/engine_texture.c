@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 18:42:47 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 16:02:52 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	engine_vline_textured_sprite(SDL_Surface *surf, t_scaler ty,
 			d.red = (d.pixs)[d.offset] * din.color.red;
 			d.green = (d.pixs)[d.offset + 1] * din.color.green;
 			d.blue = (d.pixs)[d.offset + 2] * din.color.blue;
-			d.color = get_rgb((int)d.red , (int)d.green, (int)d.blue, 255);
+			d.color = get_rgb((int)d.red, (int)d.green, (int)d.blue, 255);
 			*d.pixd = d.color;
 		}
 		d.pixd += WIDTH;

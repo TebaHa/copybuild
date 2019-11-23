@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   engine_render_twall_cycler.c                       :+:      :+:    :+:   */
+/*   game_pickup_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/15 15:06:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 15:57:54 by zytrams          ###   ########.fr       */
+/*   Created: 2019/11/23 15:54:05 by zytrams           #+#    #+#             */
+/*   Updated: 2019/11/23 15:56:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 
-void				engine_render_twall_cycle(t_wall_clinks *l)
+t_bool		apply_sprite_obj_help(t_player *plr, t_sprobject *sobj)
 {
-	engine_vline_textured(l->surf, (t_scaler)scaler_init((float[5])
-	{l->mdata->ya, l->mdata->cya, l->mdata->yb,
-	0, l->data->polygone->tex_scale_koef}),
-	(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya, 0},
-	(t_fix_point_3d){l->cycler->x,
-	l->mdata->cyb, 0}, l->data->color, l->mdata->txtx},
-	l->data->polygone->texture);
+	t_bool	picked;
+
+	if (sobj->enum_type == PLASMA_AMMO)
+	{
+		if (ft_strcmp(plr->wpn->name, "Plazma gun") == 0)
+			picked = modify_players_stat(&plr->wpn->ammo, 10, 50);
+	}
+	else if (sobj->enum_type == RIFLE_AMMO)
+	{
+		if (ft_strcmp(plr->wpn->name, "Rifle") == 0)
+			picked = modify_players_stat(&plr->wpn->ammo, 25, 300);
+	}
+	return (picked);
 }

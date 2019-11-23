@@ -6,12 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 15:04:57 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/15 15:54:15 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 16:28:59 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
-
 
 void			engine_render_twall_count_initial_point(t_polygone *polygone,
 				t_player *plr, t_point_2d *t1, t_point_2d *t2)

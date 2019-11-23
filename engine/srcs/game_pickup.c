@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 13:49:25 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/22 18:58:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:55:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void		check_sprite_pick(t_player *plr, t_sprobject *sobj)
 	sobj->enum_type == JETPACK)
 	{
 		tmp = pow((plr->position.x - sobj->position.x), 2)
-		+ pow((plr->position.y - sobj->position.y), 2) +
-		+ pow(((plr->position.z - 150) - sobj->position.z), 2);
+		+ pow((plr->position.y - sobj->position.y), 2)
+		+ pow((plr->position.z - 150 - sobj->position.z), 2);
 		if (tmp <= 0.1)
 			return ;
 		dist = sqrt(tmp);
@@ -92,16 +92,9 @@ void		apply_sprite_obj(t_player *plr, t_sprobject *sobj)
 		engine_replace_text(plr, "HP INCREASED TO MAX LEVEL");
 		picked = modify_players_stat(&plr->health, 200, 200);
 	}
-	else if (sobj->enum_type == PLASMA_AMMO)
-	{
-		if (ft_strcmp(plr->wpn->name, "Plazma gun") == 0)
-			picked = modify_players_stat(&plr->wpn->ammo, 10, 50);
-	}
-	else if (sobj->enum_type == RIFLE_AMMO)
-	{
-		if (ft_strcmp(plr->wpn->name, "Rifle") == 0)
-			picked = modify_players_stat(&plr->wpn->ammo, 25, 300);
-	}
+	else if (sobj->enum_type == PLASMA_AMMO
+	|| sobj->enum_type == RIFLE_AMMO)
+		picked = apply_sprite_obj_help(plr, sobj);
 	else
 		picked = apply_sprite_key(plr, sobj);
 	if (picked == true)

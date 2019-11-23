@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 18:58:51 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/18 18:56:48 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 16:06:53 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ float	count_line_length(t_line_2d line)
 	tmp = pow((line.b.x - line.a.x), 2)
 	+ pow((line.b.y - line.a.y), 2);
 	if (tmp <= 0.1)
-		return 0;
+		return (0);
 	dist = sqrt(tmp);
 	return (dist);
 }
@@ -29,7 +29,6 @@ void	prepare_polygones(t_engine *eng)
 {
 	int			i;
 	int			j;
-	float		dist;
 	t_sector	*s;
 
 	i = 0;
@@ -40,20 +39,7 @@ void	prepare_polygones(t_engine *eng)
 		while (j < s->objects_count)
 		{
 			if (s->objects_array[j].polies_array[0].texture != NULL)
-			{
-				if (s->objects_array[j].polies_array[0].texture_spread == 1 ||
-				s->objects_array[j].polies_array[0].texture_spread == 0)
-				{
-					s->objects_array[j].polies_array[0].tex_scale_koef
-					= s->objects_array[j].polies_array[0].texture->height;
-				}
-				else
-				{
-					s->objects_array[j].polies_array[0].tex_scale_koef
-					= s->objects_array[j].polies_array[0].texture->height
-					* s->objects_array[j].polies_array[0].texture_spread;
-				}
-			}
+				prepare_polegone_help(s, j);
 			else
 			{
 				if (s->objects_array[j].ceil_wall_spread == 0)
@@ -63,5 +49,21 @@ void	prepare_polygones(t_engine *eng)
 			j++;
 		}
 		i++;
+	}
+}
+
+void	prepare_polegone_help(t_sector *s, int j)
+{
+	if (s->objects_array[j].polies_array[0].texture_spread == 1 ||
+	s->objects_array[j].polies_array[0].texture_spread == 0)
+	{
+		s->objects_array[j].polies_array[0].tex_scale_koef =
+		s->objects_array[j].polies_array[0].texture->height;
+	}
+	else
+	{
+		s->objects_array[j].polies_array[0].tex_scale_koef =
+		s->objects_array[j].polies_array[0].texture->height
+		* s->objects_array[j].polies_array[0].texture_spread;
 	}
 }
