@@ -39,6 +39,7 @@ GAME_SRCS_LIST =	freefps.c \
 					game_collision_detector.c \
 					gravitation.c \
 					menu.c \
+					menu_2.c \
 					multi_threading.c \
 					weapon_fire.c \
 					parser_filename.c \

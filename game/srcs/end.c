@@ -26,6 +26,8 @@ void	game_end(t_game *fps)
 				break ;
 			}
 		}
+		// Попробуй лучше использовать это. Так же сделаны автор и контрол
+//		game_menu_endgame(fps);
 		game_render_endframe(fps->menu,
 		fps->render_thread_pool[0].surface);
 		engine_render_frame(fps->eng,

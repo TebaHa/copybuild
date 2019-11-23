@@ -31,28 +31,34 @@ void		eng_create_menu(t_game *fps)
 	fps->menu->element[ME_ENDGAME]->sprite =
 			util_create_sprite_by_name(fps->eng, "m_endgame");
 	fps->menu->element[ME_ENDGAME]->active = false;
+	fps->menu->element[ME_CONTROLS] =
+			(t_menu_element *)ft_memalloc(sizeof(t_menu_element));
+	fps->menu->element[ME_CONTROLS]->position = (t_fix_point_2d){332, 180};
+	fps->menu->element[ME_CONTROLS]->sprite =
+			util_create_sprite_by_name(fps->eng, "m_controls");
+	fps->menu->element[ME_CONTROLS]->active = false;
 	eng_create_menu_2(fps);
 	eng_create_menu_3(fps);
 }
 
 void		eng_create_menu_2(t_game *fps)
 {
-	fps->menu->button[M_STORY] =
+	fps->menu->button[M_PLAY] =
 			(t_menu_button *)ft_memalloc(sizeof(t_menu_button));
-	fps->menu->button[M_STORY]->position = (t_fix_point_2d){332, 180};
-	fps->menu->button[M_STORY]->normal =
-			util_create_sprite_by_name(fps->eng, "m_story_norm");
-	fps->menu->button[M_STORY]->mouseover =
-			util_create_sprite_by_name(fps->eng, "m_story_act");
-	fps->menu->button[M_STORY]->active = true;
-	fps->menu->button[M_LOAD_MAP] =
+	fps->menu->button[M_PLAY]->position = (t_fix_point_2d){332, 180};
+	fps->menu->button[M_PLAY]->normal =
+			util_create_sprite_by_name(fps->eng, "m_play_norm");
+	fps->menu->button[M_PLAY]->mouseover =
+			util_create_sprite_by_name(fps->eng, "m_play_act");
+	fps->menu->button[M_PLAY]->active = true;
+	fps->menu->button[M_CONTROLS] =
 			(t_menu_button *)ft_memalloc(sizeof(t_menu_button));
-	fps->menu->button[M_LOAD_MAP]->position = (t_fix_point_2d){332, 270};
-	fps->menu->button[M_LOAD_MAP]->normal =
-			util_create_sprite_by_name(fps->eng, "m_load_norm");
-	fps->menu->button[M_LOAD_MAP]->mouseover =
-			util_create_sprite_by_name(fps->eng, "m_load_act");
-	fps->menu->button[M_LOAD_MAP]->active = true;
+	fps->menu->button[M_CONTROLS]->position = (t_fix_point_2d){332, 270};
+	fps->menu->button[M_CONTROLS]->normal =
+			util_create_sprite_by_name(fps->eng, "m_controls_norm");
+	fps->menu->button[M_CONTROLS]->mouseover =
+			util_create_sprite_by_name(fps->eng, "m_controls_act");
+	fps->menu->button[M_CONTROLS]->active = true;
 	fps->menu->button[M_EDITOR] =
 			(t_menu_button *)ft_memalloc(sizeof(t_menu_button));
 	fps->menu->button[M_EDITOR]->position = (t_fix_point_2d){332, 360};
