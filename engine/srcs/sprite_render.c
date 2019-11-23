@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 03:13:59 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 15:03:15 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:17:50 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ t_sprobject	*engine_render_sprites_in_sector(t_sector *sect,
 			SDL_Surface *surf, t_player *plr, t_item_sprts *restr)
 {
 	t_sprt_r	d;
-	t_sprobject	*aimed;
 
-	aimed = NULL;
+	d.aimed = NULL;
 	sort_sprites(sect, plr);
 	d.i = 0;
 	while (d.i < sect->sprobjects_count)
@@ -56,20 +55,18 @@ t_sprobject	*engine_render_sprites_in_sector(t_sector *sect,
 		}
 		engine_render_sprites_in_sector_help(sect, surf, &d, restr);
 	}
-	return (aimed);
+	return (d.aimed);
 }
 
 void		engine_render_sprites_in_sector_help(t_sector *sect,
 			SDL_Surface *surf, t_sprt_r *d, t_item_sprts *restr)
 {
-	t_sprobject	*aimed;
-
 	d->begx = max(d->x1, restr->sect_id.sx1);
 	d->endx = min(d->x2, restr->sect_id.sx2);
 	d->x = d->begx;
 	if (d->ya <= (HEIGHT / 2) + 5 && d->cyb >= (HEIGHT / 2) - 5
 	&& d->begx <= (WIDTH / 2) + 5 && d->endx >= (WIDTH / 2) - 5)
-		aimed = &sect->sprobjects_array[sect->order[d->i]];
+		d->aimed = &sect->sprobjects_array[sect->order[d->i]];
 	while (d->x < d->endx)
 	{
 		d->cya = clamp(d->ya, restr->ytop[d->x], restr->ybottom[d->x]);

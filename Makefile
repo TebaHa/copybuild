@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/22 20:20:38 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/23 14:57:00 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,9 +113,11 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					sort.c \
 					sound_2.c \
 					sound.c \
-					sprite_render_2.c \
 					sprite_render_stack.c \
 					sprite_render.c \
+					sprite_render_2.c \
+					sprite_render_3.c \
+					sprite_render_4.c \
 					engine_texture_math.c \
 					engine_texture.c \
 					engine_wall_objects_init.c \

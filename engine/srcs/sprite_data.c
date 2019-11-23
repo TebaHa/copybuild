@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 19:20:06 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 21:36:10 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:10:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	initilize_abs_sprt_sizes(t_player *plr)
 {
 	plr->arr_sizes = (t_sprts_size **)ft_memalloc(sizeof(t_sprts_size *));
-	*plr->arr_sizes = (t_sprts_size *)ft_memalloc(sizeof(t_sprts_size) * ENEMY_NUM);
+	*plr->arr_sizes = (t_sprts_size *)
+	ft_memalloc(sizeof(t_sprts_size) * ENEMY_NUM);
 	plr->arr_sizes[0][MEDKIT] = (t_sprts_size){8.f, 40.f, 0.f};
 	plr->arr_sizes[0][ARMOR] = (t_sprts_size){8.f, 40.f, 0.f};
 	plr->arr_sizes[0][POWER_UP] = (t_sprts_size){10.f, 60.f, 0.f};

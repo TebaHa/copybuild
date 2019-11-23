@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 21:32:24 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 14:31:35 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:09:19 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@ int		check_point_inside_wbox(t_point_3d a,
 	return (0);
 }
 
+int		use_help(t_engine *eng, t_player *plr, t_shoot_data *d, int *i)
+{
+	if (check_point_inside_wbox(d->int_p,
+	&d->sect->objects_array[d->i].stuff[*i],
+	d->sect->ceil, d->sect->floor))
+	{
+		add_task(eng,
+		&eng->world->sectors_array[d->sect->objects_array[d->i].
+		wallobjects_array[*i].sector_id],
+		&d->sect->objects_array[d->i].wallobjects_array[*i], plr);
+		return (1);
+	}
+	(*i) += 1;
+	return (0);
+}
+
 void	use(t_engine *eng, t_player *plr)
 {
 	t_shoot_data	d;
@@ -50,16 +66,8 @@ void	use(t_engine *eng, t_player *plr)
 				i = 0;
 				while (i < d.sect->objects_array[d.i].wallobjects_num)
 				{
-					if (check_point_inside_wbox(d.int_p,
-					&d.sect->objects_array[d.i].stuff[i],
-					d.sect->ceil, d.sect->floor))
-					{
-						add_task(eng,
-						&eng->world->sectors_array[d.sect->objects_array[d.i].wallobjects_array[i].sector_id],
-						&d.sect->objects_array[d.i].wallobjects_array[i], plr);
+					if (use_help(eng, plr, &d, &i))
 						break ;
-					}
-					i++;
 				}
 				break ;
 			}

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 21:14:30 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 19:11:11 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:13:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,25 +120,5 @@ void	shoot(t_engine *eng, t_player *plr, int weapon_range)
 			}
 			d.i++;
 		}
-	}
-}
-
-void	kill(t_sprobject *sobj)
-{
-	int	i;
-
-	i = 0;
-	if (sobj->enum_type == IMP ||
-	sobj->enum_type == AFRIT ||
-	sobj->enum_type == CACODEMON)
-	{
-		sobj->state = E_DEAD;
-		sobj->type->anmtn[E_DEAD]->a_state = ANIMATE;
-		while (i < 8)
-		{
-			sobj->type->anmtn_360[E_DEAD][i]->a_state = ANIMATE;
-			i++;
-		}
-		sobj->frame_num = 0;
 	}
 }

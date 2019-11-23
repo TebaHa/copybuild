@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 14:05:25 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:18:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -959,6 +959,7 @@ typedef struct		s_sprt_r
 	int				cya;
 	int				cyb;
 	int				txtx;
+	t_sprobject		*aimed;
 }					t_sprt_r;
 
 typedef struct		s_line_2d
@@ -1581,5 +1582,7 @@ void				engine_put_text(t_engine *eng, t_player *plr);
 void				engine_render_text(t_engine *eng, t_player *plr);
 void				engine_render_keys(t_hud *hud, t_player *plr, SDL_Surface *surf);
 void				instant_close_door(t_sector *sect);
+void				engine_render_sprites_in_sector_help(t_sector *sect,
+					SDL_Surface *surf, t_sprt_r	*d, t_item_sprts *restr);
 
 #endif
