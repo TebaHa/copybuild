@@ -79,10 +79,12 @@ int		check_button(int x, int y,
 
 int		check_button_pushed(t_game *fps)
 {
-	if (fps->menu->mouseover_section == M_LOAD_MAP)
+	if (fps->menu->mouseover_section == M_PLAY)
 		return (1);
 	else if (fps->menu->mouseover_section == M_AUTHOR)
 		game_menu_author(fps);
+	else if (fps->menu->mouseover_section == M_CONTROLS)
+		game_menu_controls(fps);
 	else if (fps->menu->mouseover_section == M_BACK)
 		game_menu_mainframe(fps);
 	else if (fps->menu->mouseover_section == M_EDITOR)
@@ -94,7 +96,7 @@ int		check_button_pushed(t_game *fps)
 
 void	apply_button(t_game *fps)
 {
-	if (fps->menu->mouseover_section == M_LOAD_MAP)
+	if (fps->menu->mouseover_section == M_PLAY)
 	{
 		fps->work.menu = false;
 		fps->work.game = true;
@@ -136,47 +138,11 @@ void	game_menu_main(t_game *fps)
 			if (fps->eng->event.button.type == SDL_MOUSEBUTTONDOWN)
 				if (fps->eng->event.button.button == SDL_BUTTON_LEFT)
 					if (check_button_pushed(fps))
-						break;
+						break ;
 		}
 		engine_render_frame(fps->eng,
 		fps->render_thread_pool[0].surface);
 		engine_present_and_clear_frame(fps->eng);
 	}
 	apply_button(fps);
-}
-
-void 	game_menu_author(t_game *fps)
-{
-	fps->menu->button[M_STORY]->active = false;
-	fps->menu->button[M_LOAD_MAP]->active = false;
-	fps->menu->button[M_EDITOR]->active = false;
-	fps->menu->button[M_AUTHOR]->active = false;
-	fps->menu->button[M_EXIT]->active = false;
-	fps->menu->button[M_BACK]->active = true;
-	fps->menu->element[ME_AUTHORS]->active = true;
-	fps->menu->element[ME_ENDGAME]->active = false;
-}
-
-void 	game_menu_mainframe(t_game *fps)
-{
-	fps->menu->button[M_STORY]->active = true;
-	fps->menu->button[M_LOAD_MAP]->active = true;
-	fps->menu->button[M_EDITOR]->active = true;
-	fps->menu->button[M_AUTHOR]->active = true;
-	fps->menu->button[M_EXIT]->active = true;
-	fps->menu->button[M_BACK]->active = false;
-	fps->menu->element[ME_AUTHORS]->active = false;
-	fps->menu->element[ME_ENDGAME]->active = false;
-}
-
-void 	game_menu_endgame(t_game *fps)
-{
-	fps->menu->button[M_STORY]->active = false;
-	fps->menu->button[M_LOAD_MAP]->active = false;
-	fps->menu->button[M_EDITOR]->active = false;
-	fps->menu->button[M_AUTHOR]->active = false;
-	fps->menu->button[M_EXIT]->active = true;
-	fps->menu->button[M_BACK]->active = false;
-	fps->menu->element[ME_AUTHORS]->active = false;
-	fps->menu->element[ME_ENDGAME]->active = true;
 }

@@ -44,7 +44,7 @@ set(GAME_SRC
 		game/srcs/menu.c
 		game/srcs/game_collision_detector.c
 		game/srcs/parser_menu.c
-		game/srcs/parser_game.c)
+		game/srcs/parser_game.c game/srcs/menu_2.c)
 
 set(ENG_INC engine/includes/engine.h)
 set(ENG_SRC

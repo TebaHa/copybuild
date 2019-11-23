@@ -28,8 +28,8 @@
 typedef enum		e_menu_section
 {
 	M_NONE = -1,
-	M_STORY,
-	M_LOAD_MAP,
+	M_PLAY,
+	M_CONTROLS,
 	M_EDITOR,
 	M_AUTHOR,
 	M_EXIT,
@@ -41,6 +41,7 @@ typedef enum		e_menu_element_enum
 {
 	ME_AUTHORS,
 	ME_ENDGAME,
+	ME_CONTROLS,
 	ME_ELEMENTS_NUM
 }					t_menu_element_enum;
 
@@ -147,6 +148,7 @@ void				vector_projection(t_player *plr, t_point_3d v1,
 void				game_render_menu(t_menu *menu, SDL_Surface *surf);
 void				game_menu_main(t_game *fps);
 void				game_menu_author(t_game *fps);
+void 				game_menu_controls(t_game *fps);
 void				game_menu_mainframe(t_game *fps);
 void				game_menu_endgame(t_game *fps);
 void				game_menu_quit(t_game *fps);
