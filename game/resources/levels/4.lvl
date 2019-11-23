@@ -222,7 +222,7 @@ object:	632	5		1		1	null		s_tile			ceiling		53 52
 object:	701	-1		0		1	q_bricks_1	s_tile			ceiling		70 71
 object:	711	9		0		1	q_cage		s_tile			ceiling		71 74
 object:	741	-1		0		1	q_bricks_1	s_tile			ceiling		74 75
-object:	751	12		1		1	null		q_elevator	q_ceil_wall_4	75 76
+object:	751	12		1		1	null		q_bricks_1	q_ceil_wall_4	75 76
 object:	761	-1		0		1	q_bricks_1	s_tile			ceiling		76 77
 object:	771	14		1		1	null		s_tile		q_ceil_wall_2	77 78
 object:	781	-1		0		1	q_bricks_1	s_tile			ceiling		78 79
@@ -342,6 +342,10 @@ sobjct:	55	0		3		982
 #Wall objects	(types from t_button_type)
 #		id,	type,	object, height,	%position,	tar_sect,	req keys (red, blue, yellow)
 wobjct:	0	0		1412	100		70			12			0 0 0
+wobjct:	2	0		202		150		70			2			0 0 0
+wobjct:	4	0		511		150		70			4			0 0 0
+wobjct:	6	0		1012	150		70			6			0 0 0
+
 
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
