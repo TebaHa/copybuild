@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 21:32:24 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 14:06:15 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 14:31:35 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	add_task(t_engine *eng, t_sector *sect, t_wobj *obj, t_player *plr)
 			red = plr->key_red;
 		if (obj->blue_key)
 			blue = plr->key_blue;
-		if (obj->blue_key)
+		if (obj->yellow_key)
 			yellow = plr->key_yellow;
 		if (red && blue && yellow)
 		{
