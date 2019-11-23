@@ -14,10 +14,10 @@ vertex: 0	100		600		100
 #Middle position
 vertex: 1	2800	50		100
 #Start position
-vertex: 2	2150	1600	100
+vertex: 2	2200	1600	100
 ---
-vertex: 8	-10		550		100
-vertex: 9	-10		650		100
+vertex: 8	-90		550		100
+vertex: 9	-90		650		100
 
 vertex: 10	0		450		100
 vertex: 11	500		450		100
@@ -159,11 +159,13 @@ vertex: 972	2400	250		100
 vertex: 973	2300	200		100
 vertex: 974	2200	100		100
 vertex: 975	2200	300		100
-vertex: 976 2100	150		100
+vertex: 976 1300	150		100
 vertex: 977 2100	250		100
 
 vertex: 981	2400	1600	100
 vertex:	982	2500	1600	100
+
+vertex: 991	2150	1600	100
 
 #Objects
 #			(if >= 0 where goes)
@@ -333,23 +335,26 @@ sobjct:	48	0		9		972
 sobjct:	49	0		7		973
 sobjct:	50	0		7		974
 sobjct:	51	0		7		975
-sobjct:	52	0		11		976
+
 sobjct:	53	0		3		977
 
 sobjct:	54	0		5		981
 sobjct:	55	0		3		982
 
+sobjct:	52	0		11		976
+
+sobjct:	91	0		13		991
+
 #Wall objects	(types from t_button_type)
 #		id,	type,	object, height,	%position,	tar_sect,	req keys (red, blue, yellow)
-wobjct:	99	1		91		150		70			16			0 0 0
-wobjct:	0	0		111		150		70			0			0 0 0
-wobjct:	2	0		361		150		70			2			0 0 0
-wobjct:	4	0		511		150		70			4			0 0 0
-wobjct:	6	0		1012	150		70			6			0 0 0
-wobjct:	10	0		1311	150		70			10			0 0 0
-wobjct:	14	0		701		150		70			14			0 0 0
-wobjct:	12	0		1541	150		70			12			0 0 0
-
+wobjct:	99	1		91		150		70			16			1 1 1
+wobjct:	0	0		111		150		70			0			1 1 1
+wobjct:	2	0		361		150		70			2			1 1 1
+wobjct:	4	0		511		150		70			4			0 1 1
+wobjct:	6	0		1012	150		70			6			0 1 1
+wobjct:	10	0		1311	150		70			10			0 0 1
+wobjct:	12	0		1541	150		70			12			0 0 1
+wobjct:	14	0		701		150		70			14			0 0 1
 
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
