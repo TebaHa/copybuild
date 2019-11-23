@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 13:55:15 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 14:22:23 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void		game_quit(t_game *fps)
 
 void		game_init_player(t_player *plr)
 {
-	plr->velocity = (t_point_3d){0, 0.f, 0.f, 0.f};
 	plr->angle = 0;
 	plr->sinangle = sinf(plr->angle);
 	plr->cosangle = cosf(plr->angle);
@@ -28,7 +27,7 @@ void		game_init_player(t_player *plr)
 	plr->controller.duckcheck = -1;
 	plr->controller.falling = 0;
 	plr->controller.ground = 1;
-	plr->controller.moving = 0;
+	plr->controller.moving = 1;
 	plr->controller.running = 4;
 	plr->controller.fakefall = 0;
 	plr->plr_state = P_IDLE;
@@ -45,6 +44,11 @@ void		game_init_player(t_player *plr)
 	plr->key_red = false;
 	plr->key_blue = false;
 	plr->key_yellow = false;
+	plr->velocity = (t_point_3d){0.f, 0.1f, 0.1f, 0.1f};
+	plr->controller.wasd[0] = 0;
+	plr->controller.wasd[1] = 0;
+	plr->controller.wasd[2] = 0;
+	plr->controller.wasd[3] = 0;
 	initilize_abs_sprt_sizes(plr);
 }
 
@@ -70,6 +74,7 @@ void		game_init(t_game *fps, int argc, char **argv)
 	fps->logic.init = 0;
 	fps->logic.grav = 1;
 	fps->logic.yaw = 0;
+	fps->logic.acceleration = 0;
 	fps->eng->ending = false;
 	fps->eng->x = 0;
 	fps->eng->y = 0;

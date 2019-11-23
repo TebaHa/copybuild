@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 13:36:03 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 14:05:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -450,6 +450,7 @@ typedef struct		s_door_task
 	int				id;
 	t_bool			closed;
 	t_bool			renderable;
+	t_bool			inuse;
 	int				delta;
 	int				range;
 }					t_door_task;

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 22:20:58 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 14:21:07 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	game_apply_movement_main(t_game *fps)
 	fps->logic.yaw = clamp(fps->logic.yaw - fps->logic.xy.y * 0.03f, -3, 3);
 	fps->player.yaw = fps->logic.yaw - fps->player.velocity.z * 0.5f;
 	move_player(fps->eng, &fps->player,
-	(t_point_2d){0, 0});
+	(t_point_2d){0.f, 0.f});
 	fps->logic.move_vec[0] = 0.f;
 	fps->logic.move_vec[1] = 0.f;
 	game_apply_movement_main_count1(fps);
