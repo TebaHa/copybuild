@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 23:17:00 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 17:03:48 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void				game_buttons_control_down_main(t_game *fps);
 void				game_buttons_control_down1(t_game *fps);
 void				game_buttons_control_down2(t_game *fps);
 void				game_buttons_control_down3(t_game *fps);
+void				game_buttons_control_down4(t_game *fps);
 
 void				apply_gravitation(t_game *fps);
 
@@ -165,5 +166,10 @@ void				run_game(t_game *fps);
 void				run_controller(t_game *fps);
 void				game_end(t_game *fps);
 void				game_render_endframe(t_menu *menu, SDL_Surface *surf);
+void				set_flags_editor(t_game *fps);
+void				game_render_menu_help(t_menu *menu, SDL_Surface *surf);
+int					game_menu_break_check(t_game *fps);
+int					check_button_pushed(t_game *fps);
+void				game_movement_check_help(t_game *fps);
 
 #endif

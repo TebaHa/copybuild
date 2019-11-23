@@ -6,11 +6,18 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 21:31:01 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 21:02:20 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 16:46:44 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
+
+void	set_flags_editor(t_game *fps)
+{
+	fps->work.menu = true;
+	fps->work.game = false;
+	fps->work.editor = false;
+}
 
 void	run_controller(t_game *fps)
 {
@@ -21,9 +28,7 @@ void	run_controller(t_game *fps)
 		else if (fps->work.editor == true)
 		{
 			run_editor(fps->editor);
-			fps->work.menu = true;
-			fps->work.game = false;
-			fps->work.editor = false;
+			set_flags_editor(fps);
 		}
 		else if (fps->work.game == true)
 		{

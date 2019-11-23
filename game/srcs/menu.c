@@ -6,46 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:49:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/21 20:51:24 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 16:57:30 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
-
-void	game_render_menu(t_menu *menu, SDL_Surface *surf)
-{
-	int	i;
-
-	i = 0;
-	draw_from_surface_to_surface(surf, menu->background->surface[0], 0, 0);
-	while (i < M_SECTIONS_NUM)
-	{
-		if (menu->button[i]->active)
-		{
-			if (menu->mouseover_section == i)
-				draw_from_surface_to_surface(surf,
-				menu->button[i]->mouseover->surface[0],
-				menu->button[i]->position.x,
-				menu->button[i]->position.y);
-			else
-				draw_from_surface_to_surface(surf,
-				menu->button[i]->normal->surface[0],
-				menu->button[i]->position.x,
-				menu->button[i]->position.y);
-		}
-		i++;
-	}
-	i = 0;
-	while (i < ME_ELEMENTS_NUM)
-	{
-		if (menu->element[i]->active)
-			draw_from_surface_to_surface(surf,
-			menu->element[i]->sprite->surface[0],
-			menu->element[i]->position.x,
-			menu->element[i]->position.y);
-		i++;
-	}
-}
 
 void	game_find_button(t_game *fps)
 {
@@ -122,23 +87,8 @@ void	game_menu_main(t_game *fps)
 		game_render_menu(fps->menu, fps->render_thread_pool[0].surface);
 		if (SDL_PollEvent(&fps->eng->event))
 		{
-			if (fps->eng->event.type == SDL_QUIT)
-			{
-				game_quit(fps);
+			if (game_menu_break_check(fps) == 0)
 				break ;
-			}
-			if (fps->eng->event.type == SDL_KEYDOWN)
-			{
-				if (fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
-				{
-					game_quit(fps);
-					break ;
-				}
-			}
-			if (fps->eng->event.button.type == SDL_MOUSEBUTTONDOWN)
-				if (fps->eng->event.button.button == SDL_BUTTON_LEFT)
-					if (check_button_pushed(fps))
-						break ;
 		}
 		engine_render_frame(fps->eng,
 		fps->render_thread_pool[0].surface);

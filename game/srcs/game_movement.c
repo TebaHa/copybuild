@@ -6,11 +6,26 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 18:26:29 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 14:21:07 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 17:03:39 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
+
+void	game_movement_check_help(t_game *fps)
+{
+	fps->logic.sectprev = fps->player.cursector;
+	check_wall_passed(fps->eng, &fps->player,
+	(t_line_2d){(t_point_2d){fps->player.position.x, fps->player.position.y},
+	(t_point_2d){fps->player.position.x + fps->player.velocity.x,
+	fps->player.position.y + fps->player.velocity.y}},
+	&fps->player.controller.moving);
+	fps->logic.sectprev = engine_object_get_sector(fps->eng->world,
+	(t_point_3d){0.f, fps->player.position.x
+	+ fps->player.velocity.x, fps->player.position.y
+	+ fps->player.velocity.y, fps->player.position.z},
+	fps->player.cursector);
+}
 
 void	game_movement_check(t_game *fps)
 {
@@ -19,18 +34,7 @@ void	game_movement_check(t_game *fps)
 	thread = SDL_CreateThread(game_thread_wrapper, NULL, (void *)fps);
 	if (fps->player.controller.moving)
 	{
-		fps->logic.sectprev = fps->player.cursector;
-		check_wall_passed(fps->eng, &fps->player,
-		(t_line_2d){(t_point_2d){fps->player.position.x, fps->player.position.y},
-		(t_point_2d){fps->player.position.x + fps->player.velocity.x,
-		fps->player.position.y + fps->player.velocity.y}},
-		&fps->player.controller.moving);
-		fps->logic.sectprev = engine_object_get_sector(fps->eng->world,
-		(t_point_3d){0.f, fps->player.position.x
-		+ fps->player.velocity.x,
-		fps->player.position.y
-		+ fps->player.velocity.y, fps->player.position.z},
-		fps->player.cursector);
+		game_movement_check_help(fps);
 		if (fps->logic.sectprev >= 0 && fps->logic.sectprev
 		== fps->player.cursector &&
 		fps->eng->world->sectors_array

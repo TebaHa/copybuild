@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 15:33:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 16:40:43 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -974,6 +974,20 @@ typedef struct		s_surf_and_plr
 	SDL_Surface		*surf;
 }					t_surf_and_plr;
 
+typedef struct		s_bg
+{
+	int				x;
+	int				y;
+	int				sx;
+	int				sy;
+	int				oy;
+	int				*spix;
+	int				*dpix;
+	int				red;
+	int 			green;
+	int 			blue;
+}					t_bg;
+
 void				engine_sdl_init(t_engine **eng);
 void				engine_sdl_uninit(t_engine *eng);
 void				engine_draw_line(t_engine *eng, t_point_2d a,
@@ -1580,12 +1594,24 @@ void				engine_replace_text(t_player *plr, char *str);
 void				engine_check_text(t_engine *eng);
 void				engine_put_text(t_engine *eng, t_player *plr);
 void				engine_render_text(t_engine *eng, t_player *plr);
-void				engine_render_keys(t_hud *hud, t_player *plr, SDL_Surface *surf);
+void				engine_render_keys(t_hud *hud, t_sprite *img,
+					t_player *plr, SDL_Surface *surf);
 void				instant_close_door(t_sector *sect);
 void				engine_render_sprites_in_sector_help(t_sector *sect,
 					SDL_Surface *surf, t_sprt_r	*d, t_item_sprts *restr);
 void				init_portal_data(t_engine *eng, t_wall_help3 *data_help,
 					t_wall_help2 *data, t_wall_mai_data *mdata);
 void				engine_render_particle_8(t_wallobj *particle, t_ptcl_r *data);
-
+void				engine_render_particles_wall_help(t_engine *eng,
+					SDL_Surface *surf, t_wall_help2 *data);
+void				engine_render_particle_animate(t_wallobj *particle);
+void				engine_draw_background_help(t_engine *eng,
+					SDL_Surface *surf, t_bg	*bg);
+t_bool				apply_sprite_obj_help(t_player *plr, t_sprobject *sobj);
+void				prepare_polegone_help(t_sector *s, int j);
+void				engine_render_ts_object_help(t_wall_help2 *data,
+					t_trns_item item);
+void				init_wobj_help(t_object *obj, t_point_3d *particle);
+void				init_wobj_help2(t_object *obj, t_wobj *txtr,
+					t_point_3d *particle, t_sh_part *data);
 #endif

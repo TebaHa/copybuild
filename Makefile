@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/23 15:33:37 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/23 16:50:41 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ GAME_SRCS_LIST =	freefps.c \
 					gravitation.c \
 					menu.c \
 					menu_2.c \
+					menu_3.c \
 					multi_threading.c \
 					weapon_fire.c \
 					parser_filename.c \
@@ -92,6 +93,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					objects_help.c \
 					objects.c \
 					game_pickup.c \
+					game_pickup_2.c \
 					relative_coord.c \
 					render_cycle.c \
 					render_cycle2.c \
@@ -126,6 +128,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					utility.c \
 					utils_check_stack.c \
 					engine_door_stack.c \
+					engine_door_stack_2.c \
 					init_sectors.c \
 					engine_render_twall_cycler.c \
 					engine_render_twall_help.c \

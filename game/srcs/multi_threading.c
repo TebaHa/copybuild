@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 17:10:20 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/22 20:17:06 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 16:58:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void		game_init_threads(t_thread_pool *render_thread_pool, int sectors)
 		WIDTH, HEIGHT, 32, (unsigned int)0xff000000,
 		(unsigned int)0x00ff0000, (unsigned int)0x0000ff00,
 		(unsigned int)0x000000ff);
-		render_thread_pool[i].ren_stacks.renderstack
-		= (t_item *)ft_memalloc(sizeof(t_item) * MAXSECTORS);
-		render_thread_pool[i].ren_stacks.rendered
-		= (char *)ft_memalloc(sizeof(char) * sectors);
+		render_thread_pool[i].ren_stacks.renderstack =
+		(t_item *)ft_memalloc(sizeof(t_item) * MAXSECTORS);
+		render_thread_pool[i].ren_stacks.rendered =
+		(char *)ft_memalloc(sizeof(char) * sectors);
 		ft_bzero(render_thread_pool[i].ren_stacks.rendered, sectors);
 		engine_clear_renderstack(render_thread_pool[i].ren_stacks.renderstack);
 		engine_clear_tsrenderstack(render_thread_pool[i].
