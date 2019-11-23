@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 13:26:52 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 13:36:03 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1579,6 +1579,6 @@ void				engine_check_text(t_engine *eng);
 void				engine_put_text(t_engine *eng, t_player *plr);
 void				engine_render_text(t_engine *eng, t_player *plr);
 void				engine_render_keys(t_hud *hud, t_player *plr, SDL_Surface *surf);
-void				instant_close_dooe(t_sector *sect);
+void				instant_close_door(t_sector *sect);
 
 #endif

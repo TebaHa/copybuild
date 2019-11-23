@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:21:18 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 13:29:06 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 13:55:23 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ void		wall_objects_init(t_engine *eng)
 	}
 }
 
-void			instant_close_dooe(t_sector *sect)
+void			instant_close_door(t_sector *sect)
 {
-	int			floor;
-	int			ceil;
+	int			i;
 
-	floor = (sect->ceil - sect->floor / 2) - 1;
-	ceil = (sect->ceil - sect->floor / 2) + 1;
+	i = 0;
+	sect->opening.delta = 10;
+	sect->opening.range = sect->ceil - sect->floor;
+	while (close_door(&sect->opening, sect) == 0)
+		i++;
 }
 
 void		wall_object_init(t_engine *eng, t_object *obj,
@@ -95,8 +97,8 @@ void		wall_object_init(t_engine *eng, t_object *obj,
 		obj->stuff[i].red = txtr->red_key;
 		obj->stuff[i].blue = txtr->blue_key;
 		obj->stuff[i].yellow = txtr->yellow_key;
-		if (txtr->enum_type == BT_DOOR)
-			instant_close_dooe(&eng->world->sectors_array[txtr->sector_id]);
+		if (obj->stuff[i].type == BT_DOOR)
+			instant_close_door(&eng->world->sectors_array[txtr->sector_id]);
 		i++;
 	}
 }
