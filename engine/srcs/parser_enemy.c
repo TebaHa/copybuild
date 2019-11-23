@@ -27,10 +27,14 @@ void		eng_create_afrit(t_engine *eng)
 	afrit->id = AFRIT;
 	afrit->name = ft_strdup("Afrit");
 	afrit->rotatable = ROTATABLE;
-	afrit->anmtn_360[E_IDLE] = util_create_sprite_360_by_name(eng, "afrit_idle");
-	afrit->anmtn_360[E_HURT] = util_create_sprite_360_by_name(eng, "afrit_hurt");
-	afrit->anmtn_360[E_FIRE] = util_create_sprite_360_by_name(eng, "afrit_fire");
-	afrit->anmtn_360[E_DEAD] = util_create_sprite_0_by_name(eng, "afrit_dead");
+	afrit->anmtn_360[E_IDLE] = util_create_sprite_360_by_name(eng,
+			"afrit_idle");
+	afrit->anmtn_360[E_HURT] = util_create_sprite_360_by_name(eng,
+			"afrit_hurt");
+	afrit->anmtn_360[E_FIRE] = util_create_sprite_360_by_name(eng,
+			"afrit_fire");
+	afrit->anmtn_360[E_DEAD] = util_create_sprite_0_by_name(eng,
+			"afrit_dead");
 	afrit->shot = util_create_sprite_by_name(eng, "afrit_shot");
 	afrit->anmtn_360[E_RUN] = afrit->anmtn_360[E_IDLE];
 	afrit->anmtn[E_IDLE] = afrit->anmtn_360[E_IDLE][EA_000];
@@ -49,10 +53,14 @@ void		eng_create_cacodemon(t_engine *eng)
 	demon->id = CACODEMON;
 	demon->name = ft_strdup("Cacodemon");
 	demon->rotatable = ROTATABLE;
-	demon->anmtn_360[E_IDLE] = util_create_sprite_360_by_name(eng, "cacodemon_idle");
-	demon->anmtn_360[E_HURT] = util_create_sprite_360_by_name(eng, "cacodemon_hurt");
-	demon->anmtn_360[E_FIRE] = util_create_sprite_360_by_name(eng, "cacodemon_fire");
-	demon->anmtn_360[E_DEAD] = util_create_sprite_0_by_name(eng, "cacodemon_dead");
+	demon->anmtn_360[E_IDLE] = util_create_sprite_360_by_name(eng,
+			"cacodemon_idle");
+	demon->anmtn_360[E_HURT] = util_create_sprite_360_by_name(eng,
+			"cacodemon_hurt");
+	demon->anmtn_360[E_FIRE] = util_create_sprite_360_by_name(eng,
+			"cacodemon_fire");
+	demon->anmtn_360[E_DEAD] = util_create_sprite_0_by_name(eng,
+			"cacodemon_dead");
 	demon->shot = util_create_sprite_by_name(eng, "empty_place");
 	demon->anmtn_360[E_RUN] = demon->anmtn_360[E_IDLE];
 	demon->anmtn[E_IDLE] = demon->anmtn_360[E_IDLE][EA_000];
@@ -71,10 +79,14 @@ void		eng_create_imp(t_engine *eng)
 	imp->id = IMP;
 	imp->name = ft_strdup("Imp");
 	imp->rotatable = ROTATABLE;
-	imp->anmtn_360[E_IDLE] = util_create_sprite_360_by_name(eng, "imp_idle");
-	imp->anmtn_360[E_HURT] = util_create_sprite_360_by_name(eng, "imp_hurt");
-	imp->anmtn_360[E_FIRE] = util_create_sprite_360_by_name(eng, "imp_fire");
-	imp->anmtn_360[E_DEAD] = util_create_sprite_0_by_name(eng, "imp_dead");
+	imp->anmtn_360[E_IDLE] = util_create_sprite_360_by_name(eng,
+			"imp_idle");
+	imp->anmtn_360[E_HURT] = util_create_sprite_360_by_name(eng,
+			"imp_hurt");
+	imp->anmtn_360[E_FIRE] = util_create_sprite_360_by_name(eng,
+			"imp_fire");
+	imp->anmtn_360[E_DEAD] = util_create_sprite_0_by_name(eng,
+			"imp_dead");
 	imp->shot = util_create_sprite_by_name(eng, "imp_shot");
 	imp->anmtn_360[E_RUN] = imp->anmtn_360[E_IDLE];
 	imp->anmtn[E_IDLE] = imp->anmtn_360[E_IDLE][EA_000];

@@ -82,14 +82,13 @@ set(ENG_SRC
 		engine/srcs/sprite_render_stack.c
 		engine/srcs/sort.c
 		engine/srcs/render_stack.c
-		engine/srcs/checksum.c
+		engine/srcs/parser_checksum.c
 		engine/srcs/parser_player.c
 		engine/srcs/parser_items_2.c
 		engine/srcs/sound_2.c
 		engine/srcs/parser_point_3d.c
 		engine/srcs/parser_sprite.c
 		engine/srcs/parser_object.c
-		engine/srcs/parser_polygone.c
 		engine/srcs/parser_sector.c
 		engine/srcs/parser_sprobject.c
 		engine/srcs/parser_worldbox.c
@@ -127,7 +126,7 @@ set(ENG_SRC
 		engine/srcs/render_background.c
 		engine/srcs/use.c
 		engine/srcs/engine_texture_scale_koef.c
-		engine/srcs/engine_wall_objects_init.c engine/srcs/checksum_errors.c)
+		engine/srcs/engine_wall_objects_init.c engine/srcs/parser_checksum_errors.c engine/srcs/parser_items_3.c engine/srcs/parser_object_2.c)
 
 set(EDITOR_INC editor/includes/editor.h)
 set(EDITOR_SRC

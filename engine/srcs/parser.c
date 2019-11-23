@@ -17,7 +17,7 @@ void		parser_engine(t_engine *eng, t_player *plr)
 	engine_create_engine_resources(eng);
 	engine_create_world_from_file(eng, plr, eng->map_name);
 	plr->wpn = eng->weapon[1];
-	plr->cursector = 0; // УДОЛИ
+	plr->cursector = 0;
 }
 
 void		engine_create_engine_resources(t_engine *eng)
@@ -28,7 +28,7 @@ void		engine_create_engine_resources(t_engine *eng)
 	eng_create_items(eng);
 	eng_create_enemies(eng);
 	eng_create_buttons(eng);
-	//eng_create_background_music(eng);
+	eng_create_background_music(eng);
 }
 
 void		engine_create_world_from_file(t_engine *eng, t_player *plr,
@@ -39,8 +39,6 @@ void		engine_create_world_from_file(t_engine *eng, t_player *plr,
 	buff.str = engine_read_level_file(filename);
 	engine_preparser(eng, buff.str);
 	buff.vertexes = engine_read_vertexes_from_file(eng, buff.str);
-//	buff.sprites = engine_read_sprites_from_file(eng, buff);
-//	buff.polies = engine_read_polygones_from_file(eng, buff);
 	buff.wallobjects = engine_read_wallobjects_from_file(eng, buff);
 	buff.objects = engine_read_objects_from_file(eng, &buff);
 	buff.sectors = engine_read_sectors_from_file(eng, buff);
@@ -54,12 +52,10 @@ void		engine_create_world_from_file(t_engine *eng, t_player *plr,
 void		engine_preparser(t_engine *eng, char **buff)
 {
 	eng->stats.vertexes_count = 0;
-//	eng->stats.polies_count = 0;
 	eng->stats.objects_count = 0;
 	eng->stats.sprobjects_count = 0;
 	eng->stats.wallobjects_count = 0;
 	eng->stats.sectors_count = 0;
-//	eng->stats.skins_count = 0;
 	eng->stats.worlds_count = 0;
 	eng->stats.players_count = 0;
 	engine_count_all_from_file(&eng->stats, buff);
@@ -69,8 +65,6 @@ void		engine_preparser(t_engine *eng, char **buff)
 		util_parsing_error_not_enough("sectors");
 	if (!eng->stats.objects_count)
 		util_parsing_error_not_enough("objects");
-//	if (!eng->stats.polies_count)
-//		util_parsing_error_not_enough("polies");
 	if (!eng->stats.vertexes_count)
 		util_parsing_error_not_enough("vertexes");
 }
@@ -84,8 +78,6 @@ void		engine_count_all_from_file(t_stats *stats, char **buff)
 	{
 		if (ft_strwcmp(buff[i], "vertex:") == 0)
 			stats->vertexes_count++;
-//		else if (ft_strwcmp(buff[i], "polygone:") == 0)
-//			stats->polies_count++;
 		else if (ft_strwcmp(buff[i], "object:") == 0)
 			stats->objects_count++;
 		else if (ft_strwcmp(buff[i], "sector:") == 0)

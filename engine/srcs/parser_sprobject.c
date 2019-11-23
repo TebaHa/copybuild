@@ -12,7 +12,7 @@
 
 #include <engine.h>
 
-void		engine_read_sprobjects_from_file(t_engine *eng, t_buff *buff)
+void			engine_read_sprobjects_from_file(t_engine *eng, t_buff *buff)
 {
 	char		**splitted_line;
 	int			i;
@@ -37,6 +37,7 @@ void			util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 				t_buff *buff, char **str)
 {
 	t_sector	*sector;
+
 	util_parsing_error_little_data_check("sprite object", str, 4);
 	util_parsing_error_count_handler("sprite object", str, 4);
 	sprobject->id = util_int10_data_filler(str[1], 0, 5000);
@@ -63,9 +64,9 @@ void			util_create_sprobject(t_engine *eng, t_sprobject *sprobject,
 
 void			util_fill_sector_with_sprobjects(t_engine *eng, t_buff *buff)
 {
-	int 		sect_count;
-	int 		sprobj_count;
-	int 		sprobj_count_global;
+	int			sect_count;
+	int			sprobj_count;
+	int			sprobj_count_global;
 
 	sect_count = 0;
 	while (sect_count < eng->world->sectors_count)
@@ -78,17 +79,21 @@ void			util_fill_sector_with_sprobjects(t_engine *eng, t_buff *buff)
 			sprobj_count_global = 0;
 			sprobj_count = 0;
 			while (sprobj_count_global < eng->stats.sprobjects_count)
-			{
-				if (eng->world->sectors_array[sect_count].id ==
-				buff->sprobjects[sprobj_count_global].sector_id)
-				{
-					eng->world->sectors_array[sect_count].sprobjects_array[sprobj_count] =
-					buff->sprobjects[sprobj_count_global];
-					sprobj_count++;
-				}
-				sprobj_count_global++;
-			}
+				util_fill_sector_with_sprobjects_2(&eng->world->sectors_array[
+					sect_count], buff, &sprobj_count, &sprobj_count_global);
 		}
 		sect_count++;
 	}
+}
+
+void			util_fill_sector_with_sprobjects_2(t_sector *sector,
+				t_buff *buff, int *sprobj_count, int *sprobj_count_global)
+{
+	if (sector->id == buff->sprobjects[*sprobj_count_global].sector_id)
+	{
+		sector->sprobjects_array[*sprobj_count] =
+			buff->sprobjects[*sprobj_count_global];
+		(*sprobj_count)++;
+	}
+	(*sprobj_count_global)++;
 }

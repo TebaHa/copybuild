@@ -63,7 +63,8 @@ t_point_3d	util_get_vertex_from_buff_by_id(int id, int size,
 	return (vertexes[i]);
 }
 
-void		util_find_repeats_in_vertexes(t_point_3d *vertex, int vertexes_count)
+void		util_find_repeats_in_vertexes(t_point_3d *vertex,
+			int vertexes_count)
 {
 	int		j;
 	int		i;
