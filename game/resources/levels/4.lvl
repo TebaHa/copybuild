@@ -1,7 +1,7 @@
 Map
 #Worlds
 #		id, num of sects,	sectors
-world:	1	21				0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+world:	1	17				0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
 
 #Vertexes
 #		angle,	vertex
@@ -14,10 +14,10 @@ vertex: 0	100		600		100
 #Middle position
 vertex: 1	2800	50		100
 #Start position
-vertex: 2	2150	1600	100
+vertex: 2	2200	1600	100
 ---
-vertex: 8	-10		550		100
-vertex: 9	-10		650		100
+vertex: 8	-90		550		100
+vertex: 9	-90		650		100
 
 vertex: 10	0		450		100
 vertex: 11	500		450		100
@@ -73,11 +73,11 @@ vertex: 84	2700	800		100
 vertex: 85	2700	300		100
 vertex: 86	2700	200		100
 
-vertex: 87	2100	1300	100
-vertex: 88	2100	800		100
+vertex: 87	2400	1300	100
+vertex: 88	2400	800		100
 
-vertex: 90	3200	0		100
-vertex: 91	3200	500		100
+vertex: 90	3100	0		100
+vertex: 91	3100	500		100
 
 vertex: 100	2600	200		100
 vertex: 101	2600	300		100
@@ -133,17 +133,13 @@ vertex: 915	2300	700		100
 vertex: 916	2400	700		100
 vertex: 917	2300	600		100
 
-vertex: 931	2400	900		100
-vertex: 932	2400	1200	100
-vertex: 933	2300	1050	100
-vertex: 934	2200	1000	100
-vertex: 935	2200	1100	100
+vertex: 931	2600	900		100
+vertex: 932	2600	1200	100
+vertex: 933	2600	1050	100
 
-vertex: 941	3100	150		100
-vertex: 942	3100	250		100
-vertex: 943	3100	350		100
-vertex: 944	3000	100		100
-vertex: 945	3000	400		100
+vertex: 941	3000	150		100
+vertex: 942	3000	250		100
+vertex: 943	3000	350		100
 
 vertex: 951	3050	1250	100
 vertex: 952	3100	1150	100
@@ -163,11 +159,13 @@ vertex: 972	2400	250		100
 vertex: 973	2300	200		100
 vertex: 974	2200	100		100
 vertex: 975	2200	300		100
-vertex: 976 2100	150		100
+vertex: 976 1300	150		100
 vertex: 977 2100	250		100
 
 vertex: 981	2400	1600	100
 vertex:	982	2500	1600	100
+
+vertex: 991	2150	1600	100
 
 #Objects
 #			(if >= 0 where goes)
@@ -179,11 +177,11 @@ object:	91	-1		0		1	q_elevator	q_bricks_1		q_bricks_1	9 8
 
 object:	101	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	10 11
 object:	111	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	11 12
-object:	121	2		1		1	null		q_bricks_1	q_ceil_wall_4	12 13
+object:	121	2		1		1	null		q_bricks_1		q_bricks_1	12 13
 object:	131	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	13 14
 object:	141	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	14 15
 object:	151	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	15 16
-object:	161	0		1		1	null		q_bricks_1	q_ceil_wall_2	16 17
+object:	161	0		1		1	null		q_bricks_1		q_bricks_1	16 17
 object:	171	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	17 10
 
 object:	122	-1		0		1	q_wall		s_tile			ceiling		12 20
@@ -211,11 +209,11 @@ object:	342	3		1		1	null		s_tile			ceiling		34 33
 
 object:	501	-1		0		1	q_bricks_3	q_bricks_3		ceiling		50 51
 object:	511	-1		0		1	q_bricks_3	q_bricks_3		ceiling		51 52
-object:	521	6		1		1	null		q_bricks_3	q_ceil_wall_2	52 53
+object:	521	6		1		1	null		q_bricks_3		q_bricks_3	52 53
 object:	531	-1		0		1	q_bricks_3	q_bricks_3		ceiling		53 54
 object:	541	-1		0		1	q_bricks_3	q_bricks_3		ceiling		54 55
 object:	551	-1		0		1	q_bricks_3	q_bricks_3		ceiling		55 41
-object:	412	4		1		1	null		q_bricks_3	q_ceil_wall_2	41 40
+object:	412	4		1		1	null		q_bricks_3		q_bricks_3	41 40
 object:	402	-1		0		1	q_bricks_3	q_bricks_3		ceiling		40 50
 
 object:	522	-1		0		1	q_wall		s_tile			ceiling		52 60
@@ -224,54 +222,30 @@ object:	611	-1		0		1	q_wall		s_tile			ceiling		61 53
 object:	632	5		1		1	null		s_tile			ceiling		53 52
 
 object:	701	-1		0		1	q_bricks_1	s_tile			ceiling		70 71
-object:	711	19		0		1	q_cage		s_tile			ceiling		71 72
-object:	721	9		1		1	null		s_tile		q_bricks_1		72 73
-object:	731	20		0		1	q_cage		s_tile			ceiling		73 74
+object:	711	9		0		1	q_cage		s_tile			ceiling		71 74
 object:	741	-1		0		1	q_bricks_1	s_tile			ceiling		74 75
-object:	751	12		1		1	null		s_tile		q_ceil_wall_4	75 76
+object:	751	12		1		1	null		q_bricks_1		q_bricks_1	75 76
 object:	761	-1		0		1	q_bricks_1	s_tile			ceiling		76 77
-object:	771	14		1		1	null		s_tile		q_ceil_wall_2	77 78
+object:	771	14		1		1	null		q_bricks_1		q_bricks_1	77 78
 object:	781	-1		0		1	q_bricks_1	s_tile			ceiling		78 79
-object:	791	16		1		1	null		s_tile		q_ceil_wall_4	79 80
+object:	791	16		1		1	null		q_bricks_1		q_bricks_1	79 80
 object:	801	-1		0		1	q_bricks_1	s_tile			ceiling		80 81
-object:	811	18		0		1	q_cage		s_tile			ceiling		81 82
-object:	821	8		1		1	null		s_tile		q_ceil_wall_2	82 83
-object:	831	17		0		1	q_cage		s_tile			ceiling		83 84
+object:	811	8		0		1	q_cage		s_tile			ceiling		81 84
 object:	841	-1		0		1	q_bricks_1	s_tile			ceiling		84 61
-object:	612	6		1		1	null		s_tile		q_ceil_wall_2	61 60
+object:	612	6		1		1	null		q_bricks_1		q_bricks_1	61 60
 object:	602	-1		0		1	q_bricks_1	s_tile			ceiling		60 85
-object:	851	10		1		1	null		s_tile		q_ceil_wall_4	85 86
+object:	851	10		1		1	null		q_bricks_1		q_bricks_1	85 86
 object:	861	-1		0		1	q_bricks_1	s_tile			ceiling		86 70
 
-object:	881	-1		0		1	q_bricks_1	s_tile			ceiling		88 84
-object:	842	7		0		1	q_cage		s_tile			ceiling		84 83
-object:	832	8		1		1	null		s_tile			ceiling		83 171
-object:	1711 -1		0		1	q_bricks_1	s_tile			ceiling		171 88
-
-object:	1712 17		1		1	null		s_tile			ceiling		171 83
-object:	833 7		1		1	null		s_tile			ceiling		83 82
-object:	822 18		1		1	null		s_tile			ceiling		82 181
-object:	1811 -1		0		1	q_bricks_1	s_tile			ceiling		181 171
-
-object:	1812 8		1		1	null		s_tile			ceiling		181 82
-object:	823 7		0		1	q_cage		s_tile			ceiling		82 81
+object:	881 -1		0		1	q_bricks_1	s_tile			ceiling		88 84
+object:	842 7		0		1	q_cage		s_tile			ceiling		84 81
 object:	812 -1		0		1	q_bricks_1	s_tile			ceiling		81 87
-object:	871 -1		0		1	q_bricks_1	s_tile			ceiling		87 181
+object:	871 -1		0		1	q_bricks_1	s_tile			ceiling		87 88
 
 object:	712	-1		0		1	q_bricks_1	s_tile			ceiling		71 90
-object:	901	-1		0		1	q_bricks_1	s_tile			ceiling		90 191
-object:	1911 9		1		1	null		s_tile			ceiling		191 72
-object:	722	7		0		1	q_cage		s_tile			ceiling		72 71
-
-object:	723	19		1		1	null		s_tile			ceiling		72 191
-object:	1912 -1		0		1	q_bricks_1	s_tile			ceiling		191 201
-object:	2011 20		1		1	null		s_tile			ceiling		201 73
-object:	732	7		1		1	null		s_tile			ceiling		73 72
-
-object:	733	9		1		1	null		s_tile			ceiling		73 201
-object:	2012 -1		0		1	q_bricks_1	s_tile			ceiling		201 91
-object:	911	-1		0		1	q_bricks_1	s_tile			ceiling		91 74
-object:	742	7		0		1	q_cage		s_tile			ceiling		74 73
+object:	901 -1		0		1	q_bricks_1	s_tile			ceiling		90 91
+object:	911 -1		0		1	q_bricks_1	s_tile			ceiling		91 74
+object:	742	7		0		1	q_cage		s_tile			ceiling		74 71
 
 object:	1001 -1		0		1	q_bricks_1	s_tile			ceiling		100 86
 object:	862	7		1		1	null		s_tile		q_ceil_wall_1	86 85
@@ -339,14 +313,10 @@ sobjct:	26	0		8		917
 sobjct:	27	0		9		931
 sobjct:	28	0		9		932
 sobjct:	29	0		9		933
-sobjct:	30	0		0		934
-sobjct:	31	0		3		935
 
 sobjct:	32	180		9		941
 sobjct:	33	180		7		942
 sobjct:	34	180		9		943
-sobjct:	35	180		5		944
-sobjct:	36	180		13		945
 
 sobjct:	37	180		9		951
 sobjct:	38	180		7		952
@@ -365,15 +335,26 @@ sobjct:	48	0		9		972
 sobjct:	49	0		7		973
 sobjct:	50	0		7		974
 sobjct:	51	0		7		975
-sobjct:	52	0		11		976
+
 sobjct:	53	0		3		977
 
 sobjct:	54	0		5		981
 sobjct:	55	0		3		982
 
+sobjct:	52	0		11		976
+
+sobjct:	91	0		13		991
+
 #Wall objects	(types from t_button_type)
 #		id,	type,	object, height,	%position,	tar_sect,	req keys (red, blue, yellow)
-wobjct:	0	0		1412	100		70			12			0 0 0
+wobjct:	99	1		91		150		70			16			1 1 1
+wobjct:	0	0		111		150		70			0			1 1 1
+wobjct:	2	0		361		150		70			2			1 1 1
+wobjct:	4	0		511		150		70			4			0 1 1
+wobjct:	6	0		1012	150		70			6			0 1 1
+wobjct:	10	0		1311	150		70			10			0 0 1
+wobjct:	12	0		1541	150		70			12			0 0 1
+wobjct:	14	0		701		150		70			14			0 0 1
 
 #Sectors
 #		id, floor,	ceil,	floor_texture,	ceil_texture, 	glow,	#objs,	id of obj,
@@ -384,9 +365,9 @@ sector:	3	-50		1000	q_floor_5	null			0xFFFFFF	12	301 311 321 331 341 351 361 371
 sector:	4	0		300		q_floor_4	q_wall			0xEEEEEE	4	332 401 411 342
 sector:	5	0		500		q_floor_2	q_floor_3		0xBBBBBB	8	501 511 521 531 541 551 412 402
 sector:	6	0		300		q_floor_4	q_wall			0x999999	4	522 601 611 632
-sector:	7	0		500		q_floor_4	q_floor_2		0x666666	19	701 711 721 731 741 751 761 771 781 791 801 811 821 831 841 612 602 851 861
-sector:	8	0		500		q_floor_4	q_floor_2		0x606060	4	1712 833 822 1811
-sector:	9	0		500		q_floor		q_floor_2		0x606060	4	723 1912 2011 732
+sector:	7	0		500		q_floor_4	q_floor_2		0x666666	15	701 711 741 751 761 771 781 791 801 811 841 612 602 851 861
+sector:	8	0		500		q_floor_4	q_floor_2		0x444444	4	881 842 812 871
+sector:	9	0		500		q_floor		q_floor_2		0x444444	4	712 901 911 742
 sector:	10	0		400		q_floor_4	q_bricks_1		0x999999	4	1001 862 852 1011
 sector:	11	0		500		q_floor_4	q_floor_3		0xBBBBBB	6	1101 1111 1002 1012 1121 1131
 sector:	12	0		250		q_floor_4	q_bricks_1		0x888888	4	752 1211 1221 762
@@ -394,7 +375,3 @@ sector:	13	0		500		q_floor		q_box			0xBBBBBB	6	1301 1311 1321 1331 1222 1212
 sector:	14	0		300		q_floor_4	q_bricks_1		0x999999	4	772 1411 1421 782
 sector:	15	0		500		q_floor_4	q_floor_3		0xCCCCCC	6	1511 1521 1531 1541 1422 1412
 sector:	16	0		500		q_floor_4	q_floor_2		0x444444	5	1611 802 792 1621 1631
-sector:	17	0		500		q_floor_4	q_floor_2		0x505050	4	881 842 832 1711
-sector:	18	0		500		q_floor_4	q_floor_2		0x505050	4	1812 823 812 871
-sector:	19	0		500		q_floor		q_floor_2		0x505050	4	712 901 1911 722
-sector:	20	0		500		q_floor		q_floor_2		0x505050	4	733 2012 911 742
