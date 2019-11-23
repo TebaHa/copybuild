@@ -175,11 +175,11 @@ object:	91	-1		0		1	q_elevator	q_bricks_1		q_bricks_1	9 8
 
 object:	101	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	10 11
 object:	111	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	11 12
-object:	121	2		1		1	null		q_bricks_1	q_ceil_wall_4	12 13
+object:	121	2		1		1	null		q_bricks_1		q_bricks_1	12 13
 object:	131	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	13 14
 object:	141	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	14 15
 object:	151	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	15 16
-object:	161	0		1		1	null		q_bricks_1	q_ceil_wall_2	16 17
+object:	161	0		1		1	null		q_bricks_1		q_bricks_1	16 17
 object:	171	-1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	17 10
 
 object:	122	-1		0		1	q_wall		s_tile			ceiling		12 20
@@ -207,11 +207,11 @@ object:	342	3		1		1	null		s_tile			ceiling		34 33
 
 object:	501	-1		0		1	q_bricks_3	q_bricks_3		ceiling		50 51
 object:	511	-1		0		1	q_bricks_3	q_bricks_3		ceiling		51 52
-object:	521	6		1		1	null		q_bricks_3	q_ceil_wall_2	52 53
+object:	521	6		1		1	null		q_bricks_3		q_bricks_3	52 53
 object:	531	-1		0		1	q_bricks_3	q_bricks_3		ceiling		53 54
 object:	541	-1		0		1	q_bricks_3	q_bricks_3		ceiling		54 55
 object:	551	-1		0		1	q_bricks_3	q_bricks_3		ceiling		55 41
-object:	412	4		1		1	null		q_bricks_3	q_ceil_wall_2	41 40
+object:	412	4		1		1	null		q_bricks_3		q_bricks_3	41 40
 object:	402	-1		0		1	q_bricks_3	q_bricks_3		ceiling		40 50
 
 object:	522	-1		0		1	q_wall		s_tile			ceiling		52 60
@@ -222,17 +222,17 @@ object:	632	5		1		1	null		s_tile			ceiling		53 52
 object:	701	-1		0		1	q_bricks_1	s_tile			ceiling		70 71
 object:	711	9		0		1	q_cage		s_tile			ceiling		71 74
 object:	741	-1		0		1	q_bricks_1	s_tile			ceiling		74 75
-object:	751	12		1		1	null		q_bricks_1	q_ceil_wall_4	75 76
+object:	751	12		1		1	null		q_bricks_1		q_bricks_1	75 76
 object:	761	-1		0		1	q_bricks_1	s_tile			ceiling		76 77
-object:	771	14		1		1	null		s_tile		q_ceil_wall_2	77 78
+object:	771	14		1		1	null		q_bricks_1		q_bricks_1	77 78
 object:	781	-1		0		1	q_bricks_1	s_tile			ceiling		78 79
-object:	791	16		1		1	null		s_tile		q_ceil_wall_4	79 80
+object:	791	16		1		1	null		q_bricks_1		q_bricks_1	79 80
 object:	801	-1		0		1	q_bricks_1	s_tile			ceiling		80 81
 object:	811	8		0		1	q_cage		s_tile			ceiling		81 84
 object:	841	-1		0		1	q_bricks_1	s_tile			ceiling		84 61
-object:	612	6		1		1	null		s_tile		q_ceil_wall_2	61 60
+object:	612	6		1		1	null		q_bricks_1		q_bricks_1	61 60
 object:	602	-1		0		1	q_bricks_1	s_tile			ceiling		60 85
-object:	851	10		1		1	null		s_tile		q_ceil_wall_4	85 86
+object:	851	10		1		1	null		q_bricks_1		q_bricks_1	85 86
 object:	861	-1		0		1	q_bricks_1	s_tile			ceiling		86 70
 
 object:	881 -1		0		1	q_bricks_1	s_tile			ceiling		88 84
@@ -341,10 +341,14 @@ sobjct:	55	0		3		982
 
 #Wall objects	(types from t_button_type)
 #		id,	type,	object, height,	%position,	tar_sect,	req keys (red, blue, yellow)
-wobjct:	0	0		1412	100		70			12			0 0 0
-wobjct:	2	0		202		150		70			2			0 0 0
+wobjct:	99	1		91		150		70			16			0 0 0
+wobjct:	0	0		111		150		70			0			0 0 0
+wobjct:	2	0		361		150		70			2			0 0 0
 wobjct:	4	0		511		150		70			4			0 0 0
 wobjct:	6	0		1012	150		70			6			0 0 0
+wobjct:	10	0		1311	150		70			10			0 0 0
+wobjct:	14	0		701		150		70			14			0 0 0
+wobjct:	12	0		1541	150		70			12			0 0 0
 
 
 #Sectors
