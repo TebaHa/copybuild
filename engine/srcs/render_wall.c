@@ -6,11 +6,25 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:19:23 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/18 19:17:44 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:23:40 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
+
+void			init_portal_data(t_engine *eng, t_wall_help3 *data_help,
+				t_wall_help2 *data, t_wall_mai_data *mdata)
+{
+	if (data->portal >= 0
+	&& eng->world->sectors_array[data->portal].opening.renderable)
+	{
+		mdata->nyceil = eng->world->sectors_array[data->portal].
+		ceil - data->plr->position.z;
+		mdata->nyfloor = eng->world->sectors_array[data->portal].
+		floor - data->plr->position.z;
+		data_help->push = 1;
+	}
+}
 
 void			*engine_render_wall_count_values(t_engine *eng,
 		t_wall_help3 *data_help, t_wall_help2 *data, t_wall_mai_data *mdata)
@@ -30,15 +44,7 @@ void			*engine_render_wall_count_values(t_engine *eng,
 	floor - data->plr->position.z;
 	mdata->nyceil = 0;
 	mdata->nyfloor = 0;
-	if (data->portal >= 0 &&
-	eng->world->sectors_array[data->portal].opening.renderable == true)
-	{
-		mdata->nyceil = eng->world->sectors_array[data->portal].
-		ceil - data->plr->position.z;
-		mdata->nyfloor = eng->world->sectors_array[data->portal].
-		floor - data->plr->position.z;
-		data_help->push = 1;
-	}
+	init_portal_data(eng, data_help, data, mdata);
 	engine_render_wall_c_val2(data_help, data, mdata);
 	return (mdata);
 }

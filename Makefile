@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/23 14:57:00 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/23 15:33:37 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,12 +96,14 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					render_cycle.c \
 					render_cycle2.c \
 					render_main.c \
+					render_particle_3.c \
 					render_particle_2.c \
 					render_particle.c \
 					render_stack.c \
 					render_wall_help.c \
 					render_wall.c \
 					render_wall2.c \
+					render_world_help.c \
 					render_world.c \
 					render_background.c \
 					engine_render_text.c \

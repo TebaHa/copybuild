@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 15:18:05 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:33:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1584,5 +1584,8 @@ void				engine_render_keys(t_hud *hud, t_player *plr, SDL_Surface *surf);
 void				instant_close_door(t_sector *sect);
 void				engine_render_sprites_in_sector_help(t_sector *sect,
 					SDL_Surface *surf, t_sprt_r	*d, t_item_sprts *restr);
+void				init_portal_data(t_engine *eng, t_wall_help3 *data_help,
+					t_wall_help2 *data, t_wall_mai_data *mdata);
+void				engine_render_particle_8(t_wallobj *particle, t_ptcl_r *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 17:42:08 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/17 18:11:39 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:25:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,4 @@ void		engine_render_world(t_engine *eng, t_player plr,
 	engine_clear_tsrenderstack(stacks->helpstack);
 	ft_bzero(stacks->rendered, eng->stats.sectors_count);
 	SDL_UnlockSurface(surf);
-}
-
-void		engine_clear_surface(SDL_Surface *surf)
-{
-	SDL_memset(surf->pixels, 0, surf->h * surf->pitch);
-}
-
-void		one_dim_zbuffers_copy(t_item_sprts *sprt, int *ytop, int *ybottom)
-{
-	int		i;
-
-	i = 0;
-	while (i < WIDTH)
-	{
-		sprt->ytop[i] = ytop[i];
-		sprt->ybottom[i] = ybottom[i];
-		i++;
-	}
 }

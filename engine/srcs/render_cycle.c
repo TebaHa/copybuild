@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:39:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/18 19:16:31 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:31:02 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int					engine_render_cycle_5(t_wall_clinks *l)
 	l->cycler->tex->height) * l->cycler->tex->width)
 	+ (l->cycler->txtx % l->cycler->tex->width)) * l->cycler->tex->channels;
 	l->cycler->red = (l->cycler->tex->data)[l->cycler->offset] * color.red;
-	l->cycler->green = (l->cycler->tex->data)[l->cycler->offset + 1] * color.green;;
-	l->cycler->blue = (l->cycler->tex->data)[l->cycler->offset + 2] * color.blue;
+	l->cycler->green = (l->cycler->tex->data)[l->cycler->offset + 1]
+	* color.green;
+	l->cycler->blue = (l->cycler->tex->data)[l->cycler->offset + 2]
+	* color.blue;
 	return (1);
 }
 
