@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 21:37:00 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/16 17:44:25 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/23 15:04:08 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,36 @@ short	engine_render_sprites_in_sector_3(t_sector *sect, t_player *plr,
 void	engine_render_sprites_in_sector_4(t_sector *sect, SDL_Surface *surf,
 		t_sprt_r *d)
 {
-
 	d->txtx = (int)((float)(d->x - d->x1) /
 	(float)(d->x2 - d->x1)
-	* d->img->surface[sect->sprobjects_array[sect->order[d->i]]
-	.frame_num]->w);
+	* d->img->surface[sect->sprobjects_array[sect->order[d->i]].
+	frame_num]->w);
 	engine_vline_textured_surface(surf,
 	(t_scaler)scaler_init((float[5]){d->ya, d->cya, d->yb, 0,
-	(d->img->surface[sect->sprobjects_array[sect->order[d->i]]
-	.frame_num]->h - 1)})
+	(d->img->surface[sect->sprobjects_array[sect->order[d->i]].
+	frame_num]->h - 1)})
 	, (t_vline1_in){(t_fix_point_3d){d->x, d->cya + 1, 0},
 	(t_fix_point_3d){d->x, d->cyb, 0}, sect->color, d->txtx},
 	d->img->surface[sect->sprobjects_array[sect->order[d->i]].frame_num]);
 	d->x++;
+}
+
+int		get_id_by_angle(float angle)
+{
+	if (angle >= 0.01 && angle <= 45.01)
+		return (0);
+	else if (angle > 45.01 && angle <= 90.01)
+		return (1);
+	else if (angle > 90.01 && angle <= 135.01)
+		return (2);
+	else if (angle > 135.01 && angle <= 180.01)
+		return (3);
+	else if (angle > 180.01 && angle <= 225.01)
+		return (4);
+	else if (angle > 225.01 && angle <= 270.01)
+		return (5);
+	else if (angle > 270.01 && angle <= 315.01)
+		return (6);
+	else
+		return (7);
 }
