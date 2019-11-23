@@ -112,7 +112,8 @@ typedef	struct		s_game
 void				game_init_player(t_player *plr);
 void				game_quit(t_game *fps);
 int					game_thread_wrapper(void *ptr);
-void				game_init_threads(t_thread_pool *render_thread_pool, int sectors);
+void				game_init_threads(t_thread_pool *render_thread_pool,
+					int sectors);
 void				game_stop_threads(t_thread_pool	*render_thread,
 					int thread_count);
 void				game_threads_recount(t_game *fps);
@@ -134,18 +135,20 @@ void				game_buttons_control_down3(t_game *fps);
 
 void				apply_gravitation(t_game *fps);
 
-int					line_intersection_check(t_line_2d plr_dir, t_line_2d wall_dir);
+int					line_intersection_check(t_line_2d plr_dir,
+					t_line_2d wall_dir);
 void				count_heights(float *hole_low, float *hole_high,
 					t_sector *sector);
 int					check_wall_passed(t_engine *eng, t_player *plr,
 					t_line_2d plr_dir, int *moving);
-void				vector_projection(t_player *plr, t_point_3d v1, t_point_3d v2);
+void				vector_projection(t_player *plr, t_point_3d v1,
+					t_point_3d v2);
 
 void				game_render_menu(t_menu *menu, SDL_Surface *surf);
 void				game_menu_main(t_game *fps);
-void 				game_menu_author(t_game *fps);
-void 				game_menu_mainframe(t_game *fps);
-void 				game_menu_endgame(t_game *fps);
+void				game_menu_author(t_game *fps);
+void				game_menu_mainframe(t_game *fps);
+void				game_menu_endgame(t_game *fps);
 void				game_menu_quit(t_game *fps);
 void				parser_game(t_game *fps, int argc, char **argv);
 void				game_create_resources_from_file(t_game *fps);
