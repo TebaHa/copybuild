@@ -20,6 +20,9 @@ void		eng_create_hud(t_engine *eng)
 	eng->hud->health = util_create_sprite_by_name(eng, "hud_health");
 	eng->hud->armor = util_create_sprite_by_name(eng, "hud_armor");
 	eng->hud->ammo = util_create_sprite_by_name(eng, "hud_ammo");
+	eng->hud->key_red = util_create_sprite_by_name(eng, "key_red_1");
+	eng->hud->key_blue = util_create_sprite_by_name(eng, "key_blue_1");
+	eng->hud->key_yellow = util_create_sprite_by_name(eng, "key_yellow_1");
 	eng_create_face_100_60(eng, eng->hud);
 	eng_create_face_40_0(eng, eng->hud);
 }

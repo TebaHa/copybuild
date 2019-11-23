@@ -49,7 +49,7 @@
 # define DEFAULT_SPRITE_DELAY	10
 # define FIRERATE 30
 # define BACKGROUND_MUSIC_VOLUME	0.2
-# define GAME_SOUNDS_VOLUME			1
+# define GAME_SOUNDS_VOLUME			0.8
 # define MAX_DOORS 10
 # define TEXT_TIME 15
 
@@ -406,6 +406,9 @@ typedef struct		s_hud
 	t_sprite		*health;
 	t_sprite		*armor;
 	t_sprite		*ammo;
+	t_sprite		*key_red;
+	t_sprite		*key_blue;
+	t_sprite		*key_yellow;
 	t_sprite		*face[H_STATES_NUM][F_STATES_NUM];
 }					t_hud;
 
