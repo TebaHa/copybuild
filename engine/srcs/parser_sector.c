@@ -80,9 +80,6 @@ void			util_create_sector_sprobjs(t_engine *eng,
 			&sector->ceil_spread);
 	}
 	util_read_color(&sector->color, str[6]);
-	sector->dist = (float *)ft_memalloc(sizeof(float)
-		* sector->objects_count);
-	sector->order = (int *)ft_memalloc(sizeof(int) * sector->objects_count);
 }
 
 void			util_find_sprobjects_repeats_in_sector(t_sector *sector)
