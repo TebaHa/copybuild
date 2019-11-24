@@ -6,11 +6,17 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:47:00 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/22 18:35:14 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 14:09:19 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
+
+void		game_quit(t_game *fps)
+{
+	fps->work.work = false;
+	SDL_Delay(50);
+}
 
 void	game_end(t_game *fps)
 {

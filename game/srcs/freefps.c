@@ -6,17 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:32:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 14:22:23 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 14:09:41 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <game.h>
-
-void		game_quit(t_game *fps)
-{
-	fps->work.work = false;
-	SDL_Delay(50);
-}
 
 void		game_init_player(t_player *plr)
 {
@@ -39,6 +33,11 @@ void		game_init_player(t_player *plr)
 	plr->armor = 100;
 	plr->health = 100;
 	plr->steps_sound = sound_init("player_steps");
+	game_init_player_help(plr);
+}
+
+void		game_init_player_help(t_player *plr)
+{
 	plr->grav = true;
 	plr->costil = NULL;
 	plr->key_red = false;
@@ -68,6 +67,11 @@ void		game_init(t_game *fps, int argc, char **argv)
 	game_init_player(&fps->player);
 	fps->editor = init_editor();
 	SDL_ShowCursor(SDL_DISABLE);
+	game_init_help(fps);
+}
+
+void		game_init_help(t_game *fps)
+{
 	fps->logic.duck_shift = 0;
 	fps->logic.thread_end_index = 0;
 	fps->logic.thread_start_index = 0;
@@ -82,42 +86,6 @@ void		game_init(t_game *fps, int argc, char **argv)
 	fps->work.menu = true;
 	fps->work.game = false;
 	fps->work.work = true;
-}
-
-void		run_game(t_game *fps)
-{
-	fps->logic.thread_end_index = 0;
-	fps->logic.thread_start_index = 0;
-	fps->logic.init = 0;
-	while (1)
-	{
-		if (fps->eng->ending == true)
-			break ;
-		SDL_ShowCursor(SDL_DISABLE);
-		game_movement_check(fps);
-		if (SDL_PollEvent(&fps->eng->event))
-		{
-			if (fps->eng->grav == true)
-				sound_player_control(&fps->player);
-			if (fps->eng->event.type == SDL_QUIT)
-				game_quit(fps);
-			if (fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
-			{
-				game_stop_threads(fps->render_thread_pool,
-				THREAD_POOL_SIZE);
-				break ;
-			}
-			game_buttons_control_up_main(fps);
-			game_buttons_control_down_main(fps);
-		}
-		engine_run_doors(fps->eng, fps->eng->doors);
-		apply_gravitation(fps);
-		fire_anim_change(fps->eng, &fps->player);
-		game_apply_movement_main(fps);
-		game_threads_recount(fps);
-		SDL_Delay(3);
-	}
-
 }
 
 int			main(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 17:03:48 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 14:15:05 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,14 @@ typedef	struct		s_game
 	t_controller	work;
 }					t_game;
 
+typedef struct		s_colli
+{
+	int				i;
+	float			hole_low;
+	float			hole_high;
+	int				moving;
+}					t_colli;
+
 void				game_init_player(t_player *plr);
 void				game_quit(t_game *fps);
 int					game_thread_wrapper(void *ptr);
@@ -149,7 +157,7 @@ void				vector_projection(t_player *plr, t_point_3d v1,
 void				game_render_menu(t_menu *menu, SDL_Surface *surf);
 void				game_menu_main(t_game *fps);
 void				game_menu_author(t_game *fps);
-void 				game_menu_controls(t_game *fps);
+void				game_menu_controls(t_game *fps);
 void				game_menu_mainframe(t_game *fps);
 void				game_menu_endgame(t_game *fps);
 void				game_menu_quit(t_game *fps);
@@ -171,5 +179,13 @@ void				game_render_menu_help(t_menu *menu, SDL_Surface *surf);
 int					game_menu_break_check(t_game *fps);
 int					check_button_pushed(t_game *fps);
 void				game_movement_check_help(t_game *fps);
+void				check_wall_passed_help(t_engine *eng, t_player *plr,
+					t_sector *sector, t_colli *c_data);
+void				game_init_player_help(t_player *plr);
+void				game_init_help(t_game *fps);
+void				run_game_init_logic(t_game *fps);
+void				run_render(t_game *fps);
+int					move_player_check(t_sector *s, int *i, t_player *plr,
+					t_point_2d dd);
 
 #endif

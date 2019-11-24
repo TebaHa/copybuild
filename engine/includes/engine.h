@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 16:40:43 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 14:18:14 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -984,8 +984,8 @@ typedef struct		s_bg
 	int				*spix;
 	int				*dpix;
 	int				red;
-	int 			green;
-	int 			blue;
+	int				green;
+	int				blue;
 }					t_bg;
 
 void				engine_sdl_init(t_engine **eng);
@@ -1601,7 +1601,8 @@ void				engine_render_sprites_in_sector_help(t_sector *sect,
 					SDL_Surface *surf, t_sprt_r	*d, t_item_sprts *restr);
 void				init_portal_data(t_engine *eng, t_wall_help3 *data_help,
 					t_wall_help2 *data, t_wall_mai_data *mdata);
-void				engine_render_particle_8(t_wallobj *particle, t_ptcl_r *data);
+void				engine_render_particle_8(t_wallobj *particle,
+					t_ptcl_r *data);
 void				engine_render_particles_wall_help(t_engine *eng,
 					SDL_Surface *surf, t_wall_help2 *data);
 void				engine_render_particle_animate(t_wallobj *particle);
