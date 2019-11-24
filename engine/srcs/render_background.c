@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:21:26 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 15:50:22 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 19:54:25 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void	engine_draw_background(t_engine *eng,
 	bg.dpix = (int *)surf->pixels;
 	bg.sx = ((float)((float)eng->sky->w / 360))
 	* ((int)(plrangle * 180 / M_PI) % 360);
-	bg.oy = ((((HEIGHT) / (400)) * ((yaw + 3.0) * 100)));
+	if (yaw + 3.0 < 0.1)
+		bg.oy = 0;
+	else
+		bg.oy = ((((HEIGHT) / (400)) * ((yaw + 3.0) * 100)));
 	engine_draw_background_help(eng, surf, &bg);
 	SDL_UnlockSurface(surf);
 	SDL_UnlockSurface(eng->sky);
@@ -56,7 +59,7 @@ void	engine_draw_background_help(t_engine *eng,
 			bg->sx = 0;
 		bg->y = 0;
 		bg->sy = bg->oy;
-		while (bg->y < HEIGHT - 1 && bg->sy < eng->sky->h - 1)
+		while (bg->y <= HEIGHT - 1 && bg->sy < eng->sky->h - 1)
 		{
 			bg->red = ((unsigned char *)bg->spix)
 			[((bg->sy * eng->sky->w + bg->sx) * 4)];

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:39:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 14:19:04 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 19:58:59 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,12 @@ int					engine_render_cycle_5(t_wall_clinks *l)
 
 void				engine_render_cycle_2(t_wall_clinks *l)
 {
-	l->cycler->y = l->data->ytop[l->cycler->x];
-	while (l->cycler->y <= l->data->ybottom[l->cycler->x])
+	l->cycler->y = l->data->ytop[l->cycler->x] - 1;
+	while (++l->cycler->y <= l->data->ybottom[l->cycler->x])
 	{
 		if (l->cycler->y >= l->mdata->cya && l->cycler->y <= l->mdata->cyb)
 		{
 			l->cycler->y = l->mdata->cyb;
-			(l->cycler->y) += 1;
 			continue;
 		}
 		l->cycler->hei = l->cycler->y < l->mdata->cya
@@ -51,14 +50,10 @@ void				engine_render_cycle_2(t_wall_clinks *l)
 		l->cycler->pnts = relative_map_coordinate_to_absolute(l->data->plr,
 		l->cycler->hei, l->cycler->x, l->cycler->y);
 		if (engine_render_cycle_5(l) == 0)
-		{
-			(l->cycler->y) += 1;
 			continue;
-		}
 		((int*)l->surf->pixels)
 		[l->cycler->y * WIDTH + l->cycler->x] = get_rgb((int)l->cycler->red,
 		(int)l->cycler->green, (int)l->cycler->blue, 255);
-		(l->cycler->y) += 1;
 	}
 }
 
@@ -95,7 +90,7 @@ void				engine_render_wall_cycle_4(t_wall_clinks *l)
 	.objects_array[l->data->obj_id].ceil_wall_texture->height - 1}),
 	(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya, 0},
 	(t_fix_point_3d){l->cycler->x,
-	l->mdata->cnya + 1, 0}, color, l->mdata->txtx},
+	l->mdata->cnya, 0}, color, l->mdata->txtx},
 	l->eng->world->sectors_array[l->data->sect.sectorno]
 	.objects_array[l->data->obj_id].ceil_wall_texture);
 	l->data->ytop[l->cycler->x] = clamp(max(l->mdata->cya, l->mdata->cnya),
@@ -105,21 +100,13 @@ void				engine_render_wall_cycle_4(t_wall_clinks *l)
 
 void				engine_render_wall_cycle_3(t_wall_clinks *l)
 {
-	t_color	color;
-
-	color = l->eng->world->sectors_array[l->data->sect.sectorno].color;
-	if (l->data->portal >= 0)
+	if (l->eng->world->sectors_array[l->data->sect.sectorno].opening.closed
+	== false)
 	{
-		engine_render_wall_cycle_4(l);
-	}
-	else
-	{
-		engine_vline_textured(l->surf, (t_scaler)scaler_init((float[5])
-		{l->mdata->ya, l->mdata->cya, l->mdata->yb,
-		0, l->data->polygone->tex_scale_koef}),
-		(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya, 0},
-		(t_fix_point_3d){l->cycler->x,
-		l->mdata->cyb + 1, 0}, color, l->mdata->txtx},
-		l->data->polygone->texture);
+		if (l->data->portal >= 0 &&
+		l->eng->world->sectors_array[l->data->portal].opening.renderable)
+			engine_render_wall_cycle_4(l);
+		else
+			engine_render_wall_cycle_main_wall(l);
 	}
 }

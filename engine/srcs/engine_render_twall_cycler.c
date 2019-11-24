@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 15:06:28 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 13:36:54 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 17:24:32 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void				engine_render_twall_cycle(t_wall_clinks *l)
 	{l->mdata->ya, l->mdata->cya, l->mdata->yb,
 	0, l->data->polygone->tex_scale_koef}),
 	(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya, 0},
-	(t_fix_point_3d){l->cycler->x,
-	l->mdata->cyb + 1, 0}, l->data->color, l->mdata->txtx},
+	(t_fix_point_3d){l->cycler->x,l->mdata->cyb, 0},
+	l->data->color, l->mdata->txtx},
 	l->data->polygone->texture);
 }

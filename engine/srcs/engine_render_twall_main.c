@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 14:58:34 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/18 18:57:13 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 17:19:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,6 @@ void			engine_render_twall_c_val2(t_wall_help3 *data_help,
 	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
 	mdata->y2b = HEIGHT / 2 + (int)(-(mdata->yfloor
 	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
-	mdata->ny1a = HEIGHT / 2 + (int)(-(mdata->nyceil
-	+ data_help->t1.y * data->plr->yaw) * mdata->yscale1);
-	mdata->ny1b = HEIGHT / 2 + (int)(-(mdata->nyfloor
-	+ data_help->t1.y * data->plr->yaw) * mdata->yscale1);
-	mdata->ny2a = HEIGHT / 2 + (int)(-(mdata->nyceil
-	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
-	mdata->ny2b = HEIGHT / 2 + (int)(-(mdata->nyfloor
-	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
 	engine_render_twall_c_val3(data, mdata);
 }
 
@@ -63,10 +55,6 @@ void			engine_render_twall_c_val3(t_wall_help2 *data,
 	mdata->beginx, mdata->x2, mdata->y1a, mdata->y2a});
 	mdata->yb_int = scaler_init((float[5]){mdata->x1,
 	mdata->beginx, mdata->x2, mdata->y1b, mdata->y2b});
-	mdata->nya_int = scaler_init((float[5]){mdata->x1,
-	mdata->beginx, mdata->x2, mdata->ny1a, mdata->ny2a});
-	mdata->nyb_int = scaler_init((float[5]){mdata->x1,
-	mdata->beginx, mdata->x2, mdata->ny1b, mdata->ny2b});
 }
 
 void			engine_render_twall(t_engine *eng, SDL_Surface *surf,

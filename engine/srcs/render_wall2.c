@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 19:21:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 15:39:47 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 18:31:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ void			engine_set_links(t_wall_clinks *links, void *ls[6])
 void			engine_render_wall_main_cycler(t_wall_clinks *links,
 				t_wall_cycle *cycler, t_wall_mai_data *mdata)
 {
-	while (cycler->x <= mdata->endx)
+	while (++cycler->x <= mdata->endx)
 	{
 		engine_render_cycle_1(links);
 		engine_render_wall_cycle_3(links);
-		++cycler->x;
 	}
 }
 

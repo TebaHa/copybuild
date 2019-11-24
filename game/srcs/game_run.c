@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 14:07:11 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 14:09:14 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 18:02:46 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void		run_game(t_game *fps)
 				sound_player_control(&fps->player);
 			if (fps->eng->event.type == SDL_QUIT)
 				game_quit(fps);
-			if (fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
+			if (fps->eng->event.type == SDL_KEYDOWN
+			&& fps->eng->event.key.keysym.sym == SDLK_ESCAPE)
 			{
 				game_stop_threads(fps->render_thread_pool,
 				THREAD_POOL_SIZE);

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 14:18:14 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 19:58:42 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 64
 # define MAXBUFF	900000
-# define HFOV (1.0 * 0.63f * HEIGHT / WIDTH)
+# define HFOV (1.0 * 0.83f * HEIGHT / WIDTH)
 # define VFOV (1.0 * 0.2f)
 # define TEXTURE_PACK_PATH		"./game/resources/images/"
 # define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
@@ -453,6 +453,8 @@ typedef struct		s_door_task
 	t_bool			inuse;
 	int				delta;
 	int				range;
+	int				real_ceil;
+	int				real_floor;
 }					t_door_task;
 
 typedef	struct		s_sector
@@ -872,6 +874,8 @@ typedef struct		s_vline1
 	int				color;
 	int				*pixd;
 	uint8_t			*pixs;
+	int				*start;
+	int				*end;
 }					t_vline1;
 
 typedef struct		s_vline1_in
@@ -1615,4 +1619,6 @@ void				engine_render_ts_object_help(t_wall_help2 *data,
 void				init_wobj_help(t_object *obj, t_point_3d *particle);
 void				init_wobj_help2(t_object *obj, t_wobj *txtr,
 					t_point_3d *particle, t_sh_part *data);
+void				engine_render_wall_cycle_main_wall(t_wall_clinks *l);
+
 #endif

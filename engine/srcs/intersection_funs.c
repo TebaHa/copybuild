@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:57:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/10/28 17:11:55 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 18:19:23 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_point_2d	intersect(t_point_2d x1, t_point_2d x2,
 
 t_scaler	scaler_init(float data[5])
 {
+	if ((data[2] - data[0] == 0) || (int)fabsf(data[2] - data[0]) == 0)
+		return ((t_scaler){0, 1, 1, 0, 0});
 	return (t_scaler){data[3] + (data[1] - 1 - data[0])
 	* (data[4] - data[3]) / (data[2] - data[0]),
 	((data[4] < data[3]) ^ (data[2] < data[0])) ? -1 : 1,

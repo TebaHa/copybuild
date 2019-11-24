@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:01:36 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 16:41:57 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 17:29:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int		close_door(t_door_task *door, t_sector *sect)
 		door->renderable = false;
 		sect->opening.inuse = false;
 		door->closed = true;
+		sect->ceil = door->real_ceil;
+		sect->floor = door->real_floor;
 		return (1);
 	}
 	return (0);
@@ -37,6 +39,8 @@ int		open_door(t_door_task *door, t_sector *sect)
 	{
 		sect->opening.inuse = false;
 		door->closed = false;
+		sect->ceil = door->real_ceil;
+		sect->floor = door->real_floor;
 		return (1);
 	}
 	return (0);

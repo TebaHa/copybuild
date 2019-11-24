@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 17:59:50 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/06 22:12:02 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 19:26:31 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	engine_push_particlestack(t_object *obj, t_weapon *wpn,
 	data.w_partcle.id = 1;
 	data.w_partcle.z = particle.z;
 	data.w_partcle.timer = 0;
+	data.w_partcle.frame_num = 0;
 	data.w_partcle.frame_num = 0;
 	particlestack[*status] = data.w_partcle;
 	*status = (*status > 126) ? 0 : *status + 1;

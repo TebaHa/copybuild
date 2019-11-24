@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 21:13:21 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 13:46:05 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 19:54:46 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ void	engine_vline_textured(SDL_Surface *surf, t_scaler ty,
 {
 	t_vline1	d;
 
+	if (din.a.x >= WIDTH)
+		return ;
 	d.pixd = (int *)surf->pixels;
 	d.y1 = clamp(din.a.y, 0, HEIGHT - 1);
 	d.y2 = clamp(din.b.y, 0, HEIGHT - 1);
 	d.pixd += d.y1 * WIDTH + din.a.x;
 	d.y = d.y1;
-	while (d.y < d.y2)
+	while (++d.y <= d.y2)
 	{
 		d.txty = scaler_next(&ty);
 		d.offset = (((d.txty % texture->height) * texture->width)
@@ -33,10 +35,9 @@ void	engine_vline_textured(SDL_Surface *surf, t_scaler ty,
 			d.green = (texture->data)[d.offset + 1] * din.color.green;
 			d.blue = (texture->data)[d.offset + 2] * din.color.blue;
 			d.color = get_rgb((int)d.red, (int)d.green, (int)d.blue, 255);
-			*d.pixd = d.color;
+			*(d.pixd) = d.color;
 		}
 		d.pixd += WIDTH;
-		d.y++;
 	}
 }
 
