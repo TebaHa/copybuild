@@ -1,7 +1,7 @@
 Map
 #Worlds
 #		id, num of sects,	sectors
-world:	1	17				0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+world:	1	22				0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
 
 #Vertexes
 #		angle,	vertex
@@ -165,6 +165,10 @@ vertex: 977 2100	250		100
 vertex: 981	2400	1600	100
 vertex:	982	2500	1600	100
 
+vertex:	985 400		500		100
+vertex:	986	400		700		100
+vertex:	987	300		600		100
+
 vertex: 991	2150	1600	100
 
 #Objects
@@ -229,7 +233,7 @@ object:	761	-1		0		1	q_bricks_1	s_tile			ceiling		76 77
 object:	771	14		1		1	null		q_bricks_1		q_bricks_1	77 78
 object:	781	-1		0		1	q_bricks_1	s_tile			ceiling		78 79
 object:	791	16		1		1	null		q_bricks_1		q_bricks_1	79 80
-object:	801	-1		0		1	q_bricks_1	s_tile			ceiling		80 81
+object:	801	17		1		1	q_bricks_1	s_tile			ceiling		80 81
 object:	811	8		0		1	q_cage		s_tile			ceiling		81 84
 object:	841	-1		0		1	q_bricks_1	s_tile			ceiling		84 61
 object:	612	6		1		1	null		q_bricks_1		q_bricks_1	61 60
@@ -289,6 +293,71 @@ object:	792	-1		0		1	q_bricks_1	s_tile			ceiling		79 162
 object:	1621 -1		0		1	q_bricks_1	s_tile			ceiling		162 163
 object:	1631 -1		0		1	q_box		s_tile			ceiling		163 161
 
+===============================================================================
+
+vertex: 300	2500	1350	100
+vertex: 301	2500	1450	100
+
+vertex: 302 2350	1350	100
+vertex: 303	2350	1450	100
+
+vertex: 304 2250	1450	100
+vertex: 305	2250	1250	100
+vertex: 306	2350	1250	100
+
+object:	3001 -1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	300 81
+object:	813 7		1		1	q_bricks_1	q_bricks_1		q_bricks_1	81 80
+object:	303 -1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	80 301
+object:	3011 18		1		1	null		q_bricks_1		q_bricks_1	301 300
+
+object:	3021 -1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	302 300
+object:	3002 17		1		1	null		q_bricks_1		q_bricks_1	300 301
+object:	3012 -1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	301 303
+object:	3031 19		1		1	null		q_bricks_1		q_bricks_1	303 302
+
+object:	3051 20		1		1	null		q_bricks_1		q_bricks_1	305 306
+object:	3061 -1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	306 302
+object:	3022 18		1		1	null		q_bricks_1		q_bricks_1	302 303
+object:	3032 -1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	303 304
+object:	3041 -1		0		1	q_bricks_1	q_bricks_1		q_bricks_1	304 305
+
+vertex: 307	2250	1240	100
+vertex: 308	2350	1240	100
+vertex: 309	2250	1230	100
+vertex: 310	2350	1230	100
+vertex: 311	2250	1220	100
+vertex: 312	2350	1220	100
+vertex: 313	2250	1210	100
+vertex: 314	2350	1210	100
+vertex: 315	2250	1200	100
+vertex: 316	2350	1200	100
+vertex: 317	2250	1990	100
+vertex: 318	2350	1990	100
+vertex: 319	2250	1980	100
+vertex: 320	2350	1980	100
+vertex: 321	2250	1970	100
+vertex: 322	2350	1970	100
+
+object:	3071 21		1		1	null		s_black			s_black	307 308
+object:	3081 -1		0		1	s_black		s_black			s_black	308 306
+object:	3062 19		1		1	null		s_black			s_black	306 305
+object:	3052 -1		0		1	s_black		s_black			s_black	305 307
+
+object:	3091 -1		0		1	s_black		s_black			s_black	309 310
+object:	3101 -1		0		1	s_black		s_black			s_black	310 308
+object:	3082 20		1		1	null		s_black			s_black	308 307
+object:	3072 -1		0		1	s_black		s_black			s_black	307 309
+
+
+sector:	17	0		500		s_black	s_black		0x444444	4	3001 813 303 3011
+sector:	18	0		500		s_black	s_black		0x554040	4	3021 3002 3012 3031
+sector:	19	0		500		s_black	s_black		0x663535	5	3051 3061 3022 3032 3041
+
+sector:	20	-10		500		s_black	s_black		0x773030	4	3071 3081 3062 3052
+sector:	21	-20		500		s_black	s_black		0x773030	4	3091 3101 3082 3072
+
+===============================================================================
+
 #Sprites objects	(types from t_enm_type)
 #		id,	angle,	type,	vert
 sobjct:	0	0		8		900
@@ -342,6 +411,10 @@ sobjct:	54	0		5		981
 sobjct:	55	0		3		982
 
 sobjct:	52	0		11		976
+
+sobjct:	61	0		8		985
+sobjct:	62	0		8		986
+sobjct:	63	0		8		987
 
 sobjct:	91	0		13		991
 
