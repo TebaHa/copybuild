@@ -22,7 +22,7 @@ void		engine_sdl_init(t_engine **eng)
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		error_handler("SDL_Init Error: ", SDL_GetError(), (*eng));
 	(*eng)->win = SDL_CreateWindow("doka 2",
-	800, 400, WIDTH, HEIGHT,  SDL_WINDOW_SHOWN);
+	800, 400, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
 	if ((*eng)->win == NULL)
 		error_handler("SDL_CreateWindow Error: ", SDL_GetError(), (*eng));
 	(*eng)->ren = SDL_CreateRenderer((*eng)->win, -1, SDL_RENDERER_ACCELERATED);

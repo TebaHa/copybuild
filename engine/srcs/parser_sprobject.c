@@ -80,8 +80,13 @@ void			util_fill_sector_with_sprobjects(t_engine *eng, t_buff *buff)
 			sprobj_count = 0;
 			while (sprobj_count_global < eng->stats.sprobjects_count)
 				util_fill_sector_with_sprobjects_2(&eng->world->sectors_array[
-					sect_count], buff, &sprobj_count, &sprobj_count_global);
+						sect_count], buff, &sprobj_count, &sprobj_count_global);
 		}
+		eng->world->sectors_array[sect_count].dist = (float *)ft_memalloc(
+		sizeof(float) * eng->world->sectors_array[sect_count].sprobjects_count);
+		eng->world->sectors_array[sect_count].order =
+			(int *)ft_memalloc(sizeof(int)
+			* eng->world->sectors_array[sect_count].sprobjects_count);
 		sect_count++;
 	}
 }
