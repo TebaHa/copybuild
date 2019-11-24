@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 19:58:42 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/24 20:04:17 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define PLAYERSTARTZ 0
 # define MAXSECTORS 64
 # define MAXBUFF	900000
-# define HFOV (1.0 * 0.83f * HEIGHT / WIDTH)
+# define HFOV (1.0 * 0.73f * HEIGHT / WIDTH)
 # define VFOV (1.0 * 0.2f)
 # define TEXTURE_PACK_PATH		"./game/resources/images/"
 # define TEXTURE_SPRITE_PATH	"./game/resources/sprites/"
