@@ -12,7 +12,7 @@
 
 #include <game.h>
 
-void		game_quit(t_game *fps)
+void	game_quit(t_game *fps)
 {
 	fps->work.work = false;
 	SDL_Delay(50);
@@ -32,8 +32,6 @@ void	game_end(t_game *fps)
 				break ;
 			}
 		}
-		// Попробуй лучше использовать это. Так же сделаны автор и контрол
-//		game_menu_endgame(fps);
 		game_render_endframe(fps->menu,
 		fps->render_thread_pool[0].surface);
 		engine_render_frame(fps->eng,

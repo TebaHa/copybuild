@@ -280,4 +280,10 @@ le_clean:
 le: le_clean all
 
 id:
-	echo $(ID_UN)
+	@echo $(ID_UN)
+
+norm:
+	@norminette game/srcs/
+	@norminette game/includes/
+	@norminette engine/srcs/
+	@norminette engine/includes/engine.h
