@@ -1328,6 +1328,7 @@ t_object			util_get_object_from_buff_by_id(int id, int size,
 void				util_find_repeats_in_objects(t_object *object,
 					int objects_count);
 void				util_parsing_objects_portal(t_engine *eng, t_buff buff);
+void				util_parsing_double_portal(t_engine *eng);
 void				util_fill_object_with_wallobjects(t_engine *eng,
 					t_buff *buff, t_object *object);
 
