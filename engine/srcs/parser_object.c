@@ -18,8 +18,9 @@ t_object		*engine_read_objects_from_file(t_engine *eng, t_buff *buff)
 	char		**splitted_line;
 	int			i;
 
-	o_array_buffer = (t_object *)ft_memalloc(sizeof(t_object) *
-		eng->stats.objects_count);
+	if ((o_array_buffer = (t_object *)ft_memalloc(sizeof(t_object) *
+	eng->stats.objects_count)) == NULL)
+		util_malloc_error("objects buffer");
 	i = 0;
 	eng->stats.objects_count = 0;
 	while (buff->str[i] != NULL)
@@ -78,8 +79,9 @@ void			util_create_object_2(t_engine *eng, t_object *object,
 	object->polies_array->vertices_count = 2;
 	object->polies_array->id = object->id;
 	object->polies_array->type = 1;
-	object->polies_array->vertices_array =
-		(t_point_3d *)ft_memalloc(sizeof(t_point_3d) * 2);
+	if ((object->polies_array->vertices_array =
+	(t_point_3d *)ft_memalloc(sizeof(t_point_3d) * 2)) == NULL)
+		util_malloc_error("vertices array");
 	wobj_count = 0;
 	while (wobj_count < eng->stats.wallobjects_count)
 	{
@@ -97,8 +99,9 @@ void			util_fill_object_with_wallobjects(t_engine *eng, t_buff *buff,
 	int			wobj_count;
 	int			obj_count;
 
-	object->wallobjects_array = (t_wobj *)ft_memalloc(sizeof(t_wobj) *
-		object->wallobjects_num);
+	if ((object->wallobjects_array = (t_wobj *)ft_memalloc(sizeof(t_wobj) *
+	object->wallobjects_num)) == NULL)
+		util_malloc_error("wall objects array");
 	wobj_count = 0;
 	obj_count = 0;
 	while (wobj_count < eng->stats.wallobjects_count)

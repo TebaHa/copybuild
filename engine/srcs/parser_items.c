@@ -31,7 +31,8 @@ void		eng_create_medkit(t_engine *eng)
 {
 	t_enemy	*medkit;
 
-	medkit = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((medkit = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("medkit");
 	medkit->id = MEDKIT;
 	medkit->name = ft_strdup("Medkit");
 	medkit->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "medkit");
@@ -47,7 +48,8 @@ void		eng_create_armor(t_engine *eng)
 {
 	t_enemy	*armor;
 
-	armor = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((armor = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("armor");
 	armor->id = ARMOR;
 	armor->name = ft_strdup("Armor");
 	armor->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "armor");
@@ -64,7 +66,8 @@ void		eng_create_powerup(t_engine *eng)
 {
 	t_enemy	*powerup;
 
-	powerup = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((powerup = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("powerup");
 	powerup->id = POWER_UP;
 	powerup->name = ft_strdup("Power up");
 	powerup->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "power_up");
@@ -81,7 +84,8 @@ void		eng_create_jetpack(t_engine *eng)
 {
 	t_enemy	*jetpack;
 
-	jetpack = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((jetpack = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("jetpack");
 	jetpack->id = JETPACK;
 	jetpack->name = ft_strdup("Jetpack");
 	jetpack->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "jetpack");

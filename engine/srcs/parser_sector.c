@@ -18,8 +18,9 @@ t_sector		*engine_read_sectors_from_file(t_engine *eng, t_buff buff)
 	char		**splitted_line;
 	int			i;
 
-	s_array_buffer = (t_sector *)ft_memalloc(sizeof(t_sector) *
-		eng->stats.sectors_count);
+	if ((s_array_buffer = (t_sector *)ft_memalloc(sizeof(t_sector) *
+	eng->stats.sectors_count)) == NULL)
+		util_malloc_error("sectors array");
 	i = 0;
 	eng->stats.sectors_count = 0;
 	while (buff.str[i] != NULL)
@@ -49,8 +50,9 @@ void			util_create_sector(t_engine *eng, t_buff buff,
 		util_parsing_error_little_data("objects", "sector", str);
 	sector->sprobjects_count = 0;
 	util_parsing_error_count_handler("sector", str, 7 + sector->objects_count);
-	sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object)
-		* sector->objects_count);
+	if ((sector->objects_array = (t_object *)ft_memalloc(sizeof(t_object)
+	* sector->objects_count)) == NULL)
+		util_malloc_error("objects array");
 	str_count = 8;
 	obj_count = 0;
 	sector->opening.range = sector->ceil - sector->floor;

@@ -66,3 +66,11 @@ void	util_parsing_value_out_of_limits(char *str)
 	ft_putendl(" out of limits!");
 	close_game(PARSING_ERROR);
 }
+
+void	util_malloc_error(char *str)
+{
+	ft_putendl("Malloc error: ");
+	ft_putstr(str);
+	ft_putendl(" not allocated!");
+	close_game(MALLOC_ERROR);
+}

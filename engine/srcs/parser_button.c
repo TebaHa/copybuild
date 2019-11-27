@@ -23,7 +23,8 @@ void			eng_create_button_door(t_engine *eng)
 {
 	t_button	*button;
 
-	button = (t_button *)ft_memalloc(sizeof(t_button));
+	if ((button = (t_button *)ft_memalloc(sizeof(t_button))) == NULL)
+		util_malloc_error("button door");
 	button->id = BT_DOOR;
 	button->name = ft_strdup("Door button");
 	button->anmtn[BS_INACTIVE] = util_create_sprite_by_name(eng,
@@ -39,7 +40,8 @@ void			eng_create_button_finish(t_engine *eng)
 {
 	t_button	*button;
 
-	button = (t_button *)ft_memalloc(sizeof(t_button));
+	if ((button = (t_button *)ft_memalloc(sizeof(t_button))) == NULL)
+		util_malloc_error("button finish");
 	button->id = BT_FINISH;
 	button->name = ft_strdup("Door button");
 	button->anmtn[BS_INACTIVE] = util_create_sprite_by_name(eng,
@@ -55,7 +57,8 @@ void			eng_create_button_reset(t_engine *eng)
 {
 	t_button	*button;
 
-	button = (t_button *)ft_memalloc(sizeof(t_button));
+	if ((button = (t_button *)ft_memalloc(sizeof(t_button))) == NULL)
+		util_malloc_error("button reset");
 	button->id = BUTTON_NUM;
 	button->name = ft_strdup("Door button");
 	button->anmtn[BS_INACTIVE] = util_create_sprite_by_name(eng,

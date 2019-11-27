@@ -41,6 +41,7 @@
 # define CYCLE_READING_ERROR 42
 # define PACKAGE_ERROR 43
 # define SOUND_ERROR 44
+# define MALLOC_ERROR 45
 # define PARSING_ERROR_TEXTURE	"!purple"
 # define PARSING_ERROR_SPRITE	"!teal"
 # define THREAD_POOL_SIZE	3
@@ -1282,6 +1283,7 @@ void				util_parsing_error_repeats(char *problem,
 void				util_parsing_error_little_data_check(char *problem_from,
 					char **str, int problems_number);
 void				util_parsing_value_out_of_limits(char *str);
+void				util_malloc_error(char *str);
 void				util_parsing_error_no_cap(char *problem, t_engine *eng);
 SDL_Surface			*util_transform_texture_to_sprite(t_image *texture);
 SDL_Surface			*util_create_rgb_surface(Uint32 flags, int width,

@@ -55,7 +55,8 @@ void		util_create_world(t_engine *eng, t_world **world,
 	int		sect_count;
 	int		str_count;
 
-	*world = (t_world *)ft_memalloc(sizeof(t_world));
+	if ((*world = (t_world *)ft_memalloc(sizeof(t_world))) == NULL)
+		util_malloc_error("world");
 	(*world)->id = util_int10_data_filler(str[1], 0, 0xFFFF);
 	(*world)->sectors_count = util_int10_data_filler(str[2], 0, 0xFFFF);
 	if (((*world)->sectors_count) != eng->stats.sectors_count)
@@ -63,8 +64,9 @@ void		util_create_world(t_engine *eng, t_world **world,
 	if (!(*world)->sectors_count)
 		util_parsing_error_little_data("sectors", "world", str);
 	util_parsing_error_count_handler("world", str, 2 + (*world)->sectors_count);
-	(*world)->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector)
-		* (*world)->sectors_count);
+	if (((*world)->sectors_array = (t_sector *)ft_memalloc(sizeof(t_sector)
+		* (*world)->sectors_count)) == NULL)
+		util_malloc_error("sectors_array");
 	str_count = 3;
 	sect_count = 0;
 	while (str_count < 3 + (*world)->sectors_count)
@@ -72,7 +74,8 @@ void		util_create_world(t_engine *eng, t_world **world,
 			*util_get_sector_from_buff_by_id(ft_atoi(str[str_count++]),
 			eng->stats.sectors_count, buff.sectors, (*world)->id);
 	util_find_repeats_in_world(*world);
-	(*world)->world_box = (t_sector *)ft_memalloc(sizeof(t_sector));
+	if (((*world)->world_box = (t_sector *)ft_memalloc(sizeof(t_sector))) == NULL)
+		util_malloc_error("world_box");
 }
 
 void		util_find_repeats_in_world(t_world *world)

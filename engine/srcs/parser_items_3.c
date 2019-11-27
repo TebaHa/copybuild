@@ -16,7 +16,8 @@ void		eng_create_key_red(t_engine *eng)
 {
 	t_enemy	*key;
 
-	key = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((key = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("key red");
 	key->id = KEY_RED;
 	key->name = ft_strdup("Red key");
 	key->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "key_red");
@@ -31,7 +32,8 @@ void		eng_create_key_blue(t_engine *eng)
 {
 	t_enemy	*key;
 
-	key = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((key = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("key blue");
 	key->id = KEY_BLUE;
 	key->name = ft_strdup("Blue key");
 	key->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "key_blue");
@@ -46,7 +48,8 @@ void		eng_create_key_yellow(t_engine *eng)
 {
 	t_enemy	*key;
 
-	key = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((key = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("key yellow");
 	key->id = KEY_YELLOW;
 	key->name = ft_strdup("Yellow key");
 	key->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "key_yellow");

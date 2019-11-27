@@ -16,7 +16,8 @@ void		engine_sdl_init(t_engine **eng)
 {
 	// РАСКОМЕНТИТЬ, КОГДА ВСЕ ГОТОВО ИЛИ ПОТЕСТИТЬ
 	// engine_unpack_resources(MODE_SILENT, MODE_LEAVE);
-	*eng = (t_engine *)ft_memalloc(sizeof(t_engine));
+	if ((*eng = (t_engine *)ft_memalloc(sizeof(t_engine))) == NULL)
+		util_malloc_error("eng");
 	if (TTF_Init() != 0)
 		error_handler("SDL_Init Error: ", SDL_GetError(), (*eng));
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -52,10 +53,9 @@ void		eng_read_sprite(t_engine *eng,
 	eng_reader_prep_data(&data, stats, path);
 	if (data.d)
 	{
-		*text_buff = (t_txtr_pkg **)
-		ft_memalloc(sizeof(t_txtr_pkg *) * (data.count));
-		if (*text_buff == NULL)
-			error_handler("malloc error: ", "allocation", eng);
+		if ((*text_buff = (t_txtr_pkg **)
+		ft_memalloc(sizeof(t_txtr_pkg *) * (data.count))) == NULL)
+			util_malloc_error("text_buff");
 		while (data.i < data.count)
 		{
 			if ((data.dir = readdir(data.d)) != NULL)
@@ -79,8 +79,9 @@ void		eng_reader_put_data(t_engine *eng, t_read_data *data,
 	path = (char *)mass[0];
 	stats = (int *)mass[1];
 	data->buffer_name = ft_strjoin(path, data->dir->d_name);
-	(*text_buff)[data->real_i] =
-	(t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg));
+	if (((*text_buff)[data->real_i] =
+	(t_txtr_pkg *)ft_memalloc(sizeof(t_txtr_pkg))) == NULL)
+		util_malloc_error("real_i");
 	(*text_buff)[data->real_i]->filename = ft_strdup(data->dir->d_name);
 	(*stats)++;
 	if ((*text_buff)[data->real_i] == NULL)
