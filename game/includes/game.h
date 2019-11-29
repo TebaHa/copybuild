@@ -166,6 +166,7 @@ void				game_create_resources_from_file(t_game *fps);
 void				eng_create_menu(t_game *fps);
 void				eng_create_menu_2(t_game *fps);
 void				eng_create_menu_3(t_game *fps);
+void				eng_create_menu_4(t_game *fps);
 
 int					check_button(int x, int y,
 					t_fix_point_2d pos_a, t_fix_point_2d pos_b);

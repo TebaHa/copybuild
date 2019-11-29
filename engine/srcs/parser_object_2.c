@@ -86,27 +86,26 @@ void			util_parsing_double_portal(t_engine *eng)
 		while (obj_count < eng->world->sectors_array[sect_count].objects_count)
 		{
 			obj_count_2 = 0;
-			while (obj_count_2 < eng->world->sectors_array[sect_count].objects_count)
-			{
-				if (obj_count != obj_count_2 && eng->world->sectors_array
-				[sect_count].objects_array[obj_count].portal != -1 &&
-				eng->world->sectors_array[sect_count].objects_array
-				[obj_count].portal == eng->world->sectors_array
-				[sect_count].objects_array[obj_count_2].portal)
-				{
-					ft_putendl("Parsing error:");
-					ft_putstr("Double portal from sector ");
-					ft_putnbr(sect_count);
-					ft_putstr(" to sector ");
-					ft_putnbr(eng->world->sectors_array[sect_count].
-						objects_array[obj_count].portal);
-					ft_putstr("!\n");
-					close_game(PARSING_ERROR);
-				}
-				obj_count_2++;
-			}
+			while (obj_count_2 < eng->world->sectors_array[
+			sect_count].objects_count)
+				if (util_parsing_double_portal_2(eng, sect_count, obj_count,
+				obj_count_2))
+					obj_count_2++;
 			obj_count++;
 		}
 		sect_count++;
 	}
+}
+
+int				util_parsing_double_portal_2(t_engine *eng, int sect_count,
+				int obj_count, int obj_count_2)
+{
+	if (obj_count != obj_count_2 && eng->world->sectors_array
+	[sect_count].objects_array[obj_count].portal != -1 &&
+	eng->world->sectors_array[sect_count].objects_array
+	[obj_count].portal == eng->world->sectors_array
+	[sect_count].objects_array[obj_count_2].portal)
+		util_parsing_error_double_portal(sect_count, eng->world->
+		sectors_array[sect_count].objects_array[obj_count].portal);
+	return (1);
 }

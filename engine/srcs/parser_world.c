@@ -74,7 +74,8 @@ void		util_create_world(t_engine *eng, t_world **world,
 			*util_get_sector_from_buff_by_id(ft_atoi(str[str_count++]),
 			eng->stats.sectors_count, buff.sectors, (*world)->id);
 	util_find_repeats_in_world(*world);
-	if (((*world)->world_box = (t_sector *)ft_memalloc(sizeof(t_sector))) == NULL)
+	if (((*world)->world_box =
+	(t_sector *)ft_memalloc(sizeof(t_sector))) == NULL)
 		util_malloc_error("world_box");
 }
 

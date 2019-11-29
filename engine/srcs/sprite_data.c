@@ -14,7 +14,8 @@
 
 void	initilize_abs_sprt_sizes(t_player *plr)
 {
-	if ((plr->arr_sizes = (t_sprts_size **)ft_memalloc(sizeof(t_sprts_size *))) == NULL)
+	if ((plr->arr_sizes =
+	(t_sprts_size **)ft_memalloc(sizeof(t_sprts_size *))) == NULL)
 		util_malloc_error("arr sizes");
 	if ((*plr->arr_sizes = (t_sprts_size *)
 	ft_memalloc(sizeof(t_sprts_size) * ENEMY_NUM)) == NULL)

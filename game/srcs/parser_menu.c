@@ -34,6 +34,13 @@ void		eng_create_menu(t_game *fps)
 	fps->menu->element[ME_ENDGAME]->sprite =
 			util_create_sprite_by_name(fps->eng, "m_endgame");
 	fps->menu->element[ME_ENDGAME]->active = false;
+	eng_create_menu_2(fps);
+	eng_create_menu_3(fps);
+	eng_create_menu_4(fps);
+}
+
+void		eng_create_menu_2(t_game *fps)
+{
 	if ((fps->menu->element[ME_CONTROLS] =
 	(t_menu_element *)ft_memalloc(sizeof(t_menu_element))) == NULL)
 		util_malloc_error("menu controls");
@@ -41,12 +48,6 @@ void		eng_create_menu(t_game *fps)
 	fps->menu->element[ME_CONTROLS]->sprite =
 			util_create_sprite_by_name(fps->eng, "m_controls");
 	fps->menu->element[ME_CONTROLS]->active = false;
-	eng_create_menu_2(fps);
-	eng_create_menu_3(fps);
-}
-
-void		eng_create_menu_2(t_game *fps)
-{
 	if ((fps->menu->button[M_PLAY] =
 	(t_menu_button *)ft_memalloc(sizeof(t_menu_button))) == NULL)
 		util_malloc_error("button play");
@@ -65,6 +66,10 @@ void		eng_create_menu_2(t_game *fps)
 	fps->menu->button[M_CONTROLS]->mouseover =
 			util_create_sprite_by_name(fps->eng, "m_controls_act");
 	fps->menu->button[M_CONTROLS]->active = true;
+}
+
+void		eng_create_menu_3(t_game *fps)
+{
 	if ((fps->menu->button[M_EDITOR] =
 	(t_menu_button *)ft_memalloc(sizeof(t_menu_button))) == NULL)
 		util_malloc_error("button editor");
@@ -74,10 +79,6 @@ void		eng_create_menu_2(t_game *fps)
 	fps->menu->button[M_EDITOR]->mouseover =
 			util_create_sprite_by_name(fps->eng, "m_editor_act");
 	fps->menu->button[M_EDITOR]->active = true;
-}
-
-void		eng_create_menu_3(t_game *fps)
-{
 	if ((fps->menu->button[M_AUTHOR] =
 	(t_menu_button *)ft_memalloc(sizeof(t_menu_button))) == NULL)
 		util_malloc_error("button author");
@@ -87,6 +88,10 @@ void		eng_create_menu_3(t_game *fps)
 	fps->menu->button[M_AUTHOR]->mouseover =
 			util_create_sprite_by_name(fps->eng, "m_author_act");
 	fps->menu->button[M_AUTHOR]->active = true;
+}
+
+void		eng_create_menu_4(t_game *fps)
+{
 	if ((fps->menu->button[M_EXIT] =
 	(t_menu_button *)ft_memalloc(sizeof(t_menu_button))) == NULL)
 		util_malloc_error("button exit");
