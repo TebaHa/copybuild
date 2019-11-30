@@ -23,7 +23,8 @@ void		eng_create_afrit(t_engine *eng)
 {
 	t_enemy	*afrit;
 
-	afrit = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((afrit = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("afrit");
 	afrit->id = AFRIT;
 	afrit->name = ft_strdup("Afrit");
 	afrit->rotatable = ROTATABLE;
@@ -49,7 +50,8 @@ void		eng_create_cacodemon(t_engine *eng)
 {
 	t_enemy	*demon;
 
-	demon = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((demon = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("demon");
 	demon->id = CACODEMON;
 	demon->name = ft_strdup("Cacodemon");
 	demon->rotatable = ROTATABLE;
@@ -75,7 +77,8 @@ void		eng_create_imp(t_engine *eng)
 {
 	t_enemy	*imp;
 
-	imp = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((imp = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("imp");
 	imp->id = IMP;
 	imp->name = ft_strdup("Imp");
 	imp->rotatable = ROTATABLE;

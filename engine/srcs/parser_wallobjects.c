@@ -18,8 +18,9 @@ t_wobj			*engine_read_wallobjects_from_file(t_engine *eng, t_buff buff)
 	char		**splitted_line;
 	int			i;
 
-	wallobject_buff = (t_wobj *)ft_memalloc(sizeof(t_wobj) *
-		eng->stats.wallobjects_count);
+	if ((wallobject_buff = (t_wobj *)ft_memalloc(sizeof(t_wobj) *
+	eng->stats.wallobjects_count)) == NULL)
+		util_malloc_error("Wallobjs buff");
 	i = 0;
 	eng->stats.wallobjects_count = 0;
 	while (buff.str[i] != NULL)

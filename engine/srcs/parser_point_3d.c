@@ -18,8 +18,9 @@ t_point_3d	*engine_read_vertexes_from_file(t_engine *eng, char **json_splited)
 	char		**splitted_line;
 	int			i;
 
-	v_arr_buffer = (t_point_3d *)ft_memalloc(sizeof(t_point_3d) *
-		eng->stats.vertexes_count);
+	if ((v_arr_buffer = (t_point_3d *)ft_memalloc(sizeof(t_point_3d) *
+	eng->stats.vertexes_count)) == NULL)
+		util_malloc_error("vert_buffer");
 	i = 0;
 	eng->stats.vertexes_count = 0;
 	while (json_splited[i] != NULL)

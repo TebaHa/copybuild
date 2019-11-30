@@ -18,7 +18,7 @@ void				engine_render_twall_cycle(t_wall_clinks *l)
 	{l->mdata->ya, l->mdata->cya, l->mdata->yb,
 	0, l->data->polygone->tex_scale_koef}),
 	(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya, 0},
-	(t_fix_point_3d){l->cycler->x,l->mdata->cyb, 0},
+	(t_fix_point_3d){l->cycler->x, l->mdata->cyb, 0},
 	l->data->color, l->mdata->txtx},
 	l->data->polygone->texture);
 }

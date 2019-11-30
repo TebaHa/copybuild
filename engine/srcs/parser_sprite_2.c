@@ -24,7 +24,9 @@ int			util_create_static_sprite(t_engine *eng, char *str, t_sprite *res)
 		{
 			res->frames_num = 1;
 			res->a_state = STATIC;
-			res->surface = (SDL_Surface **)ft_memalloc(sizeof(SDL_Surface *));
+			if ((res->surface = (SDL_Surface **)
+			ft_memalloc(sizeof(SDL_Surface *))) == NULL)
+				util_malloc_error("surface");
 			res->surface[0] = util_transform_texture_to_sprite(
 					&eng->sprites_buffer[i]->texture);
 			break ;
@@ -99,8 +101,9 @@ int			util_create_animated_sprite(t_engine *eng, char *str, t_sprite *res)
 		res->frames_num = srfc_count;
 		res->frames_delay = DEFAULT_SPRITE_DELAY;
 		res->a_state = ANIMATE;
-		res->surface = (SDL_Surface **)ft_memalloc(sizeof(SDL_Surface *)
-			* srfc_count);
+		if ((res->surface = (SDL_Surface **)ft_memalloc(sizeof(SDL_Surface *)
+		* srfc_count)) == NULL)
+			util_malloc_error("surface");
 		srfc_count = 0;
 		while (srfc_count < res->frames_num)
 		{

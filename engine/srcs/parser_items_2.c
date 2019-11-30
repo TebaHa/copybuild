@@ -16,7 +16,8 @@ void		eng_create_barrel(t_engine *eng)
 {
 	t_enemy	*barrel;
 
-	barrel = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((barrel = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("barrel");
 	barrel->id = BARREL;
 	barrel->name = ft_strdup("Barrel");
 	barrel->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "barrel_idle");
@@ -31,7 +32,8 @@ void		eng_create_rifle_ammo(t_engine *eng)
 {
 	t_enemy	*ammo;
 
-	ammo = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((ammo = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("ammo");
 	ammo->id = RIFLE_AMMO;
 	ammo->name = ft_strdup("Rifle ammo");
 	ammo->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "rifle_ammo");
@@ -47,7 +49,8 @@ void		eng_create_plasma_ammo(t_engine *eng)
 {
 	t_enemy	*ammo;
 
-	ammo = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((ammo = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("ammo");
 	ammo->id = PLASMA_AMMO;
 	ammo->name = ft_strdup("Plasma ammo");
 	ammo->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "plasma_ammo");
@@ -63,7 +66,8 @@ void		eng_create_plasma_gun(t_engine *eng)
 {
 	t_enemy	*plasma;
 
-	plasma = (t_enemy *)ft_memalloc(sizeof(t_enemy));
+	if ((plasma = (t_enemy *)ft_memalloc(sizeof(t_enemy))) == NULL)
+		util_malloc_error("plasma");
 	plasma->id = PLASMA_GUN;
 	plasma->name = ft_strdup("Plasma gun");
 	plasma->anmtn[E_IDLE] = util_create_sprite_by_name(eng, "plasma_gun");

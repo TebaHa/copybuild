@@ -14,7 +14,8 @@
 
 void		eng_create_hud(t_engine *eng)
 {
-	eng->hud = (t_hud *)ft_memalloc(sizeof(t_hud));
+	if ((eng->hud = (t_hud *)ft_memalloc(sizeof(t_hud))) == NULL)
+		util_malloc_error("Hud");
 	eng->hud->emo_state = F_IDLE;
 	eng->hud->health_state = H_100;
 	eng->hud->health = util_create_sprite_by_name(eng, "hud_health");

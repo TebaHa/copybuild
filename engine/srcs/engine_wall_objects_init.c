@@ -54,8 +54,9 @@ void		wall_object_init(t_engine *eng, t_object *obj,
 	int			i;
 
 	i = 0;
-	obj->stuff = (t_wallobj *)
-	ft_memalloc(sizeof(t_wallobj) * obj->wallobjects_num);
+	if ((obj->stuff = (t_wallobj *)
+	ft_memalloc(sizeof(t_wallobj) * obj->wallobjects_num)) == NULL)
+		util_malloc_error("stuff");
 	while (i < obj->wallobjects_num)
 	{
 		txtr = &obj->wallobjects_array[i];

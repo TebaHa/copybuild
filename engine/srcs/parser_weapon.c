@@ -22,7 +22,8 @@ void			eng_create_rifle(t_engine *eng)
 {
 	t_weapon	*rifle;
 
-	rifle = (t_weapon *)ft_memalloc(sizeof(t_weapon));
+	if ((rifle = (t_weapon *)ft_memalloc(sizeof(t_weapon))) == NULL)
+		util_malloc_error("rifle");
 	rifle->id = RIFLE;
 	rifle->name = ft_strdup("Rifle");
 	rifle->ammo = 30;
@@ -59,7 +60,8 @@ void			eng_create_plasma(t_engine *eng)
 {
 	t_weapon	*plasma;
 
-	plasma = (t_weapon *)ft_memalloc(sizeof(t_weapon));
+	if ((plasma = (t_weapon *)ft_memalloc(sizeof(t_weapon))) == NULL)
+		util_malloc_error("plasma");
 	plasma->id = PLASMA;
 	plasma->name = ft_strdup("Plazma gun");
 	plasma->ammo = 5;

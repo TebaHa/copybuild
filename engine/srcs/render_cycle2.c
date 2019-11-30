@@ -47,7 +47,7 @@ void		engine_render_wall_cycle_main_wall(t_wall_clinks *l)
 		img = l->eng->world->sectors_array[l->data->sect.sectorno]
 		.objects_array[l->data->obj_id].floor_wall_texture;
 	else
-		return;
+		return ;
 	engine_vline_textured(l->surf, (t_scaler)scaler_init((float[5])
 	{l->mdata->ya, l->mdata->cya, l->mdata->yb,
 	0, l->data->polygone->tex_scale_koef}),

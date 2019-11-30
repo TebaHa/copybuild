@@ -14,9 +14,12 @@
 
 void	initilize_abs_sprt_sizes(t_player *plr)
 {
-	plr->arr_sizes = (t_sprts_size **)ft_memalloc(sizeof(t_sprts_size *));
-	*plr->arr_sizes = (t_sprts_size *)
-	ft_memalloc(sizeof(t_sprts_size) * ENEMY_NUM);
+	if ((plr->arr_sizes =
+	(t_sprts_size **)ft_memalloc(sizeof(t_sprts_size *))) == NULL)
+		util_malloc_error("arr sizes");
+	if ((*plr->arr_sizes = (t_sprts_size *)
+	ft_memalloc(sizeof(t_sprts_size) * ENEMY_NUM)) == NULL)
+		util_malloc_error("*arr sizes");
 	plr->arr_sizes[0][MEDKIT] = (t_sprts_size){8.f, 40.f, 0.f};
 	plr->arr_sizes[0][ARMOR] = (t_sprts_size){8.f, 40.f, 0.f};
 	plr->arr_sizes[0][POWER_UP] = (t_sprts_size){10.f, 60.f, 0.f};

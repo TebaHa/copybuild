@@ -144,6 +144,7 @@ PARSER_SRCS_LIST =	parser_button.c \
 					parser_enemy.c \
 					parser_errors_2.c \
 					parser_errors_3.c \
+					parser_errors_4.c \
 					parser_errors.c \
 					parser_filler.c \
 					parser_hud.c \

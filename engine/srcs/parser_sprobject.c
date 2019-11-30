@@ -17,8 +17,9 @@ void			engine_read_sprobjects_from_file(t_engine *eng, t_buff *buff)
 	char		**splitted_line;
 	int			i;
 
-	buff->sprobjects = (t_sprobject *)ft_memalloc(sizeof(t_sprobject) *
-		eng->stats.sprobjects_count);
+	if ((buff->sprobjects = (t_sprobject *)ft_memalloc(sizeof(t_sprobject) *
+	eng->stats.sprobjects_count)) == NULL)
+		util_malloc_error("buff->sprobjects");
 	i = 0;
 	eng->stats.sprobjects_count = 0;
 	while (buff->str[i] != NULL)
@@ -73,20 +74,17 @@ void			util_fill_sector_with_sprobjects(t_engine *eng, t_buff *buff)
 	{
 		if (eng->world->sectors_array[sect_count].sprobjects_count)
 		{
-			eng->world->sectors_array[sect_count].sprobjects_array =
+			if ((eng->world->sectors_array[sect_count].sprobjects_array =
 			(t_sprobject *)ft_memalloc(sizeof(t_sprobject) *
-			eng->world->sectors_array[sect_count].sprobjects_count);
+			eng->world->sectors_array[sect_count].sprobjects_count)) == NULL)
+				util_malloc_error("sprobjects_array");
 			sprobj_count_global = 0;
 			sprobj_count = 0;
 			while (sprobj_count_global < eng->stats.sprobjects_count)
 				util_fill_sector_with_sprobjects_2(&eng->world->sectors_array[
-						sect_count], buff, &sprobj_count, &sprobj_count_global);
+				sect_count], buff, &sprobj_count, &sprobj_count_global);
 		}
-		eng->world->sectors_array[sect_count].dist = (float *)ft_memalloc(
-		sizeof(float) * eng->world->sectors_array[sect_count].sprobjects_count);
-		eng->world->sectors_array[sect_count].order =
-			(int *)ft_memalloc(sizeof(int)
-			* eng->world->sectors_array[sect_count].sprobjects_count);
+		util_fill_sector_with_sprobjects_3(eng, sect_count);
 		sect_count++;
 	}
 }
@@ -101,4 +99,17 @@ void			util_fill_sector_with_sprobjects_2(t_sector *sector,
 		(*sprobj_count)++;
 	}
 	(*sprobj_count_global)++;
+}
+
+void			util_fill_sector_with_sprobjects_3(t_engine *eng,
+				int sect_count)
+{
+	if ((eng->world->sectors_array[sect_count].dist = (float *)ft_memalloc(
+	sizeof(float) * eng->world->sectors_array[sect_count].sprobjects_count))
+	== NULL)
+		util_malloc_error("dist");
+	if ((eng->world->sectors_array[sect_count].order =
+	(int *)ft_memalloc(sizeof(int)
+	* eng->world->sectors_array[sect_count].sprobjects_count)) == NULL)
+		util_malloc_error("order");
 }
