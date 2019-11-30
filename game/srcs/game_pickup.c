@@ -6,11 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 13:49:25 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 15:55:16 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/30 18:36:33 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <engine.h>
+#include <game.h>
 
 void		check_sprites_in_sector(t_player *plr, t_sector *sect)
 {

@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/24 19:27:02 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/30 18:41:41 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,24 +30,26 @@ LIBFT = $(LIBFT_DIRECTORY)libft.a
 LIBFT_DIRECTORY = ./lib/libft/
 LIBFT_DIRECTORY_HEADERS = $(LIBFT_DIRECTORY)includes
 
-GAME_SRCS_LIST =	freefps.c \
-					end.c \
+GAME_SRCS_LIST =	game_start.c \
+					game_end.c \
 					game_controller_down.c \
 					game_controller_up.c \
 					game_movement_funs.c \
 					game_movement.c \
 					game_collision_detector.c \
 					game_run.c \
-					gravitation.c \
-					menu.c \
-					menu_2.c \
-					menu_3.c \
-					multi_threading.c \
-					weapon_fire.c \
+					game_pickup.c \
+					game_pickup_2.c \
+					game_gravitation.c \
+					game_menu.c \
+					game_menu_2.c \
+					game_menu_3.c \
+					game_multi_threading.c \
+					game_weapon_fire.c \
 					parser_filename.c \
 					parser_game.c \
 					parser_menu.c \
-					run_controller.c \
+					game_run_controller.c \
 
 SDL = $(SDL_DIRECTORY)libmlx.a
 SDL_DIRECTORY = ./lib/sdl2/
@@ -78,26 +80,24 @@ GAME_OBJS_LIST = $(patsubst %.c, %.o, $(GAME_SRCS_LIST))
 
 ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					line_bresenham.c \
-					line_bresenham2.c \
+					line_bresenham_2.c \
 					engine_close.c \
 					line_color.c \
 					engine_main.c \
 					error_handler.c \
 					engine_font.c \
 					hud_draw.c \
-					hud_draw1.c \
+					hud_draw_1.c \
 					loader_images.c \
 					intersection_funs_help.c \
 					engine_texture_scale_koef.c \
 					intersection_funs.c \
-					vectors_normal.c \
-					objects_help.c \
-					objects.c \
-					game_pickup.c \
-					game_pickup_2.c \
-					relative_coord.c \
+					vector_norm_count.c \
+					objects_finder_help.c \
+					objects_finder.c \
+					relative_coordinate.c \
 					render_cycle.c \
-					render_cycle2.c \
+					render_cycle_2.c \
 					render_main.c \
 					render_particle_3.c \
 					render_particle_2.c \
@@ -105,7 +105,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					render_stack.c \
 					render_wall_help.c \
 					render_wall.c \
-					render_wall2.c \
+					render_wall_2.c \
 					render_world_help.c \
 					render_world.c \
 					render_background.c \
@@ -114,27 +114,27 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					use.c \
 					shoot_help.c \
 					shoot_main.c \
-					shoot_main2.c \
+					shoot_main_2.c \
 					sort.c \
 					sound_2.c \
 					sound.c \
 					sprite_render_stack.c \
-					sprite_render.c \
-					sprite_render_2.c \
-					sprite_render_3.c \
-					sprite_render_4.c \
+					render_sprite.c \
+					render_sprite_2.c \
+					render_sprite_3.c \
+					render_sprite_4.c \
 					engine_texture_math.c \
 					engine_texture.c \
 					engine_wall_objects_init.c \
-					utility.c \
+					utils_junk.c \
 					utils_check_stack.c \
 					engine_door_stack.c \
 					engine_door_stack_2.c \
-					init_sectors.c \
+					engine_init_sectors.c \
 					engine_render_twall_cycler.c \
 					engine_render_twall_help.c \
 					engine_render_twall_main.c \
-					engine_render_twall_main2.c \
+					engine_render_twall_main_2.c \
 					engine_render_twalls.c \
 					engine_transprt_stack.c \
 

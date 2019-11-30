@@ -6,11 +6,11 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 15:54:05 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/23 15:56:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/30 18:36:29 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <engine.h>
+#include <game.h>
 
 t_bool		apply_sprite_obj_help(t_player *plr, t_sprobject *sobj)
 {
