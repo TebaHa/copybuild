@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:19:23 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 18:50:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/26 19:01:56 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,21 @@ void			*engine_render_wall_count_values(t_engine *eng,
 void			engine_render_wall_c_val2(t_wall_help3 *data_help,
 				t_wall_help2 *data, t_wall_mai_data *mdata)
 {
-	mdata->y1a = HEIGHT / 2 + (int)(-(mdata->yceil
+	mdata->y1a = HEIGHT / 2 + (-(mdata->yceil
 	+ data_help->t1.y * data->plr->yaw) * mdata->yscale1);
-	mdata->y1b = HEIGHT / 2 + (int)(-(mdata->yfloor
+	mdata->y1b = HEIGHT / 2 + (-(mdata->yfloor
 	+ data_help->t1.y * data->plr->yaw) * mdata->yscale1);
-	mdata->y2a = HEIGHT / 2 + (int)(-(mdata->yceil
+	mdata->y2a = HEIGHT / 2 + (-(mdata->yceil
 	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
-	mdata->y2b = HEIGHT / 2 + (int)(-(mdata->yfloor
+	mdata->y2b = HEIGHT / 2 + (-(mdata->yfloor
 	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
-	mdata->ny1a = HEIGHT / 2 + (int)(-(mdata->nyceil
+	mdata->ny1a = HEIGHT / 2 + (-(mdata->nyceil
 	+ data_help->t1.y * data->plr->yaw) * mdata->yscale1);
-	mdata->ny1b = HEIGHT / 2 + (int)(-(mdata->nyfloor
+	mdata->ny1b = HEIGHT / 2 + (-(mdata->nyfloor
 	+ data_help->t1.y * data->plr->yaw) * mdata->yscale1);
-	mdata->ny2a = HEIGHT / 2 + (int)(-(mdata->nyceil
+	mdata->ny2a = HEIGHT / 2 + (-(mdata->nyceil
 	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
-	mdata->ny2b = HEIGHT / 2 + (int)(-(mdata->nyfloor
+	mdata->ny2b = HEIGHT / 2 + (-(mdata->nyfloor
 	+ data_help->t2.y * data->plr->yaw) * mdata->yscale2);
 	engine_render_wall_c_val3(data, mdata);
 }

@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 19:19:22 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 20:04:17 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/26 19:22:24 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -738,30 +738,30 @@ typedef struct		s_wall_mai_data
 	float			yfloor;
 	float			nyceil;
 	float			nyfloor;
-	int				y1a;
-	int				y1b;
-	int				y2a;
-	int				y2b;
-	int				ny1a;
-	int				ny1b;
-	int				ny2a;
-	int				ny2b;
-	int				beginx;
-	int				endx;
+	float			y1a;
+	float			y1b;
+	float			y2a;
+	float			y2b;
+	float			ny1a;
+	float			ny1b;
+	float			ny2a;
+	float			ny2b;
+	float			beginx;
+	float			endx;
 	t_scaler		ya_int;
 	t_scaler		yb_int;
 	t_scaler		nya_int;
 	t_scaler		nyb_int;
-	int				ya;
-	int				yb;
-	int				cya;
-	int				cyb;
+	float			ya;
+	float			yb;
+	float			cya;
+	float			cyb;
 	int				txtx;
 	t_image			*tex;
-	int				nya;
-	int				nyb;
-	int				cnya;
-	int				cnyb;
+	float			nya;
+	float			nyb;
+	float			cnya;
+	float			cnyb;
 }					t_wall_mai_data;
 
 typedef struct		s_wall_cycle

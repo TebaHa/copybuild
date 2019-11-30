@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:39:27 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 19:58:59 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/11/26 19:35:16 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void				engine_render_wall_cycle_4(t_wall_clinks *l)
 	{l->mdata->ya, l->mdata->cya, l->mdata->yb,
 	0, l->eng->world->sectors_array[l->data->sect.sectorno]
 	.objects_array[l->data->obj_id].ceil_wall_texture->height - 1}),
-	(t_vline1_in){(t_fix_point_3d){l->cycler->x, l->mdata->cya, 0},
+	(t_vline1_in){(t_fix_point_3d){l->cycler->x, ceilf(l->mdata->cya), 0},
 	(t_fix_point_3d){l->cycler->x,
-	l->mdata->cnya, 0}, color, l->mdata->txtx},
+	ceilf(l->mdata->cnya), 0}, color, l->mdata->txtx},
 	l->eng->world->sectors_array[l->data->sect.sectorno]
 	.objects_array[l->data->obj_id].ceil_wall_texture);
 	l->data->ytop[l->cycler->x] = clamp(max(l->mdata->cya, l->mdata->cnya),
