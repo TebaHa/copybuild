@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/30 18:41:41 by zytrams          ###   ########.fr        #
+#    Updated: 2019/11/30 21:23:42 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					hud_draw_1.c \
 					loader_images.c \
 					intersection_funs_help.c \
-					engine_texture_scale_koef.c \
+					render_texture_scale_koef.c \
 					intersection_funs.c \
 					vector_norm_count.c \
 					objects_finder_help.c \
@@ -109,7 +109,7 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					render_world_help.c \
 					render_world.c \
 					render_background.c \
-					engine_render_text.c \
+					render_text.c \
 					sprite_data.c \
 					use.c \
 					shoot_help.c \
@@ -123,20 +123,20 @@ ENGINE_SRCS_LIST =	$(PARSER_SRCS_LIST) \
 					render_sprite_2.c \
 					render_sprite_3.c \
 					render_sprite_4.c \
-					engine_texture_math.c \
-					engine_texture.c \
+					render_texture_math.c \
+					render_texture.c \
 					engine_wall_objects_init.c \
 					utils_junk.c \
 					utils_check_stack.c \
 					engine_door_stack.c \
 					engine_door_stack_2.c \
 					engine_init_sectors.c \
-					engine_render_twall_cycler.c \
-					engine_render_twall_help.c \
-					engine_render_twall_main.c \
-					engine_render_twall_main_2.c \
-					engine_render_twalls.c \
-					engine_transprt_stack.c \
+					render_twall_cycler.c \
+					render_twall_help.c \
+					render_twall_main.c \
+					render_twall_main_2.c \
+					render_twalls.c \
+					render_transprt_stack.c \
 
 PARSER_SRCS_LIST =	parser_button.c \
 					parser_checksum.c \
