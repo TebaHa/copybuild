@@ -17,9 +17,9 @@ static int	create_file(char *map_name)
 	int		fd;
 	char	filename[120];
 
-	ft_strcpy(filename, "resources/");
+	ft_strcpy(filename, "game/resources/levels/");
 	ft_strcat(filename, map_name);
-	ft_strcat(filename, ".txt");
+	ft_strcat(filename, ".lvl");
 	fd = open(filename, O_WRONLY);
 	if (fd == -1)
 	{

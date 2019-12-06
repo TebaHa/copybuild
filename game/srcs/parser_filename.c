@@ -18,16 +18,11 @@ void		parser_filename(t_engine *eng, int argc, char **argv)
 		eng->map_name = ft_strdup(GAME_PATH);
 	else if (argc == 2)
 	{
-		if (!ft_strcmp(argv[1], "1"))
-			eng->map_name = "game/resources/levels/1.lvl";
-		else if (!ft_strcmp(argv[1], "2"))
-			eng->map_name = "game/resources/levels/2.lvl";
-		else if (!ft_strcmp(argv[1], "3"))
-			eng->map_name = "game/resources/levels/3.lvl";
-		else if (!ft_strcmp(argv[1], "4"))
-			eng->map_name = "game/resources/levels/4.lvl";
-		else
-			eng->map_name = argv[1];
+		eng->map_name = ft_strnew(ft_strlen(argv[1]) +
+				ft_strlen("game/resources/levels/") + ft_strlen(".lvl"));
+		eng->map_name = ft_strcat(eng->map_name, "game/resources/levels/");
+		eng->map_name = ft_strcat(eng->map_name, argv[1]);
+		eng->map_name = ft_strcat(eng->map_name, ".lvl");
 	}
 	else
 	{
