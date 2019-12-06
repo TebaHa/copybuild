@@ -14,7 +14,6 @@
 
 void		close_game(int error)
 {
-	// РАСКОМЕНТИТЬ, КОГДА ВСЕ ГОТОВО ИЛИ ПОТЕСТИТЬ
-	// engine_remove_resources_folder(MODE_SILENT);
+	engine_pack_resources(MODE_SILENT, MODE_CLEANING);
 	exit(error);
 }
