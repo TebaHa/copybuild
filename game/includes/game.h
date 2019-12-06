@@ -6,7 +6,7 @@
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 18:26:02 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 14:15:05 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/12/06 20:18:51 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,5 +188,6 @@ void				run_game_init_logic(t_game *fps);
 void				run_render(t_game *fps);
 int					move_player_check(t_sector *s, int *i, t_player *plr,
 					t_point_2d dd);
+
 
 #endif

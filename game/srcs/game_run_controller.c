@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_controller.c                                   :+:      :+:    :+:   */
+/*   game_run_controller.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 21:31:01 by zytrams           #+#    #+#             */
-/*   Updated: 2019/11/24 17:55:09 by zytrams          ###   ########.fr       */
+/*   Updated: 2019/12/06 20:33:26 by zytrams          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	set_flags_editor(t_game *fps)
 	fps->work.menu = true;
 	fps->work.game = false;
 	fps->work.editor = false;
+	fps->work.work = true;
 }
 
 void	run_controller(t_game *fps)

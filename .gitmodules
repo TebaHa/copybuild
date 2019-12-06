@@ -4,6 +4,3 @@
 [submodule "lib/stblib"]
 	path = lib/stblib
 	url = https://github.com/nothings/stb.git
-[submodule "editor"]
-	path = editor
-	url = https://github.com/TebaHa/Doom

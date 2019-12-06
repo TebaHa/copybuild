@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/06 21:35:31 by zytrams           #+#    #+#              #
-#    Updated: 2019/11/30 21:23:42 by zytrams          ###   ########.fr        #
+#    Updated: 2019/12/06 20:01:36 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -184,20 +184,30 @@ EDITOR_FILES =		editor.c \
 					draw_grid.c \
 					init_grid.c \
 					bigloop.c \
+					events.c \
 					clicks.c \
 					take_a_lap.c \
+					save_wall.c \
+					points_of_sect.c \
+					cut_the_rope.c \
 					remover.c \
-					reset.c \
 					put_stuff.c \
 					commands.c \
 					utils.c \
 					init.c \
-					check_intersection.c \
+					check_intersect_l.c \
+					check_intersect_r.c \
+					check_local_intersects.c \
+					check_the_touch.c \
+					check_overlays.c \
 					save_map.c \
 					save_utils.c \
+					status_text.c \
 					write_to_file.c \
-					write_vertexes.c
-
+					write_objects.c \
+					write_vertexes.c \
+					clockwise.c
+					
 ENGINE_OBJS_DIRECTORY = ./engine/objs/
 ENGINE_SRCS_DIRECTORY = ./engine/srcs/
 
