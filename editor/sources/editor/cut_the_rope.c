@@ -45,7 +45,8 @@ static int	get_conditional_by_status(int status, int j)
 **	((check_y > y1 && check_y < y2) || (check_y < y1 && check_y > y2)))
 */
 
-int			point_on_segment(t_ed_point *grid_field, t_ed_point *point, int j, int i)
+int			point_on_segment(t_ed_point *grid_field, t_ed_point *point, int j,
+			int i)
 {
 	if (((grid_field[j].x > point->x && grid_field[j].x < grid_field[i].x) ||
 		(grid_field[j].x < point->x && grid_field[j].x > grid_field[i].x)) ||
@@ -55,7 +56,8 @@ int			point_on_segment(t_ed_point *grid_field, t_ed_point *point, int j, int i)
 	return (0);
 }
 
-int			points_on_line(t_ed_point *grid_field, t_ed_point *point, int j, int i)
+int			points_on_line(t_ed_point *grid_field, t_ed_point *point, int j,
+			int i)
 {
 	if ((grid_field[j].x - point->x) * (grid_field[i].y - point->y) -
 			(grid_field[j].y - point->y) * (grid_field[i].x - point->x) == 0)

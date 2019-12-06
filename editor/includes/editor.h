@@ -206,7 +206,7 @@ typedef struct				s_ed_sprite
 	int						x;
 	int						y;
 	int						sector;
-	struct s_ed_sprite			*next;
+	struct s_ed_sprite		*next;
 }							t_ed_sprite;
 
 typedef struct				s_sdl
@@ -236,7 +236,7 @@ typedef struct				s_sdl
 	struct s_ed_sector		*sectors;
 	struct s_commands		*commands;
 	struct s_ed_point		*player;
-	struct s_ed_sprite			*sprites;
+	struct s_ed_sprite		*sprites;
 	struct s_input_field	*map_name;
 }							t_sdl;
 
@@ -253,14 +253,17 @@ void						exit_events(t_sdl *sdl);
 void						clicks3(t_sdl *sdl);
 void						input_field_click(t_sdl *sdl);
 void						delete_one_symbol(t_sdl *sdl);
-void						save_the_grid(t_ed_point *grid_field, SDL_Rect	grid);
+void						save_the_grid(t_ed_point *grid_field,
+							SDL_Rect grid);
 void						add_point(t_sdl *sdl, t_ed_sector *sector, int i);
 void						make_wall(t_sdl *sdl);
 void						save_wall(t_ed_sector *sector, int i);
 void						which_of_points(t_sdl *sdl, t_ed_sector *sector,
 											t_walls *walls, int i);
-void						cut_the_rope(t_sdl *sdl, t_ed_sector *sector, int i);
-int							check_the_grid(t_ed_point *grid_field, int x, int y);
+void						cut_the_rope(t_sdl *sdl, t_ed_sector *sector,
+							int i);
+int							check_the_grid(t_ed_point *grid_field, int x,
+							int y);
 void						redraw(t_sdl *sdl);
 void						draw_sidebar(t_sdl *sdl);
 void						player_button(t_sdl *sdl, SDL_Rect *button);
@@ -287,8 +290,10 @@ void						draw_text(t_sdl *sdl, char *text, SDL_Rect button,
 void						draw_grid(t_sdl *sdl);
 void						draw(t_sdl *sdl);
 void						status_text(t_sdl *sdl, SDL_Rect *button);
-void						choose_sprite_color(t_sdl *sdl, t_ed_sprite *sprites);
-void						draw_a_sector(t_sdl *sdl, t_ed_sector *sector, int i);
+void						choose_sprite_color(t_sdl *sdl,
+							t_ed_sprite *sprites);
+void						draw_a_sector(t_sdl *sdl, t_ed_sector *sector,
+							int i);
 void						draw_a_point(t_sdl *sdl, t_ed_point *point, int i);
 void						delete_player(t_ed_point *player);
 void						reset(t_sdl *sdl);
@@ -303,7 +308,8 @@ t_ed_sprite					*find_last_sprite(t_ed_sprite *sprites);
 SDL_Color					*create_sdl_color(int r, int g, int b, int a);
 SDL_Rect					*create_rect(int x, int y, int w, int h);
 char						*cut_the_end(char *text);
-void						choose_type_of_point(t_ed_sector **stuffbox, int type);
+void						choose_type_of_point(t_ed_sector **stuffbox,
+							int type);
 void						make_player_or_sprite(t_sdl *sdl);
 int							check_intersect_l(t_sdl *sdl, t_ed_sector *head,
 												int x2, int y2);

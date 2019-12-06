@@ -33,6 +33,7 @@ all: $(NAME)
 
 %.o: %.c $(HEADERS)
 	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo -n '.'
 
 $(NAME): $(OBJ)
 	@gcc $(FLAGS) -c $(SRC)

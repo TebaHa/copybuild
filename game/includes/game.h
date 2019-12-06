@@ -189,5 +189,4 @@ void				run_render(t_game *fps);
 int					move_player_check(t_sector *s, int *i, t_player *plr,
 					t_point_2d dd);
 
-
 #endif

@@ -91,7 +91,8 @@ RESET = \033[0m
 all: $(NAME_EDITOR)
 
 $(NAME_EDITOR): $(LIBFT) $(OBJ_DIRECTORY) $(OBJ_DIRECTORY_EDITOR) $(OBJ_EDITOR_FILES)
-	@echo "$(RED)$(NAME_EDITOR) $(GREEN)compiled successfully!$(RESET)"
+	@echo -n '.'
+# 	@echo "$(RED)$(NAME_EDITOR) $(GREEN)compiled successfully!$(RESET)"
 
 $(OBJ_DIRECTORY):
 	@mkdir -p $(OBJ_DIRECTORY)
@@ -104,21 +105,22 @@ $(OBJ_DIRECTORY_EDITOR):
 
 $(OBJ_DIRECTORY_EDITOR)%.o : $(SRC_DIRECTORY_EDITOR)%.c $(HEADERS_WOLF3D) $(HEADERS_EDITOR)
 	@$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
+	@echo -n '.'
 
 $(LIBFT):
 	@$(MAKE) -sC $(LIBFT_FOLDER)
-	@echo "$(RED)Libft $(GREEN)compiled successfully!$(RESET)"
+# 	@echo "$(RED)Libft $(GREEN)compiled successfully!$(RESET)"
 
 clean:
 	@$(MAKE) -sC $(LIBFT_FOLDER) clean
-	@echo "$(RED)Libft $(GREEN)object files were deleted!$(RESET)"
 	@/bin/rm -rf $(OBJ_EDITOR_FILES)
-	@echo "$(RED)Object $(GREEN)files deleted.$(RESET)"
+# 	@echo "$(RED)Libft $(GREEN)object files were deleted!$(RESET)"
+# 	@echo "$(RED)Object $(GREEN)files deleted.$(RESET)"
 
 fclean: clean
 	@$(MAKE) -sC $(LIBFT_FOLDER) fclean
-	@echo "$(RED)Libft.a $(GREEN)was deleted.$(RESET)"
 	@/bin/rm -rf $(NAME_EDITOR)
-	@echo "$(RED)$(NAME_EDITOR) $(GREEN)was deleted.$(RESET)"
+# 	@echo "$(RED)Libft.a $(GREEN)was deleted.$(RESET)"
+# 	@echo "$(RED)$(NAME_EDITOR) $(GREEN)was deleted.$(RESET)"
 
 re: fclean all

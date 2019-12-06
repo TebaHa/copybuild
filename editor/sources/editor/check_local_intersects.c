@@ -31,7 +31,8 @@ void	find_local_intersection(t_ed_sector *head, int i, t_walls *wall)
 			head->point[i + 1].x) * (wall->y2 - wall->neighbour_y1);
 }
 
-int		check_local_intersection(t_sdl *sdl, t_ed_sector *cur_sect, t_walls *wall)
+int		check_local_intersection(t_sdl *sdl, t_ed_sector *cur_sect,
+		t_walls *wall)
 {
 	int		i;
 	int		count;

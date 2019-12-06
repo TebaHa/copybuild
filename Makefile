@@ -265,6 +265,7 @@ $(LIBFT):
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 
 clean:
+	@$(MAKE) -sC ./editor clean
 	@rm -rf $(GAME_OBJS_DIRECTORY)/*.o
 	@rm -rf $(ENGINE_OBJS_DIRECTORY)/*.o
 	@rm -rf $(EDITOR_OBJS_DIRECTORY)/*.o
@@ -272,6 +273,7 @@ clean:
 	@echo "$(RED)Objs deleted$(RESET)"
 
 fclean: clean
+	@$(MAKE) -sC ./editor fclean
 	@rm -rf $(NAME)
 	@rm -rf $(EDITOR)
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) fclean
@@ -279,21 +281,16 @@ fclean: clean
 
 re: fclean all
 
-le_clean:
-	@rm -rf $(GAME_OBJS_DIRECTORY)/*.o
-	@rm -rf $(ENGINE_OBJS_DIRECTORY)/*.o
-	@rm -rf $(EDITOR_OBJS_DIRECTORY)/*.o
-	@echo "$(RED)Objs deleted (excluding libft)$(RESET)"
-	@rm -rf $(NAME)
-	@rm -rf $(EDITOR)
-	@echo "$(RED)DoomNukem deleted (excluding libft.a)$(RESET)"
-
-le: le_clean all
-
 id:
 	@echo $(ID_UN)
 
 norm:
+	@norminette lib/libft/includes
+	@norminette lib/libft/srcs
+	@norminette editor/libft/*.c
+	@norminette editor/libft/*.h
+	@norminette editor/includes/
+	@norminette editor/sources
 	@norminette game/srcs/
 	@norminette game/includes/
 	@norminette engine/srcs/
